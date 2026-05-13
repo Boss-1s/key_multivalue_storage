@@ -1,0 +1,3 @@
+omg its my readme....
+
+ill get this done at some point trust
