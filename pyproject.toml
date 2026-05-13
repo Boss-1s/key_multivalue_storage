@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Key to Multivalue Storage (kms)"
+version = "1.2.2.20260506.2"
+description = "A simple library that allows the JSON storage of one key to multiple values."
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "GPLv2"}
+authors = [
+    {name = "Boss_1s", email = ""}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: Database",
+    "Topic :: File Formats :: JSON",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+dev = ["pylint"]
+
+[project.urls]
+Documentation = "https://github.com/Boss-1s/docs/"
+Repository = "https://github.com/Boss-1s/key_multivalue_storage/"
+Issues = "https://github.com/issues/"
+
+# TODO in v2.0: CLI
+#[project.scripts]
+#command = "kms:func"...
+#...
+
+[tool.pyright]
+executionEnvironments = [
+    {root = "test",reportGeneralTypeIssues = "none",reportUnusedVariable = "none",reportOperatorType = "none"}
+]
