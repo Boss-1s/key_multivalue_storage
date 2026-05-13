@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Key to Multivalue Storage (kms)"
+name = "key-multivalue-storage"
 version = "1.2.2.20260506.2"
 description = "A simple library that allows the JSON storage of one key to multiple values."
 readme = "README.md"
