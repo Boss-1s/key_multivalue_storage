@@ -19,6 +19,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
       fail-fast: false
     runs-on: ${{ matrix.os }}
+    environment: test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6

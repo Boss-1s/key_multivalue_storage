@@ -8,7 +8,8 @@
                 "ms-python.pylint",              // Pylint
                 "ms-python.vscode-pylance",      // Pylance
                 "ms-vscode.anycode",             // Anycode
-                "davidanson.vscode-markdownlint" // Markdown
+                "davidanson.vscode-markdownlint", // Markdown
+                "ParisNeo.toml-hilighter" // TOML
             ]
         },
         "codespaces": {

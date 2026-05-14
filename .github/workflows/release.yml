@@ -30,3 +30,18 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1 # Official PyPI upload action
+
+      - name: Rename files for GH release upload
+        run: |
+          cd dist
+          for file in *; do
+            new_name=$(echo "$file" | sed 's/key_multivalue_storage/kms_package/')
+            mv "$file" "$new_name"
+          done
+          cd ..
+
+      - name: Upload Build to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*
