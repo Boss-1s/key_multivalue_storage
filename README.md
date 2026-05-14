@@ -42,5 +42,8 @@ my-db.store("database.json")
 ```py
 Storage.indent = 4 #indent size of JSON files
 Storage.encode = True #Whether to encode stored values
-Storage.auto_delete_self = True #Whether to automatically release the object from memory after certain operations i.e. Storage.store()
+Storage.auto_delete_self = True
+# Whether to automatically release the object
+#from memory after certain operations i.e.
+# Storage.store()
 ```
