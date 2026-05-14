@@ -15,3 +15,25 @@ pip install -U key-multivalue-storage
 
 Or, download the latest version of the `.whl` file [here](https://pypi.org/project/key-multivalue-storage/#key_multivalue_storage-1.2.2.20260506.2-py3-none-any.whl)
 <!-- ^might have to change every release-->
+
+You can also choose to download the development environment alongside the package:
+```sh
+pip install -U key-multivalue-storage[dev]
+```
+
+## Usage
+- Create a Storage object to prepare the data to be stored:
+```py
+from key-multivalue-storage import Storage
+my-db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
+```
+- To store the object, use `Storage.store()`.
+```py
+my-db.store("database.json")
+```
+- You can change certain global settings for each `Storage` instance.
+```py
+Storage.indent = 4 #indent size of JSON files
+Storage.encode = True #Whether to encode stored values
+Storage.auto_delete_self = True #Whether to automatically release the object from memory after certain operations i.e. Storage.store()
+```
