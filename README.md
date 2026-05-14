@@ -1,10 +1,17 @@
 # Key to Multivalue Storage - kms
 kms - a tiny side project tuned into a library.
 
+
+![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
+
+---
+
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/key-multivalue-storage?style=for-the-badge)]()
+
+---
+
 [![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 
 ## Installation
