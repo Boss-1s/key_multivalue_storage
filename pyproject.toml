@@ -22,23 +22,17 @@ classifiers = [
     "Topic :: File Formats :: JSON",
     "Topic :: Software Development :: Libraries",
     "Topic :: Utilities",
-    "Typing :: Typed",
 ]
 
 [project.optional-dependencies]
 dev = ["pylint"]
 
 [project.urls]
-Documentation = "https://github.com/Boss-1s/docs/"
+Documentation = "https://github.com/Boss-1s/key_multivalue_storage/wiki/"
 Repository = "https://github.com/Boss-1s/key_multivalue_storage/"
-Issues = "https://github.com/issues/"
+Issues = "https://github.com/Boss-1s/key_multivalue_storage/issues/"
 
 # TODO in v2.0: CLI
 #[project.scripts]
 #command = "kms:func"...
 #...
-
-[tool.pyright]
-executionEnvironments = [
-    {root = "test",reportGeneralTypeIssues = "none",reportUnusedVariable = "none",reportOperatorType = "none"}
-]
