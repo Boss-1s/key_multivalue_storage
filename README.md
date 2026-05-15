@@ -41,9 +41,11 @@ my-db.store("database.json")
 - You can change certain global settings for each `Storage` instance.
 ```py
 Storage.indent = 4 #indent size of JSON files
-Storage.encode = True #Whether to encode stored values
+Storage.encode = True # Whether to encode stored values
 Storage.auto_delete_self = True
 # Whether to automatically release the object
-#from memory after certain operations i.e.
+# from memory after certain operations i.e.
 # Storage.store()
 ```
+
+### See the full documentation [here](https://github.com/Boss-1s/key_multivalue_storage/wiki)!
