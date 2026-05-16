@@ -29,12 +29,24 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.py-ver }}
+        # --- ULTRA FAST WINDOWS TESTING (NO PYTEST) ---
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        if: ${{ runner.os == 'Windows' }}
+        with:
+         enable-cache: true
+
+      - name: Run Raw Python Tests
+        if: ${{ runner.os == 'Windows' }}
+        run: uv run --with . python test/test-general.py
+      
       - name: Install Self
+        if: ${{ runner.os != 'Windows' }}
         run: python -m pip install -e .
+        
       - name: Run test file
-        run: |
-          cd test
-          python3 test-general.py
+        if: ${{ runner.os != 'Windows' }}
+        run: python3 test/test-general.py
 
   deploy-to-test:
     needs: build
