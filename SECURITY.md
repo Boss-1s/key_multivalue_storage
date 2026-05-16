@@ -17,6 +17,8 @@ becomes this:
 
 Letter prefixes become numbers according to its position in the alphabet (i.e. a is 1, b is 2)
 
+**One more thing to note:** You may see a discrepancy between the version string within the [main module file](https://github.com/Boss-1s/key_multivalue_storage/blob/main/src/key_multivalue_storage/key_multivalue_storage.py) and the released version string. This is because updates may not have involved the module. Always trust the higher version number.
+
 ## Supported Versions
 
 Currently, the only (and latest) released package version is kms-v1.2.2/2026.05.06b. However, I may port all kms-semver1.x.x to pypi.
