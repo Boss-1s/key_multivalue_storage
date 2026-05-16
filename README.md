@@ -20,8 +20,7 @@ Install with `pip`:
 pip install -U key-multivalue-storage
 ```
 
-Or, download the latest version of the `.whl` file [here](https://pypi.org/project/key-multivalue-storage/#key_multivalue_storage-1.2.2.20260506.2-py3-none-any.whl)
-<!-- ^might have to change every release-->
+Or, download the latest version of the `.whl` file [in the releases page](https://github.com/Boss-1s/key_multivalue_storage/releases)
 
 You can also choose to download the development environment alongside the package:
 ```sh
