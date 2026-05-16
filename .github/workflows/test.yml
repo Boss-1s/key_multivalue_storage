@@ -42,6 +42,7 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     environment: test
+    if: ${{ github.ref_name == 'main' }}
     steps:
       - run: |
           echo all jobs successful 
