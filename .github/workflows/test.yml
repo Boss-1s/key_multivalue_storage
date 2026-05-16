@@ -65,7 +65,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    environment: test
+    environment: beta
     if: ${{ github.ref_name == 'beta' }}
     steps:
       - run: |
