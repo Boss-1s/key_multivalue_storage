@@ -34,9 +34,12 @@ The version string would look like either one of the following:
 >
 > i.e. 1.2.2.20260515.1
 
-- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable changes to the module or minor changes to the repository like updating the README.
-- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, minor feature additions, dependancy updates, or major updates to repository resources like documentation.
+- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable changes to the module or minor updates to the repository like updating the README.
+
+- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, minor feature additions, dependancy updates, or major updates to repository resources.
+  
 - An update is a **minor update** when the ***minor version number*** changes in the version string, resetting the **patch number** to zero, and changes the **date**. This is usually used to denote major additions, minor breaking changes in *some* features, etc. It is possible for a minor update to skip increments in the patch number.
+  
 - An update is a **major update** when the ***major version number***  changes in the version string, resetting both the **minor version number** and **patch number** to zero, and changes the **date**. This type of update denotes **widespread breaking changes** within the library. **All versions with different major version numbers will *NEVER* be backwards compatible**.
 
 You may see a discrepancy between the version string within the [main module file](https://github.com/Boss-1s/key_multivalue_storage/blob/main/src/key_multivalue_storage/key_multivalue_storage.py) and the released version string. This is because updates may not have involved the module. Always trust the higher version number.
@@ -60,7 +63,7 @@ Currently, the only released package versions are kms-v1.2.2/2026.05.06b and lat
 | 1.4.x | Unreleased | 2.2 |
 | 1.5.x | Unreleased | 2.2 |
 | 1.6.x | Unreleased | 2.3 |
-| 2.0 | Unreleased | Undetermined|
+| 2.0 | Unreleased | Undetermined |
 
 ## Reporting a Vulnerability
 
