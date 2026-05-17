@@ -21,6 +21,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Automatically Update Version
+        env:
+          NVERSION: ${{ github.ref_name }} 
+        run: python3 .github/workflows/src/release.py
+
       - name: Install Build Tools
         run: |
           python -m pip install --upgrade pip
