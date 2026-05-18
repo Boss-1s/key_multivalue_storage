@@ -3,6 +3,7 @@ kms - a tiny side project tuned into a library.
 
 
 ![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
+[![Package](https://img.shields.io/badge/Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
 
 ---
 
