@@ -1,7 +1,7 @@
 name: Release
+description: Workflow for official releases to PyPi, run when a release is created on GitHub.
 
 on:
-  workflow_dispatch: 
   release:
     types: [published]
 
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -37,6 +39,15 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1 # Official PyPI upload action
+
+      - name: Commit version change
+        env:
+          REF: ${{ github.event.release.name }}
+        run: |
+          # Get the branch name and strip the 'origin/' prefix
+          BRANCH=$(git branch -r --contains ${{ github.ref }} --format "%(refname:lstrip=3)" | head -n1)
+          echo "$REF is sourced from branch: $BRANCH"
+          bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
         run: |
