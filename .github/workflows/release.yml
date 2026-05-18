@@ -3,7 +3,7 @@ name: Release
 on:
   workflow_dispatch: 
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   deploy:
@@ -23,7 +23,8 @@ jobs:
 
       - name: Automatically Update Version
         env:
-          NVERSION: ${{ github.ref_name }} 
+          NVERSION: ${{ github.event.release.tag_name }}
+          RELEASENVERSION: ${{ github.event.release.name }}
         run: python3 .github/workflows/src/release.py
 
       - name: Install Build Tools

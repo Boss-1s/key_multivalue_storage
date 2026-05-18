@@ -1,5 +1,5 @@
 # Contributor Guidelines
-This is, after all, an open-source project. Anyone and everyone is invited to collaborate, discuss, and propose changes to the code. Of course, there must be rules for how a contributor can, well, contribute, so that conflicts can be avoided, bugs can be negated, and all can be rewarded and credited for thier work.
+This is, after all, an open-source project. Anyone and everyone is invited to collaborate, discuss, and propose changes to the code. Of course, there must be rules for how a contributor can, well, contribute, so that *conflicts can be avoided*, *bugs can be negated*, and *all can be **rewarded** and **credited** for thier work*.
 
 ## Communication Guidelines
 - Treat everyone with respect.
