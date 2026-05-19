@@ -53,6 +53,13 @@ jobs:
           path: dist/*.tar.gz
           if-no-files-found: error
           archive: false
+      - name: Upload Full Package as zip archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: full-kms-nightly
+          path: dist/*
+          if-no-files-found: error
+          archive: true
       - name: Generate Nightly Link
         env:
           WHL: ${{  steps.whl.outputs.artifact-url }}
@@ -65,6 +72,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: nightly
+    needs: build
     steps:
       - name: deploy to env
         run: |
