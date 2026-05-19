@@ -1,0 +1,61 @@
+name: Release to Nightly
+description: >
+  For every push, a build of the repo
+  is generated to be released as a nightly link.
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v6
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Find Lastest Tag
+        id: 'ltag'
+        uses: oprypin/find-latest-tag@v1.1.2
+        with:
+          repository: ${{ github.repository }}
+      - name: Get Date and Time
+        uses: kaven-universe/github-action-current-date-time@v1.5.0
+        id: time
+        with:
+          format: "YYYYMMDDHHmm"
+      - name: Automatically Update Version
+        env:
+          NVERSION: ${{ steps.ltag.outputs.tag }}.dev${{ steps.time.outputs.time }}
+          RELEASENVERSION: kms-nightly${{ github.event.after }}
+        run: python3 .github/workflows/src/release.py
+      - name: Build Package
+        run: python -m build
+      - name: Upload Wheel Artifact
+        uses: actions/upload-artifact@v7
+        id: whl
+        with:
+          path: dist/*.whl
+          if-no-files-found: error
+          archive: false
+      - name: Upload gZip Artifact
+        uses: actions/upload-artifact@v7
+        id: gz
+        with:
+          path: dist/*.tar.gz
+          if-no-files-found: error
+          archive: false
+      - name: Generate Nightly Link
+        env:
+          WHL: ${{ steps.whl.outputs.artifact-url }}
+          GZ: ${{ steps.whl.outputs.artifact-url }}
+        run: |
+          echo "::notice title=Nightly .whl Link::${WHL/github.com/nightly.link}"
+          echo "::notice title=Nightly .tar.gz Link::${GZ/github.com/nightly.link}"
+          echo
+          echo Nightly Build Complete.
+          
