@@ -11,8 +11,8 @@ body:
     id: kmsv
     attributes:
       label: kms version
-      description: "The version of kms you have installed. Can be found using `python -m pip show key-multivalue-storage`."
-    placeholder: '1.2.2.20260515.2'
+      description: "The version of kms you have installed. Can be found using `python -m pip show key-multivalue-storage`. [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)"
+    value: '1.2.2.20260515.2'
     validations:
       required: true
   - type: textarea
@@ -38,16 +38,16 @@ body:
     validations:
       required: false
   - type: checkboxes
-    id: prequisites
+    id: prerequisites
     attributes:
       label: Prerequisite Checks
       description: Please make sure you have done the following, and check them off as follows. This is necessary to prevent false postives, duplicate issues, or unreleated bugs from being reported here. Thanks!
-    options:
-      - label: I have checked the roadmap and have ensured that the bug I am reporting is not a known bug.
-        required: true
-      - label: I have checked other issues and have ensured that this is not a duplicate, and has not been reported before.
-        required: true
-      - label: I am using a supported version of kms (kms-semver1.2.0 and later).
-        required: true
-      - label: I have ensured that the bug is not in mmy code, but rather is truly because of this library.
-        required: true
+      options:
+        - label: I have checked the roadmap and have ensured that the bug I am reporting is not a known bug.
+          required: true
+        - label: I have checked other issues and have ensured that this is not a duplicate, and has not been reported before.
+          required: true
+        - label: I am using a supported version of kms (kms-semver1.2.0 and later).
+          required: true
+        - label: I have ensured that the bug is not in mmy code, but rather is truly because of this library.
+          required: true
