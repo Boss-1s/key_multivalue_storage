@@ -7,6 +7,12 @@ on:
   push:
     branches:
       - main
+    paths: 
+      - 'test/*'
+      - 'src/*'
+      - 'pyporject.toml'
+      - 'docs/*'
+      - 'requirements.txt'
 
 jobs:
   build:
