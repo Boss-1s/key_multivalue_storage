@@ -2,14 +2,15 @@
 kms - a tiny side project tuned into a library.
 
 
-![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
+![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)
 [![Package](https://img.shields.io/badge/Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Nightly](https://img.shields.io/badge/Package-Nightly-violet?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly.yaml/main/full-kms-nightly.zip)
+[![Nightly](https://img.shields.io/badge/Package-Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly.yaml/main/full-kms-nightly.zip)
 
 ---
 
-[![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
+[![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
+[![Nightly](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease%2Dnightly.yaml?style=for-the-badge&label=Nightly&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/deployments/nightly)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 
 ---
