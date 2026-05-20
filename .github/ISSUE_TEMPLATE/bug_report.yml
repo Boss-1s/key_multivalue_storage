@@ -12,7 +12,7 @@ body:
     attributes:
       label: kms version
       description: "The version of kms you have installed. Can be found using `python -m pip show key-multivalue-storage`. [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)"
-    value: '1.2.2.20260515.2'
+      placeholder: '1.2.2.20260515.2'
     validations:
       required: true
   - type: textarea
