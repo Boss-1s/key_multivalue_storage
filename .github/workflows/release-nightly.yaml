@@ -17,6 +17,8 @@ on:
 jobs:
   build:
     runs-on: 'ubuntu-latest'
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
@@ -79,6 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: nightly
     needs: build
+    permissions: read-all
     steps:
       - name: deploy to env
         run: |
