@@ -4,7 +4,7 @@ kms - a tiny side project tuned into a library.
 
 ![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
 [![Package](https://img.shields.io/badge/Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Nightly](https://img.shields.io/badge/Package-Nightly-violet?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly/main/full-kms-nightly.zip)
+[![Nightly](https://img.shields.io/badge/Package-Nightly-violet?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly.yaml/main/full-kms-nightly.zip)
 
 ---
 
