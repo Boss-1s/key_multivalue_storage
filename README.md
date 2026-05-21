@@ -20,20 +20,20 @@ kms - a tiny side project tuned into a library.
 ## Installation
 Install with `pip`:
 ```bash
-pip install -U key-multivalue-storage
+pip install -U key_multivalue_storage
 ```
 
 Or, download the latest version of the `.whl` file [in the releases page](https://github.com/Boss-1s/key_multivalue_storage/releases)
 
 You can also choose to download the development environment alongside the package:
 ```sh
-pip install -U key-multivalue-storage[dev]
+pip install -U key_multivalue_storage[dev]
 ```
 
 ## Usage
 - Create a Storage object to prepare the data to be stored:
 ```py
-from key-multivalue-storage import Storage
+from key_multivalue_storage import Storage
 my-db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
 ```
 - To store the object, use `Storage.store()`.
