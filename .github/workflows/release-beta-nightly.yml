@@ -9,10 +9,10 @@ on:
     branches:
       - beta
     paths: 
-      - 'test/*'
-      - 'src/*'
+      - 'test/**'
+      - 'src/**'
       - 'pyproject.toml'
-      - 'docs/*'
+      - 'docs/**'
       - 'requirements.txt'
 
 jobs:

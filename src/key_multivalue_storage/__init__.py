@@ -6,16 +6,15 @@ __license__ = "GPLv2"
 
 from . import key_multivalue_storage as kms
 from . import key_multivalue_storage
-from . import key_multivalue_storage as key-multivalue-storage
 from .key_multivalue_storage import Storage
 import warnings
 
 warnings.warn("Going from kms-semver2.0, the module"+
-              "names 'key_multivalue_storage' and"+
-              "'key-multivalue-storage' will be deprecated"+
+              "names 'key_multivalue_storage' will be deprecated"+
               "in favor of the name 'kms'. Please note this"+
               "change accordingly, thank you!",
-              PendingDeprecationWarning
+              PendingDeprecationWarning,
+              stacklevel=4
              )
 
 __all__ = ["Storage"]
