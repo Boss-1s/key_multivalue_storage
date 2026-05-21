@@ -6,7 +6,6 @@ __license__ = "GPLv2"
 
 from . import key_multivalue_storage as kms
 from . import key_multivalue_storage
-from . import key_multivalue_storage as key-multivalue-storage
 from .key_multivalue_storage import Storage
 import warnings
 
