@@ -10,11 +10,11 @@ from .key_multivalue_storage import Storage
 import warnings
 
 warnings.warn("Going from kms-semver2.0, the module"+
-              "names 'key_multivalue_storage' and"+
-              "'key-multivalue-storage' will be deprecated"+
+              "names 'key_multivalue_storage' will be deprecated"+
               "in favor of the name 'kms'. Please note this"+
               "change accordingly, thank you!",
-              PendingDeprecationWarning
+              PendingDeprecationWarning,
+              stacklevel=4
              )
 
 __all__ = ["Storage"]
