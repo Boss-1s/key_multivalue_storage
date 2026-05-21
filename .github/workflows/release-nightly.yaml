@@ -4,13 +4,14 @@ description: >
   is generated to be released as a nightly link.
 
 on:
+  workflow_dispatch: 
   push:
     branches:
       - main
     paths: 
       - 'test/*'
       - 'src/*'
-      - 'pyporject.toml'
+      - 'pyproject.toml'
       - 'docs/*'
       - 'requirements.txt'
 
