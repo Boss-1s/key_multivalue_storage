@@ -39,11 +39,11 @@ jobs:
       - name: Run Raw Python Tests
         if: ${{ runner.os == 'Windows' }}
         run: uv run --with . python test/test-general.py
-      
+
       - name: Install Self
         if: ${{ runner.os != 'Windows' }}
         run: python -m pip install -e .
-        
+
       - name: Run test file
         if: ${{ runner.os != 'Windows' }}
         run: python3 test/test-general.py
@@ -57,7 +57,7 @@ jobs:
     if: ${{ github.ref_name == 'main' }}
     steps:
       - run: |
-          echo all jobs successful 
+          echo all jobs successful
           echo deploying to environment test
 
   deploy-to-beta:
@@ -68,7 +68,9 @@ jobs:
     environment: beta
     if: ${{ github.ref_name == 'beta' }}
     steps:
+      - name: Display Breaking Changes
+        run: python test/diff.py
       - run: |
-          echo all jobs successful 
+          echo all jobs successful
           echo deploying to environment beta
-          
+
