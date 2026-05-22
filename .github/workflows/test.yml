@@ -69,6 +69,7 @@ jobs:
     if: ${{ github.ref_name == 'beta' }}
     steps:
       - uses: actions/checkout@v6
+      - run: pip install -r reqiurements.txt
       - name: Display Breaking Changes
         run: python test/diff.py
       - run: |
