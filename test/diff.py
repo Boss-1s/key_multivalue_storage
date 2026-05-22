@@ -5,7 +5,14 @@ Most likely will be in the dev package env on pip.
 Note: 98% AI-generated
 """
 
-import griffe
+import sys
+try:
+    import griffe
+except ImportError:
+    print("Please download the dev package with",
+          "'pip install key_multivalue_storage[dev]'",
+          "to use this feature.")
+    sys.exit(1)
 from griffe import load_git
 from pathlib import Path
 
@@ -87,7 +94,7 @@ def check_git_vs_standalone_file(package_name: str, git_ref: str, local_file_pat
 if __name__ == "__main__":
     # Define your historical package identity and the loose file to check against it
     PACKAGE_NAME = "key_multivalue_storage"     # The name of the module/package inside the git repo
-    GIT_COMMIT = "v1.2.2.20260515"         # The commit hash, tag, or branch representing the old code
+    GIT_COMMIT = "v1.2.2.20260506.2"         # The commit hash, tag, or branch representing the old code
     LOCAL_FILE = "./src/key_multivalue_storage/key_multivalue_storage.py"     # Path to the single modified file on your machine
 
     check_git_vs_standalone_file(PACKAGE_NAME, GIT_COMMIT, LOCAL_FILE)
