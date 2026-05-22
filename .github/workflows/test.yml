@@ -36,7 +36,7 @@ jobs:
         with:
          enable-cache: true
 
-      - name: Run Raw Python Tests
+      - name: Run Python Tests
         if: ${{ runner.os == 'Windows' }}
         run: uv run --with . python test/test-general.py
 
@@ -48,6 +48,16 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: python3 test/test-general.py
 
+      - name: Install and run pyproject.toml lint (uv)
+        if: ${{ runner.os == 'Windows' }}
+        continue-on-error: true
+        run: uvx pyproject check
+
+      - name: Install and run pyproject.toml lint (pip)
+        if: ${{ runner.os != 'Windows' }}
+        continue-on-error: true
+        run: pip install pyproject && pyproject check
+          
   deploy-to-test:
     needs: build
     permissions:
