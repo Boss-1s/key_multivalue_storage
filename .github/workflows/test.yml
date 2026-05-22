@@ -68,6 +68,7 @@ jobs:
     environment: beta
     if: ${{ github.ref_name == 'beta' }}
     steps:
+      - uses: actions/checkout@v6
       - name: Display Breaking Changes
         run: python test/diff.py
       - run: |
