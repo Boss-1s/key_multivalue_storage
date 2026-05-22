@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
@@ -38,15 +40,19 @@ jobs:
 
       - name: Run Python Tests
         if: ${{ runner.os == 'Windows' }}
-        run: uv run --with . python test/test-general.py
+        run: uv run --with .[dev] python test/test-general.py
 
       - name: Install Self
         if: ${{ runner.os != 'Windows' }}
-        run: python -m pip install -e .
+        run: python -m pip install -e .[dev]
 
       - name: Run test file
         if: ${{ runner.os != 'Windows' }}
         run: python3 test/test-general.py
+
+      - name: Display Breaking Changes (beta)
+        if: ${{ github.ref_name == 'beta' }}
+        run: python test/diff.py
 
       - name: Install and run pyproject.toml lint (uv)
         if: ${{ runner.os == 'Windows' }}
@@ -78,12 +84,6 @@ jobs:
     environment: beta
     if: ${{ github.ref_name == 'beta' }}
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - run: pip install griffe
-      - name: Display Breaking Changes
-        run: python test/diff.py
       - run: |
           echo all jobs successful
           echo deploying to environment beta
