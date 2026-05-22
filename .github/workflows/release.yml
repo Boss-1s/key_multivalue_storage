@@ -2,6 +2,7 @@ name: Release
 description: Workflow for official releases to PyPi, run when a release is created on GitHub.
 
 on:
+  workflow_dispatch: 
   release:
     types: [published]
 
@@ -45,7 +46,7 @@ jobs:
           REF: ${{ github.event.release.name }}
         run: |
           # Get the branch name and strip the 'origin/' prefix
-          BRANCH=$(git branch -r --contains ${{ github.ref }} --format "%(refname:lstrip=3)" | head -n1)
+          export BRANCH=$(git branch --contains ${{github.ref_name}})
           echo "$REF is sourced from branch: $BRANCH"
           bash .github/workflows/src/push.sh
 
