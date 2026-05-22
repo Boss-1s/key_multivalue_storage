@@ -1,7 +1,7 @@
 """
 Key to Multivalue Storage
-Version kms-v1.3/2026.5.?b
-Last updated: 5/??/2026
+Version kms-v1.3.0a0/2026.05.22
+Last updated: 5/22/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how
 scratchattach's database worked and the steep learning curve that came with it.
@@ -81,12 +81,12 @@ class _StorageSettingsMeta(type):
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
-        return "v1.3"
+        return "v1.3.0a0"
 
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.5.?"
+        return "2026.05.22"
 
     @property
     def version(cls) -> str:
@@ -96,7 +96,7 @@ class _StorageSettingsMeta(type):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/5/?"
+        return "2026/5/22"
 
 @total_ordering
 class Storage(metaclass=_StorageSettingsMeta):
