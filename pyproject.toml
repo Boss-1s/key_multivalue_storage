@@ -33,7 +33,10 @@ keywords = [
 ]
 
 [project.optional-dependencies]
-dev = ["pylint"]
+dev = [
+    "pylint>=4.0.0",
+    "griffe>=2.0.2"    
+]
 
 [project.urls]
 Documentation = "https://github.com/Boss-1s/key_multivalue_storage/wiki/"
