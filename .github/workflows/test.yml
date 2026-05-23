@@ -73,6 +73,7 @@ jobs:
 
       - name: Lint Bash Files
         id: sh
+        if: ${{ runner.os != 'Windows' }}
         continue-on-error: true
         uses: ludeeus/action-shellcheck@2.0.0
         with:
