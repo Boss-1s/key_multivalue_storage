@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Python Tests
         if: ${{ runner.os == 'Windows' }}
-        run: uv run --with .[dev] python test/test-general.py
+        run: uv run --with . python test/test-general.py
 
       - name: Install Self
         if: ${{ runner.os != 'Windows' }}
@@ -52,7 +52,7 @@ jobs:
 
       - name: Display Breaking Changes (beta)
         if: ${{ github.ref_name == 'beta' }}
-        run: python test/diff.py
+        run: uv run --with .[dev] python test/diff.py
 
       - name: Install and run pyproject.toml lint (uv)
         if: ${{ runner.os == 'Windows' }}
