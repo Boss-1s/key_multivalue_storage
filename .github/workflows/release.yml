@@ -2,6 +2,7 @@ name: Release
 description: Workflow for official releases to PyPi, run when a release is created on GitHub.
 
 on:
+  workflow_dispatch: 
   release:
     types: [published]
 
@@ -45,8 +46,10 @@ jobs:
           REF: ${{ github.event.release.name }}
         run: |
           # Get the branch name and strip the 'origin/' prefix
-          BRANCH=$(git branch -r --contains ${{ github.ref }} --format "%(refname:lstrip=3)" | head -n1)
+          export BRANCH=$(git branch --contains ${{github.ref_name}})
           echo "$REF is sourced from branch: $BRANCH"
+          git config --global user.name 'Boss_1s [via Actions]'
+          git config --global user.email 'Boss-1s[auto]@users.noreply.github.com'
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
