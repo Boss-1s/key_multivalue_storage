@@ -16,5 +16,6 @@ else
 fi
 
 git add .
-git commit -m "[BOT] Update file from workflow"
+git restore --staged .github/.tmp/
+git commit -m "[Release] Update file version"
 git push origin $BRANCH
