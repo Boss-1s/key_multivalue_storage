@@ -46,10 +46,8 @@ jobs:
         continue-on-error: true
         env:
           REF: ${{ github.event.release.name }}
+          BRANCH: ${{ github.event.release.target_commitish }}
         run: |
-          # Get the branch name and strip the 'origin/' prefix
-          export BRANCH=$(git branch --contains ${{github.ref_name}})
-          echo "$REF is sourced from branch: $BRANCH"
           git config --global user.name 'Boss_1s [via Actions]'
           git config --global user.email 'Boss-1s[auto]@users.noreply.github.com'
           bash .github/workflows/src/push.sh
