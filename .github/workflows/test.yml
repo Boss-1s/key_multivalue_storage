@@ -57,8 +57,19 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         continue-on-error: true
         run: pip install pyproject && pyproject check
+
+      - name: Lint YAML Files
+        uses: reviewdog/action-actionlint@v1.72.0
+        with:
+          actionlint_flags: '-color -oneline'
+          level: info
+
+      - name: Lint Bash Files
+        uses: ludeeus/action-shellcheck@v4.0.0
+        with:
+          format: gcc
           
-  deploy-to-test:
+  deploy-to-main:
     needs: build
     permissions:
       contents: read
