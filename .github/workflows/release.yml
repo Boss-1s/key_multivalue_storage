@@ -43,6 +43,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1 # Official PyPI upload action
 
       - name: Commit version change
+        continue-on-error: true
         env:
           REF: ${{ github.event.release.name }}
         run: |
