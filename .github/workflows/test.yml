@@ -50,24 +50,36 @@ jobs:
 
       - name: Install and run pyproject.toml lint (uv)
         if: ${{ runner.os == 'Windows' }}
+        id: uv-toml
         continue-on-error: true
         run: uvx pyproject check
 
       - name: Install and run pyproject.toml lint (pip)
         if: ${{ runner.os != 'Windows' }}
+        id: pip-toml
         continue-on-error: true
         run: pip install pyproject && pyproject check
 
       - name: Lint YAML Files
+        id: yml
+        continue-on-error: true
         uses: reviewdog/action-actionlint@v1.72.0
         with:
           actionlint_flags: '-color -oneline'
           level: info
 
       - name: Lint Bash Files
+        id: sh
+        continue-on-error: true
         uses: ludeeus/action-shellcheck@2.0.0
         with:
           format: gcc
+
+      - name: Fail job if steps failed
+        if: ${{ steps.pip-toml.outcome == 'failure' || steps.uv-toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
+        run: |
+          echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
+          exit 1
           
   deploy-to-main:
     needs: build
