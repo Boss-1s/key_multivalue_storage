@@ -95,7 +95,7 @@ def check_git_vs_standalone_file(package_name: str, git_ref: str, local_file_pat
 if __name__ == "__main__":
     # Define your historical package identity and the loose file to check against it
     PACKAGE_NAME = "key_multivalue_storage"     # The name of the module/package inside the git repo
-    GIT_COMMIT = environ.get(OLDTAG)        # The commit hash, tag, or branch representing the old code
+    GIT_COMMIT = environ.get('OLDTAG')        # The commit hash, tag, or branch representing the old code
     LOCAL_FILE = "./src/key_multivalue_storage/key_multivalue_storage.py"     # Path to the single modified file on your machine
 
     check_git_vs_standalone_file(PACKAGE_NAME, GIT_COMMIT, LOCAL_FILE)
