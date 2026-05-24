@@ -39,32 +39,18 @@ jobs:
          enable-cache: true
 
       - name: Run Python Tests
-        if: ${{ runner.os == 'Windows' }}
         run: uv run --with . python test/test-general.py
-
-      - name: Install Self
-        if: ${{ runner.os != 'Windows' }}
-        run: python -m pip install -e .[dev]
-
-      - name: Run test file
-        if: ${{ runner.os != 'Windows' }}
-        run: python3 test/test-general.py
 
       - name: Display Breaking Changes (beta)
         if: ${{ github.ref_name == 'beta' }}
+        env:
+          OLDTAG: 'v1.2.3.20260523.1'
         run: uv run --with .[dev] python test/diff.py
 
-      - name: Install and run pyproject.toml lint (uv)
-        if: ${{ runner.os == 'Windows' }}
+      - name: Install and run pyproject.toml lint
         id: uv-toml
         continue-on-error: true
         run: uvx pyproject check
-
-      - name: Install and run pyproject.toml lint (pip)
-        if: ${{ runner.os != 'Windows' }}
-        id: pip-toml
-        continue-on-error: true
-        run: pip install pyproject && pyproject check
 
       - name: Lint YAML Files
         id: yml
@@ -86,7 +72,7 @@ jobs:
           severity: error
 
       - name: Fail job if steps failed
-        if: ${{ steps.pip-toml.outcome == 'failure' || steps.uv-toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
+        if: ${{ steps.uv-toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
         run: |
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
