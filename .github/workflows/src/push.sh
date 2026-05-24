@@ -1,25 +1,23 @@
-#!/bin/bash
+# 1. Configure the GitHub Actions Bot
+git config --global user.name "github-actions[bot]"
+git config --global user.email "41898282+github-actions[bot]@://github.com"
 
-git pull origin $BRANCH
+# 2. Stage changes and safely isolate your tmp directory
+git add .
+git restore --staged .github/.tmp 2>/dev/null || true
 
-# Capture the output of git status --porcelain
+# 3. Check current status after optimization
 GIT_STATUS_OUTPUT=$(git status --porcelain)
 
-# Check if the output is empty
 if [ -z "$GIT_STATUS_OUTPUT" ]; then
-  echo 'Git working tree is clean (no uncommitted changes).'
+  echo "Git working tree is clean. No version changes to commit."
   exit 0
-else
-  echo 'Git working tree has uncommitted changes:'
-  echo "$GIT_STATUS_OUTPUT"
-  echo "These changes will be pushed to the $BRANCH branch."
 fi
 
-git switch $BRANCH
-git add .
-git restore --staged .github/.tmp
-echo 'Unstaged all commits in .github/.tmp/.'
-echo 'New Git Status:'
+echo "Git working tree has uncommitted changes:"
 echo "$GIT_STATUS_OUTPUT"
-git commit -m "[Release] Update file version"
-git push origin $BRANCH
+echo "Pushing changes directly to the remote branch: $BRANCH"
+
+# 4. Commit and push directly using HEAD to bypass detached HEAD state
+git commit -m "[Release] Update file version [skip ci]"
+git push origin HEAD:$BRANCH
