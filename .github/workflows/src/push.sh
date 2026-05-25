@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 1. Configure the GitHub Actions Bot
 git config --global user.name "github-actions[bot]"
 git config --global user.email "41898282+github-actions[bot]@://github.com"
