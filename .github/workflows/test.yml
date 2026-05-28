@@ -86,13 +86,13 @@ jobs:
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
           
-  deploy-to-main:
+  deploy-to-test:
     needs: build
     permissions:
       contents: read
     runs-on: ubuntu-latest
     environment: test
-    if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.ref_name == 'main' || contains(github.ref_name, 'dependabot/')}}
     steps:
       - run: |
           echo all jobs successful 
