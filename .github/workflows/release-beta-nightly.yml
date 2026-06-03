@@ -8,12 +8,6 @@ on:
   push:
     branches:
       - beta
-    paths: 
-      - 'test/**'
-      - 'src/**'
-      - 'pyproject.toml'
-      - 'docs/**'
-      - 'requirements.txt'
 
 jobs:
   build:
