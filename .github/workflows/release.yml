@@ -15,9 +15,14 @@ jobs:
       contents: write
       attestations: write
     steps:
+      - name: Setup SSH and signing
+        run: bash .github/workflows/src/ssh.sh
+        
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          persist-credetials: true
           fetch-depth: 0
 
       - name: Set up Python
@@ -48,8 +53,9 @@ jobs:
           REF: ${{ github.event.release.name }}
           BRANCH: ${{ github.event.release.target_commitish }}
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Get the branch name and strip the 'origin/' prefix
+          export BRANCH=$(git branch --contains ${{github.ref_name}})
+          echo "$REF is sourced from branch: $BRANCH"
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
