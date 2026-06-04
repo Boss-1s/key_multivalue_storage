@@ -46,6 +46,7 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
+The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/beta/test/). <!-- remember to change back to main -->
 
 ## Usage
 - Create a Storage object to prepare the data to be stored:
@@ -59,7 +60,7 @@ my-db.store("database.json")
 ```
 - You can change certain global settings for each `Storage` instance.
 ```py
-Storage.indent = 4 #indent size of JSON files
+Storage.indent = 4 # indent size of JSON files
 Storage.encode = True # Whether to encode stored values
 Storage.auto_delete_self = True
 # Whether to automatically release the object
