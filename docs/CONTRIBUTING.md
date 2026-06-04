@@ -10,6 +10,7 @@ This is, after all, an open-source project. Anyone and everyone is invited to co
 
 ## Contribution Guidelines
 - **KNOW PYTHON**. This is non-negotiable, sorry! 😅
+- **When using AI, please disclose in some way that you are using it.** (i.e. commenting `#ai-generated` in the changed code or commenting about AI usage in PR). This is to prevent the library from being completely reliant on AI. **Note that all PRs that do not disclose AI usage will be _CLOSED_.**
 - Keep code clean of explicit content.
 - Always know something well before doing it. (i.e. knowing what a function does exactly before messing with it)
 - Try not to change anything fundamental about existing code. There are exceptions to this rule, like security vulnerabities.
