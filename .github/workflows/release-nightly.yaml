@@ -24,7 +24,7 @@ jobs:
           python-version: "3.12"
       - name: Find Lastest Tag
         id: 'ltag'
-        uses: oprypin/find-latest-tag@v1.1.2
+        uses: oprypin/find-latest-tag@v1.1.3
         with:
           repository: ${{ github.repository }}
           sort-tags: false
