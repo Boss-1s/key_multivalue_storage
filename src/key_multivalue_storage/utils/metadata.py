@@ -14,7 +14,7 @@ class _StorageMeta(type):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.05.22"
+        return "2026.06.04"
 
     @property
     def version(cls) -> str:
@@ -24,4 +24,4 @@ class _StorageMeta(type):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/5/22"
+        return "2026/6/04"
