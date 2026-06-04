@@ -26,7 +26,7 @@ body:
     attributes:
       label: Possible Code
       description: "If possible, provide a Python mockup of the feature. It dosen't have to be synatically correct; just clear enough to understand how it works."
-      reder: python
+      render: python
   - type: dropdown
     id: ver
     attributes:
