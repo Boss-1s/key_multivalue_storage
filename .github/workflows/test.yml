@@ -83,7 +83,9 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     environment: test
-    if: ${{ github.ref_name == 'main' }}
+    if: |
+      github.ref_name == 'main' ||
+      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'main'))
     steps:
       - run: |
           echo all jobs successful
@@ -94,8 +96,10 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    environment: beta
-    if: ${{ github.ref_name == 'beta' }}
+    environment: test
+    if: |
+      github.ref_name == 'beta' ||
+      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
     steps:
       - run: |
           echo all jobs successful
