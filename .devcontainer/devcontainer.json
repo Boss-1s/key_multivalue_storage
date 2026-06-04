@@ -11,7 +11,6 @@
                 "davidanson.vscode-markdownlint", // Markdown
                 "ParisNeo.toml-hilighter", // TOML
                 "fanaticpythoner.better-todo-tree",
-                "4bde9604-932c-638d-b5d2-db273992f59c.python-silver-pack"
             ]
         },
         "codespaces": {
