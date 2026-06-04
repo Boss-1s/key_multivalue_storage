@@ -1,4 +1,5 @@
-# Custom Warning classes
+"""Custom Warning classes"""
+
 from __future__ import annotations
 
 class DeleteWarning(UserWarning):

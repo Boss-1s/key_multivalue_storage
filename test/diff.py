@@ -2,20 +2,22 @@
 Find diffs using griffe.
 Most likely will be in the dev package env on pip.
 
-Note: 98% AI-generated
+Note: 90% AI-generated
 """
 
 import sys
 try:
-    import griffe
+    import griffe #type: ignore
 except ImportError:
     print("Please download the dev package with",
           "'pip install key_multivalue_storage[dev]'",
           "to use this feature.")
     sys.exit(1)
-from griffe import load_git
+
+from griffe import load_git #type: ignore
 from pathlib import Path
 from os import environ
+from typing import Any
 
 def find_mismatched_breaking_changes(package_path: str, single_file_path: str):
     """Find breaking changes"""
@@ -92,10 +94,24 @@ def check_git_vs_standalone_file(package_name: str, git_ref: str, local_file_pat
     for breakage in breakages:
         print(breakage.explain())
 
+def find_breaking_changes(package_name: str, git_ref: Any):
+    print(f"Loading historical package state from Git commit/ref: {git_ref}...")
+    old_api = load_git(package_name, ref=git_ref, repo=".", search_paths=["src"])
+    new_api = griffe.load("key_multivalue_storage")
+
+    print("\n--- Finding Breaking Changes ---")
+    breakages = list(griffe.find_breaking_changes(old_api, new_api))
+
+    if not breakages:
+        print("Success: No breaking changes detected!")
+        return
+
+    for breakage in breakages:
+        print(breakage.explain())
+
 if __name__ == "__main__":
     # Define your historical package identity and the loose file to check against it
-    PACKAGE_NAME = "key_multivalue_storage"     # The name of the module/package inside the git repo
-    GIT_COMMIT = environ.get('OLDTAG')        # The commit hash, tag, or branch representing the old code
-    LOCAL_FILE = "./src/key_multivalue_storage/key_multivalue_storage.py"     # Path to the single modified file on your machine
+    PACKAGE_NAME = "key_multivalue_storage"# The name of the module/package inside the git repo
+    GIT_COMMIT = environ.get('OLDTAG')# The commit hash, tag, or branch representing the old code
 
-    check_git_vs_standalone_file(PACKAGE_NAME, GIT_COMMIT, LOCAL_FILE)
+    find_breaking_changes(PACKAGE_NAME, GIT_COMMIT)

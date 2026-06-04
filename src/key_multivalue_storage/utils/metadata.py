@@ -1,3 +1,5 @@
+""""Meta classes for modules"""
+
 from __future__ import annotations
 
 class _StorageMeta(type):

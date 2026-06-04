@@ -1,6 +1,5 @@
 """
 Key to Multivalue Storage
-Version kms-v1.3.0a0/2026.05.22
 Last updated: 5/22/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how
@@ -15,14 +14,22 @@ Made with love by Boss_1s.
 # TODO in v1.6: final v1.x update, bug fixes and small tweaks,
 # switch over to uuidv7 library so no fallback to uuidv4 is necessary
 
-# SEE ROADMAP FOR MORE INFO
+# NOTE: SEE ROADMAP FOR MORE INFO
 
 from __future__ import annotations
-import json,uuid,warnings,difflib,builtins
+
+import json
+import uuid
+import warnings
+import difflib
+import builtins
 # TODO in v1.5: import logger
+
 from typing import Any, Optional, Generator
 from types import TracebackType
 from functools import total_ordering
+
+from .utils import warnings as w, exceptions, metadata as meta
 
 # TODO in v1.5: logger
 #logger: logging.Logger | None = None
@@ -63,43 +70,8 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage.py] ", *args, **kwargs)
 
-class _KeyNotFoundError(KeyError):
-    """Custom exception raised when a key is not found."""
-    def __init__(self, file: str, mkey: str | uuid.UUID, message="") -> None:
-        self.mkey = mkey
-        self.file = file
-        if message == "":
-            self.message = f"The following key was not found in {file}: {mkey}"
-        else:
-            self.message = message
-        super().__init__(self.message)
-
-class _StorageSettingsMeta(type):
-    """
-    Metadata variables for Storage class
-    """
-    @property
-    def semver(cls) -> str:
-        """Current semnatic version of this module."""
-        return "v1.3.0a0"
-
-    @property
-    def calver(cls) -> str:
-        """Current calendar version of this module."""
-        return "2026.05.22"
-
-    @property
-    def version(cls) -> str:
-        """Current full version of this module."""
-        return "kms-"+cls.semver+"/"+cls.calver
-
-    @property
-    def last_update(cls) -> str:
-        """Date this module was last updated."""
-        return "2026/5/22"
-
 @total_ordering
-class Storage(metaclass=_StorageSettingsMeta):
+class Storage(metaclass=meta._StorageMeta):
     """
     Class for monokey-multivalue storage.
 
@@ -113,8 +85,7 @@ class Storage(metaclass=_StorageSettingsMeta):
     Create an instance of the Storage class to store
     """
 
-    # TODO in v1.5
-    # global logger
+    # TODO in v1.5: global logger
 
     # Define global variables: indent, encode option, and automatic object release from memory
     indent: int = 4
@@ -136,7 +107,7 @@ class Storage(metaclass=_StorageSettingsMeta):
         # ...then attempt to set values
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                          Storage.CastWarning)
+                          w.CastWarning)
         self.key = str(key)
         self.values = kwargs
 
@@ -251,14 +222,6 @@ class Storage(metaclass=_StorageSettingsMeta):
 
         return cls(top_lv_key, **og_nested_values)
 
-    @staticmethod
-    # TODO v1.3: find a better way to do this shit
-    def __is_warning_category_ignored(category: Any) -> bool: # type: ignore
-        for action, _, cat, _, _ in warnings.filters:
-            if action == 'ignore' and category==cat:
-                return True
-        return False
-
     def store(self,
               file_path: str,
               instant_delete: bool | None = None,
@@ -303,51 +266,6 @@ class Storage(metaclass=_StorageSettingsMeta):
         if instant_delete:
             del self
 
-    # Custom Warning classes
-
-    class DeleteWarning(UserWarning):
-        """Custom warning when attempting to delete the contents of a whole database."""
-        def __init__(self, message: str="", method: str="") -> None:
-            super().__init__(message)
-            self.method = method
-
-        def __str__(self) -> str:
-            return f"{self.method}: WARNING: DeleteWarning: {self.args[0]}"
-
-    class AdditionFailureWarning(RuntimeWarning):
-        """Custom warning when attempting to add a Storage instance with a dictionary or list."""
-        def __init__(self, message: str="", method: str="") -> None:
-            super().__init__(message)
-            self.method = method
-
-        def __str__(self) -> str:
-            return f"{self.method}: WARNING: AdditionFailureWarning: {self.args[0]}"
-
-    class SubtractionFailureWarning(RuntimeWarning):
-        """
-        Custom warning when attempting to subtract a
-        Storage instance by a dictionary, and vice versa.
-
-        Also applies to division, despite the name.
-        """
-        def __init__(self, message: str="", method: str="") -> None:
-            super().__init__(message)
-            self.method = method
-
-        def __str__(self) -> str:
-            return f"{self.method}: WARNING: SubtractionFailureWarning: {self.args[0]}"
-
-    class CastWarning(SyntaxWarning):
-        """
-        Custom warning when attempting to pass a key argument as something other than a string.
-        """
-        def __init__(self, message: str="", method: str="") -> None:
-            super().__init__(message)
-            self.method = method
-
-        def __str__(self) -> str:
-            return f"{self.method}: WARNING: CastWarning: {self.args[0]}"
-
     class Load:
         """Class docsting here"""
         @classmethod
@@ -375,7 +293,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if not isinstance(key, str):
                 warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
             key=str(key)
 
             #Debug
@@ -405,7 +323,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                     return None
             else:
                 print("Load.by_key: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, key)
+                raise exceptions.KeyNotFoundError(file_path, key)
 
         @classmethod
         def by_index(cls,
@@ -449,7 +367,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                     return None
             else:
                 print("Load.by_index: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path,
+                raise exceptions.KeyNotFoundError(file_path,
                                         target_key,
                                         f"Key '{target_key}' unexpectedly not found"+
                                         f" in loaded data for index '{index}'.")
@@ -504,7 +422,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if not isinstance(key, str):
                 warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             key=str(key)
 
@@ -517,7 +435,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                     return None
             else:
                 print("Load.values: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, key)
+                raise exceptions.KeyNotFoundError(file_path, key)
 
             items: list[str] = []
             for key, val in subsection.values.items():
@@ -555,7 +473,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             if not isinstance(top_lv_key, str):
                 warnings.warn("It is recommended that the 'top_lv_key' value be passed as a "+
                               "string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             top_lv_key=str(top_lv_key)
 
@@ -582,7 +500,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 loaded_data[newpropkey] = ''
             else:
                 print("Edit.propkey: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, oldpropkey)
+                raise exceptions.KeyNotFoundError(file_path, oldpropkey)
 
             Storage(top_lv_key, **loaded_data.values).store(file_path)
             print("Edit.propkey: INFO: Sucessfully ",
@@ -607,7 +525,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             if not isinstance(top_lv_key, str):
                 warnings.warn("It is recommended that the 'top_lv_key' "+
                               "value be passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             top_lv_key=str(top_lv_key)
 
@@ -663,11 +581,11 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if not isinstance(oldkey, str):
                 warnings.warn("It is recommended that the 'oldkey' value be passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             if not isinstance(newkey, str):
                 warnings.warn("It is recommended that the 'newkey' value be passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             oldkey=str(oldkey)
             newkey=str(newkey)
@@ -686,7 +604,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                     print(f"Error writing to file '{file_path}' after deletion: {e}")
             else:
                 print("Edit.key: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, oldkey)
+                raise exceptions.KeyNotFoundError(file_path, oldkey)
 
     class Delete:
         """Class docstring here"""
@@ -715,7 +633,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if not isinstance(top_lv_key, str):
                 warnings.warn("It is recommended that the 'top_lv_key' value be passed as a string."
-                              ,Storage.CastWarning)
+                              ,w.CastWarning)
 
             top_lv_key=str(top_lv_key)
 
@@ -728,7 +646,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                     return None
             else:
                 print("Delete.by_propkey: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, top_lv_key)
+                raise exceptions.KeyNotFoundError(file_path, top_lv_key)
 
             items: dict[str, Any] = {}
 
@@ -771,7 +689,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if not isinstance(key, str):
                 warnings.warn("It is recommended that the 'key' value be passed as a string.",
-                              Storage.CastWarning)
+                              w.CastWarning)
 
             key = str(key)
 
@@ -791,16 +709,21 @@ class Storage(metaclass=_StorageSettingsMeta):
                           f"after deletion: {e}")
             else:
                 print("Delete.by_key: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, key)
+                raise exceptions.KeyNotFoundError(file_path, key)
 
         @staticmethod
         def all(file_path: str,
-                warn: bool=False) -> None:
+                warn: bool=True) -> None:
             """
             Delete all data stored in a JSON file.
             """
-            if Storage._Storage__is_warning_category_ignored("DeleteWarning") or warn:#type: ignore
-                warnings.warn(Storage.DeleteWarning(
+            _warn = True
+            for action, _, cat, _, _ in warnings.filters:
+                if action == 'ignore' and cat=="DeleteWarning":
+                    _warn = False
+
+            if not (_warn or warn):
+                warnings.warn(w.DeleteWarning(
                     f"You are about to delete ALL of the data inside the file {file_path}. This "+
                     "is an irreversible action! If you are COMPLETELY CERTAIN about deleting all "+
                     "the data, add Storage.Delete.all(file_path, warn=False) to your script. If "+
@@ -808,11 +731,12 @@ class Storage(metaclass=_StorageSettingsMeta):
                     "warnings.filterwarning(category=Storage.DeleteWarning) to your script.",
                     method="Delete.all"
                     )
-                    )
-            else:
-                with open(file_path, "w", encoding="utf-8") as f:
-                    json.dump({}, f)
-                    print(f"Delete.all: INFO: Deleted all data from {file_path} sucessfully.")
+                )
+                return
+
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump({}, f)
+                print(f"Delete.all: INFO: Deleted all data from {file_path} sucessfully.")
 
     # --- #
 
@@ -865,7 +789,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 return Storage(self.key, **self.values)
             raise ValueError("Both instances must have the same top level key")
         if isinstance(other, dict):
-            warnings.warn(self.AdditionFailureWarning(
+            warnings.warn(w.AdditionFailureWarning(
                           "WARNING! You are strongly "+
                           "advised against adding a Storage "+
                           "instance and a dict/list together, as it may break the Storage "+
@@ -873,7 +797,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             self.values.update(other)
             return Storage(self.key, **self.values)
         if isinstance(other, list):
-            warnings.warn(self.AdditionFailureWarning(
+            warnings.warn(w.AdditionFailureWarning(
                           "WARNING! You are strongly advised against adding a Storage "+
                           "instance and a dict/list together, as it may break the Storage "+
                           "instance that is created.",method="__add__"))
@@ -890,7 +814,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 return Storage(self.key, **self.values)
             raise ValueError("Both instances must have the same top level key")
         if isinstance(other, dict):
-            warnings.warn(self.AdditionFailureWarning("WARNING! You are strongly"+
+            warnings.warn(w.AdditionFailureWarning("WARNING! You are strongly"+
                                                       "advised against adding a Storage "+
                           "instance and a dict/list together, as it may break the Storage "+
                           "instance that is created.",method="__radd__"))
@@ -914,7 +838,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 return Storage(self.key, **self.values)
             raise ValueError("Both instances must have the same top level key")
         if isinstance(other, dict):
-            warnings.warn(self.SubtractionFailureWarning(
+            warnings.warn(w.SubtractionFailureWarning(
                 "WARNING! You are strongly advised against subtracting/dividing"+
                 " a Storage instance by a dict, as it may break the Storage "+
                 "instance that is created.",method="__sub__"))
@@ -931,10 +855,14 @@ class Storage(metaclass=_StorageSettingsMeta):
     def __rsub__(self,
                  other: Storage | dict[str, Any]
                 ) -> Storage:
-        """Defines how to subtract two objects, same type or no."""
+        """
+        Defines how to subtract two objects, same type or no.
+        """
+
+        skeys: set[Any] = set()
         if isinstance(other, type(self)):
             if self.key==other.key:
-                skeys: set = set(self.values.keys()) & set(other.values.keys())
+                skeys = set(self.values.keys()) & set(other.values.keys())
                 for akey in skeys:
                     akey: str
                     if akey in self.values:
@@ -944,18 +872,17 @@ class Storage(metaclass=_StorageSettingsMeta):
                 return Storage(self.key, **self.values)
             raise ValueError("Both instances must have the same top level key")
         if isinstance(other, dict):
-            warnings.warn(self.SubtractionFailureWarning(
+            warnings.warn(w.SubtractionFailureWarning(
                 "WARNING! You are strongly advised against subtracting/dividing"+
                 " a Storage instance by a dict, as it may break the Storage "+
                 "instance that is created.",method="__rsub__"))
-            skeys: set = set(self.values.keys()) & set(other)
+            skeys = set(self.values.keys()) & set(other)
             for akey in skeys:
                 akey: str
                 if akey in self.values:
                     del self.values[akey]
                 else:
-                    # TODO v1.3: Object of type "() -> dict_values[str, Any]" is not subscriptable
-                    self.values[akey] = other.values[akey]
+                    self.values[akey] = other[akey]
             return Storage(self.key, **self.values)
         return NotImplemented
 
@@ -974,37 +901,33 @@ class Storage(metaclass=_StorageSettingsMeta):
             split: float | int = len(self.values.keys())/other
             if other > 9:
                 raise ValueError("Dividing by a number greater than nine is unsupported")
+
             if len(self.values.keys()) == split:
                 return [Storage(self.key, **self.values)]
+
             if split.is_integer():
                 i: int = 0
-                rtlist: list[dict[str, Any] | Storage] = []
-                while i < split*other:
+                templist: list[dict[str, Any]] = []
+                while i < split * other:
                     nd: dict[Any, str] = {}
                     nkey: str = list(self.values.keys())[i]
-                    nd[nkey]=self.values[nkey]
+                    nd[nkey] = self.values[nkey]
                     i += 1
                     while i % split != 0:
                         nkey = list(self.values.keys())[i]
-                        # TODO v1.3: og issue: no overloads aka
-                        # cannot update type dict[str, Any] with the following
-                        nd.update(
-                            tuple(str(nkey),self.values[nkey])
-                            # TODO v1.3: Expected 1 positional argument
-                        )
+                        nd[str(nkey)] = self.values[nkey]
                         i += 1
-                    rtlist.append(nd)
+                    templist.append(nd)
                 i = 0
+                returnlist: list[Storage] = []
                 while i < other:
-                    # TODO v1.3: Argument expression after ** must be a mapping with a "str" key
-                    # type
-                    rtlist[i] = Storage(self.key, **rtlist[i])
+                    returnlist.append(Storage(self.key, **templist[i]))
                     i+=1
-                # TODO v1.3: type List[see line 970] not assignable to return type
-                # List[Storage] | Storage
-                return list(rtlist)
+                if len(returnlist) == 1:
+                    return returnlist[0]
+                return returnlist
             raise ValueError(f"Cannot divide by number {other} for a "+
-                             "list length of {len(self.values.keys())}")
+                             f"list length of {len(self.values.keys())}")
         return NotImplemented
 
     def __rtruediv__(self,
@@ -1086,10 +1009,14 @@ class Storage(metaclass=_StorageSettingsMeta):
     def __xor__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
-        """Defines using XOR (^) for bitwise operations with Storage instances and dictionaries."""
+        """
+        Defines using XOR (^) for bitwise operations with Storage instances and dictionaries.
+        """
+        skeys: set[Any] = set()
+
         if isinstance(other, type(self)):
             if self.key==other.key:
-                skeys: set = set(self.values.keys()) ^ set(other.values.keys())
+                skeys = set(self.values.keys()) ^ set(other.values.keys())
                 if not skeys:
                     return 0
                 rtd: dict = {}
@@ -1102,7 +1029,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 return Storage(self.key, **rtd)
             raise ValueError("Both instances must have the same top level key")
         if isinstance(other, dict):
-            skeys: set = set(self.values.keys()) ^ set(other)
+            skeys = set(self.values.keys()) ^ set(other)
             if not skeys:
                 return 0
             rtd: dict = {}
@@ -1111,8 +1038,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 if akey in self.values:
                     rtd[akey] = self.values[akey]
                 if akey in other.values():
-                    # TODO v1.3: Object of type "() -> dict_values[str, Any]" is not subscriptable
-                    rtd[akey] = other.values[akey]
+                    rtd[akey] = other[akey]
             return Storage(self.key, **rtd)
         return NotImplemented
 
@@ -1186,11 +1112,7 @@ class Storage(metaclass=_StorageSettingsMeta):
         if isinstance(key, str):
             del self.values[key]
         elif isinstance(key, (int,slice)):
-            # TODO v1.3: Argument of type "str | list[str]" cannot be assigned to parameter
-            # "key" of type "str" in function "__delitem__"
-            #   Type "str | list[str]" is not assignable to type "str"
-            #       "list[str]" is not assignable to "str"
-            del self.values[list(self.values.keys())[key]]
+            del self.values[str(list(self.values.keys())[key])]
 
     def __len__(self) -> int:
         """Returns the length of the object."""
