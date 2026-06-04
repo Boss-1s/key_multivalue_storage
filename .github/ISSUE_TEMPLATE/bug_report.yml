@@ -6,12 +6,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report! Please be sure to read through 
+        out [Contribution Guideline](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/CONTRIBUTING.md), 
+        there are some very important things that you must read before 
+        continuing. Thanks!
   - type: input
     id: kmsv
     attributes:
       label: kms version
-      description: "The version of kms you have installed. Can be found using `python -m pip show key-multivalue-storage`. [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)"
+      description: |
+        "The version of kms you have installed. Can be found using `python -m pip show key-multivalue-storage`. 
+        [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)"
       placeholder: '1.2.2.20260515.2'
     validations:
       required: true
@@ -19,6 +24,7 @@ body:
     id: what-happened
     attributes:
       label: What happened?
+      description: Describe the bug. What happened? What did you expect?
     validations:
       required: true
   - type: textarea
