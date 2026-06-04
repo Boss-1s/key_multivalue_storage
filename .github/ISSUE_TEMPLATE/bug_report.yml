@@ -53,5 +53,5 @@ body:
           required: true
         - label: I am using a supported version of kms (kms-semver1.2.0 and later).
           required: true
-        - label: I have ensured that the bug is not in mmy code, but rather is truly because of this library.
+        - label: I have ensured that the bug is not in my code, but rather is truly because of this library.
           required: true
