@@ -1,7 +1,6 @@
 """
 Key to Multivalue Storage
-Version 1.2.2/2026.5.6b
-Last updated: 5/06/2026
+Last updated: 6/03/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how 
 scratchattach's database worked and the steep learning curve that came with it.
@@ -50,17 +49,19 @@ class _KeyNotFoundError(KeyError):
 		super().__init__(self.message)
 
 class _StorageSettingsMeta(type):
+    # NOTE: These are version strings for the *module*,
+    # not the package/library.
 	@property
 	def VERSION(cls) -> str:
-		return "1.2.2"
+		return "1.2.3"
 
 	@property
 	def DATE_VERSION(cls) -> str:
-		return "2026.5.6b"
+		return "2026.6.3"
 
 	@property
 	def LAST_UPDATE(cls) -> str:
-		return "2026/5/6"
+		return "2026/06/03"
 
 @total_ordering
 class Storage(metaclass=_StorageSettingsMeta):
