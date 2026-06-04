@@ -96,7 +96,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    environment: test
+    environment: beta
     if: |
       github.ref_name == 'beta' ||
       (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
