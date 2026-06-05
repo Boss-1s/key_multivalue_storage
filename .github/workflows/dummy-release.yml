@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          persist-credetials: true
+          persist-credentials: true
           fetch-depth: 0
           
       - name: Setup SSH and signing
