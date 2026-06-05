@@ -18,4 +18,9 @@ fi
 git add .
 git restore --staged .github/.tmp/
 git commit -m "[Release] Update file version"
-git push origin $BRANCH
+
+if [ $DUMMY == "true" ]; then
+  echo "git push to origin/$BRANCH here"
+else
+  git push origin $BRANCH
+fi
