@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# 1. Configure the GitHub Actions Bot
-git config --global user.name "github-actions[bot]"
-git config --global user.email "41898282+github-actions[bot]@://github.com"
+git pull origin "$BRANCH"
 
 # 2. Stage changes and safely isolate your tmp directory
 git add .
@@ -24,6 +22,6 @@ if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
   git reset --soft HEAD~1
 else
-  git push origin "$BRANCH"
+  git push -u origin "$BRANCH"
 fi
 
