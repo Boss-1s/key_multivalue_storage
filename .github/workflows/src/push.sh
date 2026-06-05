@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Note: 5% AI-generated
+
+git remote set-url origin "git@github.com:Boss-1s/key_multivalue_storage.git"
+
 git pull origin "$BRANCH"
 
 # 2. Stage changes and safely isolate your tmp directory
@@ -21,6 +25,7 @@ git commit -m "[Release] Update file version"
 if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
   git reset --soft HEAD~1
+  exit 0
 else
   git push -u origin "$BRANCH"
 fi
