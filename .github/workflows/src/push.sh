@@ -21,7 +21,7 @@ git restore --staged .github/.tmp/
 git commit -m "[Release] Update file version"
 
 if [ $DUMMY == "true" ]; then
-  echo "git push to origin/$BRANCH here"
+  git push origin $BRANCH --dry-run
 else
   git push origin $BRANCH
 fi
