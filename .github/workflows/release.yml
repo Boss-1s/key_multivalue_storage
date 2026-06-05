@@ -61,7 +61,7 @@ jobs:
         continue-on-error: true
         env:
           REF: "kms-v1.2.3/2026.05.23"
-          DUMMY: "true"
+          DUMMY: "false"
           TARGET_BRANCH: ${{ github.event.release.target_commitish }}
           REF_BRANCH: ${{ github.ref_name }}
         run: |
