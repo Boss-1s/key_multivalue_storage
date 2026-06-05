@@ -62,7 +62,7 @@ jobs:
         env:
           REF: "kms-v1.2.3/2026.05.23"
           DUMMY: "true"
-          TARGET_BRANCH: "${{ github.event.release.target_committish }}"
+          TARGET_BRANCH: ${{ github.event.release.target_commitish }}
           REF_BRANCH: ${{ github.ref_name }}
         run: |
           # 1. Safely evaluate environment variables without syntax parsing flaws
