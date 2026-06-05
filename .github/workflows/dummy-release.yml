@@ -1,0 +1,75 @@
+name: Dummy Release
+description: Workflow to test release.yml
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          persist-credetials: true
+          fetch-depth: 0
+          
+      - name: Setup SSH and signing
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: bash .github/workflows/src/ssh.sh
+        
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Automatically Update Version
+        env:
+          NVERSION: "2.0.0"
+          RELEASENVERSION: "kms-v2.0.0/2026.08.01"
+        run: python3 .github/workflows/src/release.py
+
+      - name: Install Build Tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build Package
+        run: python -m build # Generates the dist/ files
+
+      - name: Publish to PyPI
+        run: |
+          echo "uses: pypa/gh-action-pypi-publish@release/v1"
+
+      - name: Commit version change
+        continue-on-error: true
+        env:
+          REF: "kms-v1.2.3/2026.05.23"
+          DUMMY: true
+        run: |
+          # Get the branch name and strip the 'origin/' prefix
+          export BRANCH=$(git branch --contains ${{github.ref_name}})
+          echo "$REF is sourced from branch: $BRANCH"
+          bash .github/workflows/src/push.sh
+
+      - name: Rename files for GH release upload
+        run: |
+          cd dist
+          for file in *; do
+            new_name=$(echo "$file" | sed 's/key_multivalue_storage/kms_package/')
+            mv "$file" "$new_name"
+          done
+          cd ..
+
+      - name: Upload Build to Release
+        run: |
+          echo "uses: softprops/action-gh-release@v3"
+          echo "with:
+          echo "  files: |"
+          echo "    dist/*"
