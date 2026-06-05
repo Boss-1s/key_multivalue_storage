@@ -1,15 +1,17 @@
 #!/bin/bash
 
 # Note: 5% AI-generated
+set -e
 
-git remote set-url origin "git@github.com:Boss-1s/key_multivalue_storage.git"
+SSH_REMOTE_URL=$(git remote get-url origin | sed -E 's|https://github.com/|git@github.com:|')
+
+echo "Rewriting remote push origin target to: $SSH_REMOTE_URL"
+git remote set-url origin "$SSH_REMOTE_URL"
 
 git pull origin "$BRANCH"
 
-# Capture the output of git status --porcelain
 GIT_STATUS_OUTPUT=$(git status --porcelain)
 
-# Check if the output is empty
 if [ -z "$GIT_STATUS_OUTPUT" ]; then
   echo "Git working tree is clean (no uncommitted changes)."
   exit 0
