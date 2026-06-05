@@ -20,7 +20,7 @@ git add .
 git restore --staged .github/.tmp/
 git commit -m "[Release] Update file version"
 
-if [[ $DUMMY == "true" ]]; then
+if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
 else
   git push origin "$BRANCH"
