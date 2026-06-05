@@ -54,17 +54,28 @@ jobs:
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: ${{ github.event.release.name }}
-          DUMMY: ""
+          REF: "kms-v1.2.3/2026.05.23"
+          DUMMY: "true"
+          TARGET_BRANCH: "${{ github.event.release.target_committish }}"
+          REF_BRANCH: ${{ github.ref_name }}
         run: |
-          # Get the branch name and strip the 'origin/' prefix
-          export BRANCH=$(git branch --contains ${{github.ref_name}} --format='%(refname:short)')
+          # 1. Safely evaluate environment variables without syntax parsing flaws
+          if [ -n "$TARGET_BRANCH" ]; then
+            export BRANCH="$TARGET_BRANCH"
+          else
+            export BRANCH="$REF_BRANCH"
+          fi
+          
           echo "$REF is sourced from branch: $BRANCH"
+          
+          # 2. Realign HEAD onto the tracking stream 
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
         run: |
-          cd dist
+          cd dist || exit 1
           for file in *; do
             new_name=$(echo "$file" | sed 's/key_multivalue_storage/kms_package/')
             mv "$file" "$new_name"
