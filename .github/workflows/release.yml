@@ -55,8 +55,7 @@ jobs:
         run: python -m build # Generates the dist/ files
 
       - name: Publish to PyPI
-        run: |
-          echo "uses: pypa/gh-action-pypi-publish@release/v1"
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Commit version change
         continue-on-error: true
