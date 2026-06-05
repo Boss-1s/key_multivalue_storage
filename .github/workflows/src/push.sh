@@ -22,6 +22,8 @@ git commit -m "[Release] Update file version"
 
 if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
+  git reset --soft HEAD~1
 else
   git push origin "$BRANCH"
 fi
+
