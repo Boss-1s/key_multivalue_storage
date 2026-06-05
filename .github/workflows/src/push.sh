@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Note: 5% AI-generated
+
+git remote set-url origin "git@github.com:Boss-1s/key_multivalue_storage.git"
+
 git pull origin "$BRANCH"
 
 # Capture the output of git status --porcelain
@@ -22,6 +26,7 @@ git commit -m "[Release] Update file version"
 if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
   git reset --soft HEAD~1
+  exit 0
 else
   git push -u origin "$BRANCH"
 fi
