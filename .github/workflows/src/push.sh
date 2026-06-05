@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git pull origin $BRANCH
+git pull origin "$BRANCH"
 
 # Capture the output of git status --porcelain
 GIT_STATUS_OUTPUT=$(git status --porcelain)
@@ -23,6 +23,6 @@ if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
   git reset --soft HEAD~1
 else
-  git push origin "$BRANCH"
+  git push -u origin "$BRANCH"
 fi
 
