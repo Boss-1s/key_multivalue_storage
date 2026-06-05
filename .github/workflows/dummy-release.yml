@@ -72,6 +72,6 @@ jobs:
       - name: Upload Build to Release
         run: |
           echo "uses: softprops/action-gh-release@v3"
-          echo "with:
+          echo "with:"
           echo "  files: |"
           echo "    dist/*"
