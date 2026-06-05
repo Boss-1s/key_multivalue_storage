@@ -16,10 +16,12 @@ if [ -z "$GIT_STATUS_OUTPUT" ]; then
   exit 0
 fi
 
-echo "Git working tree has uncommitted changes:"
-echo "$GIT_STATUS_OUTPUT"
-echo "Pushing changes directly to the remote branch: $BRANCH"
+git add .
+git restore --staged .github/.tmp/
+git commit -m "[Release] Update file version"
 
-# 4. Commit and push directly using HEAD to bypass detached HEAD state
-git commit -m "[Release] Update file version [skip ci]"
-git push origin HEAD:$BRANCH
+if [ $DUMMY == "true" ]; then
+  echo "git push to origin/$BRANCH here"
+else
+  git push origin $BRANCH
+fi
