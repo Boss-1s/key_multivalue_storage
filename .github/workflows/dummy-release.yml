@@ -56,7 +56,7 @@ jobs:
           DUMMY: "true"
         run: |
           # Get the branch name and strip the 'origin/' prefix
-          export BRANCH=$(git branch --contains ${{github.ref_name}})
+          export BRANCH=$(git branch --contains ${{github.ref_name}} --format='%(refname:short)')
           echo "$REF is sourced from branch: $BRANCH"
           bash .github/workflows/src/push.sh
 
