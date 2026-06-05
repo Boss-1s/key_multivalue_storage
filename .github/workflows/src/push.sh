@@ -24,4 +24,3 @@ if [ $DUMMY == "true" ]; then
 else
   git push origin $BRANCH
 fi
-waskjlhkj
