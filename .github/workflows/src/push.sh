@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
 # Note: 5% AI-generated
+set -e
 
-git remote set-url origin "git@github.com:Boss-1s/key_multivalue_storage.git"
+SSH_REMOTE_URL=$(git remote get-url origin | sed -E 's|https://github.com/|git@github.com:|')
+
+echo "Rewriting remote push origin target to: $SSH_REMOTE_URL"
+git remote set-url origin "$SSH_REMOTE_URL"
 
 git pull origin "$BRANCH"
 
-# 2. Stage changes and safely isolate your tmp directory
-git add .
-git restore --staged .github/.tmp 2>/dev/null || true
-
-# 3. Check current status after optimization
 GIT_STATUS_OUTPUT=$(git status --porcelain)
 
 if [ -z "$GIT_STATUS_OUTPUT" ]; then
