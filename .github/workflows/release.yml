@@ -8,7 +8,6 @@ on:
 
 jobs:
   deploy:
-    environment: "release"
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -17,16 +16,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          persist-credentials: true
           fetch-depth: 0
           
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
       - name: Setup SSH and signing
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: bash .github/workflows/src/ssh.sh
         
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -47,15 +48,17 @@ jobs:
         run: python -m build # Generates the dist/ files
 
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1 # Official PyPI upload action
+        run: |
+          echo "uses: pypa/gh-action-pypi-publish@release/v1"
 
       - name: Commit version change
         continue-on-error: true
         env:
           REF: ${{ github.event.release.name }}
+          DUMMY: ""
         run: |
           # Get the branch name and strip the 'origin/' prefix
-          export BRANCH=$(git branch --contains ${{github.ref_name}})
+          export BRANCH=$(git branch --contains ${{github.ref_name}} --format='%(refname:short)')
           echo "$REF is sourced from branch: $BRANCH"
           bash .github/workflows/src/push.sh
 
