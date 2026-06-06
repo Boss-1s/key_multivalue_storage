@@ -70,5 +70,6 @@ Storage.auto_delete_self = True
 ### See the full documentation [here](https://github.com/Boss-1s/key_multivalue_storage/wiki)!
 
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
+## [Roadmap](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#possible-future-features)
 ## [Report a Bug](https://github.com/Boss-1s/key_multivalue_storage/issues)
 ## [Scratchattach](https://github.com/TimMcCool/scratchattach/)
