@@ -1,6 +1,6 @@
 """
 Key to Multivalue Storage
-Last updated: 6/04/2026
+Last updated: 6/05/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how 
 scratchattach's database worked and the steep learning curve that came with it.
@@ -12,7 +12,11 @@ To view a copy of the license, see creativecommons.com.
 """
 
 from __future__ import annotations
-import os,json,uuid,warnings,logging,difflib,builtins
+import json
+import uuid
+import warnings
+import difflib
+import builtins
 from typing import Any, Optional, Self, Generator
 from functools import total_ordering
 
@@ -40,22 +44,25 @@ class _StorageSettingsMeta(type):
     def DATE_VERSION(cls) -> str:
         warnings.warn("The metadata var name 'DATE_VERISON' will be changed "+
                       "to 'calver' in kms-semver1.3. Consider using that instead.")
-        return "2026.06.04"
+        return "2026.06.05"
 
     @property
     def LAST_UPDATE(cls) -> str:
         warnings.warn("The metadata var name 'LAST_UPDATE' will be changed "+
                       "to 'last_update' in kms-semver1.3. Consider using that instead.")
-        return "2026/06/04"
+        return "2026/06/05"
     
     @property
-    def semver(cls) -> str: return cls.VERSION
+    def semver(cls) -> str:
+        return cls.VERSION
     
     @property
-    def calver(cls) -> str: return cls.DATE_VERSION
+    def calver(cls) -> str:
+        return cls.DATE_VERSION
     
     @property
-    def last_update(cls) -> str: return cls.LAST_UPDATE
+    def last_update(cls) -> str:
+        return cls.LAST_UPDATE
 
 @total_ordering
 class Storage(metaclass=_StorageSettingsMeta):
@@ -90,10 +97,8 @@ class Storage(metaclass=_StorageSettingsMeta):
     | (Dunder methods)
     """
 
-    global logger
-
-    # Define global variables: indent, encode option, skip 
-    # Delete All warning, and automatic object release from memory
+    # Define global variables: indent, encode option, 
+    # and automatic object release from memory
     indent: int = 4
     encode: bool = True
     auto_delete_self: bool = False
@@ -102,7 +107,9 @@ class Storage(metaclass=_StorageSettingsMeta):
                  key: str | uuid.UUID, 
                  **kwargs: Any
                 ) -> None:
-        """initiate instance paramaters"""
+        """
+        initiate instance paramaters
+        """
         # Setup logger first... [TODO]
         try:
             self.instance_id = uuid.uuid7() #uuid.uuid7() for support with CPython >=3.14
@@ -114,11 +121,16 @@ class Storage(metaclass=_StorageSettingsMeta):
     
     @staticmethod
     def _encode(string: Any) -> int:
-        """Encodes a value using a simple character-matching system, simmilar to a one-time pad but reusable."""
+        """
+        Encodes a value using a simple character-matching system, simmilar to a one-time pad but reusable.
+        """
     
-        if not isinstance(string, str): string = str(string)
+        if not isinstance(string, str):
+            string = str(string)
     
-        char: str = """`1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxzawq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><"""
+        char: str = """
+        `1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxzawq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><
+        """
         i = 0
         output = ''
         while i < len(string):
@@ -130,20 +142,24 @@ class Storage(metaclass=_StorageSettingsMeta):
                 i2 += 1
                 if i3 == currentchar:
                     break
-            i2 = f"{i2}"
-            output = f"{output}{len(i2)}{i2}"
+            output = f"{output}{len(str(i2))}{str(i2)}"
             i += 1
         return int(output)
     
     @staticmethod
     def _decode(string: str | int) -> str:
-        """Decodes a value encoded with Storage._encode"""
+        """
+        Decodes a value encoded with Storage._encode
+        """
         
-        if not isinstance(string, (str, int)): raise TypeError("Expected encoded string or integer for decoding.")
+        if not isinstance(string, (str, int)):
+            raise TypeError("Expected encoded string or integer for decoding.")
     
         to_decode = str(string)
         
-        char: str = """`1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxzawq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><"""
+        char: str = """
+        `1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxzawq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><
+        """
         i = 0
         output = ''
         while i < len(to_decode):
@@ -159,7 +175,9 @@ class Storage(metaclass=_StorageSettingsMeta):
         return output
     
     def _to_dict(self) -> dict[str, dict[str, Any]]:
-        """Converts key-multivalue pair into a dict for json dumping"""
+        """
+        Converts key-multivalue pair into a dict for json dumping
+        """
         encoded_values: dict[str, Any] = {}
         for prop_key, prop_value in self.values.items():
             encoded_values[prop_key] = self._encode(prop_value) # Use self._encode
@@ -171,7 +189,9 @@ class Storage(metaclass=_StorageSettingsMeta):
                    data_dict: dict[str, dict[str, Any]], 
                    raw: bool=False
                   ) -> Storage:
-        """Extracts data from a dict into seperate key-multivalue pairs, decoding values in the process."""
+        """
+        Extracts data from a dict into seperate key-multivalue pairs, decoding values in the process.
+        """
 
         print(f"_from_dict: DEBUG: data_dict={data_dict}")
         print(f"_from_dict: DEBUG: data_dict={raw}")
@@ -245,9 +265,12 @@ class Storage(metaclass=_StorageSettingsMeta):
               encode: bool=None
              ) -> None:
         """Store a key-multivalue pair into a json file."""
-        if not indent: indent = self.indent
-        if not instant_delete: instant_delete = self.auto_delete_self
-        if not encode: encode = self.encode
+        if not indent:
+            indent = self.indent
+        if not instant_delete:
+            instant_delete = self.auto_delete_self
+        if not encode:
+            encode = self.encode
         
         all_data: dict[str, dict[str, Any]] = {}
         try:
@@ -276,34 +299,47 @@ class Storage(metaclass=_StorageSettingsMeta):
     # Custom Warning classes
     
     class DeleteWarning(UserWarning):
-        """Custom warning when attempting to delete the contents of a whole database."""
-        def __init__(self, message: str=None, method: str=None) -> None:
+        """
+        Custom warning when attempting to delete the contents of a whole database.
+        """
+        def __init__(self,
+                     message: str=None,
+                     method: str=None
+                    ) -> None:
             super().__init__(message)
             self.method = method
 
         def __str__(self) -> str:
-            return(f"{self.method}: WARNING: DeleteWarning: {self.args[0]}")
+            return f"{self.method}: WARNING: DeleteWarning: {self.args[0]}"
         
     class AdditionFailureWarning(RuntimeWarning):
-        """Custom warning when attempting to add a Storage instance with a dictionary or list."""
-        def __init__(self, message: str=None, method: str=None) -> None:
+        """
+        Custom warning when attempting to add a Storage instance with a dictionary or list.
+        """
+        def __init__(self,
+                     message: str=None,
+                     method: str=None
+                    ) -> None:
             super().__init__(message)
             self.method = method
 
         def __str__(self) -> str:
-            return(f"{self.method}: WARNING: AdditionFailureWarning: {self.args[0]}")
+            return f"{self.method}: WARNING: AdditionFailureWarning: {self.args[0]}"
             
     class SubtractionFailureWarning(RuntimeWarning):
         """
         Custom warning when attempting to subtract a Storage instance by a dictionary, and vice versa.
         Also applies to division, despite the name.
         """
-        def __init__(self, message: str=None, method: str=None) -> None:
+        def __init__(self,
+                     message: str=None,
+                     method: str=None
+                    ) -> None:
             super().__init__(message)
             self.method = method
 
         def __str__(self) -> str:
-            return(f"{self.method}: WARNING: SubtractionFailureWarning: {self.args[0]}")
+            return f"{self.method}: WARNING: SubtractionFailureWarning: {self.args[0]}"
             
     class Load:      
         @classmethod
