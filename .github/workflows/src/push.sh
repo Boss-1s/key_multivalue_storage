@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Note: 5% AI-generated
+# Note: 7% AI-generated
 set -e
 
 SSH_REMOTE_URL=$(git remote get-url origin | sed -E 's|https://github.com/|git@github.com:|')
@@ -18,7 +18,6 @@ if [ -z "$GIT_STATUS_OUTPUT" ]; then
 fi
 
 git add .
-git restore --staged .github/.tmp/
 git commit -m "[Release] Update file version"
 
 if [[ "$DUMMY" == "true" ]]; then
