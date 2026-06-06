@@ -1,0 +1,82 @@
+name: Run Bash File
+
+on:
+  workflow_dispatch:
+    inputs:
+      file-path:
+        type: string
+        default: "other/helloworld.sh"
+        required: true
+        description: Path to file
+      push:
+        type: boolean
+        default: true
+        description: Push to repo?
+      prefix:
+        type: choice
+        default: "chore: "
+        description: Commit prefix
+        options:
+          - "chore: "
+          - "fix: "
+          - "refactor: "
+          - "fatal: "
+          - "undo: "
+      msg:
+        type: string
+        default: "update via workflow"
+        required: true
+        description: |
+          Commit message. Does not inclue prefix.
+          Will only be applied if push is true.
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.10.0
+        if: inputs.push
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Setup SSH and signing
+        if: inputs.push
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: bash .github/workflows/src/ssh.sh
+
+      - name: Run File ${{ inputs.file-path }}
+        run: bash ${{ inputs.file-path }}
+
+      - name: Commit & Push
+        if: inputs.push
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # Note: 3% AI-generated
+          set -e
+          SSH_REMOTE_URL=$(git remote get-url origin | sed -E 's|https://github.com/|git@github.com:|')
+          echo "Rewriting remote push origin target to: $SSH_REMOTE_URL"
+          git remote set-url origin "$SSH_REMOTE_URL"
+          git pull origin "$BRANCH"
+          GIT_STATUS_OUTPUT=$(git status --porcelain)
+          if [ -z "$GIT_STATUS_OUTPUT" ]; then
+            echo "Git working tree is clean (no uncommitted changes)."
+            exit 0
+          else
+            echo "Git working tree has uncommitted changes:"
+            echo "$GIT_STATUS_OUTPUT"
+            echo "These changes will be pushed to the $BRANCH branch."
+          fi
+          git add .
+          git commit -m "${{inputs.prefix}}${{inputs.msg}}"
+          git push -u origin "$BRANCH"
