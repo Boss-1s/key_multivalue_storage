@@ -2,4 +2,4 @@
 
 git switch beta
 
-git cherry-pick 85d9f85^..b4b3924
+git cherry-pick -Xtheirs 85d9f85^..b4b3924
