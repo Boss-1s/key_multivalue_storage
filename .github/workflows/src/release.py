@@ -19,18 +19,19 @@ with open(pyproject_path, "r+") as f:
   
   for l in pyproject:
     if l.startswith('version = '):
-      print(f"release.py: 9:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"::info:: release.py: 22:: INFO: replacing line '{l.replace('\n', '')}'")
       nl = f'version = "{newv}"\n'
       f.write(nl)
-      print(f"release.py: 11:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::info:: release.py: 25:: INFO: line is now '{nl.replace('\n', '')}'")
     else:
       f.write(l)
 
   f.truncate()
 
 with open(pyproject_path, "r") as f:
-  print("New pyproject.toml file:")
+  print("New pyproject.toml file:\033[32m")
   print(f.read())
+  print("\033[0m")
 
 with open(init_py_path, "r+") as f:
   pyproject = f.readlines()
@@ -39,20 +40,21 @@ with open(init_py_path, "r+") as f:
   
   for l in pyproject:
     if l.startswith('__version__ = '):
-      print(f"release.py: 37:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"::info:: release.py: 42:: INFO: replacing line '{l.replace('\n', '')}'")
       nl = f'__version__ = "{newv}"\n'
       f.write(nl)
-      print(f"release.py: 40:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::info:: release.py: 45:: INFO: line is now '{nl.replace('\n', '')}'")
     elif l.startswith('__version_internal__ = '):
-      print(f"release.py: 42:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"release.py: 47:: INFO: replacing line '{l.replace('\n', '')}'")
       nl = f'__version_internal__ = "{newv_name}"\n'
       f.write(nl)
-      print(f"release.py: 45:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::info:: release.py: 50:: INFO: line is now '{nl.replace('\n', '')}'")
     else:
       f.write(l)
 
   f.truncate()
 
 with open(init_py_path, "r") as f:
-  print("New __init__.py file:")
+  print("New __init__.py file:\033[32m")
   print(f.read())
+  print("\033[0m")
