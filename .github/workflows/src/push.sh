@@ -22,7 +22,7 @@ else
 fi
 
 git add .
-git commit -m "[Release] Update file version"
+git commit -m "release: version update [skip-ci]" -m "This commit is standard release procedure and was automatically commited as part of a release. This commit was created and pushed by automation."
 
 if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run
