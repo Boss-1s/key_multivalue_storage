@@ -56,7 +56,7 @@ jobs:
         run: |
           # AI-Generated (Google AI Mode, Gemini 2.5)
           # 1. Safely evaluate environment variables without syntax parsing flaws
-          BRANCH=$(curl -s https://api.github.com/repos/${{github.repository}}/releases/tags/$REF | grep "target_commitish")
+          BRANCH=$(curl -s "https://api.github.com/repos/${{github.repository}}/releases/tags/$REF" | grep "target_commitish")
 
           export BRANCH
           
