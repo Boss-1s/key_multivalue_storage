@@ -5,7 +5,7 @@ on:
   workflow_dispatch: 
 
 jobs:
-  deploy:
+  deploy-main:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -46,12 +46,90 @@ jobs:
         run: python -m build # Generates the dist/ files
 
       - name: Publish to PyPI (Validation)
-        run: twine check dist/*
+        run: twine check dist/* # check dist/ with twine
 
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: "v1.2.2.20260515.1" #${{ github.ref_name }}
+          REF: "v1.2.2.20260515.1" #${{ github.event.release.tag_name }}
+          DUMMY: "true" #"false"
+          REPO: ${{github.repository}}
+        run: |
+          # AI-Generated (Google AI Mode, Gemini 2.5)
+          # 1. Safely evaluate environment variables without syntax parsing flaws
+          BRANCH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
+
+          export BRANCH
+          
+          echo "$REF is sourced from branch: $BRANCH"
+          
+          # 2. Realign HEAD onto the tracking stream 
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          
+          bash .github/workflows/src/push.sh
+
+      - name: Rename files for GH release upload
+        run: |
+          cd dist || exit 1
+          for file in *; do
+            new_name=$(echo "$file" | sed 's/key_multivalue_storage/kms_package/')
+            mv "$file" "$new_name"
+          done
+          cd ..
+
+      - name: Upload Build to Release
+        run: |
+          echo "uses: softprops/action-gh-release@v3"
+          echo "with:"
+          echo "  files: |"
+          echo "    dist/*"
+  deploy-beta:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Setup SSH and signing
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: bash .github/workflows/src/ssh.sh
+        
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Automatically Update Version
+        env:
+          NVERSION: "v1.3.0.20260608a3" #${{github.event.release.tag_name}}
+          RELEASENVERSION: "kms-v1.3.0-alpha3/2026.06.08" #${{github.event.release.name}}
+        run: python3 .github/workflows/src/release.py
+
+      - name: Install Build Tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build twine
+
+      - name: Build Package
+        run: python -m build # Generates the dist/ files
+
+      - name: Publish to PyPI (Validation)
+        run: twine check dist/* # check dist/ with twine
+
+      - name: Commit version change
+        continue-on-error: true
+        env:
+          REF: "v1.3.0.20260608a3" #${{ github.event.release.tag_name }}
           DUMMY: "true" #"false"
           REPO: ${{github.repository}}
         run: |
