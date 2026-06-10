@@ -33,8 +33,8 @@ jobs:
 
       - name: Automatically Update Version
         env:
-          NVERSION: "2.0.0"
-          RELEASENVERSION: "kms-v2.0.0/2026.08.01"
+          NVERSION: ${{ github.event.release.tag_name }}
+          RELEASENVERSION: ${{ github.event.release.name }}
         run: python3 .github/workflows/src/release.py
 
       - name: Install Build Tools
@@ -46,23 +46,19 @@ jobs:
         run: python -m build # Generates the dist/ files
 
       - name: Publish to PyPI
-        run: |
-          echo "uses: pypa/gh-action-pypi-publish@release/v1"
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: "kms-v1.2.3/2026.05.23"
+          REF: ${{ github.ref_name }}
           DUMMY: "true"
-          TARGET_BRANCH: "${{ github.event.release.target_committish }}"
-          REF_BRANCH: ${{ github.ref_name }}
         run: |
+          # AI-Generated (Google AI Mode, Gemini 2.5)
           # 1. Safely evaluate environment variables without syntax parsing flaws
-          if [ -n "$TARGET_BRANCH" ]; then
-            export BRANCH="$TARGET_BRANCH"
-          else
-            export BRANCH="$REF_BRANCH"
-          fi
+          BRANCH=$(curl -s https://api.github.com/repos/${{github.repository}}/releases/tags/$REF | grep "target_commitish")
+
+          export BRANCH
           
           echo "$REF is sourced from branch: $BRANCH"
           
