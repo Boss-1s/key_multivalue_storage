@@ -40,13 +40,13 @@ jobs:
       - name: Install Build Tools
         run: |
           python -m pip install --upgrade pip
-          python -m pip install build
+          python -m pip install build twine
 
       - name: Build Package
         run: python -m build # Generates the dist/ files
 
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish to PyPI (Validation)
+        run: twine check dist/*
 
       - name: Commit version change
         continue-on-error: true
