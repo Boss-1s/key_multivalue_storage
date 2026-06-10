@@ -13,13 +13,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-      attestations: write
     steps:
-      - name: Setup SSH and signing
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: bash .github/workflows/src/ssh.sh
-        
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
