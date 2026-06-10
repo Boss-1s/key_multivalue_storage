@@ -33,7 +33,7 @@ jobs:
 
       - name: Automatically Update Version
         env:
-          NVERSION: "v2.0.0.20260801"
+          NVERSION: "v2.0.0.20260801" #${{github.event.release.tag_name}}
           RELEASENVERSION: "kms-v2.0.0/2026.08.01"
         run: python3 .github/workflows/src/release.py
 
@@ -51,8 +51,8 @@ jobs:
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: ${{ github.ref_name }}
-          DUMMY: "true"
+          REF: "v2.0.0.20260801" #${{ github.ref_name }}
+          DUMMY: "true" #"false"
         run: |
           # AI-Generated (Google AI Mode, Gemini 2.5)
           # 1. Safely evaluate environment variables without syntax parsing flaws
