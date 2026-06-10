@@ -33,8 +33,8 @@ jobs:
 
       - name: Automatically Update Version
         env:
-          NVERSION: "v2.0.0.20260801" #${{github.event.release.tag_name}}
-          RELEASENVERSION: "kms-v2.0.0/2026.08.01"
+          NVERSION: "v1.2.2.20260515.1" #${{github.event.release.tag_name}}
+          RELEASENVERSION: "kms-v1.2.2/2026.05.15" #${{github.event.release.name}}
         run: python3 .github/workflows/src/release.py
 
       - name: Install Build Tools
@@ -51,7 +51,7 @@ jobs:
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: "v2.0.0.20260801" #${{ github.ref_name }}
+          REF: "v1.2.2.20260515.1" #${{ github.ref_name }}
           DUMMY: "true" #"false"
           REPO: ${{github.repository}}
         run: |
