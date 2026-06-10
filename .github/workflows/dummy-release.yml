@@ -33,8 +33,8 @@ jobs:
 
       - name: Automatically Update Version
         env:
-          NVERSION: ${{ github.event.release.tag_name }}
-          RELEASENVERSION: ${{ github.event.release.name }}
+          NVERSION: "v2.0.0.20260801"
+          RELEASENVERSION: "kms-v2.0.0/2026.08.01"
         run: python3 .github/workflows/src/release.py
 
       - name: Install Build Tools
