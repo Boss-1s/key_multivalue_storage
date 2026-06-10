@@ -1,7 +1,7 @@
 """initiation"""
 
-__version__ = "v1.3.0.20260608a3"
-__version_internal__ = "kms-v1.3.0-alpha3/2026.06.08"
+__version__ = "v1.3.0.20260610a3"
+__version_internal__ = "kms-v1.3.0-alpha4/2026.06.10"
 __author__ = "Boss_1s"
 __email__ = "95505913+Boss-1s@users.noreply.github.com"
 __license__ = "GPLv2"
