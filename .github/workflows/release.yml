@@ -60,17 +60,14 @@ jobs:
       - name: Commit version change
         continue-on-error: true
         env:
-          REF: "kms-v1.2.3/2026.05.23"
+          REF: ${{ github.event.release.tag_name }}
           DUMMY: "false"
-          TARGET_BRANCH: ${{ github.event.release.target_commitish }}
-          REF_BRANCH: ${{ github.ref_name }}
         run: |
+          # AI-Generated (Google AI Mode, Gemini 2.5)
           # 1. Safely evaluate environment variables without syntax parsing flaws
-          if [ -n "$TARGET_BRANCH" ]; then
-            export BRANCH="$TARGET_BRANCH"
-          else
-            export BRANCH="$REF_BRANCH"
-          fi
+          BRANCH=$(curl -s https://api.github.com/repos/${{github.repository}}/releases/tags/$REF | grep "target_commitish")
+
+          export BRANCH
           
           echo "$REF is sourced from branch: $BRANCH"
           
