@@ -56,9 +56,7 @@ jobs:
         continue-on-error: true
         id: pylint
         run: |
-          uv run pylint key_multivalue_storage
-          uv run pylint test/
-          uv run pylint .github/workflows/src/
+          uv run pylint --recursive=y key_multivalue_storage test/ .github/workflows/src/
       
       - name: Lint pyproject.toml
         id: toml
