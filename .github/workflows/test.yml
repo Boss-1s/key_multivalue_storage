@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.py-ver }}
-        # --- ULTRA FAST WINDOWS TESTING (NO PYTEST) ---
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
         with:
@@ -56,14 +56,14 @@ jobs:
         continue-on-error: true
         id: pylint
         run: |
-          pylint key_multivalue_storage
-          pylint test/
-          pylint .github/workflows/src/
+          uv run pylint key_multivalue_storage
+          uv run pylint test/
+          uv run pylint .github/workflows/src/
       
       - name: Lint pyproject.toml
         id: toml
         continue-on-error: true
-        run: pyproject check
+        run: uv run pyproject check
 
       - name: Lint YAML Files
         id: yml
