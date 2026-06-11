@@ -75,7 +75,7 @@ wheels = [
 
 [[package]]
 name = "key-multivalue-storage"
-version = "1.2.2.20260517.2"
+version = "1.3.0.20260610a3"
 source = { editable = "." }
 
 [package.optional-dependencies]
