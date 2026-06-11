@@ -37,7 +37,7 @@ jobs:
           format: "YYYYMMDDHHmm"
       - name: Automatically Update Version
         env:
-          NVERSION: ${{ steps.ltag.outputs.tag }}.dev${{ steps.time.outputs.time }}
+          NVERSION: ${{ steps.ltag.outputs.tag }}.post${{ steps.time.outputs.time }}
           RELEASENVERSION: "kms-semver1.2-nightly@${{ github.event.after }}"
         run: python3 .github/workflows/src/release.py
       - name: Download Build Tools & Build Package
