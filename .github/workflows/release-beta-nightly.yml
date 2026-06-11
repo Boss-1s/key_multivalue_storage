@@ -23,10 +23,19 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Find Latest Tag
+        id: ltag
+        run: |
+          # AI-Generated
+          git fetch --tags --prune
+          latest_tag=$(git describe --tags --abbrev=0 origin/beta)
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
       - name: Get Date and Time
         uses: kaven-universe/github-action-current-date-time@v1.5.0
         id: time
@@ -34,8 +43,8 @@ jobs:
           format: "YYYYMMDD"
       - name: Automatically Update Version
         env:
-          NVERSION: 1.3.0.${{ steps.time.outputs.time }}b0
-          RELEASENVERSION: kms-semver1.3.0@${{ github.event.after }}
+          NVERSION: ${{ steps.ltag.outputs.tag }}.post${{ steps.time.outputs.time }}
+          RELEASENVERSION: kms-semver1.3-nightly@${{ github.event.after }}
         run: python3 .github/workflows/src/release.py
       - name: Download Build Tools & Build Package
         run: |
