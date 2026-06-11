@@ -9,6 +9,7 @@ except NameError:
   repo_root = os.environ.get("GITHUB_WORKSPACE", os.getcwd())
 pyproject_path = os.path.join(repo_root, "pyproject.toml")
 init_py_path = os.path.join(repo_root, "src/key_multivalue_storage/__init__.py")
+nightly = os.environ.get("NIGHTLY")
 newv = os.environ.get("NVERSION")
 newv_name = os.environ.get("RELEASENVERSION")
 
@@ -19,10 +20,22 @@ with open(pyproject_path, "r+") as f:
   
   for l in pyproject:
     if l.startswith('version = '):
-      print(f"::info:: release.py: 22:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"::notice:: release.py: replacing line '{l.replace('\n', '')}'")
       nl = f'version = "{newv}"\n'
       f.write(nl)
-      print(f"::info:: release.py: 25:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::notice:: release.py: line is now '{nl.replace('\n', '')}'")
+    elif l.startswith('    "Development Status :: '):
+      print(f"::notice:: release.py: replacing line '{l.replace('\n', '')}'")
+      if nightly:
+        nl = f'    "Development Status :: 2 - Pre-Alpha",\n'
+      elif 'a' in newv:
+        nl = f'    "Development Status :: 3 - Alpha",\n'
+      elif 'b' in newv:
+        nl = f'    "Development Status :: 4 - Beta",\n'
+      else:
+        nl = f'    "Development Status :: 5 - Production/Stable",\n'
+      f.write(nl)
+      print(f"::notice:: release.py: line is now '{nl.replace('\n', '')}'")
     else:
       f.write(l)
 
@@ -40,15 +53,15 @@ with open(init_py_path, "r+") as f:
   
   for l in pyproject:
     if l.startswith('__version__ = '):
-      print(f"::info:: release.py: 42:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"::notice:: release.py: replacing line '{l.replace('\n', '')}'")
       nl = f'__version__ = "{newv}"\n'
       f.write(nl)
-      print(f"::info:: release.py: 45:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::notice:: release.py: line is now '{nl.replace('\n', '')}'")
     elif l.startswith('__version_internal__ = '):
-      print(f"release.py: 47:: INFO: replacing line '{l.replace('\n', '')}'")
+      print(f"::notice:: release.py: replacing line '{l.replace('\n', '')}'")
       nl = f'__version_internal__ = "{newv_name}"\n'
       f.write(nl)
-      print(f"::info:: release.py: 50:: INFO: line is now '{nl.replace('\n', '')}'")
+      print(f"::notice:: release.py: line is now '{nl.replace('\n', '')}'")
     else:
       f.write(l)
 
@@ -58,3 +71,4 @@ with open(init_py_path, "r") as f:
   print("New __init__.py file:\033[32m")
   print(f.read())
   print("\033[0m")
+  
