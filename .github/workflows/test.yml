@@ -33,7 +33,6 @@ jobs:
         # --- ULTRA FAST WINDOWS TESTING (NO PYTEST) ---
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
-        if: ${{ runner.os == 'Windows' }}
         with:
          enable-cache: true
 
