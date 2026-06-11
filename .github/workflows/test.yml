@@ -38,6 +38,11 @@ jobs:
         with:
          enable-cache: true
 
+      - name: Install requirements
+        run:
+          pip install -r requirements.txt
+          uv sync
+
       - name: Run Python Tests
         run: uv run --with . python test/test-general.py
 
@@ -46,11 +51,19 @@ jobs:
         env:
           OLDTAG: 'v1.2.3.20260523.1'
         run: uv run --with .[dev] python test/diff.py
-
-      - name: Install and run pyproject.toml lint
-        id: uv-toml
+      
+      - name: Lint using Pylint
         continue-on-error: true
-        run: uvx pyproject check
+        id: pylint
+        run: |
+          pylint key_multivalue_storage
+          pylint test/
+          pylint .github/workflows/src/
+      
+      - name: Lint pyproject.toml
+        id: toml
+        continue-on-error: true
+        run: pyproject check
 
       - name: Lint YAML Files
         id: yml
@@ -72,7 +85,7 @@ jobs:
           severity: error
 
       - name: Fail job if steps failed
-        if: ${{ steps.uv-toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
+        if: ${{ steps.pylint.outcome == 'failure' || steps.toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
         run: |
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
