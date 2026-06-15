@@ -35,11 +35,7 @@ keywords = [
 [project.optional-dependencies]
 dev = [
     "pylint>=4.0.0",
-    "key-multivalue-storage[test]"
-]
-test = [
     "griffe>=2.0.2", 
-    "pyproject>=1!0.1.2"
 ]
 
 [project.urls]
@@ -498,5 +494,11 @@ redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "
 
 [dependency-groups]
 dev = [
+    { include-group = "test" },
     "pylint-per-file-ignores>=3.2.1",
+]
+test = [
+    "pylint>=4.0.6",
+    "griffe>=2.0.2",
+    "pyproject>=1!0.1.2",
 ]
