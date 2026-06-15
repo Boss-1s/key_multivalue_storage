@@ -34,7 +34,7 @@ keywords = [
 
 [project.optional-dependencies]
 dev = [
-    "pylint",
+    "pylint>=4.0.0",
     "key-multivalue-storage[test]"
 ]
 test = [
