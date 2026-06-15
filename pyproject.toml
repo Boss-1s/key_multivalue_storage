@@ -498,6 +498,5 @@ dev = [
 ]
 test = [
     "pylint>=4.0.6",
-    "griffe>=2.0.2",
     "pyproject>=1!0.1.2",
 ]

@@ -46,44 +46,30 @@ source = { editable = "." }
 [package.optional-dependencies]
 dev = [
     { name = "pylint" },
-    { name = "pyproject" },
-]
-test = [
-    { name = "griffe" },
-    { name = "pyproject" },
 ]
 
 [package.dev-dependencies]
 dev = [
-    { name = "griffe" },
     { name = "pylint" },
     { name = "pylint-per-file-ignores" },
     { name = "pyproject" },
 ]
 test = [
-    { name = "griffe" },
     { name = "pylint" },
     { name = "pyproject" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "griffe", marker = "extra == 'test'", specifier = ">=2.0.2" },
-    { name = "key-multivalue-storage", extras = ["test"], marker = "extra == 'dev'" },
-    { name = "pylint", marker = "extra == 'dev'", specifier = ">=4.0.0" },
-    { name = "pyproject", marker = "extra == 'test'", specifier = ">=1!0.1.2" },
-]
-provides-extras = ["dev", "test"]
+requires-dist = [{ name = "pylint", marker = "extra == 'dev'", specifier = ">=4.0.0" }]
+provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "griffe", specifier = ">=2.0.2" },
     { name = "pylint", specifier = ">=4.0.6" },
     { name = "pylint-per-file-ignores", specifier = ">=3.2.1" },
     { name = "pyproject", specifier = ">=1!0.1.2" },
 ]
 test = [
-    { name = "griffe", specifier = ">=2.0.2" },
     { name = "pylint", specifier = ">=4.0.6" },
     { name = "pyproject", specifier = ">=1!0.1.2" },
 ]
