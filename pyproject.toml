@@ -38,8 +38,8 @@ dev = [
     "key-multivalue-storage[test]"
 ]
 test = [
-    "griffe>=2.0.2"    
-    "pyproject>=1!0.1.2",
+    "griffe>=2.0.2", 
+    "pyproject>=1!0.1.2"
 ]
 
 [project.urls]
