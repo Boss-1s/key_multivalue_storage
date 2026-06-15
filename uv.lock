@@ -46,6 +46,10 @@ source = { editable = "." }
 [package.optional-dependencies]
 dev = [
     { name = "pylint" },
+    { name = "pyproject" },
+]
+test = [
+    { name = "pyproject" },
 ]
 
 [package.dev-dependencies]
@@ -54,8 +58,12 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pylint", marker = "extra == 'dev'" }]
-provides-extras = ["dev"]
+requires-dist = [
+    { name = "key-multivalue-storage", extras = ["test"], marker = "extra == 'dev'" },
+    { name = "pylint", marker = "extra == 'dev'" },
+    { name = "pyproject", marker = "extra == 'test'", specifier = ">=1!0.1.2" },
+]
+provides-extras = ["dev", "test"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pylint-per-file-ignores", specifier = ">=3.2.1" }]
@@ -106,6 +114,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0c/bc/6d40a3596f91ef23fca7b89983b78bf4b3686323fd98e44e53ae365b1880/pylint_per_file_ignores-3.2.1.tar.gz", hash = "sha256:0a89f3cdc6fa09244a3f5624ad977ac9b026f0b25b2adb48c97c080da8d858f9", size = 81844, upload-time = "2026-04-03T19:35:37.697Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ff/68/2b0cc27b549fd788caae254752910fe7222ac47c71627c60926895fe8960/pylint_per_file_ignores-3.2.1-py3-none-any.whl", hash = "sha256:aaac8b118791e742ccf7baaf42346978f6cd0440a9090d4087fc8ff26e4a31f2", size = 5699, upload-time = "2026-04-03T19:35:36.524Z" },
+]
+
+[[package]]
+name = "pyproject"
+version = "1!0.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2b/8c/f749559abe2656434154462cd4a8488d67dd3a59f71bba9d3eff7246ea05/pyproject-1!0.1.2.tar.gz", hash = "sha256:584abf6b337b72de56e8e94d10a34c8aba1f1861ac3c4948ca207061355de5a6", size = 1151184, upload-time = "2025-11-27T19:32:26.773Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1d/95/17a346298c2e3abb6b415a285a943a7a5b8bdba0714d29a481285a49c105/pyproject-1!0.1.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:61541c95f5a76690414a355a9bb9a0fc2fc13631acfcf7f9c1959d611ca1785c", size = 5404547, upload-time = "2025-11-27T19:32:18.003Z" },
+    { url = "https://files.pythonhosted.org/packages/70/c8/b78c329e28a6b5fc3df97b7fdb4806a2ae9ac445bdb25c781a869be3f78e/pyproject-1!0.1.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:2f22afcd38064b0edc8334163d4397bfeb8ba7835599612a8820dbce32ac8aeb", size = 5141554, upload-time = "2025-11-27T19:32:19.413Z" },
+    { url = "https://files.pythonhosted.org/packages/22/5b/a3fefdaf37acd93a09fd1df6169c1969f8bef6ca03166972d810da902240/pyproject-1!0.1.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ed094ce1cdab1f13fafdbcd972997297c488041eb406a7ce402234c89486e135", size = 5332621, upload-time = "2025-11-27T19:32:20.784Z" },
+    { url = "https://files.pythonhosted.org/packages/33/26/f353efafe45d1f117c214b37cc16c015685d46e9c00dc998e19c5f2c4b07/pyproject-1!0.1.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b3cc332cfd5b9b1b86af6780148eaa17af7330fad48556445cd0c1bb07c624fb", size = 5580839, upload-time = "2025-11-27T19:32:23.11Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/86/649f964f1e1457f91db481b518c168e251e388ba06421d247c78ca314999/pyproject-1!0.1.2-py3-none-win_amd64.whl", hash = "sha256:2ffb2e52acc289d51f869df8ecb873f13a4de67528dc91f57b296e37da1c093e", size = 5739122, upload-time = "2025-11-27T19:32:25.017Z" },
 ]
 
 [[package]]

@@ -33,7 +33,13 @@ keywords = [
 ]
 
 [project.optional-dependencies]
-dev = ["pylint"]
+dev = [
+    "pylint",
+    "key-multivalue-storage[test]"
+]
+test = [
+    "pyproject>=1!0.1.2",
+]
 
 [project.urls]
 Documentation = "https://github.com/Boss-1s/key_multivalue_storage/wiki/"
