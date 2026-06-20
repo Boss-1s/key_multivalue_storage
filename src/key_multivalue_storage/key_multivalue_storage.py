@@ -169,7 +169,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             currentchar = int(to_decode[i+1:i+1+totalchars])
             print(f"_decode: DEBUG: currentchar={currentchar}")
             #Bounds Check
-            if not (0 <= currentchar-1 < len(char)):
+            if not 0 <= currentchar-1 < len(char):
                 raise ValueError(f"Decoding error: Index {currentchar - 1} out of range of characters.")
             output = f"{output}{char[currentchar-1]}"
             i += 1+totalchars
@@ -207,19 +207,19 @@ class Storage(metaclass=_StorageSettingsMeta):
             raise ValueError("Expected nested values to be a dictionary.")
 
         if not raw:
-          decoded_values: dict[str, Any] = {}
-          # Decide which values to decode.
-          # Only decode if the value is an int (encoded string) or a string that looks like an encoded int.
-          for prop_key, encoded_value in og_nested_values.items():
-              if isinstance(encoded_value, int) or (isinstance(encoded_value, str) and encoded_value.isdigit()):
-                  try:
-                      og_nested_values[prop_key] = cls._decode(string=encoded_value)
-                  except ValueError: # Handle cases where decoding fails, keep original or raise error
-                      og_nested_values[prop_key] = encoded_value # Keep as is if decoding fails
-              else:
-                  og_nested_values[prop_key] = encoded_value # Keep non-encoded values as is
+            decoded_values: dict[str, Any] = {}
+            # Decide which values to decode.
+            # Only decode if the value is an int (encoded string) or a string that looks like an encoded int.
+            for prop_key, encoded_value in og_nested_values.items():
+                if isinstance(encoded_value, int) or (isinstance(encoded_value, str) and encoded_value.isdigit()):
+                    try:
+                        decoded_values[prop_key] = cls._decode(string=encoded_value)
+                    except ValueError: # Handle cases where decoding fails, keep original or raise error
+                        decoded_values[prop_key] = encoded_value # Keep as is if decoding fails
+                else:
+                    decoded_values[prop_key] = encoded_value # Keep non-encoded values as is
 
-        return cls(top_level_key, **og_nested_values)
+        return cls(top_level_key, **decoded_values)
 
     @staticmethod
     def __store(file_path: str,
@@ -283,8 +283,8 @@ class Storage(metaclass=_StorageSettingsMeta):
             warnings.warn(f"store: WARNING: Warning: File '{file_path}' contains invalid JSON. Overwriting.", SyntaxWarning)
             all_data = {}
 
-        if ".json" not in file_path:
-            fp = str(file_path) + ".json"
+        if not file_path.endswith(".json"):
+            file_path = str(file_path) + ".json"
 
         if encode: all_data.update(self._to_dict())
 
@@ -471,7 +471,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
             if key in loaded_data:
                 try:
-                   subsection: dict[str, dict[str, Any]] = Storage._from_dict({key: loaded_data[key]}, raw)
+                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({key: loaded_data[key]}, raw)
                 except ValueError as e:
                     print(f"Load.values: ERROR: Error reconstructing object for key '{key}': {e}")
                     return None
@@ -515,7 +515,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if top_lv_key in loaded_data:
                 try:
-                   subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
+                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
                     print(f"Edit.propkey: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
@@ -563,7 +563,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if top_lv_key in loaded_data:
                 try:
-                   subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
+                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
                     print(f"Edit.propval: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
@@ -649,18 +649,18 @@ class Storage(metaclass=_StorageSettingsMeta):
             if top_level_key:
                 warnings.warn("The argument 'top_level_key' will be deprecated by kms-smever1.3. "+
                   "consider switching over and using top_lv_key instead. This should not be important if "+
-                  "you are relying on positional.If you are you may disregard this warning.",
+                  "you are relying on positional parameters. If you are, you may disregard this warning.",
                   DeprecationWarning)
             top_lv_key = top_level_key
 
-            if top_level_key in loaded_data:
-                try:subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_level_key: loaded_data[top_level_key]})
+            if top_lv_key in loaded_data:
+                try:subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
-                    print(f"Delete.by_propkey: ERROR: Error reconstructing object for key '{top_level_key}': {e}")
+                    print(f"Delete.by_propkey: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
             else:
                 print("Delete.by_propkey: ERROR: Encountered _KeyNotFoundError")
-                raise _KeyNotFoundError(file_path, top_level_key)
+                raise _KeyNotFoundError(file_path, top_lv_key)
 
             items: dict[str, Any] = {}
 
@@ -862,7 +862,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
     def __truediv__(self,
                     other: Storage | dict[str, Any] | int
-                   ) -> list[Self,...] | Self:
+                   ) -> list[Self] | Self:
         """
         Defines how to divide two objects, same type or no.
         Note that attempting to divide a Storage instance by another instance
