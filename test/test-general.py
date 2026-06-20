@@ -26,7 +26,7 @@ def db_add_subval(db, key, subkey, val, subkey2=None, val2=None, subkey3=None, v
         skwargs.update({subkey4: val4})
     if subkey5 is not None and val5 is not None:
         skwargs.update({subkey5: val5})
-    
+
     try:s(key, **skwargs).store(db)
     except Exception as e:print(f"Process failed: {e}")
     print(f"Sucessfully added values {list(skwargs.values())} to subkeys {list(skwargs.keys())}, respectively.")
@@ -40,7 +40,7 @@ def db_get_keys(db):return s.Load.keys(db)
 
 def db_get_subkeys_values(db, top_lv_key, keys=True, raw=False):
     return s.Load.values(db, top_lv_key, keys=keys, raw=raw)
-    
+
 def db_delete_key(db, key):
     try:s.Delete.by_key(db, key)
     except Exception as e:print(f"Process failed: {e}")
@@ -104,7 +104,7 @@ except ValueError:
     pass
 else:
     raise AssertionError("Key comparison most likely failed, otherwise an unknown error occurred. Check the __lt__ method.")
-  
+
 print("Part 2.1 passed.\n-----\nPart 2.2: Arithmetic")
 
 assert repr(s1+
@@ -136,13 +136,13 @@ except TypeError:
     pass
 else:
     raise AssertionError("Division has failed. Check the __truediv__ and __rturediv__ methods.")
-  
+
 print("Part 2.2 passed.\n-----\nPart 2.3: Bitwise Operators")
 
 s2 = s("test1", sk4="val1", sk6="val2", sk5="val3")
 s3 = s("test1", sk4="val1", sk6="val2", sk3="val3")
 
-assert ((repr(s3&s2) == "Storage(top_lv_key=test1, key_value_pairs=[sk6='val2', sk4='val1'])") or 
+assert ((repr(s3&s2) == "Storage(top_lv_key=test1, key_value_pairs=[sk6='val2', sk4='val1'])") or
        (repr(s3&s2) == "Storage(top_lv_key=test1, key_value_pairs=[sk4='val1', sk6='val2'])")), "The bitwise operator AND (&) has failed. Check the __and__ method."
 assert ((repr(s3|s2) == "Storage(top_lv_key=test1, key_value_pairs=[sk6='val2', sk4='val1', sk5='val3', sk3='val3'])") or
        (repr(s3|s2) == "Storage(top_lv_key=test1, key_value_pairs=[sk3='val3', sk6='val2', sk4='val1', sk5='val3'])") or
