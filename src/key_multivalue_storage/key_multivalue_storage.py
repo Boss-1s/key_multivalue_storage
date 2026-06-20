@@ -1,6 +1,6 @@
 """
 Key to Multivalue Storage
-Last updated: 6/05/2026
+Last updated: 6/20/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how
 scratchattach's database worked and the steep learning curve that came with it.
@@ -51,7 +51,7 @@ class _StorageSettingsMeta(type):
     def LAST_UPDATE(cls) -> str:
         warnings.warn("The metadata var name 'LAST_UPDATE' will be changed "+
                       "to 'last_update' in kms-semver1.3. Consider using that instead.")
-        return "2026/06/05"
+        return "2026/06/20"
 
     @property
     def semver(cls) -> str:
