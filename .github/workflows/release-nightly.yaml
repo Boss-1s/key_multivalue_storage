@@ -5,10 +5,8 @@ description: >
 
 on:
   workflow_dispatch: 
-  push:
-    branches:
-      - main
-
+  workflow_call:
+    
 jobs:
   build:
     runs-on: 'ubuntu-latest'
