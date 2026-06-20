@@ -5,15 +5,7 @@ description: >
 
 on:
   workflow_dispatch: 
-  push:
-    branches:
-      - beta
-    paths: 
-      - 'test/**'
-      - 'src/**'
-      - 'pyproject.toml'
-      - 'docs/**'
-      - 'requirements.txt'
+  workflow_call: 
 
 jobs:
   build:
