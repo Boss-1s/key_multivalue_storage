@@ -91,11 +91,17 @@ jobs:
   nightly-main:
     needs: build
     permissions: write-all
+    if: |
+      github.ref_name == 'main' ||
+      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'main'))
     uses: ./.github/workflows/release-nightly.yaml
 
   nightly-beta:
     needs: build
     permissions: write-all
+    if: |
+      github.ref_name == 'beta' ||
+      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
     uses: ./.github/workflows/release-beta-nightly.yml
 
         
