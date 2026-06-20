@@ -102,6 +102,8 @@ jobs:
       - run: |
           echo all jobs successful 
           echo deploying to environment test
+          echo Beginning nightly build...
+      - uses: ./.github/workflows/release-nightly.yml
 
   deploy-to-beta:
     needs: build
@@ -116,4 +118,6 @@ jobs:
       - run: |
           echo all jobs successful 
           echo deploying to environment beta
+          echo Beginning nightly build...
+      - uses: ./.github/workflows/release-beta-nightly.yml
           
