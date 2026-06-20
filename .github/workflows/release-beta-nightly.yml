@@ -5,9 +5,7 @@ description: >
 
 on:
   workflow_dispatch: 
-  push:
-    branches:
-      - beta
+  workflow_call: 
 
 jobs:
   build:
