@@ -89,27 +89,19 @@ jobs:
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
 
-  nightly:
+  nightly-main:
     needs: build
     permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v7
-      - name: Build Nightly (kms-semver1.2.x)
-        if: |
-          github.ref_name == 'main' ||
-          (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'main'))
-        uses: ./.github/workflows/release-nightly.yaml
-      - name: Build Nightly (kms-semver1.3.x)
-        if: |
-          github.ref_name == 'beta' ||
-          (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
-        uses: ./.github/workflows/release-beta-nightly.yml
+    uses: ./.github/workflows/release-nightly.yaml
+
+  nightly-beta:
+    needs: build
+    permissions: write-all
+    uses: ./.github/workflows/release-beta-nightly.yml
 
         
   deploy-to-test:
-    needs: nightly
+    needs: nightly-main
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -123,7 +115,7 @@ jobs:
           echo deploying to environment test
 
   deploy-to-beta:
-    needs: nightly
+    needs: nightly-beta
     permissions:
       contents: read
     runs-on: ubuntu-latest
