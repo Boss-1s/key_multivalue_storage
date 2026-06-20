@@ -18,6 +18,7 @@ import warnings
 import difflib
 import builtins
 from typing import Any, Optional, Self, Generator
+from types import TracebackType
 from functools import total_ordering
 
 def print(*args, **kwargs) -> None:
