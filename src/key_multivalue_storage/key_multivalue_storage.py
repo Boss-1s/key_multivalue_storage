@@ -1,6 +1,6 @@
 """
 Key to Multivalue Storage
-Last updated: 6/20/2026
+Last updated: 6/22/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how
 scratchattach's database worked and the steep learning curve that came with it.
@@ -18,6 +18,7 @@ import warnings
 import difflib
 import builtins
 from typing import Any, Optional, Self, Generator
+from typing_extensions import deprecated
 from types import TracebackType
 from functools import total_ordering
 
@@ -35,23 +36,24 @@ class _KeyNotFoundError(KeyError):
 class _StorageSettingsMeta(type):
     # NOTE: These are version strings for the *module*,
     # not the package/library.
+    @deprecated("The metadata var name 'VERSION' will be changed "+
+                "to 'semver' in kms-semver1.3. Consider using that instead.")
     @property
     def VERSION(cls) -> str:
-        warnings.warn("The metadata var name 'VERSION' will be changed "+
-                      "to 'semver' in kms-semver1.3. Consider using that instead.")
+        warnings.warn()
         return "1.2.3"
 
+    @deprecated("The metadata var name 'DATE_VERSION' will be changed "+
+                "to 'calver' in kms-semver1.3. Consider using that instead.")
     @property
     def DATE_VERSION(cls) -> str:
-        warnings.warn("The metadata var name 'DATE_VERISON' will be changed "+
-                      "to 'calver' in kms-semver1.3. Consider using that instead.")
-        return "2026.06.05"
+        return "2026.06.22"
 
+    @deprecated("The metadata var name 'LAST_UPDATE' will be changed "+
+                "to 'last_update' in kms-semver1.3. Consider using that instead.")
     @property
     def LAST_UPDATE(cls) -> str:
-        warnings.warn("The metadata var name 'LAST_UPDATE' will be changed "+
-                      "to 'last_update' in kms-semver1.3. Consider using that instead.")
-        return "2026/06/20"
+        return "2026/06/22"
 
     @property
     def semver(cls) -> str:
