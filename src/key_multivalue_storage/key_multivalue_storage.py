@@ -36,22 +36,24 @@ class _KeyNotFoundError(KeyError):
 class _StorageSettingsMeta(type):
     # NOTE: These are version strings for the *module*,
     # not the package/library.
+    
+    @property
     @deprecated("The metadata var name 'VERSION' will be changed "+
                 "to 'semver' in kms-semver1.3. Consider using that instead.")
-    @property
     def VERSION(cls) -> str:
         warnings.warn()
         return "1.2.3"
-
+        
+    @property
     @deprecated("The metadata var name 'DATE_VERSION' will be changed "+
                 "to 'calver' in kms-semver1.3. Consider using that instead.")
-    @property
     def DATE_VERSION(cls) -> str:
-        return "2026.06.22"
+        return "2026.06.22a"
 
+    
+    @property
     @deprecated("The metadata var name 'LAST_UPDATE' will be changed "+
                 "to 'last_update' in kms-semver1.3. Consider using that instead.")
-    @property
     def LAST_UPDATE(cls) -> str:
         return "2026/06/22"
 
