@@ -16,8 +16,8 @@ __________
 
 [![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
 [![Package](https://img.shields.io/badge/Stable%20Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Nightly](https://img.shields.io/badge/Development%20Package-kms--semver1%2E2%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly.yaml/main/full-kms-nightly.zip)
-[![Beta Nightly](https://img.shields.io/badge/Beta%20Package-kms--semver1%2E3%2E0%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/release-nightly.yaml/main/full-kms-nightly.zip)
+[![Nightly](https://img.shields.io/badge/Development%20Package-kms--semver1%2E2%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/main/full-kms-nightly.zip)
+[![Beta Nightly](https://img.shields.io/badge/Beta%20Package-kms--semver1%2E3%2E0%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/beta/full-kms-nightly.zip)
 
 ### Status
 
