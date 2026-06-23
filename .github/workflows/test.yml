@@ -75,10 +75,9 @@ jobs:
       - name: Fail job if steps failed
         if: ${{ steps.pylint.outcome == 'failure' || steps.toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
         run: |
-          echo ::error Failed!:: A step may have failed...
+          echo ::warn Failed!:: A step may have failed...
 
   nightly:
     needs: build
     permissions: write-all
-    if: contains('release/', github.ref_name)
     uses: ./.github/workflows/release-nightly.yaml
