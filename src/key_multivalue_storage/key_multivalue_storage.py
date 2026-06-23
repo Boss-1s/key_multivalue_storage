@@ -41,7 +41,6 @@ class _StorageSettingsMeta(type):
     @deprecated("The metadata var name 'VERSION' will be changed "+
                 "to 'semver' in kms-semver1.3. Consider using that instead.")
     def VERSION(cls) -> str:
-        warnings.warn()
         return "1.2.3"
         
     @property
