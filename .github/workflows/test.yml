@@ -37,11 +37,7 @@ jobs:
          enable-cache: true
 
       - name: Install requirements
-        run: |
-          uv add pylint
-          uv add pyproject
-          uv add .
-          uv sync
+        run: uv sync
 
       - name: Run Python Tests
         run: uv run --with . python test/test-general.py
