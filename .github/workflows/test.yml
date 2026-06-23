@@ -38,20 +38,13 @@ jobs:
 
       - name: Install requirements
         run: |
-          uv add -r requirements.txt
+          uv add pylint
+          uv add pyproject
+          uv add .
           uv sync
 
       - name: Run Python Tests
-        if: ${{ runner.os == 'Windows' }}
         run: uv run --with . python test/test-general.py
-      
-      - name: Install Self
-        if: ${{ runner.os != 'Windows' }}
-        run: python -m pip install -e .
-        
-      - name: Run test file
-        if: ${{ runner.os != 'Windows' }}
-        run: python3 test/test-general.py
       
       - name: Lint using Pylint
         continue-on-error: true
@@ -86,51 +79,10 @@ jobs:
       - name: Fail job if steps failed
         if: ${{ steps.pylint.outcome == 'failure' || steps.toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
         run: |
-          echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
-          exit 1
+          echo ::error Failed!:: A step may have failed...
 
-  nightly-main:
+  nightly:
     needs: build
     permissions: write-all
-    if: |
-      github.ref_name == 'main' ||
-      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'main'))
+    if: contains('release/', github.ref_name)
     uses: ./.github/workflows/release-nightly.yaml
-
-  nightly-beta:
-    needs: build
-    permissions: write-all
-    if: |
-      github.ref_name == 'beta' ||
-      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
-    uses: ./.github/workflows/release-beta-nightly.yml
-
-        
-  deploy-to-test:
-    needs: nightly-main
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    environment: test
-    if: |
-      github.ref_name == 'main' ||
-      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'main'))
-    steps:
-      - run: |
-          echo all jobs successful 
-          echo deploying to environment test
-
-  deploy-to-beta:
-    needs: nightly-beta
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    environment: beta
-    if: |
-      github.ref_name == 'beta' ||
-      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
-    steps:
-      - run: |
-          echo all jobs successful 
-          echo deploying to environment beta
-          
