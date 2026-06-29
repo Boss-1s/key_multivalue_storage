@@ -1,6 +1,14 @@
 # Key to Multivalue Storage - kms
 kms - a _tiny side project_ tuned into a **library**.
 
+> [!Info]
+> This version is brought to you via the archives at [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py)
+
+> [!Caution]
+> You are looking at and potentially downloading an older version that is no longer maintaned.
+> Things may be broken and not work.
+
+
 **JSON storage wrapper and editor.** Created with love by Boss_1s.
 
 Once upon a time, this was just a small project to solve a problem: the over-steep learning curve for [scratchattach](https://github.com/TimMcCool/scratchattach)'s database functionality. Now, I have decided to make it a library, something with humble beginnings with big hopes in its future.
@@ -41,11 +49,6 @@ pip install -U key-multivalue-storage
 ```
 
 Or, download the latest version of the `.whl` file [in the releases page](https://github.com/Boss-1s/key_multivalue_storage/releases)
-
-You can also choose to download the development environment alongside the package:
-```sh
-pip install -U key-multivalue-storage[dev]
-```
 
 ## Usage
 - Create a Storage object to prepare the data to be stored:
