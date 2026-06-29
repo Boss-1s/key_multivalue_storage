@@ -1,7 +1,7 @@
 # Key to Multivalue Storage - kms
 kms - a _tiny side project_ tuned into a **library**.
 
-> [!Info]
+> [!note]
 > This version is brought to you via the archives at [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py)
 
 > [!Caution]
