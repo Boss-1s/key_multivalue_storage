@@ -52,18 +52,18 @@ You may see a discrepancy between the version string within the [main module fil
 
 Currently, the only released package versions are kms-v1.2.2/2026.05.06b and later. However, I may port all kms-semver1.x.x to pypi.
 
-[See more about the upcoming kms-semver2.0 update.]
+[See more about the upcoming kms-semver2.0 update.](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#kms-semver20-20270817)
 
-| Version | Current Status | Expected EOL |
-| ------- | ------------------ | - |
-| 1.0.x | Unsupported | Already reached EOL |
-| 1.1.x | Unsupported | Already reached EOL |
-| 1.2.x | Supported | 2.1 |
-| 1.3.x | Unreleased | 2.1 |
-| 1.4.x | Unreleased | 2.2 |
-| 1.5.x | Unreleased | 2.2 |
-| 1.6.x | Unreleased | 2.3 |
-| 2.0 | Unreleased | Undetermined |
+| Version | Production Stage | Current Status | Expected EOL |
+| ------|-------| ------------------ | - |
+| 1.0.x | Inactive(7) | Unsupported | Already reached EOL |
+| 1.1.x | Inactive(7) | Unsupported | Already reached EOL |
+| 1.2.x | Production/Stable (5)| Supported | 1.5 |
+| 1.3.x | Alpha(3) | Pre-Release | 1.6 |
+| 1.4.x | Planning(1) | Unreleased | 2.0 |
+| 1.5.x | None(0) | Unreleased | 2.1 |
+| 1.6.x | None(0) | Unreleased | 2.2 |
+| 2.0.x | Planning(1) | Unreleased | 2.3 |
 
 ## Reporting a Vulnerability
 
