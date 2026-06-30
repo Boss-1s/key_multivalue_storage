@@ -30,7 +30,7 @@ url: "https://boss-1s.github.io" # the base hostname & protocol for your site, e
 github_username:  jekyll
 
 # Build settings
-remote_theme: "BDHU/minimalist@039feef05c3e77eb06e62a409212f5e13baab2f6"
+remote_theme: "BDHU/minimalist@f19d6a6ef015ba93c5aee9ce80339e4959b0ffa7"
 plugins:
   - jekyll-remote-theme
 color-scheme: auto # Options: auto, light, dark
