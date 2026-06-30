@@ -40,8 +40,8 @@ jobs:
           mv docs/SECURITY.md docs/security.md
           mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
           mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
-          mv docs/Documentation.md docs/documentation.md
-          mv docs/Roadmap.md docs/roadmap.md
+          mv docs/Documentation.md docs/Documentation.md
+          mv docs/Roadmap.md docs/Roadmap.md
           mv .github/_config.yml docs/_config.yml
           echo "----------CONFIRM STAT----------"
           git status
