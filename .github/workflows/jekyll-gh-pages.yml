@@ -31,12 +31,13 @@ jobs:
       - name: Clone and Setup Wiki
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
-          
           rsync -avq --exclude='.git' --exclude='_*' temp-wiki/ docs/
-          
           rm -rf temp-wiki
-
+          mv docs/Home.md docs/index.md
+          echo "----------CONFIRM STAT----------"
           git status
+          echo "----------CONFIRM FILES----------"
+          ls -a docs/
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1.0.13
         with:
