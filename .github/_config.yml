@@ -22,9 +22,10 @@
 
 title: kms Docs
 description: >-
-  Docs for `key-multivalue-storage`, a PyPI package also known as `kms`.
-  **`kms`** is a simple, yet growing, JSON wrapper library that allows the JSON storage of
-  one key to multiple values, made with love by Boss_1s.
+  <strong>Docs for key-multivalue-storage, a PyPI package also known as kms.</strong><br>
+  <em>kms is a <strong>simple, yet growing, JSON wrapper library</strong> that allows the <strong>JSON storage of
+  one key to multiple values.</strong></em><br>
+  <big>Made with love by Boss_1s.</big>
 baseurl: "/key_multivalue_storage" # the subpath of your site, e.g. /blog
 url: "https://boss-1s.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 repository: Boss-1s/key_multivalue_storage
@@ -36,7 +37,7 @@ plugins:
   - jekyll-remote-theme
   - jekyll-gfm-admonitions
   - jekyll-optional-front-matter
-color-scheme: dark # Options: auto, light, dark
+color-scheme: auto # Options: auto, light, dark
 markdown: GFM
 gfm_admonitions:
   inject_css: false
