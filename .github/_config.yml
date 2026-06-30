@@ -59,3 +59,4 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - assets/css/colors-auto-default-dark.scss
