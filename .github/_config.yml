@@ -38,6 +38,8 @@ plugins:
   - jekyll-optional-front-matter
 color-scheme: dark # Options: auto, light, dark
 markdown: GFM
+gfm_admonitions:
+  inject_css: false
 
 
 # Exclude from processing.
