@@ -40,6 +40,7 @@ jobs:
           gem install bundler
           cd docs/
           bundle install
+          bundle install
       - name: Clone and Setup Wiki
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
