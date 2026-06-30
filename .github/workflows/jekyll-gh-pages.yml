@@ -32,8 +32,14 @@ jobs:
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
           rsync -avq --exclude='.git' --exclude='_*' temp-wiki/ docs/
-          rm -rf temp-wiki
+          rm -v -rf temp-wiki
+          rm -v docs/release-template.md docs/CODEOWNERS docs/_*
           mv docs/Home.md docs/index.md
+          mv docs/SECURITY.md docs/security.md
+          mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
+          mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
+          mv docs/Documentation.md docs/documentation.md
+          mv docs/Roadmap.md docs/roadmap.md
           echo "----------CONFIRM STAT----------"
           git status
           echo "----------CONFIRM FILES----------"
