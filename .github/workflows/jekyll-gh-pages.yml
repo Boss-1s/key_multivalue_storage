@@ -32,7 +32,7 @@ jobs:
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
           
-          mv temp-wiki/.git docs/
+          rsync -avq --exclude='.git' --exclude='_*' temp-wiki/ docs/
           
           rm -rf temp-wiki
 
