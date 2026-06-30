@@ -35,6 +35,8 @@ jobs:
           mv temp-wiki/.git docs/
           
           rm -rf temp-wiki
+
+          git status
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1.0.13
         with:
