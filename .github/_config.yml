@@ -21,19 +21,23 @@
 # in the templates via {{ site.myvariable }}.
 
 title: kms Docs
-description: >- # this means to ignore newlines until "baseurl:"
+description: >-
   Docs for key-multivalue-storage, a PyPI package also known as kms.
   kms is a simple JSON wrapper library that allows the JSON storage of
   one key to multiple values.
 baseurl: "/key_multivalue_storage" # the subpath of your site, e.g. /blog
 url: "https://boss-1s.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+repository: Boss-1s/key_multivalue_storage
 github_username: Boss-1s
 
 # Build settings
 remote_theme: "BDHU/minimalist@f19d6a6ef015ba93c5aee9ce80339e4959b0ffa7"
 plugins:
   - jekyll-remote-theme
+  - jekyll-gfm-admonitions
+  - jekyll-optional-front-matter
 color-scheme: dark # Options: auto, light, dark
+markdown: GFM
 
 
 # Exclude from processing.
