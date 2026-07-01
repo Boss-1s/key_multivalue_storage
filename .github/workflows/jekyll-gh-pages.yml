@@ -37,8 +37,6 @@ jobs:
           bundler-cache: true
       - name: Generate Gem lockfile
         run: |
-          gem install bundler
-          cd docs/
           bundle install
           bundle install
       - name: Clone and Setup Wiki
