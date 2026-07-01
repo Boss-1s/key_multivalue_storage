@@ -50,6 +50,7 @@ jobs:
           mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
           mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
           mv .github/_config.yml docs/_config.yml
+          mv vendor/ docs/
           echo "----------CONFIRM STAT----------"
           git status
           echo "----------CONFIRM FILES----------"
