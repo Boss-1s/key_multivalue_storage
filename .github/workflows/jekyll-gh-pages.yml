@@ -34,11 +34,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
+          bundler: 'Gemfile.lock'
           bundler-cache: true
-      - name: Generate Gem lockfile
-        run: |
-          bundle install
-          bundle install
+          working-directory: "docs/"
       - name: Clone and Setup Wiki
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
