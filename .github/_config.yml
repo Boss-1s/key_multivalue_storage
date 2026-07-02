@@ -72,9 +72,11 @@ optional_front_matter:
 include:
   - ./docs/*.md
   - ./docs/*.html
+  - _sass/*
+  - _layouts/*
+  - _includes/*
 
 # Simplified clean exclude list
 exclude:
   - .sass-cache/
   - .jekyll-cache/
-  - _layouts/default.html
