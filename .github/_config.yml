@@ -54,7 +54,11 @@ defaults:
       path: "" # Targets all your cloned wiki markdown files
     values:
       layout: "default" # Automatically wraps them in the layout we created above
-
+      
+# Explicitly configure the optional front matter plugin
+optional_front_matter:
+  remove_extension: true
+  
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
@@ -67,14 +71,7 @@ include:
   - docs/*.md
   - docs/*.html
 
+# Simplified clean exclude list
 exclude:
   - .sass-cache/
   - .jekyll-cache/
-  - gemfiles/
-  - Gemfile
-  - Gemfile.lock
-  - node_modules/
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
