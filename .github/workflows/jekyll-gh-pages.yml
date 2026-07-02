@@ -55,6 +55,7 @@ jobs:
           ls -a docs/
       - name: Build with Jekyll
         run: |
+          bundle exec jekyll clean
           bundle exec jekyll build \
             --source docs \
             --destination _site \
