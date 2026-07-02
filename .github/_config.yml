@@ -70,10 +70,11 @@ optional_front_matter:
 # their entries' file path in the `include:` list.
 #
 include:
-  - docs/*.md
-  - docs/*.html
+  - ./docs/*.md
+  - ./docs/*.html
 
 # Simplified clean exclude list
 exclude:
   - .sass-cache/
   - .jekyll-cache/
+  - _layouts/default.html
