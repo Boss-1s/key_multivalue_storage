@@ -43,9 +43,6 @@ color-scheme: auto # Options: auto, light, dark
 markdown: kramdown
 kramdown:
   input: GFM
-  
-gfm_admonitions:
-  inject_css: false
 
 
 # Exclude from processing.
