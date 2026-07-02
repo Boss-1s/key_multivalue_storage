@@ -55,7 +55,7 @@ jobs:
       - name: Build with Jekyll
         run: |
           bundle exec jekyll clean
-          bundle exec jekyll build --source ./docs --destination ./_site
+          bundle exec jekyll build --verbose --source ./docs --destination ./_site
         env:
           BUNDLE_GEMFILE: ./docs/Gemfile
       - name: Upload artifact
