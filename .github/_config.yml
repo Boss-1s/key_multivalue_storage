@@ -60,7 +60,15 @@ defaults:
 # Explicitly configure the optional front matter plugin
 optional_front_matter:
   remove_extension: true
-  
+
+sidebar:
+  - name: GitHub (source code)
+    icon: <i class="fa-brands fa-github"></i>
+    link: https://github.com/Boss-1s/key_multivalue_storage
+  - name: PyPI (package)
+    icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg"/>
+    link: https://pypi.org/key-multivalue-storage
+    
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
