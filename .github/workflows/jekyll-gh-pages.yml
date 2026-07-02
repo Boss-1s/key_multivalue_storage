@@ -38,7 +38,7 @@ jobs:
       - name: Clone and Setup Wiki
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
-          rsync -avq --exclude='.git' --exclude='_*' temp-wiki/ docs/
+          rsync -avq --exclude='.git' temp-wiki/ docs/
           rm -v -rf temp-wiki
           rm -v -f docs/release-template.md docs/CODEOWNERS
           mv docs/Home.md docs/index.md
@@ -55,9 +55,7 @@ jobs:
       - name: Build with Jekyll
         run: |
           bundle exec jekyll clean
-          bundle exec jekyll build \
-            --source docs \
-            --destination _site \
+          bundle exec jekyll build --source ./docs --destination ./_site
         env:
           BUNDLE_GEMFILE: ./docs/Gemfile
       - name: Upload artifact
