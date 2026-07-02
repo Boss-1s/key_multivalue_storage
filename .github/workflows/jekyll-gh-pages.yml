@@ -29,6 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v6
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -36,7 +37,7 @@ jobs:
           ruby-version: "3.3"
           bundler: 'Gemfile.lock'
           bundler-cache: true
-          working-directory: "docs/"
+          working-directory: "./docs"
       - name: Clone and Setup Wiki
         run: |
           git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
@@ -53,10 +54,7 @@ jobs:
           echo "----------CONFIRM FILES----------"
           ls -a docs/
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1.0.13
-        with:
-          source: ./docs
-          destination: ./_site
+        run: cd docs && bundle exec jekyll build --destination ../_site --baseurl "${{ steps.pages.outputs.base_path }}"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
