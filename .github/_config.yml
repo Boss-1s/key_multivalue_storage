@@ -44,6 +44,10 @@ markdown: kramdown
 kramdown:
   input: GFM
 
+# Sass configuration
+sass:
+  quiet_deps: true
+  silence_deprecations: ["import"]
 
 # Exclude from processing.
 # The following items will not be processed, by default.
