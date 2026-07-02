@@ -37,6 +37,7 @@ plugins:
   - jekyll-remote-theme
   - jekyll-gfm-admonitions
   - jekyll-optional-front-matter
+  - jekyll-seo-tag
 color-scheme: auto # Options: auto, light, dark
 markdown: GFM
 gfm_admonitions:
