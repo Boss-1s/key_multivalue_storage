@@ -49,6 +49,12 @@ sass:
   quiet_deps: true
   silence_deprecations: ["import"]
 
+defaults:
+  - scope:
+      path: "" # Targets all your cloned wiki markdown files
+    values:
+      layout: "default" # Automatically wraps them in the layout we created above
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
