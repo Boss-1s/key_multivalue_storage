@@ -52,11 +52,12 @@ jobs:
           echo "----------CONFIRM FILES----------"
           ls -a docs/
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v6
       - name: Build with Jekyll
         run: |
           bundle exec jekyll clean
-          bundle exec jekyll build --verbose --source ./docs --destination ./_site
+          bundle exec jekyll build --verbose --source ./docs --destination ./_site --baseurl "${{steps.pages.outputs.base_path}}"
         env:
           BUNDLE_GEMFILE: ./docs/Gemfile
       - name: Upload artifact
