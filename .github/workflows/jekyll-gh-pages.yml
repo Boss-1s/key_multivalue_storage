@@ -59,6 +59,8 @@ jobs:
             --source docs \
             --destination _site \
             --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          BUNDLE_GEMFILE: ./docs/Gemfile
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
