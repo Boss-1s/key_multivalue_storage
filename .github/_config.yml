@@ -48,6 +48,8 @@ kramdown:
 sass:
   quiet_deps: true
   silence_deprecations: ["import"]
+  style: :compressed
+  sass_dir: ./docs/_sass
 
 defaults:
   - scope:
