@@ -44,13 +44,16 @@ jobs:
           uv sync
 
       - name: Run Python Tests
-        run: uv run python test/
+        run: |
+          export TERM=dumb
+          uv run python test/
 
       - name: Display Breaking Changes (beta)
         if: ${{ github.ref_name == 'beta' }}
         env:
           OLDTAG: 'v1.2.3.20260523.1'
-        run: uv run --with .[dev] python test/diff.py
+        run: |
+          uv run python test/diff.py
       
       - name: Lint using Pylint
         continue-on-error: true
@@ -61,7 +64,8 @@ jobs:
       - name: Lint pyproject.toml
         id: toml
         continue-on-error: true
-        run: uv run pyproject check
+        run: |
+          uv run pyproject check
 
       - name: Lint YAML Files
         id: yml
