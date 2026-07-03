@@ -38,7 +38,7 @@ jobs:
           NVERSION: ${{ steps.ltag.outputs.tag }}.post${{ steps.time.outputs.time }}
           RELEASENVERSION: kms-semver1.3-nightly@${{ github.event.after }}
           NIGHTLY: "true"
-        run: python3 .github/workflows/src/release.py
+        run: python3 test/automation/release.py
       - name: Download Build Tools & Build Package
         run: |
           python -m pip install --upgrade pip
