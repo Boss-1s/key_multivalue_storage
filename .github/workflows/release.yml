@@ -36,7 +36,7 @@ jobs:
         env:
           NVERSION: ${{ github.event.release.tag_name }}
           RELEASENVERSION: ${{ github.event.release.name }}
-        run: python3 .github/workflows/src/release.py
+        run: python3 test/automation/release.py
 
       - name: Install Build Tools
         run: |

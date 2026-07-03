@@ -1,4 +1,9 @@
-"""Custom Warning classes"""
+"""
+Custom Warning classes for kms.
+
+Best if new warnings are kept to a minimum. Always try to use existing built-in warnings.
+"""
+#pylint: disable=too-many-ancestors
 
 from __future__ import annotations
 
@@ -26,8 +31,7 @@ class AdditionFailureWarning(RuntimeWarning):
 
 class SubtractionFailureWarning(RuntimeWarning):
     """
-    Warns you about attempting to subtract a
-    Storage instance by a dictionary, and vice versa.
+    Warns you about attempting to subtract a Storage instance by a dictionary, and vice versa.
 
     Also applies to division, despite the name.
     """

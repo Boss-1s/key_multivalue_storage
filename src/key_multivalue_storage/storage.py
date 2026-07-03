@@ -1,10 +1,12 @@
 """
-Key to Multivalue Storage
-Last updated: 6/04/2026
+Key to Multivalue Storage - 'storage' Module
+Last updated: 07/02/2026
 
-Basically a nested-dictionary (key to key-value) module I made because I didn't like how
-scratchattach's database worked and the steep learning curve that came with it.
-So far this is the greatest piece of a python program I have made.
+This module contains the 'Storage' class. This is the
+main class in which this library is centralized about.
+You can create instances of this class using the format
+`Storage(key, subkey=subvalue...)` and storing it in a
+JSON file with `.store(file_path)`.
 
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
@@ -18,6 +20,7 @@ Made with love by Boss_1s.
 
 from __future__ import annotations
 
+import sys
 import json
 import uuid
 import warnings
@@ -25,9 +28,12 @@ import difflib
 import builtins
 # TODO in v1.5: import logger
 
-from typing import Any, Optional, Generator
+from typing import Any, Generator
 from types import TracebackType
 from functools import total_ordering
+from collections.abc import Callable
+from rich.console import Console
+from rich.markdown import Markdown
 
 from .utils import warnings as w, exceptions, metadata as meta
 
@@ -51,6 +57,7 @@ from .utils import warnings as w, exceptions, metadata as meta
 #    if logger.level == logging.CRITICAL + 100:logger.setLevel(logging.INFO)
 #    else:logger.setLevel(logging.CRITICAL + 100)
 
+def help() -> None: Console().print(Markdown(str(__doc__)))
 
 def print(*args, **kwargs) -> None:
     """
@@ -68,21 +75,34 @@ def print(*args, **kwargs) -> None:
     flush
      whether to forcibly flush the stream.
     """
-    builtins.print("[key_multivalue_storage.py] ", *args, **kwargs)
+    builtins.print("[key_multivalue_storage/storage.py] ", *args, **kwargs)
 
 @total_ordering
 class Storage(metaclass=meta._StorageMeta):
     """
-    Class for monokey-multivalue storage.
+    Main class for monokey-multivalue storage.
 
-    Developed for the project ScratchChat by Boss_1s -> https://scratch.mit.edu/projects/1051418168
+    ### Usage\n
+    - `Storage(key: str, kwargs1: Any, kwargs2: Any...)`
+    -> Create an instance of the Storage class to store\n
+    - `.store(file_path: str)` -> Store this instance in a JSON file
 
-    Used in conjuction with scratchattach.
+    ### Attributes\n
+    #### Global Attributes
+    >Global attributes can be set at a global scale (i.e. `Storage.attribute = value`) and affect
+    >all new instances of `Storage`.
 
-    Usage:
+    - `indent` -> indent size of JSON files.
+    - `encode` -> whether or not to encode entries.
+    - `auto_delete_self` -> whether or not an instance releases from memory automatically.
 
-    Storage(key: str, kwargs1: Any, kwargs2: Any...)
-    Create an instance of the Storage class to store
+    #### Instance Attributes
+    >Instance attributes cannot be set unless an instance is created and assigned to a variable.
+
+    - `instance_id` -> the specific identifier of a `Storage` instance. On creation of a new
+    instance, it is automatically assigned as a `uuid.UUID` object.
+    - `key` -> the top level key of a `Storage` instance.
+    - `values` -> the subkey-value pairs of a `Storage` instance.
     """
 
     # TODO in v1.5: global logger
@@ -110,6 +130,14 @@ class Storage(metaclass=meta._StorageMeta):
                           w.CastWarning)
         self.key = str(key)
         self.values = kwargs
+
+    def __init_subclass__(cls, **kwargs) -> None:
+        super().__init_subclass__(**kwargs)
+
+        def raise_error():
+            raise exceptions.NoInstantiationError(f"Cannot instantiate class {cls.__name__}")
+
+        cls.__new__ = raise_error()
 
     @staticmethod
     def _encode(string: Any) -> int:
@@ -222,6 +250,24 @@ class Storage(metaclass=meta._StorageMeta):
 
         return cls(top_lv_key, **og_nested_values)
 
+    @classmethod
+    def help(cls, method: Callable[..., Any] | None = None) -> None:
+        """Help function for class Storage."""
+        if method and not callable(method):
+            raise TypeError(f"Expected callable, got '{type(method)}' instead")
+        console = Console()
+        help_txt: str = ''
+        if method:
+            console.print(Markdown(str(method.__doc__)))
+        else:
+            help_txt = "## **<kms.Storage>**\n" + str(cls.__doc__)
+            console.print(Markdown(help_txt))
+            if hasattr(sys, 'ps1'):
+                console.print(Markdown("> To learn more about a specific method, "+
+                                       "run `Storage.help(Storage.<method>)`. When passing the "+
+                                       "method, don't call it (adding parenthesis after the "+
+                                       "method name)."))
+
     def store(self,
               file_path: str,
               instant_delete: bool | None = None,
@@ -265,478 +311,6 @@ class Storage(metaclass=meta._StorageMeta):
 
         if instant_delete:
             del self
-
-    class Load:
-        """Class docsting here"""
-        @classmethod
-        def by_key(cls,
-                   file_path: str,
-                   key: Any,
-                   raw: bool=False
-                  ) -> Optional[Storage]:
-            """
-            Load a json file and find the key to extract
-            a single key-multivalue pair and its values.
-            """
-
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Load.by_key: ERROR: Failed to load with key '{key}' -",
-                      f"file '{file_path}' does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print(f"Load.by_key: ERROR: Failed to load with key '{key}' -",
-                      f"file '{file_path}' contains invalid JSON.")
-                return None
-
-            if not isinstance(key, str):
-                warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                              w.CastWarning)
-            key=str(key)
-
-            #Debug
-            print(f"Load.by_key: DEBUG: Data loaded from '{file_path}': {loaded_data}")
-            print(f"Load.by_key: DEBUG: Keys in loaded_data: {loaded_data.keys()}")
-            print(f"Load.by_key: DEBUG: Type of loaded_data keys: {[
-                type(k) for k in loaded_data.keys()
-                ]}")
-            print(f"Load.by_key: DEBUG: Key being searched for: '{key}'")
-            print(f"Load.by_key: DEBUG: Type of search key: {type(key)}")
-
-            # Super-detailed comparison check
-            found_in_keys = False
-            for k in loaded_data.keys():
-                print(f"Load.by_key: DEBUG: Comparing '{key}' (len={len(key)},"+
-                      f" repr={repr(key)}) with loaded key '{k}' (len={len(k)}, repr={repr(k)})")
-                if key == k:
-                    found_in_keys = True
-                    print(f"Load.by_key: DEBUG: Match found for key '{key}'!")
-                    break
-
-            if key in loaded_data and found_in_keys: #Use the flag from the detailed comparison
-                try:
-                    return Storage._from_dict({key: loaded_data[key]}, raw)
-                except ValueError as e:
-                    print(f"Load.by_key: ERROR: Error reconstructing object for key '{key}': {e}")
-                    return None
-            else:
-                print("Load.by_key: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, key)
-
-        @classmethod
-        def by_index(cls,
-                     file_path: str,
-                     index: int,
-                     raw: bool=False
-                    ) -> Optional[Storage]:
-            """
-            Load a json file and find the index at which to
-            extract a single key-multivalue pair and its values.
-
-            Do note that this method bases the start index at 0.
-            """
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Failed to load by index '{index}' - file '{file_path}' does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print(f"Failed to load by index '{index}' -",
-                      f"file '{file_path}' contains invalid JSON.")
-                return None
-
-            keys = list(loaded_data.keys())
-
-            # Check if the provided index is valid
-            if not 0 <= index < len(keys):
-                print(f"Load.by_index: ERROR: Index '{index}' is out of bounds for the keys in",
-                      f"'{file_path}'. Available keys: {len(keys)}"
-                     )
-                return None
-
-            target_key: str = keys[index]
-            if target_key in loaded_data:
-                try:
-                    return Storage._from_dict({target_key: loaded_data[target_key]}, raw)
-                except ValueError as e:
-                    print("Error reconstructing object for key",
-                          f"'{target_key}' at index '{index}': {e}")
-                    return None
-            else:
-                print("Load.by_index: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path,
-                                        target_key,
-                                        f"Key '{target_key}' unexpectedly not found"+
-                                        f" in loaded data for index '{index}'.")
-
-        @classmethod
-        def keys(cls, file_path: str) -> Optional[list[str]]:
-            """Load a json file and returns the keys of that file."""
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Load.keys: ERROR: Failed to load file '{file_path}': does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print("Load.keys: ERROR: Failed to load file",
-                      f"'{file_path}': contains invalid JSON.")
-                return None
-
-            return list(loaded_data.keys())
-
-        @classmethod
-        def values(cls,
-                   file_path: str,
-                   key: Any,
-                   keys: bool=False,
-                   raw: bool=True
-                  ) -> Optional[list[str]]:
-            """
-            Loads a json file and returns the values under the inputed key.
-
-            Unlike other loading methods, this one returns the raw values by default.
-
-            Keys can also be returned as a key-value pair if keys=True.
-            """
-            print(f"Load.values: DEBUG: file_path={file_path}")
-            print(f"Load.values: DEBUG: key={key}")
-            print(f"Load.values: DEBUG: keys={keys}")
-            print(f"Load.values: DEBUG: raw={raw}")
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Load.values: ERROR: Failed to load file '{file_path}': does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print("Load.values: ERROR: Failed to load",
-                      f"file '{file_path}': contains invalid JSON.")
-                return None
-
-            print(f"Load.values: DEBUG: loaded_data={loaded_data}")
-            print(f"Load.values: DEBUG: key in loaded_data? {key in loaded_data}")
-
-            if not isinstance(key, str):
-                warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                              w.CastWarning)
-
-            key=str(key)
-
-            print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
-            if key in loaded_data:
-                try:
-                    subsection: Storage = Storage._from_dict({key: loaded_data[key]}, raw)
-                except ValueError as e:
-                    print(f"Load.values: ERROR: Error reconstructing object for key '{key}': {e}")
-                    return None
-            else:
-                print("Load.values: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, key)
-
-            items: list[str] = []
-            for key, val in subsection.values.items():
-                if keys:
-                    items.append(f"{key}: {val}")
-                    print(f"Load.values: DEBUG: items.append(f'{key}: {val}')")
-                else:
-                    items.append(val)
-                    print(f"Load.values: DEBUG: items.append({val})")
-            print(f"Load.values: DEBUG: {items}")
-            return items
-
-    class Edit:
-        """Class docstring here"""
-        @classmethod
-        def propkey(cls,
-                    file_path: str,
-                    top_lv_key: Any,
-                    oldpropkey: str,
-                    newpropkey: str,
-                    new: bool=True, #deprecated
-                    noexist_ok: bool=True) -> None:
-            """
-            Edits the name of subkey within a key within a JSON file.
-            The value of that subkey does not change.
-            """
-
-            warnings.warn("WARNING! The 'new' argument is no longer used. If you still use new="+
-                          "True or new=False, please use noexist_ok=True or noexist_ok=False."+
-                          "This argument will be removed "+
-                          "in v2.0.", DeprecationWarning)
-            if new:
-                noexist_ok = new
-
-            if not isinstance(top_lv_key, str):
-                warnings.warn("It is recommended that the 'top_lv_key' value be passed as a "+
-                              "string.",
-                              w.CastWarning)
-
-            top_lv_key=str(top_lv_key)
-
-            loaded_data: Storage | None = Storage.Load.by_key(
-                file_path,
-                top_lv_key,
-                )
-
-            if not loaded_data:
-                return
-
-            if oldpropkey in loaded_data:
-                for propkey, propval in loaded_data.values:
-                    if propkey == oldpropkey:
-                        loaded_data[newpropkey] = propval
-            elif noexist_ok:
-                warnings.warn(f"Subkey {oldpropkey} was not found. "+
-                              "Creating a new subkey under the name"+
-                              f" {newpropkey} with value '' (override this with"+
-                              " noexist_ok=False, will raise exception)"
-                             )
-                for propkey, propval in loaded_data.values:
-                    loaded_data[propkey] = propval
-                loaded_data[newpropkey] = ''
-            else:
-                print("Edit.propkey: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, oldpropkey)
-
-            Storage(top_lv_key, **loaded_data.values).store(file_path)
-            print("Edit.propkey: INFO: Sucessfully ",
-                  f"renamed {oldpropkey} to {newpropkey}.")
-
-        @classmethod
-        def propval(cls,
-                    file_path: str,
-                    top_lv_key: Any,
-                    propkey: str,
-                    newval: str) -> None:
-            """
-            Edits the value of a subkey within a key within a JSON file.
-            The subkey of that value does not change.
-            """
-
-            print(f"Edit.propval: DEBUG: file_path={file_path}")
-            print(f"Edit.propval: DEBUG: top_lv_key={top_lv_key}")
-            print(f"Edit.propval: DEBUG: propkey={propkey}")
-            print(f"Edit.propval: DEBUG: newval={newval}")
-
-            if not isinstance(top_lv_key, str):
-                warnings.warn("It is recommended that the 'top_lv_key' "+
-                              "value be passed as a string.",
-                              w.CastWarning)
-
-            top_lv_key=str(top_lv_key)
-
-            loaded_data: Storage | None = Storage.Load.by_key(
-                file_path,
-                top_lv_key,
-                )
-
-            print(f"Edit.propval: DEBUG: loaded_data={loaded_data}")
-            print(f"Edit.propval: DEBUG: not loaded_data? {not loaded_data}")
-
-            if not loaded_data:
-                return
-
-            oldval: str = ""
-            for realpropkey, propval in loaded_data.values.items():
-                print(f"Edit.propval: DEUBG: Current Check: {propkey} vs {realpropkey}")
-                if propkey == realpropkey:
-                    print(f"Edit.propval: INFO: Found match for {propkey} - {realpropkey}")
-                    oldval = propval
-                    print(f"Edit.propval: DEBUG: Attempting to set {propkey} to {newval}")
-                    loaded_data[propkey] = newval
-                    break
-
-
-            Storage(top_lv_key, **loaded_data.values).store(file_path)
-            print(f"Edit.propval: INFO: Sucessfully changed value {oldval} "+
-                  f"to {newval} under key {top_lv_key}.{propkey}.")
-
-        @classmethod
-        def key(cls,
-                file_path: str,
-                oldkey: Any,
-                newkey: Any) -> None:
-            """
-            Deletes a key-multivalue pair and its values within a JSON file.
-            Does NOT create a new instance of Storage, you will have to regrab
-            the values to see the changes.
-            """
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Edit.key: ERROR: Failed to load file '{file_path}': does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print(f"Edit.key: ERROR: Failed to load file '{file_path}': contains invalid JSON.")
-                return None
-
-            print(f"Edit.key: DEBUG: loaded_data.keys()={loaded_data.keys()}")
-            print(f"Edit.key: DEBUG: loaded_data.values()={loaded_data.values()}")
-            print(f"Edit.key: DEBUG: loaded_data={loaded_data}")
-
-            if not isinstance(oldkey, str):
-                warnings.warn("It is recommended that the 'oldkey' value be passed as a string.",
-                              w.CastWarning)
-
-            if not isinstance(newkey, str):
-                warnings.warn("It is recommended that the 'newkey' value be passed as a string.",
-                              w.CastWarning)
-
-            oldkey=str(oldkey)
-            newkey=str(newkey)
-
-            if oldkey in loaded_data:
-                loaded_data = {
-                    newkey if key == oldkey else key: value
-                    for key, value in loaded_data.items()
-                }
-                print(f"Edit.key: DEBUG: New dictionary: loaded_data={loaded_data}")
-                try:
-                    with open(file_path, "w", encoding="utf-8") as f:
-                        json.dump(loaded_data, f)
-                        print(f"Successfully changed key '{oldkey}' to '{newkey}'.")
-                except IOError as e:
-                    print(f"Error writing to file '{file_path}' after deletion: {e}")
-            else:
-                print("Edit.key: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, oldkey)
-
-    class Delete:
-        """Class docstring here"""
-        @classmethod
-        def by_propkey(cls,
-                       file_path: str,
-                       top_lv_key: Any,
-                       property_key: str) -> None:
-            """
-            Deletes a property within a top-level key in the JSON file.
-            Does NOT create a new instance of Storage, you will have to
-            regrab the values to see the changes.
-            """
-            # TODO v1.5: return_as_obj
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print("Delete.by_propkey: ERROR: Failed to load"+
-                      f"file '{file_path}': does not exist.")
-                return None
-            except json.JSONDecodeError:
-                print(f"Delete.by_propkey: ERROR: Failed to load file '{file_path}': "+
-                      "contains invalid JSON.")
-                return None
-
-            if not isinstance(top_lv_key, str):
-                warnings.warn("It is recommended that the 'top_lv_key' value be passed as a string."
-                              ,w.CastWarning)
-
-            top_lv_key=str(top_lv_key)
-
-            if top_lv_key in loaded_data:
-                try:
-                    subsection = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
-                except ValueError as e:
-                    print("Delete.by_propkey: ERROR: Error reconstructing "+
-                          f"object for key '{top_lv_key}': {e}")
-                    return None
-            else:
-                print("Delete.by_propkey: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, top_lv_key)
-
-            items: dict[str, Any] = {}
-
-            for propkey, propval in subsection.values.items():
-                if propkey != property_key:
-                    items[propkey] = propval
-
-            print(f"Delete.by_propkey: DEBUG: items={items}, type={type(items)}")
-            print(f"Delete.by_propkey: DEBUG: subsection={subsection}")
-            print(f"Delete.by_propkey: DEBUG: top_lv_key={top_lv_key}, type=({type(top_lv_key)})")
-
-            to_dump: dict[str, dict[str, Any]] = {top_lv_key: items}
-
-            print(f"Delete.by_propkey: DEBUG: to_dump={to_dump}")
-
-            Storage(top_lv_key, **to_dump).store(file_path)
-            print("Delete.by_propkey: INFO: Sucessfully deleted subkey",
-                  f"{property_key} and its value.")
-
-        @classmethod
-        def by_key(cls,
-                   file_path: str,
-                   key: Any) -> None:
-            """
-            Deletes a key-multivalue pair and its values within a JSON file.
-            Does NOT create a new instance of Storage, you will have to regrab the
-            values to see the changes.
-            """
-            # TODO v1.5: return_as_obj
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    loaded_data: dict[str, dict[str, Any]] = json.load(f)
-            except FileNotFoundError:
-                print(f"Delete.by_key: ERROR: Failed to load file '{file_path}': does not exist.")
-                return
-            except json.JSONDecodeError:
-                print(f"Delete.by_key: ERROR: Failed to load file '{file_path}': contains",
-                      "invalid JSON.")
-                return
-
-            if not isinstance(key, str):
-                warnings.warn("It is recommended that the 'key' value be passed as a string.",
-                              w.CastWarning)
-
-            key = str(key)
-
-            print(f"Delete.by_key: DEBUG: loaded_data.keys()={loaded_data.keys()}")
-            print(f"Delete.by_key: DEBUG: loaded_data.values()={loaded_data.values()}")
-            print(f"Delete.by_key: DEBUG: loaded_data={loaded_data}")
-
-            if key in loaded_data:
-                del loaded_data[key]
-                try:
-                    with open(file_path, "w", encoding="utf-8") as f:
-                        json.dump(loaded_data, f)
-                        print(f"Delete.by_key: INFO: Successfully deleted key '{key}' from",
-                              f"'{file_path}'.")
-                except IOError as e:
-                    print(f"Delete.by_key: ERROR: Error writing to file '{file_path}'",
-                          f"after deletion: {e}")
-            else:
-                print("Delete.by_key: ERROR: Encountered _KeyNotFoundError")
-                raise exceptions.KeyNotFoundError(file_path, key)
-
-        @staticmethod
-        def all(file_path: str,
-                warn: bool=True) -> None:
-            """
-            Delete all data stored in a JSON file.
-            """
-            _warn = True
-            for action, _, cat, _, _ in warnings.filters:
-                if action == 'ignore' and cat=="DeleteWarning":
-                    _warn = False
-
-            if not (_warn or warn):
-                warnings.warn(w.DeleteWarning(
-                    f"You are about to delete ALL of the data inside the file {file_path}. This "+
-                    "is an irreversible action! If you are COMPLETELY CERTAIN about deleting all "+
-                    "the data, add Storage.Delete.all(file_path, warn=False) to your script. If "+
-                    "you never want to see this warning again, add "+
-                    "warnings.filterwarning(category=Storage.DeleteWarning) to your script.",
-                    method="Delete.all"
-                    )
-                )
-                return
-
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump({}, f)
-                print(f"Delete.all: INFO: Deleted all data from {file_path} sucessfully.")
 
     # --- #
 
@@ -878,8 +452,6 @@ class Storage(metaclass=meta._StorageMeta):
                 "instance that is created.",method="__rsub__"))
             skeys = set(self.values.keys()) & set(other)
             for akey in skeys:
-
-                
                 akey: str
                 if akey in self.values:
                     del self.values[akey]

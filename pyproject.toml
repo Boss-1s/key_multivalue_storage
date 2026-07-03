@@ -31,6 +31,10 @@ keywords = [
     "storage",
     "wrapper-library"
 ]
+dependencies = [
+    "rich>=15.0.0",
+    "typing-extensions~=4.15",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -50,7 +54,7 @@ Issues = "https://github.com/Boss-1s/key_multivalue_storage/issues/"
 
 [tool.pylint.main]
 
-load-plugins = ["pylint_per_file_ignores"]
+load-plugins = [ "pylint_per_file_ignores" ]
 
 # Return non-zero exit code if any of these messages/categories are detected,
 # even if score is above --fail-under value. Syntax same as enable. Messages
@@ -207,7 +211,7 @@ overgeneral-exceptions = ["builtins.BaseException", "builtins.Exception"]
 expected-line-ending-format = ""
 
 # Regexp for a line that is allowed to be longer than the limit.
-ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
+ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$|assert"
 
 # Number of spaces of indent required inside a hanging or continued line.
 indent-after-paren = 1
@@ -232,7 +236,7 @@ single-line-if-stmt = false
 
 [tool.pylint.imports]
 # List of modules that can be imported at any level, not just the top level one.
-allow-any-import-level = ["key_multivalue_storage"]
+allow-any-import-level = ["key_multivalue_storage", ".", "Storage"]
 
 # Allow explicit reexports by alias from a package __init__.
 allow-reexport-from-package = true
@@ -283,9 +287,11 @@ confidence = []
 per-file-ignores = [
     "**/__init__.py:unused-import,unused-variable,protected-access",
 
-    "src/*:protected-access",
+    "src/**:protected-access",
     
     "**/tests/*:duplicate-code,protected-access,line-too-long,missing-module-docstring",
+
+    "src/*/utils/*:invalid-name,missing-function-docstring",
 ]
 
 # Disable the message, report, category or checker with the given id(s). You can
@@ -495,6 +501,7 @@ redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "
 [dependency-groups]
 dev = [
     { include-group = "test" },
+    "pre-commit>=4.6.0",
     "pylint-per-file-ignores>=3.2.1",
 ]
 test = [

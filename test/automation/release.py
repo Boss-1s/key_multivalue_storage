@@ -30,9 +30,9 @@ with open(pyproject_path, "r+", encoding="utf-8") as f:
             print(f"::notice:: release.py: replacing line '{line.replace('\n', '')}'")
             if nightly:
                 newline = '    "Development Status :: 2 - Pre-Alpha",\n'
-            elif 'a' in newv:
+            elif 'a' in str(newv):
                 newline = '    "Development Status :: 3 - Alpha",\n'
-            elif 'b' in newv:
+            elif 'b' in str(newv):
                 newline = '    "Development Status :: 4 - Beta",\n'
             else:
                 newline = '    "Development Status :: 5 - Production/Stable",\n'
