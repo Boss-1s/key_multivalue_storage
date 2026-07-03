@@ -44,7 +44,7 @@ jobs:
           uv sync
 
       - name: Run Python Tests
-        run: uv run --with . python test/test-general.py
+        run: uv run python test/
 
       - name: Display Breaking Changes (beta)
         if: ${{ github.ref_name == 'beta' }}
@@ -80,7 +80,7 @@ jobs:
         uses: ludeeus/action-shellcheck@2.0.0
         with:
           ignore: >-
-            .venv/
+            .venv/*
           severity: error
 
       - name: Fail job if steps failed
