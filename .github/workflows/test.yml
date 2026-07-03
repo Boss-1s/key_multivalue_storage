@@ -44,8 +44,10 @@ jobs:
           uv sync
 
       - name: Run Python Tests
+        env:
+          TERM: dumb
+          PYTHONUTF8: "1"
         run: |
-          export TERM=dumb
           uv run python test/
 
       - name: Display Breaking Changes (beta)
