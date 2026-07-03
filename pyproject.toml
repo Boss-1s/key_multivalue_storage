@@ -33,7 +33,7 @@ keywords = [
 ]
 dependencies = [
     "rich>=15.0.0",
-    "typing-extensions~=4.15",
+    "typing-extensions~=4.16",
 ]
 
 [project.optional-dependencies]
