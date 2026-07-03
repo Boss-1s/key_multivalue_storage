@@ -66,7 +66,7 @@ sidebar:
     icon: <i class="fa-brands fa-github"></i>
     link: https://github.com/Boss-1s/key_multivalue_storage
   - name: PyPI (package)
-    icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg" style="vertical-align: -5px;" width="20" height="20"/>
+    icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg" width="20" height="20"/>
     link: https://pypi.org/key-multivalue-storage
     
 # Exclude from processing.
