@@ -79,7 +79,8 @@ jobs:
         continue-on-error: true
         uses: ludeeus/action-shellcheck@2.0.0
         with:
-          format: gcc
+          ignore: >-
+            .venv/
           severity: error
 
       - name: Fail job if steps failed
