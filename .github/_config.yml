@@ -67,7 +67,7 @@ sidebar:
     link: https://github.com/Boss-1s/key_multivalue_storage
   - name: PyPI (package)
     icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg" width="20" height="20"/>
-    link: https://pypi.org/key-multivalue-storage
+    link: https://pypi.org/project/key-multivalue-storage
     
 # Exclude from processing.
 # The following items will not be processed, by default.
