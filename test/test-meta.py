@@ -2,8 +2,8 @@
 test-meta.py - a test file for KMS designed specifaclly to test the new metaclass 
 and help() method implementations.
 
-Test file version: t-meta-kms-v2026.6.0
-Compatible versions for this test file: >=kms-v1.3.0a5/2026.06.<day>
+Test file version: t-meta-kms-v2026.7.0
+Compatible versions for this test file: >=kms-v1.3.0a5/2026.07.03
 """
 
 import key_multivalue_storage as kms
