@@ -15,7 +15,10 @@ that came with it.**
 
 So far, this is the ***greatest piece of a python program I have ever made.***
 """
+import sys
 import warnings
+import inspect
+from typing import Any, Callable
 from rich.console import Console, Group
 from rich.syntax import Syntax
 from rich.panel import Panel
@@ -78,7 +81,41 @@ warnings.warn("Going from kms-semver2.0, the module "+
 #              PendingDeprecationWarning
 #             )
 
-def help() -> None:
+def help() -> None: #pylint: disable=redefined-builtin
+    """Beautiful help panel created with Rich."""
+    def _add_to_tree(tree: Tree, method: Callable[..., Any]) -> None:
+        """
+        Add a method to the tree with its signature and docstring.
+        
+        ### Args
+            tree (Tree): The tree to which the method will be added.
+            method (Callable[..., Any]): The method to add to the tree.
+        """
+        annotation_str: str = '('
+        for arg, typ in method.__annotations__.items():
+            if arg == 'return':
+                if annotation_str.endswith(", "):
+                    annotation_str = annotation_str[:-2]
+                annotation_str += f") -> {typ}"
+            else:
+                annotation_str = annotation_str + f"{arg}: {typ}"
+                if inspect.signature(method).parameters[arg]:
+                    default = inspect.signature(method).parameters[arg].default
+                    if default is not inspect.Parameter.empty:
+                        annotation_str += f"={default}"
+                annotation_str += ", "
+
+        signature = f"def {method.__name__}{annotation_str}: ..,."
+        docstring = Markdown(str(method.__doc__)) if method.__doc__ else "[red]No docstring available.[/]"
+        
+        tree.add(
+            Group(
+                Syntax(signature, "python"),
+                docstring
+            ),
+            guide_style="red"
+        )
+
     console = Console()
 
     orange: str = "#ff5533"
@@ -153,21 +190,13 @@ def help() -> None:
             Syntax(
                 "def help() -> None: ...", "python"
             ),
-            ""
+            str(__doc__)
         ),
         guide_style="red"
     )
 
     store = library.add("[cyan]storage.py", guide_style="cyan")
-    store.add(
-        Group(
-            Syntax(
-                "def help() -> None: ...", "python"
-            ),
-            str(kms.help.__doc__)
-        ),
-        guide_style="red"
-    )
+    _add_to_tree(store, storage.help)
     s = store.add(
         Group(
             Syntax(
@@ -179,54 +208,59 @@ def help() -> None:
         ),
         guide_style=orange
     )
-    s.add(
+    _add_to_tree(s, Storage.help)
+    _add_to_tree(s, Storage.store)
+
+    load = library.add("[cyan]load.py", guide_style="cyan")
+    l = load.add(
         Group(
             Syntax(
-                "def help(method: ((Any) -> Any) | None) -> None: ...", "python"
-            ),
-            str(Storage.help.__doc__)
-        ),
-        guide_style="red"
-    )
-    s.add(
-        Group(
-            Syntax(
-                """def store(
-    self: Storage,
-    file_path: str,
-    instant_delete: bool | None = None,
-    indent: int | None = None,
-    encode: bool | None = None
-) -> None: ...""",
+                "class Load(metaclass=.utils.metadata._LoadMeta) -> None: ...",
                 "python"
             ),
-            str(Storage.store.__doc__).strip()
+            Markdown(str(Load.__doc__))
         ),
-        guide_style="red"
+        guide_style=orange
     )
-    load = library.add("[cyan]load.py", guide_style="cyan")
-    load.add("[b green]Docs Coming Soon!")
+    _add_to_tree(l, Load.help)
+    _add_to_tree(l, Load.by_key)
+    _add_to_tree(l, Load.by_index)
+    _add_to_tree(l, Load.keys)
+    _add_to_tree(l, Load.values)
     edit = library.add("[cyan]edit.py", guide_style="cyan")
     edit.add("[b green]Docs Coming Soon!")
     delete = library.add("[cyan]delete.py", guide_style="cyan")
     delete.add("[b green]Docs Coming Soon!")
 
-    legend_text = """[b blue]Blue - Top level module[/b blue]
+    legend_text = Group(
+        """[b blue]Blue - Top level module[/b blue]
 [green]Green - Sub-module (folder)[/]
 [cyan]Cyan - Module (file)[/]
 [#ff5533]Orange - Class[/]
 [red]Red - Method[/]
 
-[i]Private APIs and dunder methods like __init__ are not included.
-For more details about those specific methods and classes, see the documentation.
-"""
-    legend = Panel.fit(legend_text, title="**Key**")
+[i]Private APIs (ones starting with '_') and dunder methods like __init__ are not included.""",
+        Markdown("**For more details about those specific methods and classes, "+
+                "see the [documentation]"+
+                "(https://boss-1s.github.io/key_multivalue_storage/Documentation).**"
+        )
+    )
+
+    legend = Panel.fit(legend_text, title="Key")
 
     console.print(
         Markdown(
             "# Key to Multivalue Storage (key_multivalue_storage, kms)"
         ),
-        Markdown(str(__doc__)),
+        Markdown(str(__doc__))
+    )
+
+    if hasattr(sys, 'ps1'):
+        console.print("\n[b green]Hit enter to continue[/b green]")
+
+        input()
+
+    console.print(
         Markdown("--------\n## Structure of the Library"),
         legend,
         library,

@@ -11,11 +11,15 @@ Made with love by Boss_1s.
 """
 from __future__ import annotations
 
+import sys
 import json
 import warnings
 import builtins
 # TODO in v1.5: import logger
-from typing import Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, Callable
+
+from rich.console import Console
+from rich.markdown import Markdown
 
 from .utils import warnings as w, exceptions, metadata as meta
 
@@ -42,7 +46,43 @@ def print(*args, **kwargs) -> None:
     builtins.print("[key_multivalue_storage/load.py] ", *args, **kwargs)
 
 class Load(metaclass=meta._LoadMeta):
-    """Class docsting here"""
+    """
+    Class containg methods related to loading JSON data into Storage objects.
+    
+    ### Usage
+    - `Storage.Load.by_key(file_path: str, key: Any, raw: bool=False) -> Storage | None`
+    -> Load a JSON file and find the key to extract a single key-multivalue pair and its values.
+    - `Storage.Load.by_index(file_path: str, index: int, raw: bool=False) -> Storage | None` ->
+    Load a JSON file and find the index at which to extract a single key-multivalue pair and its
+    values.
+    - `Storage.Load.keys(file_path: str) -> list[str] | None` -> Load a JSON file and returns the keys
+    of that file.
+    - `Storage.Load.values(file_path: str, key: Any, keys: bool=False, raw: bool=True) -> 
+    list[str] | None` -> Loads a JSON file and returns the values under the inputted key.
+    - `Storage.Load.help(method: ((Any) -> Any) | None) -> None` -> Displays the docstring of the
+    specified method, or the entire Load class if no method is specified.
+
+    ### Attributes
+    **There are no attributes in this class.**
+    """
+    @classmethod
+    def help(cls, method: Callable[..., Any] | None = None) -> None:
+        """Help function for class Load."""
+        if method and not callable(method):
+            raise TypeError(f"Expected callable, got '{type(method)}' instead")
+        console = Console()
+        help_txt: str = ''
+        if method:
+            console.print(Markdown(str(method.__doc__)))
+        else:
+            help_txt = "## **<kms.Storage.Load>**\n" + str(cls.__doc__)
+            console.print(Markdown(help_txt))
+            if hasattr(sys, 'ps1'):
+                console.print(Markdown("> To learn more about a specific method, "+
+                                       "run `Storage.help(Storage.<method>)`. When passing the "+
+                                       "method, don't call it (adding parenthesis after the "+
+                                       "method name)."))
+
     @classmethod
     def by_key(cls,
                 file_path: str,
@@ -52,6 +92,15 @@ class Load(metaclass=meta._LoadMeta):
         """
         Load a json file and find the key to extract
         a single key-multivalue pair and its values.
+
+        ## Arguments
+        - `file_path: str`: The file path to load from.
+        - `key: Any`: The key to search for in the loaded data.
+        - `raw: bool=False`: Whether to return the raw data or decode it.
+
+        ## Returns
+        - `Storage`: Returns a Storage object containing the loaded data if found.
+        - `None`: Returns None if the key was not found or if there was an error.
         """
 
         from . import Storage
@@ -113,6 +162,15 @@ class Load(metaclass=meta._LoadMeta):
         extract a single key-multivalue pair and its values.
 
         Do note that this method bases the start index at 0.
+
+        ## Arguments
+        - `file_path: str`: The file path to load from.
+        - `index: int`: The index to search by in the loaded data.
+        - `raw: bool=False`: Whether to return the raw data or decode it.
+
+        ## Returns
+        - `Storage`: If sucessful, a Storage object will be returned with the loaded data.
+        - `None`: Only returned on failure to load the file or if the index is out of bounds.
         """
 
         from . import Storage
@@ -154,7 +212,16 @@ class Load(metaclass=meta._LoadMeta):
 
     @classmethod
     def keys(cls, file_path: str) -> list[str] | None:
-        """Load a json file and returns the keys of that file."""
+        """
+        Load a json file and returns the keys of that file.
+        
+        ## Arguments
+        - `file_path: str`: The file path to load from.
+
+        ## Returns
+        `list[str]`: A list containing strings of the top level keys in the loaded JSON file.
+        `None`: May return None on error or if no keys were found.
+        """
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -181,6 +248,13 @@ class Load(metaclass=meta._LoadMeta):
         Unlike other loading methods, this one returns the raw values by default.
 
         Keys can also be returned as a key-value pair if keys=True.
+
+        ## Arguments
+        - `file_path: str`: The file path to load from.
+        - `key: Any`: The key to search for in the loaded data.
+        - `keys: bool=False`: Whether to return the values as a list of key-value pairs or
+        just the values.
+        - `raw: bool=True`: Whether to return the raw data or decode it.
         """
 
         from . import Storage

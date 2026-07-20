@@ -14,10 +14,10 @@ except ImportError:
           "to use this feature.")
     sys.exit(1)
 
-from griffe import load_git #type: ignore
 from pathlib import Path
 from os import environ
 from typing import Any
+from griffe import load_git #type: ignore
 
 def find_mismatched_breaking_changes(package_path: str, single_file_path: str):
     """Find breaking changes"""
