@@ -255,6 +255,11 @@ class Load(metaclass=meta._LoadMeta):
         - `keys: bool=False`: Whether to return the values as a list of key-value pairs or
         just the values.
         - `raw: bool=True`: Whether to return the raw data or decode it.
+
+        ## Returns
+        - `list[str]`: A list containing the values under the specified key in the loaded data.
+        If `keys=True`, then the list will contain key-value pairs in the format "key: value".
+        - `None`: Returns None if the key was not found or if there was an error.
         """
 
         from . import Storage
@@ -295,10 +300,10 @@ class Load(metaclass=meta._LoadMeta):
             raise exceptions.KeyNotFoundError(file_path, key)
 
         items: list[str] = []
-        for key, val in subsection.values.items():
+        for k, val in subsection.values.items():
             if keys:
-                items.append(f"{key}: {val}")
-                print(f"Load.values: DEBUG: items.append(f'{key}: {val}')")
+                items.append(f"{k}: {val}")
+                print(f"Load.values: DEBUG: items.append(f'{k}: {val}')")
             else:
                 items.append(val)
                 print(f"Load.values: DEBUG: items.append({val})")

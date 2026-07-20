@@ -6,6 +6,7 @@ relating to the date or commit SHAs.
 import os
 import re
 import sys
+import subprocess
 from datetime import datetime
 from git import Repo
 from rich.console import Console
@@ -20,14 +21,9 @@ metadata_path = os.path.join(repo_root, "src/key_multivalue_storage/utils/metada
 def is_file_modified(file_path):
     """check if file modified with GitPython"""
     repo = Repo(os.getcwd())
-
-    # Get relative path from repo root because GitPython tracks relative paths
-    rel_path = os.path.relpath(file_path, repo.working_tree_dir)
-
-    # Diffing the index against None compares it to the working tree
-    changed_files = [item.a_path for item in repo.index.diff(None)]
-
-    return rel_path in changed_files
+    repo.git.add(file_path)
+    diff = repo.git.diff('HEAD', file_path)
+    return bool(diff)
 
 class_to_module: dict[str, str] = {
     "_StorageMeta": "src/key_multivalue_storage/storage.py",
@@ -62,13 +58,15 @@ try:
                     f_lines[i] = (
                         f'        return "{datetime.now().year:04d}.'+
                         f'{datetime.now().month:02d}.{datetime.now().day:02d}"\n'
-                    )
+                )
             i += 1
 
         f.seek(0)
         f.writelines(f_lines)
         f.truncate()
         print("Completed job.")
+        print("Staging changes...")
+        subprocess.run(["git", "add", metadata_path], capture_output=True, check=True)
         sys.exit(0)
 except Exception as e:
     console = Console()
