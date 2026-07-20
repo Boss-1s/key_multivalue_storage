@@ -7,6 +7,7 @@ import os
 import re
 import sys
 from datetime import datetime
+from git import Repo
 from rich.console import Console
 
 try:
@@ -16,23 +17,52 @@ except NameError:
     repo_root = os.environ.get("GITHUB_WORKSPACE", os.getcwd())
 metadata_path = os.path.join(repo_root, "src/key_multivalue_storage/utils/metadata.py")
 
+def is_file_modified(file_path):
+    """check if file modified with GitPython"""
+    repo = Repo(os.getcwd())
+
+    # Get relative path from repo root because GitPython tracks relative paths
+    rel_path = os.path.relpath(file_path, repo.working_tree_dir)
+
+    # Diffing the index against None compares it to the working tree
+    changed_files = [item.a_path for item in repo.index.diff(None)]
+
+    return rel_path in changed_files
+
+class_to_module: dict[str, str] = {
+    "_StorageMeta": "src/key_multivalue_storage/storage.py",
+    "_LoadMeta": "src/key_multivalue_storage/load.py",
+    "_EditMeta": "src/key_multivalue_storage/edit.py",
+    "_DeleteMeta": "src/key_multivalue_storage/delete.py"
+}
+
 try:
     with open(metadata_path, "r+", encoding="utf-8") as f:
         f_lines = f.readlines()
         i = 0
+        current_class: str = ''
         while i < len(f_lines):
             line = f_lines[i]
             print(f"Processing line #{i + 1} of {len(f_lines)}: '{line.strip()}'")
+            if "class" in line:
+                # Check if the line contains a class definition
+                class_match = re.match(r'class\s+(\w+)\s*\(.*\)\s*:', line.strip())
+                if class_match:
+                    current_class = class_match.group(1)
+                    print(f"Found class definition: {current_class}")
+
             if re.match(r'return "\d{4}/\d{2}/\d{2}"', line.strip()):
-                f_lines[i] = (
-                    f'        return "{datetime.now().year:04d}/'+
-                    f'{datetime.now().month:02d}/{datetime.now().day:02d}"\n'
+                if is_file_modified(class_to_module[current_class]):
+                    f_lines[i] = (
+                        f'        return "{datetime.now().year:04d}/'+
+                        f'{datetime.now().month:02d}/{datetime.now().day:02d}"\n'
                 )
             elif re.match(r'return "\d{4}.\d{2}.\d{2}"', line.strip()):
-                f_lines[i] = (
-                    f'        return "{datetime.now().year:04d}.'+
-                    f'{datetime.now().month:02d}.{datetime.now().day:02d}"\n'
-                )
+                if is_file_modified(class_to_module[current_class]):
+                    f_lines[i] = (
+                        f'        return "{datetime.now().year:04d}.'+
+                        f'{datetime.now().month:02d}.{datetime.now().day:02d}"\n'
+                    )
             i += 1
 
         f.seek(0)

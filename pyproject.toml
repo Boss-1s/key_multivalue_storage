@@ -501,6 +501,7 @@ redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "
 [dependency-groups]
 dev = [
     { include-group = "test" },
+    "gitpython>=3.1.53",
     "pre-commit>=4.6.0",
     "pylint-per-file-ignores>=3.2.1",
 ]
