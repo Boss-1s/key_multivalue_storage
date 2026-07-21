@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# Note: 7% AI-generated
+# Note: 5% AI-generated
+
+if [ -z "$CUSTOM_COMMIT_MSG" ]; then
+  echo "CUSTOM_COMMIT_MSG environment variable is not set. Setting to default 'commit'."
+  CUSTOM_COMMIT_MSG="commit"
+fi
+
 set -e
 
 SSH_REMOTE_URL=$(git remote get-url origin | sed -E 's|https://github.com/|git@github.com:|')
@@ -22,7 +28,7 @@ else
 fi
 
 git add .
-git commit -m "[skip ci] release: version update" -m "This commit is standard release procedure and was automatically commited as part of a release. This commit was created and pushed by automation."
+git commit -m "[skip ci] release: $CUSTOM_COMMIT_MSG" -m "This commit is standard release procedure and was automatically commited as part of a release. This commit was created and pushed by automation."
 
 if [[ "$DUMMY" == "true" ]]; then
   git push origin "$BRANCH" --dry-run

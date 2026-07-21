@@ -503,6 +503,10 @@ release = [
     "requests>=2.34.2",
     "rich>=15.0.0",
 ]
+release = [
+    "packaging>=26.2",
+    "requests>=2.34.2",
+]
 test = [
     "pylint>=4.0.6",
     "pylint-per-file-ignores>=3.2.1",
