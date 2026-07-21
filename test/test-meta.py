@@ -3,7 +3,9 @@ test-meta.py - a test file for KMS designed specifaclly to test the new metaclas
 and help() method implementations.
 
 Test file version: t-meta-kms-v2026.7.1
-Compatible versions for this test file: >=kms-v1.3.0a/2026.07.03
+Compatible versions for this test file: >=kms-v1.3.0b0/2026.07.22
+
+(For version kms-semver1.3.0a4, use v2026.7.0 instead.)
 """
 
 import key_multivalue_storage as kms
