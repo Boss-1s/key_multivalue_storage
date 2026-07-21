@@ -8,6 +8,8 @@ Compatible versions for this test file: >=kms-v1.3.0b0/2026.07.22
 (For version kms-semver1.3.0a4, use v2026.7.0 instead.)
 """
 
+import sys
+from rich.console import Console
 import key_multivalue_storage as kms
 from key_multivalue_storage import Storage
 
@@ -52,7 +54,10 @@ try:
     # Storage.Delete.help()
     # Storage.Delete.help(Storage.Delete.all)
 except Exception as e:
-    raise AssertionError from e
+    console = Console()
+    console.print_exception(show_locals=True)
+    console.print(f"[b red]Error: {e}")
+    sys.exit(1)
 
 print("Part 2 passed.")
 print("Test file completed successfully.")
