@@ -73,7 +73,7 @@ jobs:
         id: yml
         if: ${{ runner.os == 'Linux' }}
         continue-on-error: true
-        uses: reviewdog/action-actionlint@v1.72.0
+        uses: reviewdog/action-actionlint@v1.72.1
         with:
           actionlint_flags: '-color -oneline'
           level: info
