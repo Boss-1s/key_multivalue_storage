@@ -13,6 +13,8 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      artifact-metadata: write
+      attestations: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -49,6 +51,13 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
+      - name: Generate Github Attestations
+        # GH's attestations are different from PyPI's.
+        uses: actions/attest@v4
+        id: gh-attest
+        with:
+          subject-path: "dist/*"
+
       - name: Commit version change
         continue-on-error: true
         env:
@@ -83,3 +92,4 @@ jobs:
         with:
           files: |
             dist/*
+            ${{steps.gh-attest.outputs.bundle-path}}
