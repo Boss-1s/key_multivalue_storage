@@ -2,12 +2,14 @@
 test-meta.py - a test file for KMS designed specifaclly to test the new metaclass 
 and help() method implementations.
 
-Test file version: t-meta-kms-v2026.7.0
-Compatible versions for this test file: >=kms-v1.3.0a5/2026.07.03
+Test file version: t-meta-kms-v2026.7.1
+Compatible versions for this test file: >=kms-v1.3.0a/2026.07.03
 """
 
 import key_multivalue_storage as kms
 from key_multivalue_storage import Storage
+
+VERSION = "t-meta-kms-v2026.7.1"
 
 print("Begin test\n"+("-"*20)+"\nPart 1: __str__ and __repr__ of class via metaclass\n"+("-"*20))
 
@@ -41,9 +43,12 @@ try:
     kms.kms.help() # storage Module Help
     Storage.help() # Storage *class* Help
     Storage.help(Storage.store)
-    # Storage.Load.help()
+    Storage.Load.help()
+    Storage.Load.help(Storage.Load.keys)
     # Storage.Edit.help()
+    # Storage.Edit.help(Storage.Edit.propkey)
     # Storage.Delete.help()
+    # Storage.Delete.help(Storage.Delete.all)
 except Exception as e:
     raise AssertionError from e
 
