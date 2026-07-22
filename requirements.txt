@@ -1,1 +1,2 @@
 typing_extensions ~= 4.16
+rich >= 15.0.0

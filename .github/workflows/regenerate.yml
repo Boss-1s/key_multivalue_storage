@@ -1,0 +1,40 @@
+name: Regenerate Changelog
+
+on:
+    workflow_dispatch:
+    release:
+        types: [edited]
+
+jobs:
+    generate:
+        if: github.event.release.draft == false
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+
+            - name: Set up UV
+              uses: astral-sh/setup-uv@v7
+              with:
+                enable-cache: true
+
+            - name: Install dependencies
+              run: |
+                  uv sync --group release
+
+            - name: (Re)Generate Changelog
+              run: |
+                python test/automation/changelog_generate.py
+            
+            - name: Commit and Push Changes
+              env:
+                REF: "beta"
+                DUMMY: "false"
+                REPO: ${{ github.repository }}
+                CUSTOM_COMMIT_MSG: "changelog regenerated"
+              run: |
+                git checkout -B "$REF" "origin/$REF"
+                bash push.sh

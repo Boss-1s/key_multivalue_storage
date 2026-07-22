@@ -494,9 +494,16 @@ redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "
 [dependency-groups]
 dev = [
     { include-group = "test" },
-    "pylint-per-file-ignores>=3.2.1",
+    { include-group = "release" },
+]
+release = [
+    "gitpython>=3.1.53",
+    "md-toc>=9.0.0",
+    "packaging>=26.2",
+    "requests>=2.34.2",
 ]
 test = [
     "pylint>=4.0.6",
+    "pylint-per-file-ignores>=3.2.1",
     "pyproject>=1!0.1.2",
 ]
