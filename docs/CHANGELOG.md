@@ -3,6 +3,7 @@
 ## 📦 v1.3.0.20260721b0 — *kms-v1.3.0beta0/2026.07.21*
 
 ⚙ **Target Node Commit:** `a0871f01`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
@@ -37,6 +38,7 @@ I'm going to be releasing one more beta on the 23rd, which should include docstr
 ## 📦 v1.3.0.20260703a4 — *kms-v1.3.0a4/2026.07.03*
 
 ⚙ **Target Node Commit:** `e658778d`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
@@ -125,6 +127,7 @@ Side note: **Feature Freeze does not begin until kms-semver1.3.0rc0.**
 ## 📦 v1.3.0.20260610a3 — *kms-v1.3.0-alpha3/2026.06.10*
 
 ⚙ **Target Node Commit:** `8b48b591`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
@@ -213,6 +216,7 @@ That's it, folks!
 ## 📦 v1.3.0.20260524a2 — *kms-v1.3.0a2/2026.05.24*
 
 ⚙ **Target Node Commit:** `f5cb3356`
+
 📝 **Release Type:** Stable Promotion
 
 ### What's Changed
@@ -233,6 +237,7 @@ The next alpha with major changes will be released in a week, with the last majo
 ## 📦 v1.3.0.20260524a1 — *kms-v1.3.0-alpha1/2026.05.24*
 
 ⚙ **Target Node Commit:** `51583499`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
@@ -258,6 +263,7 @@ The next alpha with major changes will be released in a week, with the last majo
 ## 📦 v1.3.0.20260523a0 — *kms-v1.3.0-alpha0/2026.05.23*
 
 ⚙ **Target Node Commit:** `002c7c21`
+
 📝 **Release Type:** Pre-release - Minor Update
 
 omg its finally here!!! :>
@@ -311,6 +317,7 @@ Looks like the next alpha will be released in a week, with the last alpha in two
 ## 📦 v1.2.4.20260702 — *kms-v1.2.4/2026.07.03*
 
 ⚙ **Target Node Commit:** `5710f8a7`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -345,6 +352,7 @@ Our next few 1.2.4.x updates should see more updates to the [documentation websi
 ## 📦 v1.2.4.20260610b0 — *kms-v1.2.4-beta0/2026.06.10*
 
 ⚙ **Target Node Commit:** `de48c51d`
+
 📝 **Release Type:** Pre-release - Major Patch
 
 Testing release logic....
@@ -356,6 +364,7 @@ Testing release logic....
 ## 📦 v1.2.3.20260605.4 — *kms-v1.2.3/2026.06.05d*
 
 ⚙ **Target Node Commit:** `b875965f`
+
 📝 **Release Type:** Stable Promotion
 
 ### What's Changed
@@ -381,6 +390,7 @@ Yanked: [`v1.2.3.20260605.2`](https://github.com/Boss-1s/key_multivalue_storage/
 ## 📦 v1.2.3.20260605.4b3 — *kms-v1.2.3b3/2026.06.05d*
 
 ⚙ **Target Node Commit:** `b7ad7dbc`
+
 📝 **Release Type:** Stable Promotion
 
 so many betas....im praying this'll work.....please....
@@ -392,6 +402,7 @@ so many betas....im praying this'll work.....please....
 ## 📦 v1.2.3.20260605.4b2 — *kms-v1.2.3b2/2026.06.05d*
 
 ⚙ **Target Node Commit:** `fae9ca15`
+
 📝 **Release Type:** Stable Promotion
 
 Hopefully this works...
@@ -403,6 +414,7 @@ Hopefully this works...
 ## 📦 v1.2.3.20260605.4b1 — *kms-v1.2.3b1/2026.06.05d*
 
 ⚙ **Target Node Commit:** `fae9ca15`
+
 📝 **Release Type:** Stable Promotion
 
 **Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.3.20260605.4b0...v1.2.3.20260605.4b1
@@ -412,6 +424,7 @@ Hopefully this works...
 ## 📦 v1.2.3.20260605.4b0 — *kms-v1.2.3b0/2026.06.05d*
 
 ⚙ **Target Node Commit:** `a0549a98`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 **Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.3.20260605.3...v1.2.3.20260605.4b0
@@ -421,6 +434,7 @@ Hopefully this works...
 ## 📦 v1.2.3.20260605.3 — *[YANKED] kms-v1.2.3/2026.06.05c*
 
 ⚙ **Target Node Commit:** `27cebddb`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -442,6 +456,7 @@ If release fails again i swear....
 ## 📦 v1.2.3.20260605.2 — *[YANKED] kms-v1.2.3/2026.06.05b*
 
 ⚙ **Target Node Commit:** `de7e3bb3`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -463,6 +478,7 @@ If release fails again i swear....
 ## 📦 v1.2.3.20260605.1 — *kms-v1.2.3/2026.06.05a*
 
 ⚙ **Target Node Commit:** `77609c6c`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -493,6 +509,7 @@ If the release fails again i swear....
 ## 📦 v1.2.3.20260605 — *kms-v1.2.3/2026.06.05*
 
 ⚙ **Target Node Commit:** `791c8605`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -526,6 +543,7 @@ If release fails again i swear....
 ## 📦 v1.2.3.20260523.1 — *kms-v1.2.3/2026.05.23a*
 
 ⚙ **Target Node Commit:** `190cb35e`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -547,6 +565,7 @@ Our next few 1.2.3.x updates should see more Repo updates, specifically working 
 ## 📦 v1.2.3.20260523 — *kms-v1.2.3/2026.05.23*
 
 ⚙ **Target Node Commit:** `9e3ab939`
+
 📝 **Release Type:** Major Patch
 
 ### What's Changed
@@ -576,6 +595,7 @@ Our next few 1.2.3.x updates should see more Repo updates, specifically working 
 ## 📦 v1.2.2.20260517.3 — *kms-v1.2.2/2026.05.17c*
 
 ⚙ **Target Node Commit:** `b313bc41`
+
 📝 **Release Type:** Stable Promotion
 
 ### What's Changed
@@ -599,6 +619,7 @@ Our next few 1.2.2.x update should see more Repo updates as I slowly get situate
 ## 📦 v1.2.2.20260517.3-b — *kms-v1.2.2/2026.05.17c-beta*
 
 ⚙ **Target Node Commit:** `bb7d6746`
+
 📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
@@ -623,6 +644,7 @@ The 1.3 beta will come out soon!
 ## 📦 v1.2.2.20260517.2 — *kms-v1.2.2/2026.05.17b*
 
 ⚙ **Target Node Commit:** `6cc925b0`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -645,6 +667,7 @@ The 1.3 beta will come out soon!
 ## 📦 v1.2.2.20260517.1 — *kms-v1.2.2/2026.05.17a*
 
 ⚙ **Target Node Commit:** `2308c0c7`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -667,6 +690,7 @@ The 1.3 beta will come out soon!
 ## 📦 v1.2.2.20260517 — *kms-v1.2.2/2026.05.17*
 
 ⚙ **Target Node Commit:** `b6170c53`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -693,6 +717,7 @@ The 1.3 beta will come out soon!
 ## 📦 v1.2.2.20260515.1 — *kms-v1.2.2/2026.05.15a*
 
 ⚙ **Target Node Commit:** `cc051257`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -712,6 +737,7 @@ The 1.3 beta may also come out around that time.
 ## 📦 v1.2.2.20260515 — *kms-v1.2.2/2026.05.15*
 
 ⚙ **Target Node Commit:** `1968a9b4`
+
 📝 **Release Type:** Minor Patch
 
 ### What's Changed
@@ -739,6 +765,7 @@ The 1.3 beta may also come out around that time.
 ## 📦 v1.2.2.20260506.2 — *kms-v1.2.2/2026.05.06b*
 
 ⚙ **Target Node Commit:** `44758a3c`
+
 📝 **Release Type:** Major Patch
 
 ### First Package Release! (hopefully)
@@ -752,6 +779,7 @@ README will be finished in v1.3, alongside the 'Great Docstring Update' ;)
 ## 📦 v1.2.1.20260417.2 — *kms-v1.2.1/2026.04.17b*
 
 ⚙ **Target Node Commit:** `70424d7e`
+
 📝 **Release Type:** Major Patch
 
 > [!CAUTION]
@@ -785,6 +813,7 @@ Changelog:
 ## 📦 v1.2.0.20260128.1 — *kms-v1.2/2026.01.28a*
 
 ⚙ **Target Node Commit:** `f0c2322b`
+
 📝 **Release Type:** Minor Patch
 
 > [!CAUTION]
@@ -800,6 +829,7 @@ Changelog: https://github.com/Boss-1s/scratchattach/commit/b64dd8bd9891e664d8498
 ## 📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*
 
 ⚙ **Target Node Commit:** `5aced039`
+
 📝 **Release Type:** Initial Release
 
 > [!CAUTION]
