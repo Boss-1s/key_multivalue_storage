@@ -11,7 +11,8 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 import requests
 from packaging.version import Version, InvalidVersion
-from rich.console import Console # Requires: pip install rich
+from rich.console import Console
+from md_toc import api as md_toc
 
 # 1. SETUP CONFIGURATION
 REPO_OWNER = "Boss-1s"
@@ -75,8 +76,7 @@ def get_commit_sha_from_tag(owner, repo, tag_name, auth_token):
         "Accept": "application/json",
         "User-Agent": "ChangelogGenerator-PythonApp"
     }
-    if auth_token:
-        headers["Authorization"] = f"Bearer {auth_token}"
+    headers["Authorization"] = f"Bearer {auth_token}"
 
     response = requests.get(url, headers=headers, timeout=10)
     if response.status_code != 200:
@@ -104,10 +104,7 @@ def fetch_github_releases(owner, repo, token):
         "Accept": "application/json",
         "User-Agent": "ChangelogGenerator-PythonApp"
     }
-    if token and token != "YOUR_PERSONAL_ACCESS_TOKEN_HERE":
-        headers["Authorization"] = f"Bearer {token}"
-    elif not token or token == "YOUR_PERSONAL_ACCESS_TOKEN_HERE":
-        print("⚠%EF%B8%8F Warning: Requesting without a token. Private repos will fail.")
+    headers["Authorization"] = f"Bearer {token}"
 
     raw_data_items = []
     page = 1
@@ -173,6 +170,8 @@ def generate_changelog():
     # Write formatted payload data to CHANGELOG.md
     with open(changelog_path, "w", encoding="utf-8") as f:
         f.write("# Changelog\n\n")
+        f.write("## Table Of Contents\n\n")
+        f.write("<!--TOC-->\n\n")
         # Enumerate to peek at the older release adjacent to the current one
         for i, rel in enumerate(releases):
             # The chronologically prior release is the next element in a descending list
@@ -190,7 +189,10 @@ def generate_changelog():
             f.write(f"{flattened_body}\n\n")
             f.write("---\n\n")
 
-    print(f"\n🎉 {changelog_path} successfully created with exact web UI notes!")
+    toc = md_toc.build_toc(changelog_path, keep_header_levels=2, skip_lines=4)
+    md_toc.write_string_on_file_between_markers(changelog_path, toc, '<!--TOC-->')
+
+    print(f"\n🎉 {changelog_path} successfully generated!")
 
 if __name__ == "__main__":
     try:
