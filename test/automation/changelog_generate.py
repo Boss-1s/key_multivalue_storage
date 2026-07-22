@@ -183,7 +183,7 @@ def generate_changelog():
             rel_type = get_release_type(rel["tag"], prior_tag)
 
             f.write(f"## 📦 {rel['tag']} — *{rel['title']}*\n\n")
-            f.write(f"⚙ **Target Node Commit:** `{rel['commit'][:8]}`\n")
+            f.write(f"⚙ **Target Node Commit:** `{rel['commit'][:8]}`\n\n")
             f.write(f"📝 **Release Type:** {rel_type}\n\n")
 
             flattened_body = clean_and_demote_headers(rel['body'])
