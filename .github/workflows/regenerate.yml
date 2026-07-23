@@ -27,7 +27,7 @@ jobs:
 
             - name: (Re)Generate Changelog
               run: |
-                python test/automation/changelog_generate.py
+                uv run python test/automation/changelog_generate.py
             
             - name: Commit and Push Changes
               env:
