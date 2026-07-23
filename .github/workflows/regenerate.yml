@@ -50,4 +50,5 @@ jobs:
                 CUSTOM_COMMIT_MSG: "changelog regenerated"
               run: |
                 git checkout -B "$REF" "origin/$REF"
+                export BRANCH="$REF"
                 bash .github/workflows/src/push.sh
