@@ -1,11 +1,17 @@
 """
-Custom Warning classes for kms.
+Custom Warning classes and warning decorators for kms.
 
 Best if new warnings are kept to a minimum. Always try to use existing built-in warnings.
 """
-#pylint: disable=too-many-ancestors
-
+#pylint: disable=too-many-ancestors, unused-variable
 from __future__ import annotations
+
+import functools
+import inspect
+import sys
+from collections.abc import Callable
+
+warnings = sys.modules.get("warnings")
 
 class DeleteWarning(UserWarning):
     """
@@ -52,3 +58,24 @@ class CastWarning(SyntaxWarning):
 
     def __str__(self) -> str:
         return f"{self.method}: WARNING: CastWarning: {self.args[0]}"
+
+
+def _deprecated_arg[**P, R](arg_name: str,
+                            message: str | None = None
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
+    """Decorator to issue a warning when a specific method argument is used."""
+    def decorator(func: Callable[P, R]) -> Callable[P, R]:
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            # Get the exact names of parameters the method accepts
+            sig = inspect.signature(func)
+            bound_args = sig.bind_partial(*args, **kwargs)
+
+            # Check if the deprecated argument name is present in the passed arguments
+            if arg_name in bound_args.arguments:
+                msg = message or f"Argument '{arg_name}' in '{func.__name__}' is deprecated."
+                warnings.warn(msg, DeprecationWarning, stacklevel=2) #type: ignore
+
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
