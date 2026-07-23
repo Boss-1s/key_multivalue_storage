@@ -79,9 +79,9 @@ class Load(metaclass=meta._LoadMeta):
             console.print(Markdown(help_txt))
             if hasattr(sys, 'ps1'):
                 console.print(Markdown("> To learn more about a specific method, "+
-                                       "run `Storage.help(Storage.Load.<method>)`. When passing the "+
-                                       "method, don't call it (adding parenthesis after the "+
-                                       "method name)."))
+                                       "run `Storage.Load.help(Storage.Load.<method>)`. When "+
+                                       "passing the method, don't call it (adding parenthesis "+
+                                       "after the method name)."))
 
     @classmethod
     def by_key(cls,
