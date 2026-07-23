@@ -4,7 +4,6 @@
 
 <!--TOC-->
 
-- [📦 v1.3.0.20260723b1 — *kms-v1.3.0b1/2026.07.23*](#-v13020260723b1--kms-v130b120260723)
 - [📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*](#-v13020260721b0--kms-v130b020260721)
 - [📦 v1.3.0.20260703a4 — *kms-v1.3.0a4/2026.07.03*](#-v13020260703a4--kms-v130a420260703)
 - [📦 v1.3.0.20260610a3 — *kms-v1.3.0-alpha3/2026.06.10*](#-v13020260610a3--kms-v130-alpha320260610)
@@ -38,6 +37,7 @@
 
 <!--TOC-->
 
+<<<<<<< HEAD
 ## 📦 v1.3.0.20260723b1 — *kms-v1.3.0b1/2026.07.23*
 
 ⚙ **Target Node Commit:** `Unknown `
@@ -48,6 +48,8 @@
 
 ---
 
+=======
+>>>>>>> f2c8029 (fix: release type assignments were wrong)
 ## 📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*
 
 ⚙ **Target Node Commit:** `a0871f01`
@@ -265,7 +267,7 @@ That's it, folks!
 
 ⚙ **Target Node Commit:** `f5cb3356`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Pre-release - Minor Patch
 
 ### What's Changed
 #### Repo Updates
@@ -413,7 +415,7 @@ Testing release logic....
 
 ⚙ **Target Node Commit:** `b875965f`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Stable Promotion - Minor Patch
 
 ### What's Changed
 #### Repo Updates
@@ -439,7 +441,7 @@ Yanked: [`v1.2.3.20260605.2`](https://github.com/Boss-1s/key_multivalue_storage/
 
 ⚙ **Target Node Commit:** `b7ad7dbc`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Pre-release - Minor Patch
 
 so many betas....im praying this'll work.....please....
 
@@ -451,7 +453,7 @@ so many betas....im praying this'll work.....please....
 
 ⚙ **Target Node Commit:** `fae9ca15`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Pre-release - Minor Patch
 
 Hopefully this works...
 
@@ -463,7 +465,7 @@ Hopefully this works...
 
 ⚙ **Target Node Commit:** `fae9ca15`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Pre-release - Minor Patch
 
 **Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.3.20260605.4b0...v1.2.3.20260605.4b1
 
@@ -644,7 +646,7 @@ Our next few 1.2.3.x updates should see more Repo updates, specifically working 
 
 ⚙ **Target Node Commit:** `b313bc41`
 
-📝 **Release Type:** Stable Promotion
+📝 **Release Type:** Stable Promotion - Minor Patch
 
 ### What's Changed
 #### Repo Updates
