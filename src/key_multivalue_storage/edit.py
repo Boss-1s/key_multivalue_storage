@@ -9,19 +9,25 @@ into Storage objects, among other things.
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
 """
+#pylint: disable=import-outside-toplevel
 from __future__ import annotations
 
-
+import sys
 import json
 import warnings
 import builtins
 # TODO in v1.5: import logger
-from typing import Any, TYPE_CHECKING
+from typing import Any, Callable, TYPE_CHECKING
+from rich.console import Console
+from rich.markdown import Markdown
 
 from .utils import warnings as w, exceptions, metadata as meta
 
 if TYPE_CHECKING:
     from . import Storage
+
+def help() -> None:
+    Console().print(Markdown(str(__doc__)))
 
 def print(*args, **kwargs) -> None:
     """
@@ -42,8 +48,53 @@ def print(*args, **kwargs) -> None:
     builtins.print("[key_multivalue_storage/edit.py] ", *args, **kwargs)
 
 class Edit(metaclass=meta._EditMeta):
-    """Class docstring here"""
+    # TODO in v1.4: methods that allow easily `Storage` object manipulation
+    """
+    Class containing methods related to editing data within a JSON file.
+
+    ### Usage
+    - `Edit.propkey(file_path, top_lv_key, oldpropkey, newpropkey, new=True, noexist_ok=True) ->
+    None`
+
+    Edits the name of a subkey within a key within a JSON file. The value(s) of that subkey does
+    not change.
+
+    - `Edit.propval(file_path, top_lv_key, propkey, newval) -> None`
+
+    Edits the value of a subkey within a key within a JSON file. The subkey of that value does
+    not change.
+
+    - `Edit.key(file_path, oldkey, newkey) -> None`
+
+    Renames the top level key in a JSON file. The value(s) of that key does not change.
+
+
+    ### Attributes
+    **This class does not contain any attributes.**
+    """
+
     @classmethod
+    def help(cls, method: Callable[..., Any] | None = None) -> None:
+        """Help function for class Load."""
+        if method and not callable(method):
+            raise TypeError(f"Expected callable, got '{type(method)}' instead")
+        console = Console()
+        help_txt: str = ''
+        if method:
+            console.print(Markdown(str(method.__doc__)))
+        else:
+            help_txt = "## **<kms.Storage.Edit>**\n" + str(cls.__doc__)
+            console.print(Markdown(help_txt))
+            if hasattr(sys, 'ps1'):
+                console.print(Markdown("> To learn more about a specific method, "+
+                                       "run `Storage.help(Storage.Edit.<method>)`. When passing "+
+                                       "the method, don't call it (adding parenthesis after the "+
+                                       "method name)."))
+
+    @classmethod
+    @w._deprecated_arg("new",
+                      "The 'new' argument is no longer used. Please use 'noexist_ok' instead."
+    )
     def propkey(cls,
                 file_path: str,
                 top_lv_key: Any,
@@ -52,30 +103,43 @@ class Edit(metaclass=meta._EditMeta):
                 new: bool=True, #deprecated
                 noexist_ok: bool=True) -> None:
         """
-        Edits the name of subkey within a key within a JSON file.
-        The value of that subkey does not change.
+        Edits the name of a subkey within a key within a JSON file.
+        The value(s) of that subkey does not change.
+
+        ## Arguments
+        - `file_path: str`: The JSON file to load from.
+        - `top_lv_key: Any`: The top level key to edit the subkey of.
+        - `oldpropkey: str`: The subkey to rename.
+        - `newpropkey: str`: The new name for the subkey.
+        - `new: bool=True`: Deprecated. Use `noexist_ok` instead.
+        - `noexist_ok: bool=True`: If True, will create a new subkey with an empty value if the old
+        subkey does not exist. If False, will raise a `KeyNotFoundError` if the old subkey does
+        not exist.
+
+        ## Returns
+        - `None`
         """
 
         from . import Storage
 
         warnings.warn("WARNING! The 'new' argument is no longer used. If you still use new="+
-                        "True or new=False, please use noexist_ok=True or noexist_ok=False."+
-                        "This argument will be removed "+
-                        "in v2.0.", DeprecationWarning)
+                        "True or new=False, please use noexist_ok=True or noexist_ok=False. "+
+                        "This argument will be removed in v2.0.", DeprecationWarning)
+
         if new:
             noexist_ok = new
 
         if not isinstance(top_lv_key, str):
             warnings.warn("It is recommended that the 'top_lv_key' value be passed as a "+
-                            "string.",
-                            w.CastWarning)
+                          "string.",
+                          w.CastWarning)
 
         top_lv_key=str(top_lv_key)
 
         loaded_data: Storage | None = Storage.Load.by_key(
             file_path,
             top_lv_key,
-            )
+        )
 
         if not loaded_data:
             return
@@ -106,10 +170,21 @@ class Edit(metaclass=meta._EditMeta):
                 file_path: str,
                 top_lv_key: Any,
                 propkey: str,
-                newval: str) -> None:
+                newval: str
+        ) -> None:
+        # TODO in v2.0: Allow editing if propval contains Stoage objs (via MultiStorage)
         """
         Edits the value of a subkey within a key within a JSON file.
         The subkey of that value does not change.
+
+        ## Arguments
+        - `file_path: str`: The JSON file to load from.
+        - `top_lv_key: Any`: The top level key to edit the subkey of.
+        - `propkey: str`: The subkey to edit the value of.
+        - `newval: str`: The new value for the subkey.
+
+        ## Returns
+        - `None`
         """
 
         from . import Storage
@@ -158,7 +233,15 @@ class Edit(metaclass=meta._EditMeta):
             oldkey: Any,
             newkey: Any) -> None:
         """
-        Renames the top level key in
+        Renames the top level key in a JSON file. The value(s) of that key does not change.
+
+        ## Arguments
+        - `file_path: str`: The JSON file to load from.
+        - `oldkey: Any`: The top level key to rename.
+        - `newkey: Any`: The new name for the top level key.
+
+        ## Returns
+        - `None`
         """
         try:
             with open(file_path, "r", encoding="utf-8") as f:
