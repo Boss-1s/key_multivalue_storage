@@ -57,7 +57,8 @@ from .utils import warnings as w, exceptions, metadata as meta
 #    if logger.level == logging.CRITICAL + 100:logger.setLevel(logging.INFO)
 #    else:logger.setLevel(logging.CRITICAL + 100)
 
-def help() -> None: Console().print(Markdown(str(__doc__)))
+def help() -> None:
+    Console().print(Markdown(str(__doc__)))
 
 def print(*args, **kwargs) -> None:
     """

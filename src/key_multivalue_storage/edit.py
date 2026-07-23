@@ -49,6 +49,7 @@ def print(*args, **kwargs) -> None:
 
 class Edit(metaclass=meta._EditMeta):
     # TODO in v1.4: methods that allow easily `Storage` object manipulation
+    # TODO in v2.0: methods should use 'subkey', 'subsubkey', etc. over 'propkey'
     """
     Class containing methods related to editing data within a JSON file.
 

@@ -26,6 +26,8 @@ from .utils import warnings as w, exceptions, metadata as meta
 if TYPE_CHECKING:
     from . import Storage
 
+def help() -> None:
+    Console().print(Markdown(str(__doc__)))
 
 def print(*args, **kwargs) -> None:
     """

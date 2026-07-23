@@ -83,10 +83,11 @@ warnings.warn("Going from kms-semver2.0, the module "+
 
 def help() -> None: #pylint: disable=redefined-builtin
     """Beautiful help panel created with Rich."""
+    from . import load, edit, delete #pylint: disable=import-outside-toplevel
     def _add_to_tree(tree: Tree, method: Callable[..., Any]) -> None:
         """
         Add a method to the tree with its signature and docstring.
-        
+
         ### Args
             tree (Tree): The tree to which the method will be added.
             method (Callable[..., Any]): The method to add to the tree.
@@ -107,7 +108,7 @@ def help() -> None: #pylint: disable=redefined-builtin
 
         signature = f"def {method.__name__}{annotation_str}: ..,."
         docstring = Markdown(str(method.__doc__)) if method.__doc__ else "[red]No docstring available.[/]"
-        
+
         tree.add(
             Group(
                 Syntax(signature, "python"),
@@ -185,15 +186,7 @@ def help() -> None: #pylint: disable=redefined-builtin
     )
 
     init = library.add("[b blue]__init__.py")
-    init.add(
-        Group(
-            Syntax(
-                "def help() -> None: ...", "python"
-            ),
-            str(__doc__)
-        ),
-        guide_style="red"
-    )
+    _add_to_tree(init, help)
 
     store = library.add("[cyan]storage.py", guide_style="cyan")
     _add_to_tree(store, storage.help)
@@ -211,8 +204,9 @@ def help() -> None: #pylint: disable=redefined-builtin
     _add_to_tree(s, Storage.help)
     _add_to_tree(s, Storage.store)
 
-    load = library.add("[cyan]load.py", guide_style="cyan")
-    l = load.add(
+    load_module = library.add("[cyan]load.py", guide_style="cyan")
+    _add_to_tree(load_module, load.help)
+    load_cls = load_module.add(
         Group(
             Syntax(
                 "class Load(metaclass=.utils.metadata._LoadMeta) -> None: ...",
@@ -222,15 +216,45 @@ def help() -> None: #pylint: disable=redefined-builtin
         ),
         guide_style=orange
     )
-    _add_to_tree(l, Load.help)
-    _add_to_tree(l, Load.by_key)
-    _add_to_tree(l, Load.by_index)
-    _add_to_tree(l, Load.keys)
-    _add_to_tree(l, Load.values)
-    edit = library.add("[cyan]edit.py", guide_style="cyan")
-    edit.add("[b green]Docs Coming Soon!")
-    delete = library.add("[cyan]delete.py", guide_style="cyan")
-    delete.add("[b green]Docs Coming Soon!")
+    _add_to_tree(load_cls, Load.help)
+    _add_to_tree(load_cls, Load.by_key)
+    _add_to_tree(load_cls, Load.by_index)
+    _add_to_tree(load_cls, Load.keys)
+    _add_to_tree(load_cls, Load.values)
+
+    edit_module = library.add("[cyan]edit.py", guide_style="cyan")
+    _add_to_tree(edit_module, edit.help)
+    edit_cls = edit_module.add(
+        Group(
+            Syntax(
+                "class Edit(metaclass=.utils.metadata._EditMeta) -> None: ...",
+                "python"
+            ),
+            Markdown(str(Edit.__doc__))
+        ),
+        guide_style=orange
+    )
+    _add_to_tree(edit_cls, Edit.help)
+    _add_to_tree(edit_cls, Edit.propval)
+    _add_to_tree(edit_cls, Edit.propkey)
+    _add_to_tree(edit_cls, Edit.key)
+
+    delete_module = library.add("[cyan]delete.py", guide_style="cyan")
+    _add_to_tree(delete_module, delete.help)
+    delete_cls = delete_module.add(
+        Group(
+            Syntax(
+                "class Delete(metaclass=.utils.metadata._DeleteMeta) -> None: ...",
+                "python"
+            ),
+            Markdown(str(Delete.__doc__))
+        ),
+        guide_style=orange
+    )
+    _add_to_tree(delete_cls, Delete.help)
+    _add_to_tree(delete_cls, Delete.by_propkey)
+    _add_to_tree(delete_cls, Delete.by_key)
+    _add_to_tree(delete_cls, Delete.all)
 
     legend_text = Group(
         """[b blue]Blue - Top level module[/b blue]
