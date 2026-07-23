@@ -1,24 +1,30 @@
 """
-Key to Multivalue Storage - 'load' Module
-Last updated: 6/20/2026
+Key to Multivalue Storage - 'delete' Module
 
-This module contains the 'Load' class, a special
-class created for the sole purpose of loading JSON data
-into Storage objects, among other things.
+This module contains the 'Delete' class, a special
+class created for the sole purpose of deleting data from
+JSON files.
 
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
 """
+#pylint: disable=import-outside-toplevel
 from __future__ import annotations
 
+import sys
 import json
 import warnings
 import builtins
+from typing import Any, Callable
 # TODO in v1.5: import logger
 
-from typing import Any
+from rich.console import Console
+from rich.markdown import Markdown
 
 from .utils import warnings as w, exceptions, metadata as meta
+
+def help() -> None:
+    Console().print(Markdown(str(__doc__)))
 
 def print(*args, **kwargs) -> None:
     """
@@ -39,18 +45,64 @@ def print(*args, **kwargs) -> None:
     builtins.print("[key_multivalue_storage/delete.py] ", *args, **kwargs)
 
 class Delete(metaclass=meta._DeleteMeta):
-    """Class docstring here"""
+    # TODO in v1.4: methods should allow easy Storage manipulation
+    # TODO in v2.0: methods should use 'subkey', 'subsubkey', etc. over 'propkey'
+    """
+    Class contaning methods that allow deletion of data in JSON files.
+
+    ### Usage
+    - `Storage.Delete.by_propkey(file_path, top_lv_key, property_key) -> None`
+    
+    Deletes a property within a top-level key in the JSON file.
+
+    - `Storage.Delete.by_key(file_path, key) -> None`
+
+    Deletes a key-multivalue pair and its values within a JSON file.
+
+    - `Storage.Delete.all(file_path, warn=True) -> None`
+
+    Deletes all data stored in a JSON file.
+
+    ### Attributes
+    **This class does not contain any attributes.**
+    """
+
+    @classmethod
+    def help(cls, method: Callable[..., Any] | None = None) -> None:
+        """Help function for class Delete."""
+        if method and not callable(method):
+            raise TypeError(f"Expected callable, got '{type(method)}' instead")
+        console = Console()
+        help_txt: str = ''
+        if method:
+            console.print(Markdown(str(method.__doc__)))
+        else:
+            help_txt = "## **<kms.Storage.Delete>**\n" + str(cls.__doc__)
+            console.print(Markdown(help_txt))
+            if hasattr(sys, 'ps1'):
+                console.print(Markdown("> To learn more about a specific method, "+
+                                        "run `Storage.Delete.help(Storage.Delete.<method>)`. When"+
+                                        " passing the method, don't call it (adding parenthesis "+
+                                        "after the method name)."))
+
     @classmethod
     def by_propkey(cls,
                     file_path: str,
                     top_lv_key: Any,
-                    property_key: str) -> None:
+                    property_key: str #TODO in v2.0: `subkey: str``
+        ) -> None:
         """
-        Deletes a property within a top-level key in the JSON file.
-        Does NOT create a new instance of Storage, you will have to
-        regrab the values to see the changes.
+        Deletes a property within a top-level key in the JSON file. Does NOT create a new instance
+        of Storage, you will have to regrab the values to see the changes.
+
+        ## Arguments
+        - `file_path: str`: The path to the JSON file.
+        - `top_lv_key: Any`: The top-level key in the JSON file.
+        - `property_key: str`: The property key to delete within the top-level key.
+
+        ## Returns
+        `None`
         """
-        # TODO v1.5: return_as_obj
 
         from . import Storage
 
@@ -104,11 +156,19 @@ class Delete(metaclass=meta._DeleteMeta):
     @classmethod
     def by_key(cls,
                 file_path: str,
-                key: Any) -> None:
+                key: Any #TODO in v2.0: `top_lv_key: Any`
+        ) -> None:
         """
         Deletes a key-multivalue pair and its values within a JSON file.
         Does NOT create a new instance of Storage, you will have to regrab the
         values to see the changes.
+
+        ## Arguments
+        - `file_path: str`: The path to the JSON file.
+        - `key`: The key to delete in the JSON file.
+
+        ## Returns
+        `None`
         """
         # TODO v1.5: return_as_obj
         try:
@@ -150,7 +210,16 @@ class Delete(metaclass=meta._DeleteMeta):
     def all(file_path: str,
             warn: bool=True) -> None:
         """
-        Delete all data stored in a JSON file.
+        Deletes all data stored in a JSON file.
+
+        ## Arguments
+        - `file_path: str`: File path to JSON file.
+        - `warn: bool=True`: Whether to warn the user before deleting all data.
+        If set to False, no warning will be shown. Ignoring kms.DeleteWarning will automatically
+        set warn to False.
+
+        ## Returns
+        `None`
         """
         _warn = True
         for action, _, cat, _, _ in warnings.filters:

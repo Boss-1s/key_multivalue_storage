@@ -3,8 +3,7 @@ Key to Multivalue Storage - 'edit' Module
 Last updated: 6/20/2026
 
 This module contains the 'Edit' class, a special
-class created to easily edit JSON data
-into Storage objects, among other things.
+class created to easily edit data in JSON files.
 
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
