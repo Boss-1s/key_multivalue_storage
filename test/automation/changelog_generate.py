@@ -43,18 +43,20 @@ def get_release_type(current_tag, prior_tag=None):
 
             # 3. Handle a promotion from a pre-release directly to
             # its stable version (e.g., 1.0.0a1 -> 1.0.0)
-            if prior_ver.is_prerelease and curr_ver.base_version == prior_ver.base_version:
-                release_type = "Stable Promotion"
+            if prior_ver.is_prerelease:
+                if not curr_ver.is_prerelease:
+                    if curr_ver.base_version == prior_ver.base_version:
+                        release_type += "Stable Promotion - "
+
+            # 4. Standard SemVer delta checking
+            if curr_ver.major > prior_ver.major:
+                release_type += "Major Update"
+            elif curr_ver.minor > prior_ver.minor:
+                release_type += "Minor Update"
+            elif curr_ver.micro > prior_ver.micro:
+                release_type += "Major Patch"
             else:
-                # 4. Standard SemVer delta checking
-                if curr_ver.major > prior_ver.major:
-                    release_type += "Major Update"
-                elif curr_ver.minor > prior_ver.minor:
-                    release_type += "Minor Update"
-                elif curr_ver.micro > prior_ver.micro:
-                    release_type += "Major Patch"
-                else:
-                    release_type += "Minor Patch"
+                release_type += "Minor Patch"
         return release_type
     except InvalidVersion:
         return "Legacy Tag"
@@ -166,6 +168,12 @@ def generate_changelog():
 
     # Sort releases in descending order by SemVer value
     releases.sort(key=sort_key, reverse=True)
+
+    for _, rel in enumerate(releases):
+        if "Unknown" in rel['commit']:
+            print(f"Warning: Could not resolve commit SHA for tag {rel['tag']}")
+            print("Removing this release....")
+            releases.remove(rel)
 
     # Write formatted payload data to CHANGELOG.md
     with open(changelog_path, "w", encoding="utf-8") as f:
