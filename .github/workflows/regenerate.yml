@@ -14,6 +14,16 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Install SSH Key
+              uses: webfactory/ssh-agent@v0.10.0
+              with:
+                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            
+            - name: Setup SSH and signing
+              env:
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+              run: bash .github/workflows/src/ssh.sh
+
             - name: Set up Python
               uses: actions/setup-python@v4
 
