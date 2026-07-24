@@ -1,0 +1,76 @@
+# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: pages build and deployment
+
+on:
+  push:
+    branches: ["docs"]
+    paths:
+      - "docs/*"
+      - "*/_config.yml"
+      - ".github/workflows/jekyll-gh-pages.yml"
+  gollum:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler: 'Gemfile.lock'
+          bundler-cache: true
+          working-directory: "./docs"
+      - name: Clone and Setup Wiki
+        run: |
+          git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
+          rsync -avq --exclude='.git' temp-wiki/ docs/
+          rm -v -rf temp-wiki
+          rm -v -f docs/release-template.md docs/CODEOWNERS
+          mv docs/Home.md docs/index.md
+          mv docs/SECURITY.md docs/security.md
+          mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
+          mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
+          mv .github/_config.yml docs/_config.yml
+          echo "----------CONFIRM STAT----------"
+          git status
+          echo "----------CONFIRM FILES----------"
+          ls -a docs/
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+      - name: Build with Jekyll
+        run: |
+          bundle exec jekyll clean
+          bundle exec jekyll build --verbose --source ./docs --destination ./_site --baseurl "${{steps.pages.outputs.base_path}}"
+        env:
+          BUNDLE_GEMFILE: ./docs/Gemfile
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
