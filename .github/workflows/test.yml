@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - releases/**
       - eol/**
+      - docs
   pull_request:
   workflow_dispatch:
 
