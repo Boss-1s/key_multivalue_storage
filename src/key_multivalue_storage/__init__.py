@@ -36,8 +36,8 @@ from .delete import Delete
 from .utils import exceptions
 from .utils import warnings as kms_warnings
 
-__version__ = "v1.3.0.20260723b1"
-__version_internal__ = "kms-v1.3.0b1/2026.07.23"
+__version__ = "v1.3.0.20260724rc0"
+__version_internal__ = "kms-v1.3.0rc0/2026.07.24"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
