@@ -44,7 +44,7 @@ jobs:
             
             - name: Commit and Push Changes
               env:
-                REF: "main"
+                REF: "docs"
                 DUMMY: "false"
                 REPO: ${{ github.repository }}
                 CUSTOM_COMMIT_MSG: "changelog regenerated"
