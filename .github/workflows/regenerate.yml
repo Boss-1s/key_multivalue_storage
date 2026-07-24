@@ -1,13 +1,12 @@
 name: Regenerate Changelog
 
 on:
-    workflow_dispatch:
-    release:
-        types: [edited]
+    workflow_dispatch: # still allowing CLI trigger
+    repository_dispatch:
+        types: [regenerate-changelog]
 
 jobs:
     generate:
-        if: github.event.release.draft == false
         runs-on: ubuntu-latest
         permissions: write-all
         steps:
@@ -33,22 +32,17 @@ jobs:
                 enable-cache: true
 
             - name: Install dependencies
-              run: |
-                  uv sync --only-group release
+              run: uv sync --only-group release
 
             - name: (Re)Generate Changelog
               env:
                 GITHUB_TOKEN: ${{ github.token }}
-              run: |
-                uv run python test/automation/changelog_generate.py
+              run: uv run python test/automation/changelog_generate.py
             
             - name: Commit and Push Changes
               env:
-                REF: "docs"
+                BRANCH: "docs"
                 DUMMY: "false"
                 REPO: ${{ github.repository }}
                 CUSTOM_COMMIT_MSG: "changelog regenerated"
-              run: |
-                git checkout -B "$REF" "origin/$REF"
-                export BRANCH="$REF"
-                bash .github/workflows/src/push.sh
+              run: bash .github/workflows/src/push.sh
