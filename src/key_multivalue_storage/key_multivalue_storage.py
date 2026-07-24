@@ -1,6 +1,6 @@
 """
 Key to Multivalue Storage
-Last updated: 6/22/2026
+Last updated: 7/24/2026
 
 Basically a nested-dictionary (key to key-value) module I made because I didn't like how
 scratchattach's database worked and the steep learning curve that came with it.
@@ -10,6 +10,7 @@ Made with love by Boss_1s.
 (c)2025, 2026. This work is licensed under the CC BY-NC-ND 4.0 International license.
 To view a copy of the license, see creativecommons.com.
 """
+#pylint: disable=protected-access,unused-private-member
 
 from __future__ import annotations
 import json
@@ -18,9 +19,9 @@ import warnings
 import difflib
 import builtins
 from typing import Any, Optional, Self, Generator
-from typing_extensions import deprecated
 from types import TracebackType
 from functools import total_ordering
+from typing_extensions import deprecated
 
 def print(*args, **kwargs) -> None:
     builtins.print("[key_multivalue_storage.py] ", *args, **kwargs)
@@ -36,25 +37,25 @@ class _KeyNotFoundError(KeyError):
 class _StorageSettingsMeta(type):
     # NOTE: These are version strings for the *module*,
     # not the package/library.
-    
+
     @property
     @deprecated("The metadata var name 'VERSION' will be changed "+
                 "to 'semver' in kms-semver1.3. Consider using that instead.")
     def VERSION(cls) -> str:
-        return "1.2.3"
-        
+        return "1.2.5"
+
     @property
     @deprecated("The metadata var name 'DATE_VERSION' will be changed "+
                 "to 'calver' in kms-semver1.3. Consider using that instead.")
     def DATE_VERSION(cls) -> str:
-        return "2026.06.22a"
+        return "2026.07.24"
 
-    
+
     @property
     @deprecated("The metadata var name 'LAST_UPDATE' will be changed "+
                 "to 'last_update' in kms-semver1.3. Consider using that instead.")
     def LAST_UPDATE(cls) -> str:
-        return "2026/06/22"
+        return "2026/07/24"
 
     @property
     def semver(cls) -> str:
@@ -75,30 +76,38 @@ class Storage(metaclass=_StorageSettingsMeta):
     Developed for the project ScratchChat by Boss_1s -> https://scratch.mit.edu/projects/1051418168
     Used in conjuction with scratchattach.
 
-    Usage:
-    Storage(key: str, kwargs1: Any, kwargs2: Any...) -> Create an instance of the Storage class to store
-    |
-    | Storage.store(file_path: str, instant_delete: bool, indent: int) -> Stores created instance into a JSON file
-    |
-    | Storage.DeleteWarning(UserWarning) -> a custom warning class used to warn about deleteing in Storage.Delete.all().
-    |
-    | Storage.Load
-    |  --> Storage.Load.by_key(file_path: str, key: str|uuid.UUID, raw: bool) -> load a key and its values.
-    |  --> Storage.Load.by_index(file_path: str, index: int, raw: bool) -> same as above, but load by index, not key.
-    |  --> Storage.Load.keys(file_path: str) -> returns the key of a file only.
-    |  --> Storage.Load.values(file_path: str, key: str|uuid.UUID, keys: bool, raw: bool) -> returns the values of a key. Can return keys if keys=True
-    |
-    | Storage.Edit
-    |  --> Storage.Edit.propkey(file_path: str, top_lv_key: str | uuid.UUID, oldpropkey: str, newpropkey: str) -> Edits the name of a subkey within a key within a JSON file.
-    |  --> Storage.Edit.propval(file_path: str, top_lv_key: str | uuid.UUID, propkey: str, newval: str) -> Edits the value of a subkey within a key within a JSON file.
-    |  --> Storage.Edit.key(file_path: str, oldkey: str | uuid.UUID, newkey: str | uuid.UUID)
-    |
-    | Storage.Delete
-    |  --> Storage.Delete.by_propkey(file_path: str, top_level_key: str | uuid.UUID, property_key: str) -> deletes a subkey-value pair within a key
-    |  --> Storage.Delete.by_key(file_path: str, key: str | uuid.UUID) -> Deletes a key-multivalue pair and its values
-    |  --> Storage.Delete.all(file_path: str, warn: bool) -> Deletes all of a JSON Storage file.
-    |
-    | (Dunder methods)
+    ## Usage:
+    - Storage(key: str, kwargs1: Any, kwargs2: Any...)
+    Create an instance of the Storage class to store
+
+    - Storage.store(file_path: str, instant_delete: bool, indent: int)
+    Stores created instance into a JSON file
+
+    ### Storage.Load
+    - Storage.Load.by_key(file_path: str, key: str|uuid.UUID, raw: bool)
+    load a key and its values.
+    - Storage.Load.by_index(file_path: str, index: int, raw: bool)
+    same as above, but load by index, not key.
+    - Storage.Load.keys(file_path: str)
+    returns the key of a file only.
+    - Storage.Load.values(file_path: str, key: str|uuid.UUID, keys: bool, raw: bool)
+    returns the values of a key. Can return keys if keys=True
+
+    ### Storage.Edit
+    - Storage.Edit.propkey(file_path: str, top_lv_key: str | uuid.UUID, oldpropkey: str, newpropkey: str)
+    Edits the name of a subkey within a key within a JSON file.
+    - Storage.Edit.propval(file_path: str, top_lv_key: str | uuid.UUID, propkey: str, newval: str)
+    Edits the value of a subkey within a key within a JSON file.
+    - Storage.Edit.key(file_path: str, oldkey: str | uuid.UUID, newkey: str | uuid.UUID)
+    Edits the name of a top level key within a JSON file.
+
+    ### Storage.Delete
+    - Storage.Delete.by_propkey(file_path: str, top_level_key: str | uuid.UUID, property_key: str)
+    deletes a subkey-value pair within a key
+    - Storage.Delete.by_key(file_path: str, key: str | uuid.UUID)
+    Deletes a key-multivalue pair and its values
+    - Storage.Delete.all(file_path: str, warn: bool)
+    Deletes all of a JSON Storage file.
     """
 
     # Define global variables: indent, encode option,
@@ -264,9 +273,9 @@ class Storage(metaclass=_StorageSettingsMeta):
 
     def store(self,
               file_path: str,
-              instant_delete: bool=None,
-              indent: int=None,
-              encode: bool=None
+              instant_delete: bool | None=None,
+              indent: int | None=None,
+              encode: bool | None=None
              ) -> None:
         """Store a key-multivalue pair into a json file."""
         if not indent:
@@ -307,8 +316,8 @@ class Storage(metaclass=_StorageSettingsMeta):
         Custom warning when attempting to delete the contents of a whole database.
         """
         def __init__(self,
-                     message: str=None,
-                     method: str=None
+                     message: str | None=None,
+                     method: str | None=None
                     ) -> None:
             super().__init__(message)
             self.method = method
@@ -321,8 +330,8 @@ class Storage(metaclass=_StorageSettingsMeta):
         Custom warning when attempting to add a Storage instance with a dictionary or list.
         """
         def __init__(self,
-                     message: str=None,
-                     method: str=None
+                     message: str | None=None,
+                     method: str | None=None
                     ) -> None:
             super().__init__(message)
             self.method = method
@@ -336,8 +345,8 @@ class Storage(metaclass=_StorageSettingsMeta):
         Also applies to division, despite the name.
         """
         def __init__(self,
-                     message: str=None,
-                     method: str=None
+                     message: str|None=None,
+                     method: str|None=None
                     ) -> None:
             super().__init__(message)
             self.method = method
@@ -373,7 +382,7 @@ class Storage(metaclass=_StorageSettingsMeta):
             # Super-detailed comparison check
             found_in_keys = False
             for k in loaded_data.keys():
-                print(f"Load.by_key: DEBUG: Comparing '{key}' (len={len(key)},"+
+                print(f"Load.by_key: DEBUG: Comparing '{key}' (len={len(str(key))},"+
                       f" repr={repr(key)}) with loaded key '{k}' (len={len(k)}, repr={repr(k)})")
                 if key == k:
                     found_in_keys = True
