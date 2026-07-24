@@ -2,14 +2,10 @@ name: Tests
 
 on:
   push:
-    branches:
-      - main
-      - beta
-      - dev
+    branches-ignore:
+      - releases/**
+      - eol/**
   pull_request:
-    branches:
-      - main
-      - beta
   workflow_dispatch:
 
 jobs:
