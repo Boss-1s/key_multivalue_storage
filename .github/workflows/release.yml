@@ -117,5 +117,5 @@ jobs:
           
           # 2. Realign HEAD onto the tracking stream 
           git checkout -B "$BRANCH" "origin/$BRANCH"
-          python3 test/automation/changelog_generate.py
+          uv run python3 test/automation/changelog_generate.py
           bash .github/workflows/src/push.sh
