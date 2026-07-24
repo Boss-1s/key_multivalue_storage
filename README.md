@@ -27,6 +27,7 @@ __________
 
 ### Info & Docs
 
+[![Changelog](https://img.shields.io/badge/Changelog-Click%20Here-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG)
 [![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=gray&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=gray&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 [![Contributing](https://img.shields.io/badge/Contribution%20Guidelines-Click-gray?style=for-the-badge&labelColor=orange)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/CONTRIBUTING.md)
