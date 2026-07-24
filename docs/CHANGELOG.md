@@ -37,19 +37,6 @@
 
 <!--TOC-->
 
-<<<<<<< HEAD
-## 📦 v1.3.0.20260723b1 — *kms-v1.3.0b1/2026.07.23*
-
-⚙ **Target Node Commit:** `Unknown `
-
-📝 **Release Type:** Pre-release - Minor Patch
-
-**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.0.20260721b0...v1.3.0.20260723b1
-
----
-
-=======
->>>>>>> f2c8029 (fix: release type assignments were wrong)
 ## 📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*
 
 ⚙ **Target Node Commit:** `a0871f01`
