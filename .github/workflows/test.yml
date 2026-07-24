@@ -104,8 +104,8 @@ jobs:
     needs: build
     permissions: write-all
     if: |
-      github.ref_name == 'beta' ||
-      (github.actor == 'dependabot[bot]' && contains(github.ref_name, 'beta'))
+      github.ref_name == 'semver1.3.x' ||
+      contains(github.ref_name, 'semver1.3.x')
     uses: ./.github/workflows/release-beta-nightly.yml
 
         
