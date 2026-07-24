@@ -26,7 +26,7 @@ jobs:
         run: |
           # AI-Generated
           git fetch --tags --prune
-          latest_tag=$(git describe --tags --abbrev=0 origin/beta)
+          latest_tag=$(git describe --tags --abbrev=0 origin/semver1.3.x)
           echo "tag=$latest_tag" >> $GITHUB_OUTPUT
       - name: Get Date and Time
         uses: kaven-universe/github-action-current-date-time@v1.5.0
