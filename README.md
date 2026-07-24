@@ -6,8 +6,10 @@ kms - a _tiny side project_ tuned into a **library**.
 Once upon a time, this was just a small project to solve a problem: the over-steep learning curve for [scratchattach](https://github.com/TimMcCool/scratchattach)'s database functionality. Now, I have decided to make it a library, something with humble beginnings with big hopes in its future.
 
 
-
 This is, after all, the greatest piece of a CPython progam I have made. ;)
+
+> [!important]
+> `kms-v1.3.0/2026.07.29`, the first stable version of `kms-semver1.3.x`, will release soon! Please note the changes stated in the roadmap and changelog, and prepare accordingly. Thanks!
 
 __________
 
