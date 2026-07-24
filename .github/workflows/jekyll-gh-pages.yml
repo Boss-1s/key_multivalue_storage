@@ -3,7 +3,7 @@ name: pages build and deployment
 
 on:
   push:
-    branches: ["main"]
+    branches: ["docs"]
     paths:
       - "docs/*"
       - "*/_config.yml"
