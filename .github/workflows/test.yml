@@ -2,14 +2,11 @@ name: Tests
 
 on:
   push:
-    branches:
-      - main
-      - beta
-      - dev
+    branches-ignore:
+      - releases/**
+      - eol/**
+      - docs
   pull_request:
-    branches:
-      - main
-      - beta
   workflow_dispatch:
 
 jobs:
