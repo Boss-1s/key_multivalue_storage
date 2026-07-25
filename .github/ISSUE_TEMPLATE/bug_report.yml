@@ -41,6 +41,13 @@ body:
       render: sh
     validations:
       required: false
+  - type: textarea
+    id: other
+    attributes:
+      label: Other Comments
+      render: md
+    validations:
+      required: false
   - type: checkboxes
     id: prerequisites
     attributes:
@@ -51,7 +58,7 @@ body:
           required: true
         - label: I have checked other issues and have ensured that this is not a duplicate, and has not been reported before.
           required: true
-        - label: I am using a supported version of kms (kms-semver1.2.0 and later).
+        - label: I am using a supported version of kms (kms-semver1.3.0 and later), or am reporting a bug on behalf of an LTS version (kms-semver1.2.x).
           required: true
         - label: I have ensured that the bug is not in my code, but rather is truly because of this library.
           required: true
