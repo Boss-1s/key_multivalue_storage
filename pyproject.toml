@@ -10,6 +10,10 @@ release = [
     "requests>=2.34.2",
     "rich>=15.0.0",
 ]
+site = [
+    "markdown>=3.10.2",
+    "mdx-gh-links>=0.4"
+]
 test = [
     "pylint>=4.0.6",
     "pylint-per-file-ignores>=3.2.1",
