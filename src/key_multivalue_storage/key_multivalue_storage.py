@@ -18,6 +18,7 @@ import uuid
 import warnings
 import difflib
 import builtins
+from collections.abc import Mapping
 from typing import Any, Optional, Self, Generator
 from types import TracebackType
 from functools import total_ordering
@@ -70,7 +71,7 @@ class _StorageSettingsMeta(type):
         return cls.LAST_UPDATE
 
 @total_ordering
-class Storage(metaclass=_StorageSettingsMeta):
+class Storage(Mapping[str, dict[str, Any]], metaclass=_StorageSettingsMeta):
     """
     Class for monokey-multivalue storage.
     Developed for the project ScratchChat by Boss_1s -> https://scratch.mit.edu/projects/1051418168
@@ -129,8 +130,8 @@ class Storage(metaclass=_StorageSettingsMeta):
         except AttributeError: # if CPython is not >=3.14, fallback to uuid.uuid4()
             self.instance_id = uuid.uuid4()
         # ...then attempt to set values
-        self.key = str(key) if isinstance(key, uuid.UUID) else key
-        self.values = kwargs
+        self.key: str = str(key) if isinstance(key, uuid.UUID) else key
+        self.values: dict[str, Any] = kwargs
 
     @staticmethod
     def _encode(string: Any) -> int:
@@ -391,7 +392,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if key in loaded_data and found_in_keys: #Use the flag from the detailed comparison
                 try:
-                    return Storage._from_dict({key: loaded_data[key]}, raw)
+                    return Storage._from_dict({str(key): loaded_data[str(key)]}, raw)
                 except ValueError as e:
                     print(f"Load.by_key: ERROR: Error reconstructing object for key '{key}': {e}")
                     return None
@@ -463,6 +464,9 @@ class Storage(metaclass=_StorageSettingsMeta):
             Loads a json file and returns the values under the inputed key. Unlike other loading methods, this one returns the raw values by default.
             Keys can also be returned as a key-value pair if keys=True.
             """
+
+            if isinstance(key, uuid.UUID): key = str(key)
+
             print(f"Load.values: DEBUG: file_path={file_path}")
             print(f"Load.values: DEBUG: key={key}")
             print(f"Load.values: DEBUG: keys={keys}")
@@ -480,10 +484,10 @@ class Storage(metaclass=_StorageSettingsMeta):
             print(f"Load.values: DEBUG: loaded_data={loaded_data}")
             print(f"Load.values: DEBUG: key in loaded_data? {key in loaded_data}")
 
-            print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
+            print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[str(key)]})}")
             if key in loaded_data:
                 try:
-                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({key: loaded_data[key]}, raw)
+                    subsection: Mapping[str, Mapping[str, Any]] = Storage._from_dict({key: loaded_data[key]}, raw)
                 except ValueError as e:
                     print(f"Load.values: ERROR: Error reconstructing object for key '{key}': {e}")
                     return None
@@ -513,8 +517,10 @@ class Storage(metaclass=_StorageSettingsMeta):
             """Edits the name of subkey within a key within a JSON file. The value of that subkey does not change."""
             warnings.warn("WARNING! The 'new' argument is no longer used. If you still use new=True or new=False, "+
                           "please use noexist_ok=True or noexist_ok=False. This argument will be removed "+
-                          "by v1.3.", DeprecationWarning)
+                          "in kms-semver2.0.", DeprecationWarning)
             noexist_ok = new if new else noexist_ok
+            top_lv_key = str(top_lv_key) if isinstance(top_lv_key, uuid.UUID) else top_lv_key
+
             try:
                 with open(file_path, "r") as f:
                     loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -527,7 +533,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if top_lv_key in loaded_data:
                 try:
-                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
+                    subsection: Mapping[str, Mapping[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
                     print(f"Edit.propkey: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
@@ -563,6 +569,9 @@ class Storage(metaclass=_StorageSettingsMeta):
                     propkey: str,
                     newval: str) -> None:
             """Edits the value of a subkey within a key within a JSON file. The subkey of that value does not change."""
+
+            if isinstance(top_lv_key, uuid.UUID): top_lv_key = str(top_lv_key)
+
             try:
                 with open(file_path, "r") as f:
                     loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -575,7 +584,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if top_lv_key in loaded_data:
                 try:
-                    subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
+                    subsection: Mapping[str, Mapping[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
                     print(f"Edit.propval: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
@@ -584,6 +593,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                 raise _KeyNotFoundError(file_path, top_lv_key)
 
             items: dict[str, Any] = {}
+            oldval = ''
             for propkey1, propval in subsection.values.items():
                 if propkey == propkey1:
                     oldval = propval
@@ -622,7 +632,7 @@ class Storage(metaclass=_StorageSettingsMeta):
 
             if oldkey in loaded_data:
                 loaded_data = {
-                    newkey if key == oldkey else key: value
+                    str(newkey) if key == str(oldkey) else str(key): value
                     for key, value in loaded_data.items()
                 }
                 print(f"Edit.key: DEBUG: New dictionary: loaded_data={loaded_data}")
@@ -642,7 +652,7 @@ class Storage(metaclass=_StorageSettingsMeta):
                        file_path: str,
                        top_level_key: str | uuid.UUID,
                        property_key: str,
-                       top_lv_key: str | uuid.UUID = None
+                       top_lv_key: str | uuid.UUID | None = None
                       ) -> None:
             """
             Deletes a property within a top-level key in the JSON file.
@@ -665,8 +675,10 @@ class Storage(metaclass=_StorageSettingsMeta):
                   DeprecationWarning)
             top_lv_key = top_level_key
 
+            if isinstance(top_lv_key, uuid.UUID): top_lv_key = str(top_lv_key)
+
             if top_lv_key in loaded_data:
-                try:subsection: dict[str, dict[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
+                try:subsection: Mapping[str, Mapping[str, Any]] = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
                 except ValueError as e:
                     print(f"Delete.by_propkey: ERROR: Error reconstructing object for key '{top_lv_key}': {e}")
                     return None
@@ -700,6 +712,9 @@ class Storage(metaclass=_StorageSettingsMeta):
             Does NOT create a new instance of Storage, you will have to regrab the
             values to see the changes.
             """
+
+            if isinstance(key, uuid.UUID): key = str(key)
+
             try:
                 with open(file_path, "r") as f:
                     loaded_data: dict[str, dict[str, Any]] = json.load(f)
