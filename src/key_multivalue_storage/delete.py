@@ -52,7 +52,7 @@ class Delete(metaclass=meta._DeleteMeta):
 
     ### Usage
     - `Storage.Delete.by_propkey(file_path, top_lv_key, property_key) -> None`
-    
+
     Deletes a property within a top-level key in the JSON file.
 
     - `Storage.Delete.by_key(file_path, key) -> None`

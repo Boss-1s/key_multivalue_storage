@@ -49,7 +49,7 @@ def print(*args, **kwargs) -> None:
 class Load(metaclass=meta._LoadMeta):
     """
     Class containg methods related to loading JSON data into Storage objects.
-    
+
     ### Usage
     - `Storage.Load.by_key(file_path: str, key: Any, raw: bool=False) -> Storage | None`
     -> Load a JSON file and find the key to extract a single key-multivalue pair and its values.
@@ -58,7 +58,7 @@ class Load(metaclass=meta._LoadMeta):
     values.
     - `Storage.Load.keys(file_path: str) -> list[str] | None` -> Load a JSON file and returns the keys
     of that file.
-    - `Storage.Load.values(file_path: str, key: Any, keys: bool=False, raw: bool=True) -> 
+    - `Storage.Load.values(file_path: str, key: Any, keys: bool=False, raw: bool=True) ->
     list[str] | None` -> Loads a JSON file and returns the values under the inputted key.
     - `Storage.Load.help(method: ((Any) -> Any) | None) -> None` -> Displays the docstring of the
     specified method, or the entire Load class if no method is specified.
@@ -215,7 +215,7 @@ class Load(metaclass=meta._LoadMeta):
     def keys(cls, file_path: str) -> list[str] | None:
         """
         Load a json file and returns the keys of that file.
-        
+
         ## Arguments
         - `file_path: str`: The file path to load from.
 

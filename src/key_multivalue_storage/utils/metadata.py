@@ -201,7 +201,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.07.23"
+        return "2026.07.25"
 
     @property
     def version(cls) -> str:
@@ -211,7 +211,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/07/23"
+        return "2026/07/25"
 
     def __repr__(cls) -> str:
         """
