@@ -35,7 +35,7 @@ class _KeyNotFoundError(KeyError):
         self.message = f"The following key was not found in {file}: {mkey}" if message == "" else message
         super().__init__(self.message)
 
-class _StorageSettingsMeta(type):
+class _StorageSettingsMeta(Mapping[str, dict[str, Any]], type):
     # NOTE: These are version strings for the *module*,
     # not the package/library.
 
@@ -71,7 +71,7 @@ class _StorageSettingsMeta(type):
         return cls.LAST_UPDATE
 
 @total_ordering
-class Storage(Mapping[str, dict[str, Any]], metaclass=_StorageSettingsMeta):
+class Storage(metaclass=_StorageSettingsMeta):
     """
     Class for monokey-multivalue storage.
     Developed for the project ScratchChat by Boss_1s -> https://scratch.mit.edu/projects/1051418168
