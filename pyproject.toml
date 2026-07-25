@@ -2,6 +2,7 @@
 dev = [
     { include-group = "test" },
     { include-group = "release" },
+    { include-group = 'site' }
 ]
 release = [
     "gitpython>=3.1.53",
@@ -12,7 +13,8 @@ release = [
 ]
 site = [
     "markdown>=3.10.2",
-    "mdx-gh-links>=0.4"
+    "mdx-gh-links>=0.4",
+    "markdownify >=1.2.3"
 ]
 test = [
     "pylint>=4.0.6",
