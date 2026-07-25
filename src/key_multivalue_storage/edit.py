@@ -1,6 +1,5 @@
 """
 Key to Multivalue Storage - 'edit' Module
-Last updated: 6/20/2026
 
 This module contains the 'Edit' class, a special
 class created to easily edit data in JSON files.

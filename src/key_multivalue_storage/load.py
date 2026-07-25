@@ -1,6 +1,5 @@
 """
 Key to Multivalue Storage - 'load' Module
-Last updated: 6/11/2026
 
 This module contains the 'Load' class, a special
 class created for the sole purpose of loading JSON data

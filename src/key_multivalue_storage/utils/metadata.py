@@ -49,12 +49,12 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
-        return "v1.3.0a3"
+        return "v1.3.0"
 
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.07.23"
+        return "2026.07.25"
 
     @property
     def version(cls) -> str:
@@ -64,7 +64,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/07/23"
+        return "2026/07/25"
 
     @property
     def Load(cls):
@@ -122,12 +122,12 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
-        return "v1.0.0a3"
+        return "v1.0.0"
 
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.07.23"
+        return "2026.07.25"
 
     @property
     def version(cls) -> str:
@@ -137,7 +137,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/07/23"
+        return "2026/07/25"
 
     def __repr__(cls) -> str:
         """
@@ -159,12 +159,12 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
-        return "v1.0.0a3"
+        return "v1.0.0"
 
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.07.23"
+        return "2026.07.25"
 
     @property
     def version(cls) -> str:
@@ -174,7 +174,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/07/23"
+        return "2026/07/25"
 
     def __repr__(cls) -> str:
         """
@@ -196,7 +196,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
-        return "v1.0.0a3"
+        return "v1.0.0"
 
     @property
     def calver(cls) -> str:

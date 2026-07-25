@@ -1,6 +1,5 @@
 """
 Key to Multivalue Storage - 'storage' Module
-Last updated: 07/02/2026
 
 This module contains the 'Storage' class. This is the
 main class in which this library is centralized about.
