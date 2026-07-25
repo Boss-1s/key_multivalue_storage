@@ -48,4 +48,6 @@ jobs:
               run: bash .github/workflows/src/push.sh
 
             - name: Run pages build and deployment
+              env:
+                GH_TOKEN: ${{ github.token }}
               run: gh workflow run .github/workflows/jekyll-gh-pages.yml --ref docs
