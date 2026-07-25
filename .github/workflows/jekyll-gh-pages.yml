@@ -5,8 +5,8 @@ on:
   push:
     branches: ["docs"]
     paths:
-      - "docs/*"
-      - "*/_config.yml"
+      - "docs/**"
+      - "**/_config.yml"
       - ".github/workflows/jekyll-gh-pages.yml"
   gollum:
   workflow_dispatch:
