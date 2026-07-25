@@ -43,7 +43,7 @@ dev = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/Boss-1s/key_multivalue_storage/wiki/"
+Documentation = "https://boss-1s.github.io/key_multivalue_storage"
 Repository = "https://github.com/Boss-1s/key_multivalue_storage/"
 Issues = "https://github.com/Boss-1s/key_multivalue_storage/issues/"
 
