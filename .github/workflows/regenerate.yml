@@ -1,6 +1,7 @@
 name: Regenerate Changelog (trigger)
 
 on:
+  workflow_dispatch: 
   release:
     types: [edited]
 
