@@ -10,8 +10,6 @@ on:
       - ".github/workflows/jekyll-gh-pages.yml"
   gollum:
   workflow_dispatch:
-  repository_dispatch:
-    types: [deploy-gh-site]
 
 permissions:
   contents: read
@@ -28,12 +26,13 @@ jobs:
   retrigger:
     if: github.ref_name != 'docs'
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
-      - uses: peter-evans/repository-dispatch@v4.0.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: deploy-gh-site
-          client-payload: '{"ref": "docs"}' # Sends the branch details
+      - env:
+          GH_TOKEN: ${{github.token}}
+        run: gh workflow run .github/workflows/jekyll-gh-pages.yml --ref docs
+
+        
   build:
     if: github.ref_name == 'docs'
     runs-on: ubuntu-latest
