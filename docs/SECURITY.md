@@ -55,8 +55,8 @@ Currently, the only released package versions are kms-v1.2.2/2026.05.06b and lat
 | ------|-------| ------------------ | - |
 | 1.0.x | Inactive(7) | Unsupported | Already reached EOL |
 | 1.1.x | Inactive(7) | Unsupported | Already reached EOL |
-| 1.2.x | Production/Stable (5)| Supported | 1.5 |
-| 1.3.x | Alpha(3) | Pre-Release | 1.6 |
+| 1.2.x | Production/Stable (5)| LTS | 1.5 |
+| 1.3.x | Production/Stable (5) | Pre-Release | 1.6 |
 | 1.4.x | Planning(1) | Unreleased | 2.0 |
 | 1.5.x | None(0) | Unreleased | 2.1 |
 | 1.6.x | None(0) | Unreleased | 2.2 |
