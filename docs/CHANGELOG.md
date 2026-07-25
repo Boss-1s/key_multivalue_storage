@@ -4,12 +4,14 @@
 
 <!--TOC-->
 
+- [📦 v1.3.0.20260724rc0 — *kms-v1.3.0rc0/2026.07.24*](#-v13020260724rc0--kms-v130rc020260724)
 - [📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*](#-v13020260721b0--kms-v130b020260721)
 - [📦 v1.3.0.20260703a4 — *kms-v1.3.0a4/2026.07.03*](#-v13020260703a4--kms-v130a420260703)
 - [📦 v1.3.0.20260610a3 — *kms-v1.3.0-alpha3/2026.06.10*](#-v13020260610a3--kms-v130-alpha320260610)
 - [📦 v1.3.0.20260524a2 — *kms-v1.3.0a2/2026.05.24*](#-v13020260524a2--kms-v130a220260524)
 - [📦 v1.3.0.20260524a1 — *kms-v1.3.0-alpha1/2026.05.24*](#-v13020260524a1--kms-v130-alpha120260524)
 - [📦 v1.3.0.20260523a0 — *kms-v1.3.0-alpha0/2026.05.23*](#-v13020260523a0--kms-v130-alpha020260523)
+- [📦 v1.2.5.20260724 — *kms-v1.2.5/2026.07.24*](#-v12520260724--kms-v12520260724)
 - [📦 v1.2.4.20260702 — *kms-v1.2.4/2026.07.03*](#-v12420260702--kms-v12420260703)
 - [📦 v1.2.4.20260610b0 — *kms-v1.2.4-beta0/2026.06.10*](#-v12420260610b0--kms-v124-beta020260610)
 - [📦 v1.2.3.20260605.4 — *kms-v1.2.3/2026.06.05d*](#-v123202606054--kms-v12320260605d)
@@ -36,6 +38,56 @@
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 
 <!--TOC-->
+
+## 📦 v1.3.0.20260724rc0 — *kms-v1.3.0rc0/2026.07.24*
+
+⚙ **Target Node Commit:** `66ccf8d5`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+### What's Changed
+
+#### Repo Updates
+> [!important]
+> This branch is no longer called **'beta'**. As of this release, it will be called **'semver1.3.x'**.
+* Attestations on release
+* Merged SECURITY.md changes from 4d90d42 to this branch via ce5cbbd
+* **Auto changelog generation!**
+* New dependency group: `release`
+* This dependency group was created for the release pipeline, drawing a finer line between `dev` and `release`.
+* Dependencies reorganized
+* Small README update
+
+#### Module Updates
+* **ALL DOCSTRINGS REFACTORED!** 🎉
+* All main modules (storage, load, edit, delete), top level module (key_multivalue_storage), and any classes in those modules have thier own `help()` function.
+* The `help()` method in `key_multivalue_storage.help()` is special because not only does it display the original docstring, it also generates a tree of the entire library! _All credits to Rich for making it possible!_
+* All tests use Rich tracebacks
+
+#### Dependency updates
+* chore(deps): bump reviewdog/action-actionlint from 1.72.1 to 1.73.0 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/20
+* chore(deps): bump actions/setup-python from 4 to 7 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/22
+* chore(deps): bump actions/checkout from 3 to 7 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/23
+
+
+#### Notes
+This was originally released as `v1.3.0.20260723b1`. However, I decided to re-release it as a release candidate instead.
+
+#### Plans for next update
+Bro.
+
+We are _almost there._
+
+The first **release candidate** is out, and a second one containing cleanups is coming out. This is it: after `rc1`, we will finally be stable.
+
+What a journey this has been.
+
+**Please note: the final release date will be on _July 29th_, two days after the original planned date, to give myself some time to rest and cleanup any messes left behind.**
+
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.0.20260721b0...v1.3.0.20260724rc0
+
+---
 
 ## 📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*
 
@@ -348,6 +400,59 @@ Looks like the next alpha will be released in a week, with the last alpha in two
 **Note that kms-semver1.3 will now be officially designated as built from [`v1.2.3.20260523.1`](https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.2.3.20260523.1).**
 
 **Full Changelog**: [`v1.2.2.20260517.3` vs `v1.3.0.20260522a0`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.2.20260517.3...v1.3.0.20260522a0)
+
+---
+
+## 📦 v1.2.5.20260724 — *kms-v1.2.5/2026.07.24*
+
+⚙ **Target Node Commit:** `0edcd250`
+
+📝 **Release Type:** Major Patch
+
+### What's Changed
+
+> [!important]
+> As of this version, the `main` branch will be renamed to `semver1.2.x`. Please update your environments accordingly.
+
+> [!important]
+> `kms-v1.3.0/2026.07.29`, the first stable version of `kms-semver1.3.x`, will release soon! Please note the changes stated in the roadmap and changelog, and prepare accordingly. Thanks!
+
+> [!important]
+> As of this version, the main branch handling all things relating to the `docs/` folder and the [Github Pages site](https://boss-1s.github.io/key_multivalue_storage) is [docs](https://github.com/boss-1s/key_multivalue_storage/blob/tree/docs)
+
+> [!warning]
+> This will be the **last feature release** for `kms-semver1.2.x`. Beginning this release, `kms-semver1.2.x` will enter its `Maintenance` stage, meaning only high-priority security updates and important bug fixes will be committed to ensure long-term stability before EOS (End of Support).
+
+#### Repository Updates
+* Fixed some problems with the README's links
+* Wiki is almost finished
+* **Main documentation site!** _Deployed at https://boss-1s.github.io/key_multivalue_storage_
+* _Auto changelog [re]generation - see `v1.3.0.20260724rc0`_
+
+#### Module Updates
+- docstring revamped for `Storage`
+- fixed a bunch of type hints
+- using Mapping instead of dict
+- **Type-hinted `Storage`**
+- stringify `key`/`top_lv_key`
+- pylint: 8.14 -> 8.59
+
+
+#### Dependency Updates
+* chore(deps-dev): bump pyproject from 1!0.1.2 to 1!0.1.3 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/15
+* chore(deps): bump actions/setup-python from 6 to 7 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/17
+* chore(deps): bump reviewdog/action-actionlint from 1.72.0 to 1.72.1 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/18
+* chore(deps): bump reviewdog/action-actionlint from 1.72.1 to 1.73.0 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/21
+* chore(deps): bump actions/checkout from 3 to 7 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/25
+* chore(deps): bump actions/setup-python from 4 to 7 by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/24
+
+#### Notes
+_This is a delayed release._ The original planned date for this release was 2026/07/23 on `v1.2.5.20260723` instead.
+
+#### Plans for next update
+No plans for the next `kms-semver1.2.x` update.
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.4.20260702...v1.2.5.20260724
 
 ---
 
