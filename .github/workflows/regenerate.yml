@@ -46,3 +46,6 @@ jobs:
                 REPO: ${{ github.repository }}
                 CUSTOM_COMMIT_MSG: "changelog regenerated"
               run: bash .github/workflows/src/push.sh
+
+            - name: Run pages build and deployment
+              run: gh workflow run .github/workflows/jekyll-gh-pages.yml --ref docs
