@@ -16,8 +16,7 @@ __________
 
 [![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
 [![Package](https://img.shields.io/badge/Stable%20Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Nightly](https://img.shields.io/badge/Development%20Package-kms--semver1%2E2%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/main/full-kms-nightly.zip)
-[![Beta Nightly](https://img.shields.io/badge/Beta%20Package-kms--semver1%2E3%2E0%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/beta/full-kms-nightly.zip)
+[![Beta Nightly](https://img.shields.io/badge/Nightly%20Package-kms--semver1%2E3%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/semver1.3.x/full-kms-nightly.zip)
 
 ### Status
 
@@ -48,10 +47,12 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
-The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/beta/test/). <!-- remember to change back to main -->
+The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.3.x/test/). 
+
+[*See more about tests here.*](https://boss-1s.github.io/key_multivalue_storage/Development)
 
 ## Usage
-- Create a Storage object to prepare the data to be stored:
+- Create a Storage object to wrap the data to be stored:
 ```py
 from key_multivalue_storage import Storage
 my-db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
@@ -60,7 +61,7 @@ my-db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
 ```py
 my-db.store("database.json")
 ```
-- You can change certain global settings for each `Storage` instance.
+- You can change certain global variables for each `Storage` instance.
 ```py
 Storage.indent = 4 # indent size of JSON files
 Storage.encode = True # Whether to encode stored values
@@ -70,7 +71,7 @@ Storage.auto_delete_self = True
 # Storage.store()
 ```
 
-### See the full documentation [here](https://github.com/Boss-1s/key_multivalue_storage/wiki)!
+### See the full documentation [here](https://boss-1s.github.io/key_multivalue_storage)!
 
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
 ## [Roadmap](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#possible-future-features)
