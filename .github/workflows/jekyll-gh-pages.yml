@@ -28,6 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: docs
       - env:
           GH_TOKEN: ${{github.token}}
         run: gh workflow run .github/workflows/jekyll-gh-pages.yml --ref docs
