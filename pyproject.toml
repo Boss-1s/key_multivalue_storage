@@ -5,7 +5,7 @@ dev = [
     { include-group = 'site' }
 ]
 release = [
-    "gitpython>=3.1.53",
+    "gitpython>=3.1.57",
     "md-toc>=9.0.0",
     "packaging>=26.2",
     "requests>=2.34.2",
