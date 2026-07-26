@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: docs
       - env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run .github/workflows/regenerate.yml --ref docs
