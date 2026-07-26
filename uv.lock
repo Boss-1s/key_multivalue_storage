@@ -14,7 +14,7 @@ dev = [
     { name = "packaging", specifier = ">=26.2" },
     { name = "pylint", specifier = ">=4.0.6" },
     { name = "pylint-per-file-ignores", specifier = ">=3.2.1" },
-    { name = "pyproject", specifier = ">=1!0.1.2" },
+    { name = "pyproject", specifier = ">=1!0.2.1" },
     { name = "requests", specifier = ">=2.34.2" },
     { name = "rich", specifier = ">=15.0.0" },
 ]
@@ -33,7 +33,7 @@ site = [
 test = [
     { name = "pylint", specifier = ">=4.0.6" },
     { name = "pylint-per-file-ignores", specifier = ">=3.2.1" },
-    { name = "pyproject", specifier = ">=1!0.1.2" },
+    { name = "pyproject", specifier = ">=1!0.2.1" },
 ]
 
 [[package]]
@@ -306,14 +306,14 @@ wheels = [
 
 [[package]]
 name = "pyproject"
-version = "1!0.1.3"
+version = "1!0.2.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3d/28/9e7c376989dfb30d58c973b69f7cfd667a8a13e4c8404e96605ef8580df9/pyproject-1!0.1.3.tar.gz", hash = "sha256:4f0e666a1d45eec4a664c0be31a22c60d43048ce9261b1250e8de5019f0772db", size = 1191560, upload-time = "2026-07-17T15:56:44.208Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/80/92/03e7167743cb98f90847f6a11cf9d66f2c01b28e2e6f0a8f51d196ddfd53/pyproject-1!0.2.1.tar.gz", hash = "sha256:e4efc7e1cf90a38d262a96bc32e5faf40d968c27ffe5c5e5623d9ad44c600e2d", size = 1210149, upload-time = "2026-07-26T03:26:47.476Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/7b/f9c47dfe853ff1690698c3f5e32e566281ca1b01101bf422a24822389c1c/pyproject-1!0.1.3-py3-none-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl", hash = "sha256:cb90094942ac52cd2e437bb1de44f41a4ac838ff2fd8d86f91bf3469ac6983df", size = 9446487, upload-time = "2026-07-17T15:56:36.62Z" },
-    { url = "https://files.pythonhosted.org/packages/60/9b/d3b28e21ea349e8a97234d1f05484cdd492cd0a7e3528bf9d056789f993d/pyproject-1!0.1.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:44aeaed756c55bf0647d49bfb8c6a588e2b0ea4a71e7df572fa5997f27886b36", size = 5264329, upload-time = "2026-07-17T15:56:39.144Z" },
-    { url = "https://files.pythonhosted.org/packages/3c/b7/039b26a73cca99f2f90270706047e27f2624a914639ba66d4134a6bac9db/pyproject-1!0.1.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:147ef62828861a728e75cc4f834cd723b6ed3cfceebe69add0203d037461ac80", size = 5508339, upload-time = "2026-07-17T15:56:41.035Z" },
-    { url = "https://files.pythonhosted.org/packages/37/87/0a00ccedbdfeeb667ad458f79925ccd726a6f221eeda6a159a3ac45ee6a7/pyproject-1!0.1.3-py3-none-win_amd64.whl", hash = "sha256:0503175a90a70d7b6c623ed752d0af32ce85ee34123b26ce82277222618438a0", size = 5683138, upload-time = "2026-07-17T15:56:42.617Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/29/0f622e6069169956d59e4ab02ce7242d5777b4dc28c3f4f6e083b548cafd/pyproject-1!0.2.1-py3-none-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl", hash = "sha256:18e8bbb68b5abfdb47cc6b7628762764e18235b3c6ffa4acdc50b06e34a0ae40", size = 9735869, upload-time = "2026-07-26T03:26:41.221Z" },
+    { url = "https://files.pythonhosted.org/packages/c8/8b/4908dce035e73c5abd467befac9a92fa71e583c1601687e89b8cd9433469/pyproject-1!0.2.1-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cec3f87fd2b1e8594586eb6961e00c30ed39050c2861d92358c9853fff805789", size = 5406215, upload-time = "2026-07-26T03:26:43.218Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/1c/25903f1d56a615959246aff3a2bf05554b8cd58c2b4ae9a1a828dba4b631/pyproject-1!0.2.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0e6a417d77f00edbb150075819b34cac51979a5a1263b4615ed44e9a123670df", size = 5658091, upload-time = "2026-07-26T03:26:44.582Z" },
+    { url = "https://files.pythonhosted.org/packages/a8/8f/ea7c4613bca71cea21ab2ebd772981a15c1372b647ea7c1737a453bd01be/pyproject-1!0.2.1-py3-none-win_amd64.whl", hash = "sha256:bc453973f9bb4e84c5943f961482cacb5d97eadc34ba13cb70128f789951f0bc", size = 5826405, upload-time = "2026-07-26T03:26:45.956Z" },
 ]
 
 [[package]]
