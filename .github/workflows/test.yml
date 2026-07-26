@@ -98,7 +98,7 @@ jobs:
     if: |
       github.ref_name == 'semver1.3.x' ||
       contains(github.ref_name, 'semver1.3.x')
-    uses: ./.github/workflows/release-beta-nightly.yaml
+    uses: ./.github/workflows/release-beta-nightly.yml
         
   deploy-to-test:
     needs: nightly-main
