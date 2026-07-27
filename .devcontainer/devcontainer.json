@@ -29,9 +29,6 @@
             "repositories": {
                 "Boss-1s/key_multivalue_storage": {
                     "permissions": "write"
-                },
-                "Boss-1s/scratchattach": {
-                    "permissions": "write"
                 }
             }
         }
