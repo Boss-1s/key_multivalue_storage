@@ -2,14 +2,14 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.python",              // Python
-                "ms-python.python-environments", // Python Environments
-                "ms-python.debugpy",             // Python Debugger
-                "ms-python.pylint",              // Pylint
-                "ms-python.vscode-pylance",      // Pylance
-                "ms-vscode.anycode",             // Anycode
-                "davidanson.vscode-markdownlint", // Markdown
-                "ParisNeo.toml-hilighter", // TOML
+                "ms-python.python",
+                "ms-python.python-environments",
+                "ms-python.debugpy",
+                "ms-python.pylint",
+                "ms-python.vscode-pylance",
+                "ms-vscode.anycode",
+                "davidanson.vscode-markdownlint",
+                "ParisNeo.toml-hilighter",
                 "fanaticpythoner.better-todo-tree",
                 "mads-hartmann.bash-ide-vscode",
                 "aaron-bond.better-comments",
