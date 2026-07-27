@@ -94,7 +94,7 @@ jobs:
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
 
-  nightly-main:
+  nightly:
     needs: build
     permissions: write-all
     if: |
@@ -103,7 +103,7 @@ jobs:
     uses: ./.github/workflows/release-nightly.yml
         
   deploy-to-test:
-    needs: nightly-main
+    needs: build
     permissions:
       contents: read
     runs-on: ubuntu-latest
