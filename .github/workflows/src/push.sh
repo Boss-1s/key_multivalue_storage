@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Note: 5% AI-generated
+# NOTE: 5% AI-generated
 
 if [ -z "$CUSTOM_COMMIT_MSG" ]; then
   echo "CUSTOM_COMMIT_MSG environment variable is not set. Setting to default 'commit'."

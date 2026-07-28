@@ -2,7 +2,7 @@
 Find diffs using griffe.
 Most likely will be in the dev package env on pip.
 
-Note: 90% AI-generated
+NOTE: 90% AI-generated
 """
 
 import sys
