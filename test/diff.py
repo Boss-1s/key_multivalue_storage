@@ -9,9 +9,7 @@ import sys
 try:
     import griffe #type: ignore
 except ImportError:
-    print("Please download the dev package with",
-          "'pip install key_multivalue_storage[dev]'",
-          "to use this feature.")
+    print("Could not find package griffe. Did you run `uv sync --dev`?")
     sys.exit(1)
 
 from pathlib import Path

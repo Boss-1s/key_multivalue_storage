@@ -1,0 +1,16 @@
+# TODO: Tests as a seperate package, can come with kms with the [dev] extra
+
+[dependency-groups]
+dev = [
+    "gitpython>=3.1.57",
+    "griffe>=2.1.0",
+    "key-multivalue-storage",
+    "md-toc>=9.0.0",
+    "packaging>=26.2",
+    "pre-commit>=4.6.1",
+    "rich>=15.0.0",
+    "textual>=8.2.8",
+]
+
+[tool.uv.sources]
+key-multivalue-storage = { path = "../", editable = true }
