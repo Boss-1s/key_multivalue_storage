@@ -29,8 +29,8 @@ __________
 [![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=gray&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 [![Documentation](https://img.shields.io/badge/Documentation-Click-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=gray&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
-[![Contributing](https://img.shields.io/badge/Contribution%20Guidelines-Click-gray?style=for-the-badge&labelColor=orange)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/CONTRIBUTING.md)
-[![Security](https://img.shields.io/badge/Versioning%20%26%20Security-Click-gray?style=for-the-badge&labelColor=red)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/CONTRIBUTING.md)
+[![Contributing](https://img.shields.io/badge/Contribution%20Guidelines-Click-gray?style=for-the-badge&labelColor=orange)](https://boss-1s.github.io/key_multivalue_storage/contribution-guidelines)
+[![Security](https://img.shields.io/badge/Versioning%20%26%20Security-Click-gray?style=for-the-badge&labelColor=red)](https://boss-1s.github.io/key_multivalue_storage/security)
 
 _____________
 
@@ -75,4 +75,3 @@ Storage.auto_delete_self = True
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
 ## [Roadmap](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#possible-future-features)
 ## [Report a Bug](https://github.com/Boss-1s/key_multivalue_storage/issues)
-## [Scratchattach](https://github.com/TimMcCool/scratchattach/)
