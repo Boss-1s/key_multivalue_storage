@@ -4,6 +4,7 @@
 
 <!--TOC-->
 
+- [📦 v1.3.0.20260727rc1 — *kms-v1.3.0rc1/2026.07.27*](#-v13020260727rc1--kms-v130rc120260727)
 - [📦 v1.3.0.20260724rc0 — *kms-v1.3.0rc0/2026.07.24*](#-v13020260724rc0--kms-v130rc020260724)
 - [📦 v1.3.0.20260721b0 — *kms-v1.3.0b0/2026.07.21*](#-v13020260721b0--kms-v130b020260721)
 - [📦 v1.3.0.20260703a4 — *kms-v1.3.0a4/2026.07.03*](#-v13020260703a4--kms-v130a420260703)
@@ -38,6 +39,76 @@
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 
 <!--TOC-->
+
+## 📦 v1.3.0.20260727rc1 — *kms-v1.3.0rc1/2026.07.27*
+
+⚙ **Target Node Commit:** `345ed056`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+### What's Changed
+
+> [!important]
+> `kms-v1.3.0/2026.07.29`, the first stable version of `kms-semver1.3.x`, will release soon! Please note the changes stated in the roadmap and changelog, and prepare accordingly. Thanks!
+
+
+#### Repo Updates
+
+- Fixed auto-regenerate changelog trigger 
+- Fixed docs build and deployment trigger
+- Small README changes
+- devcontainer.json update
+- Fixed all references to old branch name
+- Updated Issue Templates to point to kms-semver1.3.x
+- Removed docs folder contents to complete documentation migration to docs branch 
+- Synced and patched up `.github/` directory with semver1.2.x
+- Attestations for nightly builds
+
+##### Tests & Automations
+
+- **New test folder: `test/automations/.vscode_rebuild`**
+- New scripts: `reinstall_extensions.py` and `reconfigure_ssh_key.sh`
+- Both are pretty self-explanatory, given the names.
+- _Useful scripts when rebuilding your codespace's/VSCode's devcontainer and you don't want to waste time reconfiguring everything._
+
+#### Module Updates 
+
+* Removed 'Last Updated' line from module docstrings
+* Trimmed trailing whitespace in `src/*`
+
+#### Dependency Updates
+
+***See commit e95aedc for details.***
+
+- Bumped `certifi` `v2026.6.17` -> `v2026.7.22`
+- Bumped `filelock` `v3.29.4` -> `v3.32.0`
+- Bumped `gitpython` `v3.1.53 -> `v3.1.57`
+- Bumped `griffe` `v2.0.2` -> `v2.1.0`
+- Bumped `griffecli` `v2.0.2` -> `v2.1.0`
+- Bumped `griffelib` `v2.0.2` -> `v2.1.0`
+- Bumped `platformdirs` `v4.10.0` -> `v4.11.0`
+- Bumped `pre-commit` `v4.6.0` -> `v4.6.1`
+- Bumped `pyproject` `v1!0.1.2` -> `v1!0.2.1`
+- Bumped `python-discovery` `v1.4.2` -> `v1.5.0`
+- Bumped `tomlkit` `v0.15.0` -> `v0.15.1`
+- Bumped `virtualenv` `v21.5.1` -> `v21.7.0`
+
+#### Notes
+
+**Four medium-risk security leaks were patched by updating `gitpython` to a version greater than `v3.1.54`, via commit e95aedc.** These leaks may not have affected kms directly; however, _it is important to be conscientious when dealing with security and stability._
+
+_[See the alerts here.](https://github.com/Boss-1s/key_multivalue_storage/security/dependabot?q=manifest%3Auv.lock+is%3Aclosed+ecosystem%3Apip+GitPython)_
+
+#### Plans for next update
+
+> [!important]
+> This is the final release candidate!
+
+**The final release date will be on July 29th, two days after the original planned date, to give myself some time to rest and cleanup any messes left behind.**
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.0.20260724rc0...v1.3.0.20260727rc1
+
+---
 
 ## 📦 v1.3.0.20260724rc0 — *kms-v1.3.0rc0/2026.07.24*
 
