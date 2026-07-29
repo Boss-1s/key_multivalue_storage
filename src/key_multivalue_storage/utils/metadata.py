@@ -81,6 +81,34 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         from key_multivalue_storage import delete
         return delete.Delete
 
+    @property
+    @deprecated("Warnings no longer belong to the `Storage` namespace. "+
+                "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+    def CastWarning(cls):
+        from key_multivalue_storage import kms_warnings
+        return kms_warnings.CastWarning
+
+    @property
+    @deprecated("Warnings no longer belong to the `Storage` namespace. "+
+                "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+    def SubtractionFailureWarning(cls):
+        from key_multivalue_storage import kms_warnings
+        return kms_warnings.SubtractionFailureWarning
+
+    @property
+    @deprecated("Warnings no longer belong to the `Storage` namespace. "+
+                    "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+    def AdditionFailureWarning(cls):
+        from key_multivalue_storage import kms_warnings
+        return kms_warnings.AdditionFailureWarning
+
+    @property
+    @deprecated("Warnings no longer belong to the `Storage` namespace. "+
+                    "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+    def DeleteWarning(cls):
+        from key_multivalue_storage import kms_warnings
+        return kms_warnings.DeleteWarning
+
     def __repr__(cls) -> str:
         """
         String/Dev representation of `kms.storage.Storage`
@@ -102,19 +130,22 @@ class _StorageMeta(type, metaclass=_KmsMeta):
 
     @property
     @deprecated("The metadata var name 'VERSION' has been changed "+
-                "to 'semver' since kms-semver1.3. Consider using that instead.")
+                "to 'semver' since kms-semver1.3. Consider using that instead."+
+                "This will be removed in 2.0.")
     def VERSION(cls) -> str:
         return cls.semver
 
     @property
     @deprecated("The metadata var name 'DATE_VERSION' has been changed "+
-                "to 'calver' since kms-semver1.3. Consider using that instead.")
+                "to 'calver' since kms-semver1.3. Consider using that instead."+
+                "This will be removed in 2.0.")
     def DATE_VERSION(cls) -> str:
         return cls.calver
 
     @property
     @deprecated("The metadata var name 'LAST_UPDATE' has been changed "+
-                "to 'last_update' since kms-semver1.3. Consider using that instead.")
+                "to 'last_update' since kms-semver1.3. Consider using that instead."+
+                "This will be removed in 2.0.")
     def LAST_UPDATE(cls) -> str:
         return cls.last_update
 
