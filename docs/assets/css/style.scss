@@ -10,21 +10,19 @@ html {
 
 /* Banner */
 .custom-site-banner {
-  position: fixed;            /* Locks the banner to the screen layout */
-  top: 15px;                  /* Small spacing gap above the banner */
-  left: 5%;                   /* Centers the fixed box horizontally */
-  width: 90%;                 /* Spans almost across the browser width */
-  z-index: 9999;              /* Keeps the banner sitting on top of other elements */
+  position: relative;         /* Changes it from locked/fixed to standard page flow */
+  width: 100%;                /* Automatically fills the available reading column space */
+  margin-bottom: 2rem;        /* Adds a clean breathing gap before your markdown text starts */
   background-size: cover;
   background-position: center;
-  border-radius: 12px;        /* Adds smooth rounded corners */
-  overflow: hidden;           /* Forces background color to match rounded corners */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Adds a subtle floating shadow effect */
+  border-radius: 12px;        /* Keeps your nice rounded corners */
+  overflow: hidden;           
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft floating shadow */
 }
 
 .banner-overlay {
   background-color: rgba(0, 0, 0, 0.4); 
-  padding: 25px 20px;         /* Compact padding height for a top-bar banner */
+  padding: 40px 20px;         /* Gives it a nice, spacious hero-image look */
   text-align: center;
 }
 
@@ -33,18 +31,13 @@ html {
   margin: 0 auto;
   
   h1 {
-    font-size: 1.8rem;        /* Scaled down header for fixed layout look */
-    margin-bottom: 4px;
+    font-size: 2.2rem;        /* Brings back a slightly larger, bolder header font */
+    margin-bottom: 8px;
     font-weight: 700;
   }
   
   p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0;
   }
-}
-
-/* Offsets the page content down so it starts underneath the banner */
-.layout-banner-spacer {
-  margin-top: 160px !important; 
 }
