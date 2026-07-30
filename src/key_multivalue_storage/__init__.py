@@ -15,10 +15,13 @@ that came with it.**
 
 So far, this is the ***greatest piece of a python program I have ever made.***
 """
+# Built-ins
 import sys
 import warnings
 import inspect
 from typing import Any, Callable
+
+# Third-party
 from rich.console import Console, Group
 from rich.syntax import Syntax
 from rich.panel import Panel
@@ -26,15 +29,25 @@ from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
 
+# First-party
+# Modules
 from . import storage
+from . import load
+from . import edit
+from . import delete
 
+# Classes
 from .storage import Storage
 from .load import Load
 from .edit import Edit
 from .delete import Delete
 
-from .utils import exceptions
+# Custom Warnings and Exceptions
+from .utils import exceptions as kms_exceptions
 from .utils import warnings as kms_warnings
+
+from .utils.exceptions import KeyNotFoundError, NoInstantiationError
+from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
 
 __version__ = "v1.3.0.20260730"
 __version_internal__ = "kms-v1.3.0/2026.07.30"
@@ -45,13 +58,11 @@ kms = storage
 key_multivalue_storage = storage
 
 __all__ = [
-    "key_multivalue_storage", # full name
-    "kms", # short name
     "Storage", # main class object Storage
     "Load", # Load class
     "Edit", # Edit class
     "Delete", # Delete class
-    "exceptions", # custom exceptions
+    "kms_exceptions", # custom exceptions
     "kms_warnings", # custom warnings
 ]
 
