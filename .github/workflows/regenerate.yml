@@ -1,9 +1,7 @@
 name: Regenerate Changelog
 
 on:
-    workflow_dispatch: # still allowing CLI trigger
-    repository_dispatch:
-        types: [regenerate-changelog]
+    workflow_dispatch:
 
 jobs:
     generate:
