@@ -5,7 +5,7 @@ install(show_locals=True)
 
 print("Begin custom warnings/exceptions test.")
 
-assert kms.AddtionFailureWarning
+assert kms.AdditionFailureWarning
 assert kms.SubtractionFailureWarning
 assert kms.DeleteWarning
 assert kms.CastWarning
