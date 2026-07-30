@@ -63,7 +63,6 @@ optional_front_matter:
 
 global_banner:
   enabled: true
-  image: "/assets/img/global-banner-bg.jpg"
   title: "Welcome to My Site"
   subtitle: "This banner appears on every single page automatically."
 
