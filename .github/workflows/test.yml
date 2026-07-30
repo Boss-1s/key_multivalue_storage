@@ -25,21 +25,26 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Setup Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: ${{ matrix.py-ver }}
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v7
-        with:
-         enable-cache: true
+      # Setup
+      - parallel:
+        - name: Setup Python
+          uses: actions/setup-python@v7
+          with:
+            python-version: ${{ matrix.py-ver }}
+  
+        - name: Set up uv
+          uses: astral-sh/setup-uv@v7
+          with:
+           enable-cache: true
+  
+        # Install dependencies....
+        - name: Install requirements
+          run: |
+            pip install -r requirements.txt
+            uv sync --test
 
-      - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-          uv sync
-
+      # ...and begin tests!
       - name: Run Python Tests
         if: ${{ runner.os != 'Windows' }}
         run: uv run python test/
@@ -57,39 +62,44 @@ jobs:
       #     OLDTAG: 'v1.2.3.20260523.1'
       #   run: |
       #     uv run python test/diff.py
-      
-      - name: Lint using Pylint
-        continue-on-error: true
-        id: pylint
-        run: uv run pylint --recursive=y key_multivalue_storage test/ .github/workflows/src/
-      
-      - name: Lint pyproject.toml
-        id: toml
-        continue-on-error: true
-        run: uv run pyproject check
 
-      - name: Lint YAML Files
-        id: yml
-        if: ${{ runner.os == 'Linux' }}
-        continue-on-error: true
-        uses: reviewdog/action-actionlint@v1.73.0
-        with:
-          actionlint_flags: '-color -oneline'
-          level: info
-          fail_level: error
-
-      - name: Lint Bash Files
-        id: sh
-        if: ${{ runner.os != 'Windows' }}
-        continue-on-error: true
-        uses: ludeeus/action-shellcheck@2.0.0
-        with:
-          ignore_paths: >-
-            .venv/*
-          severity: error
+      - parallel:
+        - name: Lint using Pylint
+          continue-on-error: true
+          id: pylint
+          run: uv run pylint --recursive=y key_multivalue_storage test/ .github/workflows/src/
+        
+        - name: Lint pyproject.toml
+          id: toml
+          continue-on-error: true
+          run: uv run pyproject check
+  
+        - name: Lint YAML Files
+          id: yml
+          if: ${{ runner.os == 'Linux' }}
+          continue-on-error: true
+          uses: reviewdog/action-actionlint@v1.73.0
+          with:
+            actionlint_flags: '-color -oneline'
+            level: info
+            fail_level: error
+  
+        - name: Lint Bash Files
+          id: sh
+          if: ${{ runner.os != 'Windows' }}
+          continue-on-error: true
+          uses: ludeeus/action-shellcheck@2.0.0
+          with:
+            ignore_paths: >-
+              .venv/*
+            severity: error
 
       - name: Fail job if steps failed
-        if: ${{ steps.pylint.outcome == 'failure' || steps.toml.outcome == 'failure' || steps.yml.outcome == 'failure' || steps.sh.outcome == 'failure' }}
+        if: |
+          steps.pylint.outcome == 'failure' ||
+          steps.toml.outcome == 'failure' ||
+          steps.yml.outcome == 'failure' ||
+          steps.sh.outcome == 'failure'
         run: |
           echo ::error Failed!:: A step may have failed, skipping deployment and failing job.
           exit 1
