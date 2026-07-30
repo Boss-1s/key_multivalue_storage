@@ -3,38 +3,48 @@
 
 @import "{{ site.theme }}";
 
+/* Smooth scoll */
 html {
   scroll-behavior: smooth;
 }
 
+/* Banner */
 .custom-site-banner {
-  width: 100%;
+  position: fixed;            /* Locks the banner to the screen layout */
+  top: 15px;                  /* Small spacing gap above the banner */
+  left: 5%;                   /* Centers the fixed box horizontally */
+  width: 90%;                 /* Spans almost across the browser width */
+  z-index: 9999;              /* Keeps the banner sitting on top of other elements */
   background-size: cover;
   background-position: center;
-  position: relative;
-  margin-bottom: 2rem;
+  border-radius: 12px;        /* Adds smooth rounded corners */
+  overflow: hidden;           /* Forces background color to match rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Adds a subtle floating shadow effect */
 }
 
 .banner-overlay {
-  background-color: rgba(0, 0, 0, 0.4); /* Overlay to make text legible */
-  padding: 60px 20px;
+  background-color: rgba(0, 0, 0, 0.4); 
+  padding: 25px 20px;         /* Compact padding height for a top-bar banner */
   text-align: center;
 }
 
 .banner-inner-text {
   max-width: 800px;
   margin: 0 auto;
-  color: #ffffff !important;
   
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #ffffff !important;
+    font-size: 1.8rem;        /* Scaled down header for fixed layout look */
+    margin-bottom: 4px;
+    font-weight: 700;
   }
   
   p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
-    color: #eeeeee !important;
   }
+}
+
+/* Offsets the page content down so it starts underneath the banner */
+.layout-banner-spacer {
+  margin-top: 160px !important; 
 }
