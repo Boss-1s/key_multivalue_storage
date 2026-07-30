@@ -61,6 +61,12 @@ defaults:
 optional_front_matter:
   remove_extension: true
 
+global_banner:
+  enabled: true
+  image: "/assets/img/global-banner-bg.jpg"
+  title: "Welcome to My Site"
+  subtitle: "This banner appears on every single page automatically."
+
 sidebar:
   - name: Boss_1s Home
     link: https://boss-1s.github.io
