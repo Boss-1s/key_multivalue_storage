@@ -54,6 +54,7 @@ sass:
 defaults:
   - scope:
       path: "" # Targets all your cloned wiki markdown files
+      type: "pages"
     values:
       layout: "banner" # Automatically wraps them in the layout we created above
       
