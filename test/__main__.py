@@ -25,12 +25,17 @@ def main():
         exec(open("test/test-general.py").read(), globals())
         print("-"*30)
         exec(open("test/test-meta.py").read(), globals())
+        print("-"*30)
+        exec(open("test/test-exceptions.py").read(), globals())
         return
     if sys.argv[1].lower() == "general":
         exec(open("test/test-general.py").read(), globals())
         return
     if sys.argv[1].lower() == "meta":
         exec(open("test/test-meta.py").read(), globals())
+        return
+    if sys.argv[1].lower() in ["exceptions", "warnings"]:
+        exec(open("test/test-exceptions.py").read(), globals())
         return
     if sys.argv[1].lower() == "diff":
         try:
@@ -47,7 +52,8 @@ def main():
         exec("import key_multivalue_storage as kms; kms.help()", globals())
         return
     raise ValueError(
-        "Invalid argument. Available arguments: a, all, general, meta, diff, help_shortcut"
+        "Invalid argument. Available arguments: a, all, general, meta, diff, "+
+        "exceptions, warnings, help_shortcut"
     )
 
 if __name__ == "__main__":
