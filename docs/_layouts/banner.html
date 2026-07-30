@@ -2,18 +2,21 @@
 layout: default
 ---
 
-<!-- Global Banner Block -->
+<!-- Global Fixed Banner Block -->
 <div class="custom-site-banner" style="background-image: url('{{ site.global_banner.image | relative_url }}');">
   <div class="banner-overlay">
     <div class="banner-inner-text">
-      <!-- Dynamically pulls page title or falls back to global title -->
-      <h1>{{ page.title | default: site.global_banner.title }}</h1>
-      <p>{{ site.global_banner.subtitle }}</p>
+      <h1 style="color: {{ site.global_banner.title_color | default: '#ffffff' }};">
+        {{ page.title | default: site.global_banner.title }}
+      </h1>
+      <p style="color: {{ site.global_banner.subtitle_color | default: '#eeeeee' }};">
+        {{ site.global_banner.subtitle }}
+      </p>
     </div>
   </div>
 </div>
 
-<!-- Main Markdown Content Target -->
-<div class="main-content">
+<!-- Main Markdown Content Spacer Wrapper -->
+<div class="main-content layout-banner-spacer">
   {{ content }}
 </div>
