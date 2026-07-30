@@ -2,21 +2,39 @@
 layout: default
 ---
 
-<!-- Global Banner Block (Scrolls away naturally) -->
-<div class="custom-site-banner" style="background-image: url('{{ site.global_banner.image | relative_url }}');">
-  <div class="banner-overlay">
-    <div class="banner-inner-text">
+<!-- Full-Screen Splash Intro Card -->
+<div id="hero-splash" class="full-screen-hero" style="background-image: url('{{ site.global_banner.image | relative_url }}');">
+  <div class="hero-overlay">
+    <div class="hero-content">
       <h1 style="color: {{ site.global_banner.title_color | default: '#ffffff' }};">
-        {{ page.title | default: site.global_banner.title }}
+        {{ site.global_banner.title }}
       </h1>
       <p style="color: {{ site.global_banner.subtitle_color | default: '#eeeeee' }};">
         {{ site.global_banner.subtitle }}
       </p>
     </div>
+    
+    <!-- Animated Clickable Scroll Arrow Button -->
+    <button class="scroll-down-btn" onclick="scrollToContent()" aria-label="Scroll down to content">
+      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    </button>
   </div>
 </div>
 
-<!-- Main Markdown Content Target -->
-<div class="main-content">
+<!-- The Actual Website Content Container -->
+<div id="main-site-content" class="actual-website-wrapper">
   {{ content }}
 </div>
+
+<!-- JavaScript to smoothly slide down to the website -->
+<script>
+  function scrollToContent() {
+    const contentSection = document.getElementById('main-site-content');
+    if (contentSection) {
+      contentSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+</script>
