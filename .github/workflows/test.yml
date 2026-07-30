@@ -38,11 +38,11 @@ jobs:
           with:
            enable-cache: true
   
-        # Install dependencies....
-        - name: Install requirements
-          run: |
-            pip install -r requirements.txt
-            uv sync --test
+      # Install dependencies....
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          uv sync --test
 
       # ...and begin tests!
       - name: Run Python Tests
