@@ -55,7 +55,7 @@ defaults:
   - scope:
       path: "" # Targets all your cloned wiki markdown files
     values:
-      layout: "default" # Automatically wraps them in the layout we created above
+      layout: "banner" # Automatically wraps them in the layout we created above
       
 # Explicitly configure the optional front matter plugin
 optional_front_matter:
