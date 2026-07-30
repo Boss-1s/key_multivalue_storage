@@ -2,13 +2,18 @@
 layout: default
 ---
 
-<header class="page-banner" style="background-image: url('{{ page.banner_image }}');">
-    <div class="banner-content">
-        <h1>{{ page.title }}</h1>
-        <p>{{ page.banner_text }}</p>
+<!-- Global Banner Block -->
+<div class="custom-site-banner" style="background-image: url('{{ site.global_banner.image | relative_url }}');">
+  <div class="banner-overlay">
+    <div class="banner-inner-text">
+      <!-- Dynamically pulls page title or falls back to global title -->
+      <h1>{{ page.title | default: site.global_banner.title }}</h1>
+      <p>{{ site.global_banner.subtitle }}</p>
     </div>
-</header>
+  </div>
+</div>
 
+<!-- Main Markdown Content Target -->
 <div class="main-content">
-    {{ content }}
+  {{ content }}
 </div>
