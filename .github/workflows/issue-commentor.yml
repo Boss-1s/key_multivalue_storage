@@ -12,6 +12,6 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v7
-      - run: gh issue comment ${{github.event.issue.id}} --body "Thanks for taking time to fill out this issue! Your issue will be triaged soon. If you have any questions or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
+      - run: gh issue comment ${{github.event.issue.node_id}} --body "Thanks for taking time to fill out this issue! Your issue will be triaged soon. If you have any questions or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
         env:
           GITHUB_TOKEN: ${{github.token}}
