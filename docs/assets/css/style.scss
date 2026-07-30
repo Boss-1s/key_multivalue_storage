@@ -6,3 +6,15 @@
 html {
   scroll-behavior: smooth;
 }
+
+.page-banner {
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+}
+.banner-content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
