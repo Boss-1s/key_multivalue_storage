@@ -1,0 +1,16 @@
+name: Automatic Issue Commentor
+run-name: issues-automation
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - run: gh issue comment ${{github.event.issue.id}} --body "Thanks for taking time to fill out this issue! Your issue will be triaged soon. If you have any questions or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
+        env:
+          GITHUB_TOKEN: ${{github.token}}
