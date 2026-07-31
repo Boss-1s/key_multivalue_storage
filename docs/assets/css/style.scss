@@ -92,3 +92,54 @@ html {
   .hero-content h1 { font-size: 2.2rem; }
   .hero-content p { font-size: 1.1rem; }
 }
+
+
+/*Mobile Hamburger (also AI-Generated)*/
+/* Mobile Rules (Adjust max-width breakpoint to fit your theme layout) */
+@media screen and (max-width: 768px) {
+  /* Style and position the hamburger icon button */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+  }
+
+  .hamburger-bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color, #333); /* Uses theme text color */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Hide the link container by default on small screens */
+  .link-wrapper-mobile {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  /* Reveal wrapper when the 'active' state class is injected */
+  .link-wrapper-mobile.active {
+    display: flex;
+  }
+  
+  /* Optional: Animate the hamburger button bars into an 'X' close icon */
+  .menu-toggle.open .hamburger-bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .menu-toggle.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.open .hamburger-bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+}
