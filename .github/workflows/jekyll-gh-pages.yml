@@ -37,21 +37,27 @@ jobs:
           bundler: 'Gemfile.lock'
           bundler-cache: true
           working-directory: "./docs"
-      - name: Clone and Setup Wiki
-        run: |
-          git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
-          rsync -avq --exclude='.git' temp-wiki/ docs/
-          rm -v -rf temp-wiki
-          rm -v -f docs/release-template.md docs/CODEOWNERS
-          mv docs/Home.md docs/index.md
-          mv docs/SECURITY.md docs/security.md
-          mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
-          mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
-          mv .github/_config.yml docs/_config.yml
-          echo "----------CONFIRM STAT----------"
-          git status
-          echo "----------CONFIRM FILES----------"
-          ls -a docs/
+      - parallel:
+        - name: Clone and Setup Wiki
+          run: |
+            git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
+            rsync -avq --exclude='.git' temp-wiki/ docs/
+            rm -v -rf temp-wiki
+            rm -v -f docs/release-template.md docs/CODEOWNERS
+            mv docs/Home.md docs/index.md
+            mv docs/SECURITY.md docs/security.md
+            mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
+            mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
+            mv .github/_config.yml docs/_config.yml
+            echo "----------CONFIRM STAT----------"
+            git status
+            echo "----------CONFIRM FILES----------"
+            ls -a docs/
+        - name: Find Date
+          uses: hudsonm62/datetime-action@v1
+          id: datetime
+          with:
+            format: yyyy-MM-dd at HH:mm:ss (UTC)
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
@@ -61,6 +67,8 @@ jobs:
           bundle exec jekyll build --verbose --source ./docs --destination ./_site --baseurl "${{steps.pages.outputs.base_path}}"
         env:
           BUNDLE_GEMFILE: ./docs/Gemfile
+          BUILD_SHA: ${{ github.sha }}
+          BUILD_DATE: ${{ steps.datetime.outputs.formatted }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
