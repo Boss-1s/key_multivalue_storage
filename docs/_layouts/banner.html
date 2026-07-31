@@ -25,12 +25,22 @@ layout: default
 </div>
 
 <script>
+  const splash = document.getElementById('hero-splash');
   let splashDismissed = false;
+
+  if (!sessionStorage.getItem('splashSeen')) {
+  splash.style.display = 'block'; 
+  } else {
+    splash.remove(); 
+    splashDismissed = true;
+  }
 
   function dismissSplash() {
     if (!splashDismissed) {
       splashDismissed = true;
-      const splash = document.getElementById('hero-splash');
+
+      sessionStorage.setItem('splashSeen', 'true');
+      
       splash.classList.add('slide-up');
       setTimeout(() => {
         splash.style.display = 'none';
