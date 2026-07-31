@@ -15,7 +15,7 @@ layout: default
     </div>
     
     <!-- Animated Clickable Scroll Arrow Button -->
-    <button class="scroll-down-btn" onclick="scrollToContent()" aria-label="Scroll down to content">
+    <button class="scroll-down-btn" onclick="dismissSplash()" aria-label="Scroll down to content">
       <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="12" y1="5" x2="12" y2="19"></line>
         <polyline points="19 12 12 19 5 12"></polyline>
@@ -29,12 +29,40 @@ layout: default
   {{ content }}
 </div>
 
-<!-- JavaScript to smoothly slide down to the website -->
 <script>
-  function scrollToContent() {
-    const contentSection = document.getElementById('main-site-content');
-    if (contentSection) {
-      contentSection.scrollIntoView({ behavior: 'smooth' });
+  let splashDismissed = false;
+
+  function dismissSplash() {
+    if (!splashDismissed) {
+      splashDismissed = true;
+      const splash = document.getElementById('hero-splash');
+      
+      // Slid the splash curtain up smoothly
+      splash.classList.add('slide-up');
+      
+      // Completely wipe layout nodes from rendering tree after animation finishes 
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 800); 
     }
   }
+
+  // Detect regular mouse tracking wheel scrolls to dismiss screen naturally
+  window.addEventListener('wheel', function(event) {
+    if (event.deltaY > 0) {
+      dismissSplash();
+    }
+  });
+
+  // Track finger swipe gestures for mobile touchscreen displays
+  let touchStartVal = 0;
+  window.addEventListener('touchstart', function(event) {
+    touchStartVal = event.touches[0].clientY;
+  });
+  window.addEventListener('touchmove', function(event) {
+    let touchMoveVal = event.touches[0].clientY;
+    if (touchStartVal - touchMoveVal > 50) { // Swiping upwards threshold
+      dismissSplash();
+    }
+  });
 </script>
