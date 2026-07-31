@@ -4,7 +4,7 @@ layout: default
 
 <!-- Only show the splash screen if global_banner configuration exists in _config.yml -->
 {% if site.global_banner %}
-<div id="hero-splash" class="full-screen-hero" style="background-image: url('{{ site.global_banner.image | relative_url }}');">
+<div id="hero-splash" class="full-screen-hero" style="background-color: {{ site.global_banner.background_color | default: '#000000' }};">
   <div class="hero-overlay">
     <div class="hero-content">
       <h1 style="color: {{ site.global_banner.title_color | default: '#ffffff' }};">
