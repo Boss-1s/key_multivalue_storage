@@ -4,6 +4,7 @@
 
 <!--TOC-->
 
+- [📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*](#-v13020260731--kms-v13020260731)
 - [📦 v1.3.0.20260730.1 — *kms-v1.3.0/2026.07.30a*](#-v130202607301--kms-v13020260730a)
 - [📦 v1.3.0.20260730 — *kms-v1.3.0/2026.07.30*](#-v13020260730--kms-v13020260730)
 - [📦 v1.3.0.20260727rc1 — *kms-v1.3.0rc1/2026.07.27*](#-v13020260727rc1--kms-v130rc120260727)
@@ -41,6 +42,33 @@
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 
 <!--TOC-->
+
+## 📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*
+
+⚙ **Target Node Commit:** `09779f11`
+
+📝 **Release Type:** Minor Patch
+
+### What's Changed
+#### Repo Updates
+None :)
+#### Module Updates 
+* Fixed a fatal bug in `storage.py` where Storage.store would not store anything if encode was set to False
+* Refactored some docstrings in `storage.py`
+#### Dependency updates
+None :)
+
+#### Notes
+***The main point of this release is the patch of `Storage.store` storing empty data if `encode` was set to `False`
+
+#### Plans for next update
+**Regarding `kms-semver1.3.1`,** the next major patch, that will come out **very soon** to address bug issues #14 and #26. If possible, I will also add the feature suggested in feat issue #27. _There is no set release date yet; however, the planned range of possible dates goes from August 5th, 2026 to August 11th, 2026._
+
+**Regarding `kms-semver1.4.0`,** that is **currently set to release around September 30th, 2026**. **HOWEVER,** because school is very unpredictable, _I may rewrite the whole roadmap to try and release a minor update to the `1.x.x` series to release every 5\~6 months instead of 3\~4._ **Currently planned features are listed in the [roadmap](https://boss-1s.github.io/key_multivalue_storage/Roadmap#possible-future-features).**
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.0.20260730.1...v1.3.0.20260731
+
+---
 
 ## 📦 v1.3.0.20260730.1 — *kms-v1.3.0/2026.07.30a*
 
