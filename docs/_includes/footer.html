@@ -7,13 +7,20 @@
     </a> &mdash; Website by <a href="https://github.com/Boss-1s">
       Boss_1s
     </a>
-  </small>
-  <br>
-  <small>
+    <br>
     <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/docs">Source Code</a>
+    <br>
+    <p>
+      Last Deployed: ${{ site.env.BUILD_DATE | default: Unknown}}
+      {% if site.env.BUILD_SHA %}
+      <br>
+      Build Revision SHA: <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/${{ site.env.BUILD_SHA }}">${{ site.env.BUILD_SHA }}</a>
+      {% endif %}
+    </p>
   </small>
 </p>
 
+<!--
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const menuToggle = document.getElementById("menu-toggle");
@@ -28,4 +35,4 @@
       });
     }
   });
-</script>
+</script>-->
