@@ -94,7 +94,14 @@ html {
 }
 
 
+
+
 /*Mobile Hamburger (also AI-Generated)*/
+/* Desktop default: Hide hamburger button */
+.menu-toggle {
+  display: none;
+}
+
 /* Mobile Rules (Adjust max-width breakpoint to fit your theme layout) */
 @media screen and (max-width: 768px) {
   /* Style and position the hamburger icon button */
