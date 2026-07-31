@@ -53,19 +53,20 @@ sass:
 
 defaults:
   - scope:
-      path: "" # Targets all your cloned wiki markdown files
+      path: "index.md"
       type: "pages"
     values:
-      layout: "banner" # Automatically wraps them in the layout we created above
+      layout: "banner"
       
-# Explicitly configure the optional front matter plugin
 optional_front_matter:
   remove_extension: true
 
 global_banner:
-  enabled: true
-  title: "Welcome to My Site"
-  subtitle: "This banner appears on every single page automatically."
+  background_color: "#221854"
+  title: "Welcome to kms-semver1.3.0"
+  subtitle: "What was once a child's play, became a teen's mace."
+  title_color: "#ffffff"
+  subtitle_color: "#400a57"
 
 sidebar:
   - name: Boss_1s Home
