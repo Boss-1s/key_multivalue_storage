@@ -70,7 +70,7 @@ global_banner:
   title: "Welcome to kms-semver1.3.0"
   subtitle: "The beginning of a beautiful library is here."
   title_color: "#ffffff"
-  subtitle_color: "#400a57"
+  subtitle_color: "#8c15bf"
 
 sidebar:
   - name: Boss_1s Home
