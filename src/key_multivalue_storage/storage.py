@@ -26,11 +26,12 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.5: import logger
-
 from typing import Any, Generator
 from types import TracebackType
 from functools import total_ordering
 from collections.abc import Callable
+
+from typing_extensions import deprecated
 from rich.console import Console
 from rich.markdown import Markdown
 
@@ -83,21 +84,22 @@ class Storage(metaclass=meta._StorageMeta):
     Main class for monokey-multivalue storage.
 
     ### Usage\n
-    - `Storage(key: str, kwargs1: Any, kwargs2: Any...)`
-    -> Create an instance of the Storage class to store\n
-    - `.store(file_path: str)` -> Store this instance in a JSON file
+    - `Storage(key: str, **kwargs: Any)`
+    -> Create an instance of the Storage class to store.\n
+    - `Storage.store(file_path: str)` -> Store this instance in a JSON file
 
-    ### Attributes\n
+    ### Attributes
+    
     #### Global Attributes
-    >Global attributes can be set at a global scale (i.e. `Storage.attribute = value`) and affect
-    >all new instances of `Storage`.
+    > Global attributes can be set at a global scale (i.e. `Storage.attribute = value`) and affect
+    > all new instances of `Storage`.
 
     - `indent` -> indent size of JSON files.
     - `encode` -> whether or not to encode entries.
     - `auto_delete_self` -> whether or not an instance releases from memory automatically.
 
     #### Instance Attributes
-    >Instance attributes cannot be set unless an instance is created and assigned to a variable.
+    > Instance attributes cannot be set unless an instance is created and assigned to a variable.
 
     - `instance_id` -> the specific identifier of a `Storage` instance. On creation of a new
     instance, it is automatically assigned as a `uuid.UUID` object.
@@ -116,7 +118,11 @@ class Storage(metaclass=meta._StorageMeta):
                  key: Any,
                  **kwargs: Any
                 ) -> None:
-        """initiate instance paramaters"""
+        """
+        Defines instantiation of Storage.
+
+        See main docstring (`Storage.help()`) about required arguments.
+        """
         # TODO in v1.5: Setup logger
         # TODO in v1.5: file_type
         # TODO in v1.6: remove fallback by adding external library
@@ -132,6 +138,11 @@ class Storage(metaclass=meta._StorageMeta):
         self.values = kwargs
 
     def __init_subclass__(cls, **kwargs) -> None:
+        """
+        Method to ensure that helper classes cannot be instantiated.
+
+        The helper classes in question are `Load`, `Edit`, and `Delete`.
+        """
         super().__init_subclass__(**kwargs)
 
         def raise_error():
@@ -143,6 +154,12 @@ class Storage(metaclass=meta._StorageMeta):
     def _encode(string: Any) -> int:
         """
         Encodes a value using a simple character-matching system.
+
+        ### Arguments
+        - `string: Any` - The object to be encoded.
+
+        ### Output
+        - `int` - The encoded object.
         """
 
         if not isinstance(string, str):
@@ -171,7 +188,13 @@ class Storage(metaclass=meta._StorageMeta):
     @staticmethod
     def _decode(string: str | int) -> str:
         """
-        Decodes a value encoded with Storage._encode.
+        Decodes a value encoded with `Storage._encode`.
+
+        ### Arguments
+        - `string: str | int`: The encoded object.
+
+        ### Output
+        - `str`: The decoded object.
         """
 
         if not isinstance(string, (str, int)):
@@ -200,20 +223,32 @@ class Storage(metaclass=meta._StorageMeta):
             i += 1+totalchars
         return output
 
-    def _to_dict(self) -> dict[str, dict[str, Any]]:
+    def _to_dict(self, encode: bool = False) -> dict[str, dict[str, Any]]:
         """
-        Converts key-multivalue pairs into a dictionary for JSON dumping.
+        Prepares a key-multivalue pair (`Storage` object) for JSON dumping.
+
+        ## Arguements
+        `encode: bool = False`: Whether to encode the values.
+
+        ## Output
+        `dict[str, dict[str, Any]]` - The `Storage` object in a `dict` representation.
         """
 
-        encoded_values: dict[str, Any] = {}
-        for prop_key, prop_value in self.values.items():
-            encoded_values[prop_key] = self._encode(prop_value)
-
-        return {
-            self.key: encoded_values
+        if encode:
+            encoded_values: dict[str, Any] = {}
+            for prop_key, prop_value in self.values.items():
+                encoded_values[prop_key] = self._encode(prop_value)
+    
+            return {
+                self.key: encoded_values
+            }
+        else:
+            return {
+                self.key: self.values
             }
 
     @classmethod
+    @deprecated("This private method will be removed soon.")
     def _from_dict(cls,
                    data_dict: dict[str, dict[str, Any]],
                    raw: bool=False
@@ -252,7 +287,9 @@ class Storage(metaclass=meta._StorageMeta):
 
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
-        """Help function for class Storage."""
+        """
+        Help function for class Storage.
+        """
         if method and not callable(method):
             raise TypeError(f"Expected callable, got '{type(method)}' instead")
         console = Console()
@@ -275,7 +312,16 @@ class Storage(metaclass=meta._StorageMeta):
               encode: bool | None = None
              ) -> None:
         """
-        Store a key-multivalue pair into a json file.
+        Stores a key-multivalue pair into a json file.
+
+        ## Arguments
+        - `file_path: str`: The path to the JSON file. If there is no file extension provided, “.json” will automatically be appended.
+        - `instant_delete: bool | None = None`: Whether or not to delete the object from memory after storing. Useful in memory-limited applications.
+        - `indent: int | None = None`: An integer representing the JSON file’s indent.
+        - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in applications requiring privacy.
+
+        ## Outputs
+        This method does not return anything.
         """
 
         if indent is None:
@@ -296,11 +342,11 @@ class Storage(metaclass=meta._StorageMeta):
                           "invalid JSON. Overwriting.", SyntaxWarning)
             all_data = {}
 
-        if ".json" not in file_path:
+        if not file_path.endswith(".json"):
+            warnings.warn(f"'{file_path}' does not end in '.json'. Appending '.json'...")
             file_path = str(file_path) + ".json"
 
-        if encode:
-            all_data.update(self._to_dict())
+        all_data.update(self._to_dict(encode))
 
         try:
             with open(file_path, "w", encoding="utf-8") as f:
