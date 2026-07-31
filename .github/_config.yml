@@ -68,7 +68,7 @@ optional_front_matter:
 global_banner:
   background_color: "#221854"
   title: "Welcome to kms-semver1.3.0"
-  subtitle: "What was once a child's play, became a teen's mace."
+  subtitle: "The beginning of a beautiful library is here."
   title_color: "#ffffff"
   subtitle_color: "#400a57"
 
