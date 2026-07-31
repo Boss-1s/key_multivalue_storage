@@ -238,14 +238,14 @@ class Storage(metaclass=meta._StorageMeta):
             encoded_values: dict[str, Any] = {}
             for prop_key, prop_value in self.values.items():
                 encoded_values[prop_key] = self._encode(prop_value)
-    
+
             return {
                 self.key: encoded_values
             }
-        else:
-            return {
-                self.key: self.values
-            }
+
+        return {
+            self.key: self.values
+        }
 
     @classmethod
     @deprecated("This private method will be removed soon.")
