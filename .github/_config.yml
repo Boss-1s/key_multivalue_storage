@@ -53,6 +53,11 @@ sass:
 
 defaults:
   - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
       path: "index.md"
     values:
       layout: "banner"
