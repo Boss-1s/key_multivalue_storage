@@ -54,12 +54,20 @@ layout: default
 
   let touchStartVal = 0;
   window.addEventListener('touchstart', function(event) {
-    touchStartVal = event.touches.clientY;
-  });
+    if (!splashDismissed) {
+      touchStartVal = event.touches[0].clientY;
+    }
+  }, { passive: true });
+  
   window.addEventListener('touchmove', function(event) {
-    let touchMoveVal = event.touches.clientY;
-    if (touchStartVal - touchMoveVal > 50) { dismissSplash(); }
-  });
+    if (splashDismissed) return;
+    let touchMoveVal = event.touches[0].clientY;
+    
+    // Triggers the animation if the user drags their finger vertically more than 30 pixels
+    if (Math.abs(touchStartVal - touchMoveVal) > 30) { 
+      dismissSplash(); 
+    }
+  }, { passive: true });
 </script>
 {% endif %}
 
