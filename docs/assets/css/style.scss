@@ -20,6 +20,8 @@ html {
   background-position: center;
   z-index: 999999 !important; /* ULTRA HIGH PRIORITY: Forces it on top of BDHU's sidebar elements */
   transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); /* Creates a smooth sliding screen effect */
+
+  touch-action: none;
 }
 
 /* New CSS state helper class to roll the banner up and away */
