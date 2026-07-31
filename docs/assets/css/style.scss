@@ -104,9 +104,8 @@ html {
   display: none;
 }
 
-/* Mobile Rules */
+/**
 @media screen and (max-width: 768px) {
-  /* Style and position the hamburger icon button */
   .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -117,7 +116,7 @@ html {
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 100; /* Keeps button clickable on top of the dropdown */
+    z-index: 100;
   }
 
   .hamburger-bar {
@@ -128,34 +127,30 @@ html {
     transition: all 0.3s ease-in-out;
   }
 
-  /* Dropdown Menu Panel */
   .link-wrapper-mobile {
-    display: flex; /* Always flex layout, managed by transform instead */
+    display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px; /* Adjust this to match the height of your top site header bar */
+    top: 60px;
     left: 0;
     width: 100%;
-    background-color: var(--background-color, #fff); /* Matches your theme background */
+    background-color: var(--background-color, #fff);
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 90;
     
-    /* Animation settings: Start hidden right above the viewport view line */
     transform: translateY(-110%);
     opacity: 0;
-    pointer-events: none; /* Prevents clicking invisible links when closed */
+    pointer-events: none;
     transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
   }
 
-  /* Trigger state: Smoothly slide down from the top */
   .link-wrapper-mobile.active {
     transform: translateY(0);
     opacity: 1;
-    pointer-events: auto; /* Restores button and link clicks when menu drops open */
+    pointer-events: auto;
   }
   
-  /* Animate hamburger bars into an 'X' close icon */
   .menu-toggle.open .hamburger-bar:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
@@ -166,3 +161,4 @@ html {
     transform: translateY(-9px) rotate(-45deg);
   }
 }
+**/
