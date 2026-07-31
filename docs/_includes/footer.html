@@ -13,3 +13,19 @@
     <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/docs">Source Code</a>
   </small>
 </p>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("link-wrapper-mobile");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", function() {
+        // Toggle active status to reveal/hide links
+        mobileMenu.classList.toggle("active");
+        // Toggle open status to animate hamburger bars into an X
+        menuToggle.classList.toggle("open");
+      });
+    }
+  });
+</script>
