@@ -8,7 +8,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Banner */
+/* Banner (AI-Generated)*/
 /* Forces the splash banner to sit cleanly on top of the entire screen layout grid */
 .full-screen-hero {
   position: fixed;            /* CHANGED FROM ABSOLUTE TO FIXED: Masks the sidebar entirely */
@@ -28,7 +28,7 @@ html {
 }
 
 .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.6); /* Slightly dark tint for stark text readability */
+  background-color: rgba(0, 0, 0, 0); /* Slightly dark tint for stark text readability */
   width: 100%;
   height: 100%;
   display: flex;
