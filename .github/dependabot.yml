@@ -10,34 +10,26 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "semver1.3.x"
-    open-pull-requests-limit: 0
-    
   - package-ecosystem: "pip" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "semver1.3.x"
-    open-pull-requests-limit: 0
-    
   - package-ecosystem: "uv" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "semver1.3.x"
-    open-pull-requests-limit: 0
-    
   - package-ecosystem: "bundler"
     directory: "/docs"
     schedule:
       interval: "daily"
     target-branch: "docs"
-    
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "docs"
-    
   - package-ecosystem: "uv" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
