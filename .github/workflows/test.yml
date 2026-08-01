@@ -7,6 +7,10 @@ on:
       - eol/**
       - docs
   pull_request:
+    branches-ignore:
+      - releases/**
+      - eol/**
+      - docs
   workflow_dispatch:
 
 jobs:
@@ -44,26 +48,27 @@ jobs:
           pip install -r requirements.txt
           uv sync --group test
 
-      # ...and begin tests!
-      - name: Run Python Tests
-        if: ${{ runner.os != 'Windows' }}
-        run: uv run python test/
-
-      - name: Run Python Tests (Windows)
-        if: ${{ runner.os == 'Windows' }}
-        env:
-          TERM: 'dumb'
-          PYTHONUTF8: '1'
-        run: uv run python test/
-
-      # - name: Display Breaking Changes (beta)
-      #   if: ${{ github.ref_name == 'semver1.3.x' }}
-      #   env:
-      #     OLDTAG: 'v1.2.3.20260523.1'
-      #   run: |
-      #     uv run python test/diff.py
-
       - parallel:
+        - name: Run Python Tests
+          id: self-tests
+          if: ${{ runner.os != 'Windows' }}
+          run: uv run python test/
+  
+        - name: Run Python Tests (Windows)
+          id: self-tests-w
+          if: ${{ runner.os == 'Windows' }}
+          env:
+            TERM: 'dumb'
+            PYTHONUTF8: '1'
+          run: uv run python test/
+  
+        # - name: Display Breaking Changes (beta)
+        #   if: ${{ github.ref_name == 'semver1.3.x' }}
+        #   env:
+        #     OLDTAG: 'v1.2.3.20260523.1'
+        #   run: |
+        #     uv run python test/diff.py
+
         - name: Lint using Pylint
           continue-on-error: true
           id: pylint
@@ -96,6 +101,8 @@ jobs:
 
       - name: Fail job if steps failed
         if: |
+          steps.self-tests.outcome == 'failure' ||
+          steps.self-tests-w.outcome == 'failure' ||
           steps.pylint.outcome == 'failure' ||
           steps.toml.outcome == 'failure' ||
           steps.yml.outcome == 'failure' ||
