@@ -66,5 +66,11 @@ jobs:
             -Dsonar.sources=src/key_multivalue_storage
             -Dsonar.tests=test
             -Dsonar.verbose=true
+            -Dsonar.sarifReportPath=sonarcloud.sarif
           # When you need the analysis to take place in a directory other than the one from which it was launched, default is .
           projectBaseDir: .
+      - name: Upload Code Scanning Results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'sonarcloud.sarif'
+    
