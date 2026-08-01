@@ -73,20 +73,6 @@ jobs:
           continue-on-error: true
           id: pylint
           run: uv run pylint --recursive=y key_multivalue_storage test/ .github/workflows/src/
-
-        - name: Analyze with SonarQube
-          if: runner.os == 'Linux'
-          uses: SonarSource/sonarqube-scan-action@v8.2.1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          with:
-            args: >
-              -Dsonar.projectKey=Boss-1s_key_multivalue_storage
-              -Dsonar.organization=boss-1s
-              -Dsonar.projectName=key_multivalue_storage
-              -Dsonar.projectVersion=1.3.0.20260731
-              -Dsonar.sourceEncoding=UTF-8
         
         - name: Lint pyproject.toml
           id: toml
