@@ -6,4 +6,7 @@
     "vulnerabilityAlerts": {
         "enabled": false
     }
+    "dependencyDashboard": false,
+    "prConcurrentLimit": 0,
+    "prHourlyLimit": 0
 }
