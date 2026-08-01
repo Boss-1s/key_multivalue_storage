@@ -7,6 +7,10 @@ on:
       - eol/**
       - docs
   pull_request:
+    branches-ignore:
+      - releases/**
+      - eol/**
+      - docs
   workflow_dispatch:
 
 jobs:
@@ -44,30 +48,39 @@ jobs:
           pip install -r requirements.txt
           uv sync --group test
 
-      # ...and begin tests!
-      - name: Run Python Tests
-        if: ${{ runner.os != 'Windows' }}
-        run: uv run python test/
-
-      - name: Run Python Tests (Windows)
-        if: ${{ runner.os == 'Windows' }}
-        env:
-          TERM: 'dumb'
-          PYTHONUTF8: '1'
-        run: uv run python test/
-
-      # - name: Display Breaking Changes (beta)
-      #   if: ${{ github.ref_name == 'semver1.3.x' }}
-      #   env:
-      #     OLDTAG: 'v1.2.3.20260523.1'
-      #   run: |
-      #     uv run python test/diff.py
-
       - parallel:
+        - name: Run Python Tests
+          id: self-tests
+          if: ${{ runner.os != 'Windows' }}
+          run: uv run python test/
+  
+        - name: Run Python Tests (Windows)
+          id: self-tests-w
+          if: ${{ runner.os == 'Windows' }}
+          env:
+            TERM: 'dumb'
+            PYTHONUTF8: '1'
+          run: uv run python test/
+  
+        # - name: Display Breaking Changes (beta)
+        #   if: ${{ github.ref_name == 'semver1.3.x' }}
+        #   env:
+        #     OLDTAG: 'v1.2.3.20260523.1'
+        #   run: |
+        #     uv run python test/diff.py
+
         - name: Lint using Pylint
           continue-on-error: true
           id: pylint
           run: uv run pylint --recursive=y key_multivalue_storage test/ .github/workflows/src/
+
+        - name: Analyze with SonarQube
+          uses: SonarSource/sonarqube-scan-action@v8.2.1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          with:
+            projectBaseDir: src/
         
         - name: Lint pyproject.toml
           id: toml
@@ -96,6 +109,8 @@ jobs:
 
       - name: Fail job if steps failed
         if: |
+          steps.self-tests.outcome == 'failure' ||
+          steps.self-tests-w.outcome == 'failure' ||
           steps.pylint.outcome == 'failure' ||
           steps.toml.outcome == 'failure' ||
           steps.yml.outcome == 'failure' ||
