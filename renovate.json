@@ -3,7 +3,7 @@
     "extends": [
         "config:recommended"
     ]
-    "osvVulnerabilityAlerts": false,
+    "osVulnerabilityAlerts": false,
     "vulnerabilityAlerts": {
         "enabled": false
     }
