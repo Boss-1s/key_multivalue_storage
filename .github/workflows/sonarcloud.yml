@@ -78,7 +78,7 @@ jobs:
           # Default SonarCloud API URL
           sonar-host-url: "https://sonarcloud.io"
       - name: Upload Code Scanning Results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'sonarqube.sarif'
     
