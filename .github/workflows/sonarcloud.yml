@@ -66,9 +66,17 @@ jobs:
             -Dsonar.sources=src/key_multivalue_storage
             -Dsonar.tests=test
             -Dsonar.verbose=true
-            -Dsonar.sarifReportPath=sonarcloud.sarif
+            -Dsonar.python.versions=3.12,3.13,3.14
           # When you need the analysis to take place in a directory other than the one from which it was launched, default is .
           projectBaseDir: .
+      - name: Export Sonar Issues to SARIF File
+        uses: vmvarela/sonarqube-to-github-security-tab-sarif@v1
+        with:
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          # For SonarCloud, use your project key you just set up in that popup box
+          project-key: "Boss-1s_key_multivalue_storage" 
+          # Default SonarCloud API URL
+          sonar-host-url: "https://sonarcloud.io"
       - name: Upload Code Scanning Results
         uses: github/codeql-action/upload-sarif@v3
         with:
