@@ -37,6 +37,8 @@ on:
 
 permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+  security-events: write # allows SonarCloud to write reports directly to the Security and Quality tab.
+  code-quality: write
 
 jobs:
   Analysis:
