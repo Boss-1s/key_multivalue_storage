@@ -43,6 +43,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarqube-scan-action@v8.2.1
         env:
