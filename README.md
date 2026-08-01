@@ -23,6 +23,8 @@ __________
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Boss-1s_key_multivalue_storage)](https://sonarcloud.io/summary/new_code?id=Boss-1s_key_multivalue_storage)
+
 ### Info & Docs
 
 [![Changelog](https://img.shields.io/badge/Changelog-Click%20Here-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG)
