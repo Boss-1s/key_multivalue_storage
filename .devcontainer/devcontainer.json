@@ -22,7 +22,8 @@
                 "pkief.material-icon-theme",
                 "mintlify.document",
                 "alefragnani.project-manager",
-                "redhat.vscode-yaml"
+                "redhat.vscode-yaml",
+                "SonarSource.sonarlint-vscode"
             ]
         },
         "codespaces": {
