@@ -234,6 +234,7 @@ dependencies = [
 dev = [
     { name = "griffe" },
     { name = "pylint" },
+    { name = "pylint-per-file-ignores" },
 ]
 
 [package.dev-dependencies]
@@ -265,6 +266,7 @@ test = [
 requires-dist = [
     { name = "griffe", marker = "extra == 'dev'", specifier = ">=2.0.2" },
     { name = "pylint", marker = "extra == 'dev'", specifier = ">=4.0.0" },
+    { name = "pylint-per-file-ignores", marker = "extra == 'dev'", specifier = ">=3.2.1" },
     { name = "rich", specifier = ">=15.0.0" },
     { name = "typing-extensions", specifier = "~=4.16" },
 ]

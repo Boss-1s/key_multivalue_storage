@@ -39,6 +39,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pylint>=4.0.0",
+    "pylint-per-file-ignores>=3.2.1",
     "griffe>=2.0.2", 
 ]
 
