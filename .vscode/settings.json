@@ -29,6 +29,7 @@
         "REVIEW",
         "REFACTOR",
         "WIP",
+        "DEPRECATED",
         "unfinished"
     ]
 }
