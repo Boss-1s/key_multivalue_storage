@@ -56,11 +56,11 @@ The development package includes Pylint and Griffe for testing and finding break
 - Create a Storage object to wrap the data to be stored:
 ```py
 from key_multivalue_storage import Storage
-my-db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
+my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
 ```
 - To store the object, use `Storage.store()`.
 ```py
-my-db.store("database.json")
+my_db.store("database.json")
 ```
 - You can change certain global variables for each `Storage` instance.
 ```py
