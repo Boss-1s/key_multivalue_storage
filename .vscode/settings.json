@@ -1,6 +1,34 @@
 {
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "python.envFile": "${workspaceRoot}/vscode.env",
-  "python.analysis.autoImportCompletions": true
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.envFile": "${workspaceRoot}/vscode.env",
+    "python.analysis.autoImportCompletions": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "boss-1s",
+        "projectKey": "Boss-1s_key_multivalue_storage"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.pylint"
+    },
+    "git.alwaysSignOff": true,
+    "git.autofetch": true,
+    "pylint.args": [
+        "--rcfile=${workspaceFolder}/pyproject.toml"
+    ],
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "projectManager.git.baseFolders": [
+        "/workspaces/**"
+    ],
+    "better-todo-tree.general.tags": [
+        "TODO",
+        "FIXME",
+        "NOTE",
+        "INFO",
+        "REVIEW",
+        "REFACTOR",
+        "WIP",
+        "unfinished"
+    ]
 }
