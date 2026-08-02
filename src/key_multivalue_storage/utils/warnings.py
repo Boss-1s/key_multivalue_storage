@@ -28,7 +28,14 @@ class AdditionFailureWarning(RuntimeWarning):
     """
     Warns you about attempting to add a Storage instance with a dictionary or list.
     """
-    def __init__(self, message: str="", method: str="") -> None:
+    def __init__(self, message: str | None=None, method: str | None=None) -> None:
+        if not message:
+            message = ("WARNING! You are strongly advised against adding a Storage "+
+                      "instance and a dict/list together, as it may break the Storage "+
+                      "instance that is created.")
+        if not method:
+            method = "unknown"
+
         super().__init__(message)
         self.method = method
 
@@ -41,7 +48,14 @@ class SubtractionFailureWarning(RuntimeWarning):
 
     Also applies to division, despite the name.
     """
-    def __init__(self, message: str="", method: str="") -> None:
+    def __init__(self, message: str | None=None, method: str|None=None) -> None:
+        if not message:
+            message = ("WARNING! You are strongly advised against subtracting/dividing a Storage "+
+                      "instance and a dict/list together, as it may break the Storage "+
+                      "instance that is created.")
+        if not method:
+            method = "unknown"
+
         super().__init__(message)
         self.method = method
 

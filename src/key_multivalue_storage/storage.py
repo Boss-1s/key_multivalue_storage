@@ -176,7 +176,7 @@ class Storage(metaclass=meta._StorageMeta):
             currentchar = string[i]
             i2: int = 0
             i3 = ''
-            while not i3 == currentchar:
+            while i3 != currentchar:
                 i3 = char[i2]
                 i2 += 1
                 if i3 == currentchar:
@@ -264,7 +264,7 @@ class Storage(metaclass=meta._StorageMeta):
         if not isinstance(data_dict, dict) or len(data_dict) != 1:
             raise ValueError("Expected a dictionary with a single top-level key.")
 
-        top_lv_key: str = list(data_dict.keys())[0]
+        top_lv_key: str = next(iter(data_dict.keys()))
         og_nested_values: dict[str, Any] = data_dict[top_lv_key]
 
         print(f"_from_dict: DEBUG: top_lv_key={top_lv_key}")
@@ -315,10 +315,13 @@ class Storage(metaclass=meta._StorageMeta):
         Stores a key-multivalue pair into a json file.
 
         ## Arguments
-        - `file_path: str`: The path to the JSON file. If there is no file extension provided, “.json” will automatically be appended.
-        - `instant_delete: bool | None = None`: Whether or not to delete the object from memory after storing. Useful in memory-limited applications.
-        - `indent: int | None = None`: An integer representing the JSON file’s indent.
-        - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in applications requiring privacy.
+        - `file_path: str`: The path to the JSON file. If there is no file extension provided,
+        ".json" will automatically be appended.
+        - `instant_delete: bool | None = None`: Whether or not to delete the object from memory
+        after storing. Useful in memory-limited applications.
+        - `indent: int | None = None`: An integer representing the JSON file's indent.
+        - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in
+        applications requiring privacy.
 
         ## Outputs
         This method does not return anything.
@@ -360,6 +363,8 @@ class Storage(metaclass=meta._StorageMeta):
 
     # --- #
 
+    _default_valueerror_msg: str = "Both instances must have the same top level key"
+
     def __str__(self) -> str:
         """Defines how the object should be represented in a easy-to-read, user-friendly form."""
         values_str: str = ',\n'.join([
@@ -386,7 +391,7 @@ class Storage(metaclass=meta._StorageMeta):
         """Defines how the object should be compared as less than."""
         if isinstance(other, type(self)):
             if self.key!=other.key:
-                raise ValueError("Both instances must have the same top level key")
+                raise ValueError(self._default_valueerror_msg)
             if len(self.values.items()) < len(other.values.items()):
                 return True
             return False
@@ -407,20 +412,13 @@ class Storage(metaclass=meta._StorageMeta):
             if self.key==other.key:
                 self.values.update(other.values)
                 return Storage(self.key, **self.values)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
-            warnings.warn(w.AdditionFailureWarning(
-                          "WARNING! You are strongly "+
-                          "advised against adding a Storage "+
-                          "instance and a dict/list together, as it may break the Storage "+
-                          "instance that is created.",method="__add__"))
+            warnings.warn(w.AdditionFailureWarning(method="__add__"))
             self.values.update(other)
             return Storage(self.key, **self.values)
         if isinstance(other, list):
-            warnings.warn(w.AdditionFailureWarning(
-                          "WARNING! You are strongly advised against adding a Storage "+
-                          "instance and a dict/list together, as it may break the Storage "+
-                          "instance that is created.",method="__add__"))
+            warnings.warn(w.AdditionFailureWarning(method="__add__"))
             self.values.update({"undefined": other})
             return Storage(self.key, **self.values)
         return NotImplemented
@@ -428,19 +426,7 @@ class Storage(metaclass=meta._StorageMeta):
     def __radd__(self,
                  other: Storage | dict[str, Any]) -> Storage:
         """Defines how to add two objects, same type or no."""
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                self.values.update(other.values)
-                return Storage(self.key, **self.values)
-            raise ValueError("Both instances must have the same top level key")
-        if isinstance(other, dict):
-            warnings.warn(w.AdditionFailureWarning("WARNING! You are strongly"+
-                                                      "advised against adding a Storage "+
-                          "instance and a dict/list together, as it may break the Storage "+
-                          "instance that is created.",method="__radd__"))
-            self.values=other|self.values
-            return Storage(self.key, **self.values)
-        return NotImplemented
+        return self.__add__(other)
 
     def __sub__(self,
                 other: Storage | dict[str, Any]
@@ -456,12 +442,9 @@ class Storage(metaclass=meta._StorageMeta):
                     else:
                         self.values[akey] = other.values[akey]
                 return Storage(self.key, **self.values)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(
-                "WARNING! You are strongly advised against subtracting/dividing"+
-                " a Storage instance by a dict, as it may break the Storage "+
-                "instance that is created.",method="__sub__"))
+            warnings.warn(w.SubtractionFailureWarning(method="__sub__"))
             skeys: set = set(self.values.keys()) & set(other)
             for akey in skeys:
                 akey: str
@@ -490,12 +473,9 @@ class Storage(metaclass=meta._StorageMeta):
                     else:
                         self.values[akey] = other.values[akey]
                 return Storage(self.key, **self.values)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(
-                "WARNING! You are strongly advised against subtracting/dividing"+
-                " a Storage instance by a dict, as it may break the Storage "+
-                "instance that is created.",method="__rsub__"))
+            warnings.warn(w.SubtractionFailureWarning(method="__rsub__"))
             skeys = set(self.values.keys()) & set(other)
             for akey in skeys:
                 akey: str
@@ -579,7 +559,7 @@ class Storage(metaclass=meta._StorageMeta):
                     if akey in other.values:
                         rtd[akey] = other.values[akey]
                 return Storage(self.key, **rtd)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
             skeys: set = set(self.values.keys()) & set(other)
             if not skeys:
@@ -611,7 +591,7 @@ class Storage(metaclass=meta._StorageMeta):
                     if akey in other.values:
                         rtd[akey] = other.values[akey]
                 return Storage(self.key, **rtd)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
             skeys: set = set(self.values.keys()) | set(other)
             if not skeys:
@@ -647,7 +627,7 @@ class Storage(metaclass=meta._StorageMeta):
                     if akey in other.values:
                         rtd[akey] = other.values[akey]
                 return Storage(self.key, **rtd)
-            raise ValueError("Both instances must have the same top level key")
+            raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
             skeys = set(self.values.keys()) ^ set(other)
             if not skeys:
@@ -801,8 +781,14 @@ class Storage(metaclass=meta._StorageMeta):
         elif format_spec == '.dictt':
             rtn = str(self.values) #truncated top level key
         elif format_spec == '.tuplef':
+            # DEPRECATED: remove in 2.0
+            warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
+                          "removed in v2.0.", DeprecationWarning)
             rtn = str(tuple({self.key: self.values}))
         elif format_spec == '.tuplet':
+            # DEPRECATED: remove in 2.0
+            warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
+                          "removed in v2.0.", DeprecationWarning)
             rtn = str(tuple(self.values))
         elif format_spec == '.key':
             rtn = str(self.key)
