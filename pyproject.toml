@@ -12,7 +12,7 @@ release = [
     "rich>=15.0.0",
 ]
 site = [
-    "markdown>=3.10.2",
+    "markdown>=3.10.3",
     "mdx-gh-links>=0.4",
     "markdownify >=1.2.3"
 ]
