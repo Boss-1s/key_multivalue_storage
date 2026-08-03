@@ -11,7 +11,7 @@ Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
 """
 # TODO in v1.4: return some things as objs
-# TODO in v1.5: logger
+# TODO in v1.3.2: logger
 # TODO in v1.6: final v1.x update, bug fixes and small tweaks,
 # switch over to uuidv7 library so no fallback to uuidv4 is necessary
 
@@ -25,7 +25,7 @@ import uuid
 import warnings
 import difflib
 import builtins
-# TODO in v1.5: import logger
+# TODO in v1.3.2: import logger
 from typing import Any, Generator
 from types import TracebackType
 from functools import total_ordering
@@ -37,7 +37,7 @@ from rich.markdown import Markdown
 
 from .utils import warnings as w, exceptions, metadata as meta
 
-# TODO in v1.5: logger
+# TODO in v1.3.2: logger
 #logger: logging.Logger | None = None
 #
 #def _set_up_logger(dir: str,
@@ -89,7 +89,7 @@ class Storage(metaclass=meta._StorageMeta):
     - `Storage.store(file_path: str)` -> Store this instance in a JSON file
 
     ### Attributes
-    
+
     #### Global Attributes
     > Global attributes can be set at a global scale (i.e. `Storage.attribute = value`) and affect
     > all new instances of `Storage`.
@@ -107,7 +107,7 @@ class Storage(metaclass=meta._StorageMeta):
     - `values` -> the subkey-value pairs of a `Storage` instance.
     """
 
-    # TODO in v1.5: global logger
+    # TODO in v1.3.2: global logger
 
     # Define global variables: indent, encode option, and automatic object release from memory
     indent: int = 4
@@ -123,7 +123,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         See main docstring (`Storage.help()`) about required arguments.
         """
-        # TODO in v1.5: Setup logger
+        # TODO in v1.3.2: Setup logger
         # TODO in v1.5: file_type
         # TODO in v1.6: remove fallback by adding external library
         try:
@@ -379,7 +379,7 @@ class Storage(metaclass=meta._StorageMeta):
         ])
         return f"Storage(top_lv_key={self.key}, key_value_pairs=[{values_str}])"
 
-    def __eq__(self, other: Storage) -> bool:
+    def __eq__(self, other: Any) -> bool:
         """Defines how the object should be compared as equal."""
         if isinstance(other, type(self)):
             if self.key==other.key and self.values.items()==other.values.items():
@@ -387,7 +387,7 @@ class Storage(metaclass=meta._StorageMeta):
             return False
         return NotImplemented
 
-    def __lt__(self, other: Storage) -> bool:
+    def __lt__(self, other: Any) -> bool:
         """Defines how the object should be compared as less than."""
         if isinstance(other, type(self)):
             if self.key!=other.key:
@@ -397,7 +397,7 @@ class Storage(metaclass=meta._StorageMeta):
             return False
         return NotImplemented
 
-    def __le__(self, other: Storage) -> bool:
+    def __le__(self, other: Any) -> bool:
         """Defines how the object should be compared as less than or equal to."""
         if isinstance(other, type(self)):
             if len(self.values.items()) < len(other.values.items()) or self==other:
