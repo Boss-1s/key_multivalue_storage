@@ -15,6 +15,7 @@ jobs:
       - env:
           GITHUB_TOKEN: ${{github.token}}
           PR_NUMBER: ${{github.event.pull_request.number}}
+        if: ${{ !(contains(github.head_ref, 'dependabot/') && contains(github.head_ref, 'renovate/')) }}
         run: |
           if [[ -z "$(gh pr view --json closingIssuesReferences --jq '.closingIssuesReferences[].number')" ]]; then
             gh pr close "$PR_NUMBER" --comment "**WARNING**
