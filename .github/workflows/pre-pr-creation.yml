@@ -3,7 +3,7 @@ run-name: pr-automation
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened]
 
 jobs:
   comment:
