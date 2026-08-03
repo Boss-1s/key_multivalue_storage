@@ -55,7 +55,7 @@ jobs:
         background: true
         if: ${{ runner.os != 'Windows' }}
         run: |
-          uv run coverage run -m test
+          uv run coverage run test
           uv run coverage report
           uv run coverage xml
 
@@ -67,7 +67,7 @@ jobs:
           TERM: 'dumb'
           PYTHONUTF8: '1'
         run: |
-          uv run coverage run -m test
+          uv run coverage run test
           uv run coverage report
           uv run coverage xml
 
