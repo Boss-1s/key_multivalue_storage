@@ -8,6 +8,9 @@ PR titles should follow Conventional Commit guidelines.
 
 Fixes # <!-- Link the tracking issue number here (e.g. #123) -->
 
+## Changes
+- List all your changes here.
+
 ## Testing
 <!-- Please describe the tests that you ran to verify your changes. -->
 <!-- Provide instructions so we can reproduce. Please also list any relevant details for your test configuration -->
