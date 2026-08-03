@@ -89,7 +89,7 @@ class Storage(metaclass=meta._StorageMeta):
     - `Storage.store(file_path: str)` -> Store this instance in a JSON file
 
     ### Attributes
-    
+
     #### Global Attributes
     > Global attributes can be set at a global scale (i.e. `Storage.attribute = value`) and affect
     > all new instances of `Storage`.
