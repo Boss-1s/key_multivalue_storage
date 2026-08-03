@@ -74,12 +74,14 @@ jobs:
       - name: Lint using Pylint
         background: true
         id: pylint
-        run: pylint --output-format=json:pylint-report.json,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
+        run: |
+          uv run pylint --output-format=json:pylint-report.json,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
 
       - name: Lint pyproject.toml
         id: toml
         background: true
-        run: pyproject check
+        run: |
+          uv run pyproject check
 
       - name: Lint YAML Files
         id: yml
