@@ -1,0 +1,28 @@
+name: Pre-PR Jobs
+run-name: pr-automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - env:
+          GITHUB_TOKEN: ${{github.token}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          if [[ -z "$(gh pr view --json closingIssuesReferences --jq '.closingIssuesReferences[].number')" ]]; then
+            gh pr close "$PR_NUMBER" --comment "**WARNING**
+            
+            This PR was auto-closed because it does not reference any issues.
+            Please reference an issue in the PR description and re-open the PR."
+            exit 1
+          fi
+          gh pr edit "$PR_NUMBER" --add-label "Needs Triage"
+          gh pr comment "$PR_NUMBER" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
+          exit 0
