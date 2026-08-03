@@ -18,6 +18,9 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      security-events: write # allows SonarCloud to write reports directly to the Security and Quality tab.
+      code-quality: write
+      checks: write
     strategy:
       matrix:
         py-ver: ['3.12', '3.13', '3.14']
