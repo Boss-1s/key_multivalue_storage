@@ -46,20 +46,19 @@ jobs:
       - name: Install and Ensure Dependecies
         run: |
           uv sync --group test
-          source .venv/bin/activate
-          coverage --version
-          shellcheck --version
-          pylint --version
-          pyproject --version
+          uv run coverage --version
+          uv run shellcheck --version
+          uv run pylint --version
+          uv run pyproject --version
 
       - name: Run Python Tests
         id: self-tests
         background: true
         if: ${{ runner.os != 'Windows' }}
         run: |
-          coverage run -m test
-          coverage report
-          coverage xml
+          uv run coverage run -m test
+          uv run coverage report
+          uv run coverage xml
 
       - name: Run Python Tests (Windows)
         id: self-tests-w
@@ -69,9 +68,9 @@ jobs:
           TERM: 'dumb'
           PYTHONUTF8: '1'
         run: |
-          coverage run -m test
-          coverage report
-          coverage xml
+          uv run coverage run -m test
+          uv run coverage report
+          uv run coverage xml
 
       - name: Lint using Pylint
         background: true
@@ -98,14 +97,9 @@ jobs:
         background: true
         if: ${{ runner.os != 'Windows' }}
         run: |
-          shellcheck --version
+          uv run shellcheck --version
           echo ""
-          find . -path './.venv' -prune -o -name '*.sh' -exec shellcheck --severity=error {} +
-
-      - name: CodeQL Analysis
-        background: true
-        id: code-ql-analyze
-        uses: ./.github/workflows/codeql.yml
+          find . -path './.venv' -prune -o -name '*.sh' -exec uv run shellcheck --severity=error {} +
 
       - name: Wait for Pylint and Coverage
         wait: [pylint, self-tests, self-tests-w]
@@ -115,8 +109,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@ad8210318ac8bb816e41990d5af2b304f7a6c213
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
-        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           # Additional arguments for the SonarScanner CLI
           args:
             # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
@@ -157,13 +150,16 @@ jobs:
 
       - wait-all:
 
+  codeql:
+    uses: ./.github/workflows/codeql.yml
+    if: always()
+
+
   nightly:
-    needs: main
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ./.github/workflows/release-nightly.yml
-        if: |
-          github.ref_name == 'semver1.3.x' ||
-          contains(github.ref_name, 'renovate')
+    needs: [main, codeql]
+    uses: ./.github/workflows/release-nightly.yml
+    if: |
+      github.ref_name == 'semver1.3.x' ||
+      contains(github.actor, 'renovate') ||
+      contains(github.actor, 'dependabot') ||
+      contains(github.actor, 'github-actions')
