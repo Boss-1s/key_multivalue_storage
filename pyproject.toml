@@ -516,4 +516,5 @@ test = [
     "griffe>=2.0.2",
     "pyproject>=1!0.1.2",
     "pylint-per-file-ignores>=3.2.1",
+    "coverage>=7.15.3",
 ]
