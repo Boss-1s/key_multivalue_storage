@@ -102,9 +102,15 @@ jobs:
           echo ""
           find . -path './.venv' -prune -o -name '*.sh' -exec shellcheck --severity=error {} +
 
-      - name: Analyze with SonarCloud
+      - name: CodeQL Analysis
         background: true
-        wait: pylint
+        id: code-ql-analyze
+        uses: ./.github/workflows/codeql.yml
+
+      - name: Wait for Pylint and Coverage
+        wait: [pylint, self-tests, self-tests-w]
+
+      - name: Analyze with SonarCloud
         id: sc-analyze
         uses: SonarSource/sonarqube-scan-action@ad8210318ac8bb816e41990d5af2b304f7a6c213
         env:
@@ -128,16 +134,12 @@ jobs:
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
-        background: true
-        wait: sc-analyze
         id: sc-qg
         uses: sonarsource/sonarqube-quality-gate-action@8e9b0ca0a7273d6f16986388d98393efdfcf56fd
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Export Sonar Issues to SARIF File
-        background: true
-        wait: sc-qg
         id: sc-sarif
         uses: vmvarela/sonarqube-sarif@ee6c3c1d5314dd0d402277cd5099ab4578ddca74
         with:
@@ -148,24 +150,20 @@ jobs:
           sonar-host-url: "https://sonarcloud.io"
 
       - name: Upload Code Scanning Results
-        background: true
-        wait: sc-sarif
         id: sc-upload
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'sonarqube.sarif'
 
-      - name: CodeQL Analysis
-        background: true
-        id: code-ql-analyze
-        uses: ./.github/workflows/codeql.yml
+      - wait-all:
 
   nightly:
-    needs: main, code-ql-analyze
+    needs: main
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    if: |
-      github.ref_name == 'semver1.3.x' ||
-      contains(github.ref_name, 'renovate')
-    uses: ./.github/workflows/release-nightly.yml
+    steps:
+      - uses: ./.github/workflows/release-nightly.yml
+        if: |
+          github.ref_name == 'semver1.3.x' ||
+          contains(github.ref_name, 'renovate')
