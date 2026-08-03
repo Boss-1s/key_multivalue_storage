@@ -31,5 +31,7 @@
         "WIP",
         "DEPRECATED",
         "unfinished"
-    ]
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.typeCheckingMode": "standard"
 }
