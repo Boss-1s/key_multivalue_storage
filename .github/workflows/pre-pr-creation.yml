@@ -17,14 +17,12 @@ jobs:
           PR_NUMBER: ${{github.event.pull_request.number}}
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
         run: |
-          git switch semver1.3.x
-          if [[ -z $(gh pr view --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null) ]]; then
-            gh pr close "$PR_NUMBER" --comment "**WARNING**
-            
-            This PR was auto-closed because it does not reference any issues.
-            Please reference an issue in the PR description and re-open the PR."
-            exit 1
-          fi
-          gh pr edit "$PR_NUMBER" --add-label "Needs Triage"
-          gh pr comment "$PR_NUMBER" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
+          if [[ -z $(gh pr view "$PR_NUMBER" --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null) ]]; then 
+              gh pr close "$PR_NUMBER" --comment "**WARNING** This PR was auto-closed because it does not reference any issues. Please reference an issue in the PR description and re-open the PR."
+              exit 1 
+          fi 
+          
+          gh pr edit "$PR_NUMBER" --add-label "Needs Triage" 
+          gh pr comment "$PR_NUMBER" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!" 
           exit 0
+
