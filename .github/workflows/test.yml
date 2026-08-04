@@ -78,7 +78,7 @@ jobs:
         background: true
         id: pylint
         run: |
-          uv run pylint --output-format=json:pylint-report.json,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
+          uv run pylint --output-format=parseable:pylint-report.txt,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
 
       - name: Lint pyproject.toml
         id: toml
@@ -92,7 +92,8 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         uses: reviewdog/action-actionlint@a499b807aed4af40b8f2f7b885b9e38c469a945c
         with:
-          actionlint_flags: '-color -oneline'
+          actionlint_flags: |
+            -color -oneline -format "{{json .}}" | tee /dev/tty | jq -s '{"issues": map(.[] | {engineId: "actionlint", ruleId: (.kind // "workflow-error"), severity: "MAJOR", type: "CODE_SMELL", primaryLocation: {message: .message, filePath: .filepath, textRange: {startLine: .line, startColumn: .column, endLine: .line}}})}' > actionlint-sonar.json
           level: info
           fail_level: error
 
@@ -127,12 +128,13 @@ jobs:
             -Dsonar.tests=test
             -Dsonar.verbose=true
             -Dsonar.python.versions=3.12,3.13,3.14
-            -Dsonar.python.pylint.reportPaths=pylint-report.json
+            -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
-        if: runner.os == 'Linux' && matrix.py-ver == '3.14'
+        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && always()
         id: sc-qg
         uses: sonarsource/sonarqube-quality-gate-action@8e9b0ca0a7273d6f16986388d98393efdfcf56fd
         env:
