@@ -8,6 +8,7 @@ Compatible versions for this test file: >=kms-v1.3.0a0/2026.05.23
 from rich.traceback import install
 from packaging.version import Version
 import key_multivalue_storage as kms
+from key_multivalue_storage import Storage
 import warnings
 
 install(show_locals=True)
@@ -28,6 +29,18 @@ try:
     warnings.warn(kms.SubtractionFailureWarning())
     warnings.warn(kms.DeleteWarning("Test DeleteWarning", __name__))
     warnings.warn(kms.CastWarning("Test CastWarning", __name__))
+except Exception as e:
+    raise AssertionError(e) from e
+
+try:
+    warnings.warn(Storage.AdditionFailureWarning("Test AdditionFailureWarning", __name__))
+    warnings.warn(Storage.SubtractionFailureWarning("Test SubtractionFailureWarning", __name__))
+    warnings.warn(Storage.AdditionFailureWarning(method=__name__))
+    warnings.warn(Storage.SubtractionFailureWarning(method=__name__))
+    warnings.warn(Storage.AdditionFailureWarning())
+    warnings.warn(Storage.SubtractionFailureWarning())
+    warnings.warn(Storage.DeleteWarning("Test DeleteWarning", __name__))
+    warnings.warn(Storage.CastWarning("Test CastWarning", __name__))
 except Exception as e:
     raise AssertionError(e) from e
 
