@@ -30,5 +30,15 @@ jobs:
           gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage" 
           gh pr comment "$PR_NUMBER" --repo "$GH_REPO" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!" 
           exit 0
+      - env:
+          GITHUB_TOKEN: ${{github.token}}
+          GH_REPO: ${{github.repository}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        if: ${{ github.actor == 'renovate[bot]' && github.actor == 'dependabot[bot]' }}
+        run: |
+          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --milestone "$(gh api repos/"$GH_REPO"/milestones -f state=open -f sort=due_on -f direction=asc --jq '.[0].title')"
+          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage" --add-label "dependencies"
+          exit 0
+
 
 
