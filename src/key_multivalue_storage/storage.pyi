@@ -15,6 +15,8 @@ from types import TracebackType
 from typing import Any, Callable, Generator, List, overload
 from typing_extensions import deprecated
 
+from .utils import metadata as meta
+
 # Top-level functions
 def help() -> None: ...
 def print(*args: Any, **kwargs: Any) -> None: ...
@@ -22,7 +24,7 @@ def print(*args: Any, **kwargs: Any) -> None: ...
 @total_ordering
 # 🎯 Inheriting from dict[Any, Any] provides complete structural freedom!
 # This clears your assignment errors while welcoming your custom overloads naturally.
-class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any]):
+class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass=meta._StorageMeta):
     # Global attributes
     indent: int
     encode: bool
