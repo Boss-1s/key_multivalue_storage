@@ -128,7 +128,35 @@ def help() -> None: #pylint: disable=redefined-builtin
             guide_style="red"
         )
 
-    console = Console()
+    import io
+
+    def _make_safe_console() -> Console:
+        """
+        Return a Console that will not raise UnicodeEncodeError when stdout uses a
+        legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
+        sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
+        construct the Console to write to that wrapper. Fall back to a no-color
+        console on unexpected failures.
+        """
+        try:
+            enc = (sys.stdout.encoding or "")
+            if "utf" in enc.lower():
+                return Console()
+        except Exception:
+            # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
+            pass
+
+        try:
+            # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
+            # encoding and replace errors to avoid raising.
+            safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+            return Console(file=safe_out, force_terminal=False)
+        except Exception:
+            # Last-resort fallback: a console without color/advanced rendering so
+            # we avoid control characters that some terminals might mishandle.
+            return Console(no_color=True, force_terminal=False)
+
+    console = _make_safe_console()
 
     orange: str = "#ff5533"
 
