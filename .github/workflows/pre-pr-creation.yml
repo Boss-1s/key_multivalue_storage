@@ -18,7 +18,7 @@ jobs:
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
         run: |
           git switch semver1.3.x
-          if [[ -z "$(gh pr view --json closingIssuesReferences --jq '.closingIssuesReferences[].number')" ]]; then
+          if [[ -z $(gh pr view --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null) ]]; then
             gh pr close "$PR_NUMBER" --comment "**WARNING**
             
             This PR was auto-closed because it does not reference any issues.
