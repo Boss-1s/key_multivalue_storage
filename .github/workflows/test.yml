@@ -6,11 +6,6 @@ on:
       - releases/**
       - eol/**
       - docs
-  pull_request:
-    branches-ignore:
-      - releases/**
-      - eol/**
-      - docs
   workflow_dispatch:
 
 jobs:
@@ -56,19 +51,6 @@ jobs:
       - name: Run Python Tests
         id: self-tests
         background: true
-        if: ${{ runner.os != 'Windows' }}
-        run: |
-          uv run coverage run test
-          uv run coverage report
-          uv run coverage xml
-
-      - name: Run Python Tests (Windows)
-        id: self-tests-w
-        background: true
-        if: ${{ runner.os == 'Windows' }}
-        env:
-          TERM: 'dumb'
-          PYTHONUTF8: '1'
         run: |
           uv run coverage run test
           uv run coverage report
@@ -78,7 +60,7 @@ jobs:
         background: true
         id: pylint
         run: |
-          uv run pylint --output-format=json:pylint-report.json,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
+          uv run pylint --output-format=parseable:pylint-report.txt,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
 
       - name: Lint pyproject.toml
         id: toml
@@ -92,7 +74,8 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         uses: reviewdog/action-actionlint@a499b807aed4af40b8f2f7b885b9e38c469a945c
         with:
-          actionlint_flags: '-color -oneline'
+          actionlint_flags: |
+            -color -oneline -format "{{json .}}" | tee /dev/tty | jq -s '{"issues": map(.[] | {engineId: "actionlint", ruleId: (.kind // "workflow-error"), severity: "MAJOR", type: "CODE_SMELL", primaryLocation: {message: .message, filePath: .filepath, textRange: {startLine: .line, startColumn: .column, endLine: .line}}})}' > actionlint-sonar.json
           level: info
           fail_level: error
 
@@ -106,10 +89,10 @@ jobs:
           find . -path './.venv' -prune -o -name '*.sh' -exec uv run shellcheck --severity=error {} +
 
       - name: Wait for Pylint and Coverage
-        wait: [pylint, self-tests, self-tests-w]
+        wait: [pylint, self-tests]
 
       - name: Analyze with SonarCloud
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.py-ver == '3.14'
         id: sc-analyze
         uses: SonarSource/sonarqube-scan-action@ad8210318ac8bb816e41990d5af2b304f7a6c213
         env:
@@ -127,12 +110,13 @@ jobs:
             -Dsonar.tests=test
             -Dsonar.verbose=true
             -Dsonar.python.versions=3.12,3.13,3.14
-            -Dsonar.python.pylint.reportPaths=pylint-report.json
+            -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && github.ref_name == 'semver1.3.x'
         id: sc-qg
         uses: sonarsource/sonarqube-quality-gate-action@8e9b0ca0a7273d6f16986388d98393efdfcf56fd
         env:
@@ -140,7 +124,7 @@ jobs:
 
       - name: Export Sonar Issues to SARIF File
         id: sc-sarif
-        if: runner.os == 'Linux' && always()
+        if: runner.os == 'Linux' && always() && matrix.py-ver == '3.14'
         uses: vmvarela/sonarqube-sarif@ee6c3c1d5314dd0d402277cd5099ab4578ddca74
         with:
           sonar-token: ${{ secrets.SONAR_TOKEN }}
@@ -151,7 +135,7 @@ jobs:
 
       - name: Upload Code Scanning Results
         id: sc-upload
-        if: runner.os == 'Linux' && always()
+        if: runner.os == 'Linux' && always() && matrix.py-ver == '3.14'
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'sonarqube.sarif'
@@ -167,7 +151,7 @@ jobs:
     needs: [main, codeql]
     uses: ./.github/workflows/release-nightly.yml
     if: |
-      github.ref_name == 'semver1.3.x' ||
+      contains(github.ref_name, 'semver1.3.x') ||
       contains(github.actor, 'renovate') ||
       contains(github.actor, 'dependabot') ||
       contains(github.actor, 'github-actions')

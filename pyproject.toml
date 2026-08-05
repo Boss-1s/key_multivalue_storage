@@ -43,7 +43,7 @@ dependencies = [
 dev = [
     "pylint==4.0.6",
     "pylint-per-file-ignores==3.2.1",
-    "griffe==2.0.2", 
+    "griffe==2.1.0", 
 ]
 
 [project.urls]
@@ -514,14 +514,14 @@ dev = [
     "pre-commit==4.6.1",
 ]
 release = [
-    "gitpython==3.1.57",
+    "gitpython==3.1.58",
     "md-toc==9.0.0",
-    "packaging==26.2",
+    "packaging==26.3",
     "requests==2.34.2",
 ]
 test = [
     "pylint==4.0.6",
-    "griffe==2.0.2",
+    "griffe==2.1.0",
     "pyproject==1!0.2.1",
     "pylint-per-file-ignores==3.2.1",
     "coverage==7.15.3",

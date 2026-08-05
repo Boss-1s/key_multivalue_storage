@@ -10,6 +10,11 @@ Fixes # <!-- Link the tracking issue number here (e.g. #123) -->
 
 ## Changes
 - List all your changes here.
+- This list SHOULD be updated dynamically.
+
+## Goals
+- [ ] List all your goals here.
+- [ ] Try NOT to add goals after the OP.
 
 ## Testing
 <!-- Please describe the tests that you ran to verify your changes. -->
@@ -27,9 +32,8 @@ import key_multivalue_storage as kms
 ...
 ```
 
-<!-- For documentation updates -->
+<!-- For documentation updates or update to tests -->
 No tests needed
-
 
 ### Test Environment:
 - OS: <!-- e.g. MacOS, Ubuntu, Windows -->
