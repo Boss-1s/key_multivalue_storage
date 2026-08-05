@@ -128,9 +128,19 @@ def help() -> None: #pylint: disable=redefined-builtin
             guide_style="red"
         )
 
-    import io
+    import io, os
 
-    def _make_safe_console() -> Console:
+    class _RawConsole():
+        @staticmethod
+        def print(*text: Any, sep: str = ' '):
+            full_text: str = ''
+            for i in text:
+                full_text += str(i)
+                full_text += sep
+            raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
+            os.write(1, raw_bytes)
+
+    def _make_safe_console() -> Console | _RawConsole:
         """
         Return a Console that will not raise UnicodeEncodeError when stdout uses a
         legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
@@ -140,21 +150,22 @@ def help() -> None: #pylint: disable=redefined-builtin
         """
         try:
             enc = (sys.stdout.encoding or "")
-            if "utf" in enc.lower():
+            if "utf" in str(enc).lower():
                 return Console()
-        except Exception:
+        except Exception as e:
+            warnings.warn(str(e), RuntimeWarning)
             # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
-            pass
 
         try:
             # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
             # encoding and replace errors to avoid raising.
             safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
             return Console(file=safe_out, force_terminal=False)
-        except Exception:
+        except Exception as e:
+            warnings.warn(str(e), RuntimeWarning)
             # Last-resort fallback: a console without color/advanced rendering so
             # we avoid control characters that some terminals might mishandle.
-            return Console(no_color=True, force_terminal=False)
+            return _RawConsole()
 
     console = _make_safe_console()
 
@@ -311,11 +322,11 @@ def help() -> None: #pylint: disable=redefined-builtin
 
     legend = Panel.fit(legend_text, title="Key")
 
+    title = "# Key to Multivalue Storage (key_multivalue_storage, kms)"
+
     console.print(
-        Markdown(
-            "# Key to Multivalue Storage (key_multivalue_storage, kms)"
-        ),
-        Markdown(str(__doc__))
+        Markdown(title) if isinstance(console, Console) else title,
+        Markdown(str(__doc__)) if isinstance (console, Console) else str(__doc__)
     )
 
     if hasattr(sys, 'ps1'):
@@ -323,8 +334,10 @@ def help() -> None: #pylint: disable=redefined-builtin
 
         input()
 
+    line2 = "--------\n## Structure of the Library"
+
     console.print(
-        Markdown("--------\n## Structure of the Library"),
+        Markdown(line2) if isinstance(console, Console) else line2,
         legend,
         library,
         sep="\n"
