@@ -56,19 +56,6 @@ jobs:
       - name: Run Python Tests
         id: self-tests
         background: true
-        if: ${{ runner.os != 'Windows' }}
-        run: |
-          uv run coverage run test
-          uv run coverage report
-          uv run coverage xml
-
-      - name: Run Python Tests (Windows)
-        id: self-tests-w
-        background: true
-        if: ${{ runner.os == 'Windows' }}
-        env:
-          TERM: 'dumb'
-          PYTHONUTF8: '1'
         run: |
           uv run coverage run test
           uv run coverage report
@@ -107,7 +94,7 @@ jobs:
           find . -path './.venv' -prune -o -name '*.sh' -exec uv run shellcheck --severity=error {} +
 
       - name: Wait for Pylint and Coverage
-        wait: [pylint, self-tests, self-tests-w]
+        wait: [pylint, self-tests]
 
       - name: Analyze with SonarCloud
         if: runner.os == 'Linux' && matrix.py-ver == '3.14'
