@@ -6,11 +6,6 @@ on:
       - releases/**
       - eol/**
       - docs
-  pull_request:
-    branches-ignore:
-      - releases/**
-      - eol/**
-      - docs
   workflow_dispatch:
 
 jobs:
