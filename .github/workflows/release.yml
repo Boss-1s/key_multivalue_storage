@@ -59,7 +59,7 @@ jobs:
 
       - name: Generate Github Attestations
         # GH's attestations are different from PyPI's.
-        uses: actions/attest@v4.2.1
+        uses: actions/attest@v4.2.2
         id: gh-attest
         with:
           subject-path: "dist/*"
