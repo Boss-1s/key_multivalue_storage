@@ -36,7 +36,7 @@ jobs:
           PR_NUMBER: ${{github.event.pull_request.number}}
         if: ${{ github.actor == 'renovate[bot]' || github.actor == 'dependabot[bot]' }}
         run: |
-          MILESTONE_TITLE=$(gh api "repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc" --jq '.[0].title')
+          MILESTONE_TITLE=$(gh api repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc --jq '[.[] | select(.due_on != null)][0].title')
 
           if [ -n "$MILESTONE_TITLE" ] && [ "$MILESTONE_TITLE" != "null" ]; then
             gh pr edit $PR_NUMBER --repo $GH_REPO --milestone "$MILESTONE_TITLE"
