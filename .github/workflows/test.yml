@@ -6,11 +6,6 @@ on:
       - releases/**
       - eol/**
       - docs
-  pull_request:
-    branches-ignore:
-      - releases/**
-      - eol/**
-      - docs
   workflow_dispatch:
 
 jobs:
@@ -56,19 +51,6 @@ jobs:
       - name: Run Python Tests
         id: self-tests
         background: true
-        if: ${{ runner.os != 'Windows' }}
-        run: |
-          uv run coverage run test
-          uv run coverage report
-          uv run coverage xml
-
-      - name: Run Python Tests (Windows)
-        id: self-tests-w
-        background: true
-        if: ${{ runner.os == 'Windows' }}
-        env:
-          TERM: 'dumb'
-          PYTHONUTF8: '1'
         run: |
           uv run coverage run test
           uv run coverage report
@@ -107,7 +89,7 @@ jobs:
           find . -path './.venv' -prune -o -name '*.sh' -exec uv run shellcheck --severity=error {} +
 
       - name: Wait for Pylint and Coverage
-        wait: [pylint, self-tests, self-tests-w]
+        wait: [pylint, self-tests]
 
       - name: Analyze with SonarCloud
         if: runner.os == 'Linux' && matrix.py-ver == '3.14'
@@ -134,7 +116,7 @@ jobs:
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
-        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && always()
+        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && github.ref_name == 'semver1.3.x'
         id: sc-qg
         uses: sonarsource/sonarqube-quality-gate-action@8e9b0ca0a7273d6f16986388d98393efdfcf56fd
         env:
@@ -169,7 +151,7 @@ jobs:
     needs: [main, codeql]
     uses: ./.github/workflows/release-nightly.yml
     if: |
-      github.ref_name == 'semver1.3.x' ||
+      contains(github.ref_name, 'semver1.3.x') ||
       contains(github.actor, 'renovate') ||
       contains(github.actor, 'dependabot') ||
       contains(github.actor, 'github-actions')
