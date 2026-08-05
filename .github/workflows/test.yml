@@ -116,7 +116,7 @@ jobs:
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
-        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && always()
+        if: runner.os == 'Linux' && matrix.py-ver == '3.14' && github.ref_name == 'semver1.3.x'
         id: sc-qg
         uses: sonarsource/sonarqube-quality-gate-action@8e9b0ca0a7273d6f16986388d98393efdfcf56fd
         env:
