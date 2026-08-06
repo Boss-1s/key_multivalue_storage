@@ -26,10 +26,10 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.3.2: import logger
-from typing import Any, Generator, Self
+from typing import Any, Generator
 from types import TracebackType
 from functools import total_ordering
-from collections.abc import Callable
+from collections.abc import Callable, KeysView
 
 from typing_extensions import deprecated
 from rich.console import Console
@@ -377,6 +377,22 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return {self.key: self.values}
 
+    def keys(self) -> KeysView[Any]:
+        """
+        Returns the top level key.
+        
+        ## Arguments
+        None.
+
+        ## Output
+        `dict_views[Any]`: A `dict_views` of the top level key.
+
+        ## Notes
+        This method is provided only so casting to a `dict()` is possible. The reccommeded usage
+        of getting the top level key is still `storage_instance.key`.
+        """
+        return {self.key: None}.keys()
+
     # --- #
 
     _default_valueerror_msg: str = "Both instances must have the same top level key"
@@ -401,6 +417,12 @@ class Storage(metaclass=meta._StorageMeta):
             if self.key==other.key and self.values.items()==other.values.items():
                 return True
             return False
+
+        if isinstance(other, dict):
+            if other == dict(self):
+                return True
+            return False
+
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
@@ -704,12 +726,18 @@ class Storage(metaclass=meta._StorageMeta):
                     key: str | int | slice
                    ) -> Any:
         """Defines how to get an item from the object."""
+        if key == self.key:
+            return self.values
+
         if isinstance(key, str):
             return self.values[key]
+
         if isinstance(key,int):
             return self.values[list(self.values.keys())[key]]
+        
         if isinstance(key,slice):
             return [self.values[k] for k in list(self.values.keys())[key]]
+        
         return NotImplemented
 
     def __setitem__(self,

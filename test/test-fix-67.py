@@ -2,13 +2,15 @@ from key_multivalue_storage import Storage
 
 db = Storage("top_lv_key", foo="bar")
 
-dict1 = db.to_dict()
+db2 = db.to_dict()
+db3 = dict(db)
 
-print(db)
-print(isinstance(db, dict))
-print(isinstance(db, Storage))
-print('')
-print(dict1)
-print(isinstance(dict1, dict))
-print(isinstance(dict1, Storage))
-print('')
+assert db == db2 == db3
+
+assert isinstance(db, Storage)
+assert isinstance(db2, dict)
+assert isinstance(db3, dict)
+
+assert db == {"top_lv_key": {"foo": "bar"}}
+print(db[db.key])
+
