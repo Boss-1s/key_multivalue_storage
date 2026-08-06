@@ -25,7 +25,10 @@ def main(c: Console) -> None:
     if len(sys.argv) == 1 or any(
         item in ["a", "all"] for item in [item.lower() for item in sys.argv]
     ):
+        # TODO: remove
         exec(open("test/test-general.py").read(), globals())
+        c.print("-"*30)
+        exec(open("test/test-general-v1.3.py").read(), globals())
         c.print("-"*30)
         exec(open("test/test-meta.py").read(), globals())
         c.print("-"*30)
@@ -35,8 +38,13 @@ def main(c: Console) -> None:
         c.print("-"*30)
         exec(open("test/test-fix-14.py").read(), globals())
         return
-    if sys.argv[1].lower() == "general":
+    if sys.argv[1].lower() == "general-1.2":
+        warnings.warn("You are using an OLD version of test-general, "+
+                      "sepcifically the one targetd for kms-semver1.2.x.")
         exec(open("test/test-general.py").read(), globals())
+        return
+    if sys.argv[1].lower() == "general":
+        exec(open("test/test-general-v1.3.py").read(), globals())
         return
     if sys.argv[1].lower() == "meta":
         exec(open("test/test-meta.py").read(), globals())

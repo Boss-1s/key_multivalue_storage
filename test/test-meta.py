@@ -65,7 +65,7 @@ print("-"*20)
 print("Part 3: Ensure _KmsMeta can fail correctly")
 
 try:
-    class BadMetaClass(metaclass=_KmsMeta):
+    class BadMetaClass(metaclass=_KmsMeta): # pylint: disable=unused-variable
         pass
 except TypeError as e:
     print(f"Expected TypeError caught: {e}")
