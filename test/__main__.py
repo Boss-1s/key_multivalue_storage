@@ -34,6 +34,8 @@ def main(c: Console) -> None:
         exec(open("test/test-fix-26-and-27.py").read(), globals())
         c.print("-"*30)
         exec(open("test/test-fix-14.py").read(), globals())
+        c.print("-"*30)
+        exec(open("test/test-fix-67.py").read(), globals())
         return
     if sys.argv[1].lower() == "general":
         exec(open("test/test-general.py").read(), globals())

@@ -26,7 +26,7 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.3.2: import logger
-from typing import Any, Generator
+from typing import Any, Generator, Self
 from types import TracebackType
 from functools import total_ordering
 from collections.abc import Callable
@@ -360,6 +360,22 @@ class Storage(metaclass=meta._StorageMeta):
 
         if instant_delete:
             del self
+
+    def to_dict(self) -> dict[str, dict[str, Any]]:
+        """
+        Converts a Storage instance into a dictionary.
+
+        ## Arguments
+        No arguments.
+
+        ## Returns
+        - `dict[str, dict[str, Any]]`: the original instance in dict form.
+
+        ## Notes
+        This method exists only as a backup to casting a `Storage` instance directly to a `dict`
+        with `dict(Storage)`.
+        """
+        return {self.key: self.values}
 
     # --- #
 
