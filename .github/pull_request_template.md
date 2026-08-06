@@ -1,10 +1,3 @@
----
-name: "General PR Template"
-title: "fix: "
-labels: "needs-triage"
-assignees: "Boss-1s"
----
-
 <!--
 Thanks for contributing to kms!
 To ensure code quality, please read our contribution guidelines. This way, we can avoid massive messes that cannot be cleaned up.
