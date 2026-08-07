@@ -25,6 +25,8 @@ jobs:
 
       - name: Sync Documentation
         run: |
+          git fetch
+          git switch semver1.3.x
           git checkout docs -- docs/
 
       - name: Commit version change
