@@ -25,9 +25,9 @@ jobs:
 
       - name: Sync Documentation
         run: |
-          git fetch
+          git fetch --all
           git switch semver1.3.x
-          git checkout docs -- docs/
+          git checkout docs -- ./docs
 
       - name: Commit version change
         continue-on-error: true
