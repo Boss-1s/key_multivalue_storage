@@ -380,7 +380,7 @@ class Storage(metaclass=meta._StorageMeta):
     def keys(self) -> KeysView[Any]:
         """
         Returns the top level key.
-        
+
         ## Arguments
         None.
 
@@ -734,10 +734,10 @@ class Storage(metaclass=meta._StorageMeta):
 
         if isinstance(key,int):
             return self.values[list(self.values.keys())[key]]
-        
+
         if isinstance(key,slice):
             return [self.values[k] for k in list(self.values.keys())[key]]
-        
+
         return NotImplemented
 
     def __setitem__(self,
