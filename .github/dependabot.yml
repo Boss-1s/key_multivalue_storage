@@ -25,6 +25,12 @@ updates:
       interval: "daily"
     target-branch: "semver1.3.x"
     open-pull-requests-limit: 0
+
+  - package-ecosystem: "uv" # See documentation for possible values
+    directory: "/test" # Location of package manifests
+    schedule:
+      interval: "daily"
+    target-branch: "semver1.3.x"
     
   - package-ecosystem: "bundler"
     directory: "/docs"

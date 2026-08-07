@@ -25,7 +25,11 @@ jobs:
 
       - name: Sync Documentation
         run: |
-          git checkout docs -- docs/
+          git fetch --all
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          git switch semver1.3.x
+          git checkout docs -- ./docs
+          rm -rf docs/_includes/ docs/_layouts/ docs/assets/ docs/Gemfile
 
       - name: Commit version change
         continue-on-error: true
