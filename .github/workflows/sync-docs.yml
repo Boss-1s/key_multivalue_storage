@@ -1,0 +1,49 @@
+name: Sync Docs
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Setup SSH and signing
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: bash .github/workflows/src/ssh.sh
+
+      - name: Sync Documentation
+        run: |
+          git checkout docs -- docs/
+
+      - name: Commit version change
+        continue-on-error: true
+        env:
+          REF: "semver1.3.x"
+          DUMMY: "false"
+          REPO: ${{ github.repository }}
+          CUSTOM_COMMIT_MSG: "sync docs"
+        run: |
+          # AI-Generated (Google AI Mode, Gemini 2.5)
+          # 1. Safely evaluate environment variables without syntax parsing flaws
+          BRANCH="semver1.3.x"
+
+          export BRANCH
+          
+          echo "$REF is sourced from branch: $BRANCH"
+          
+          # 2. Realign HEAD onto the tracking stream 
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          
+          bash .github/workflows/src/push.sh

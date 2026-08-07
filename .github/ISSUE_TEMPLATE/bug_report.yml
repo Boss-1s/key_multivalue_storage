@@ -45,7 +45,6 @@ body:
     id: other
     attributes:
       label: Other Comments
-      render: md
     validations:
       required: false
   - type: checkboxes
