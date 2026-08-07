@@ -35,5 +35,6 @@ This is, after all, an open-source project. Anyone and everyone is invited to co
 
 - **Only use `fatal` on errors that break everything related to that file.**
 - Please refrain from using `release` unless directed to.
+- [**See more about Conventional Commits here.**](https://www.conventionalcommits.org/en/v1.0.0/)
 
 Note that these contributor guidelines are subject to change. Happy contributing!
