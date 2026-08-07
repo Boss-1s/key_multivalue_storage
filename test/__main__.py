@@ -29,7 +29,7 @@ def main(c: Console) -> None:
     ):
         tests = [
             "test/test-general.py",
-            "test/test-general-v1.3.py",
+            "test/test-storage.py",
             "test/test-meta.py",
             "test/test-exceptions.py",
             "test/test-fix-26-and-27.py",
@@ -44,6 +44,7 @@ def main(c: Console) -> None:
             except Exception as e:
                 print(f"❌ [red b]Error in {test_file}: {e}[/]")
                 c.print_exception()
+                time.sleep(1.9)
 
             c.print("-" * 30)
             time.sleep(0.1)

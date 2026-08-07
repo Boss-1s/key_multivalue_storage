@@ -8,7 +8,6 @@ for semver1.2.x, use the original 'test-general.py' file instead.
 """
 import json
 import os
-from tkinter import N
 from typing import Any
 
 from key_multivalue_storage.storage import Storage
@@ -20,8 +19,7 @@ print("Begin test for semver1.3.x")
 
 Delete.all("test_storage.json", warn=False)
 
-print("Part 1: Storage")
-print("Part 1.1: Storage instantiation and type hinting")
+print("Part 1: Storage instantiation and type hinting")
 
 normal_db = Storage("top_lv_key", foo="bar", baz="qux")
 
@@ -37,10 +35,10 @@ type_hint_db: Storage[str, str, str|int] = Storage("top_lv_key", foo="bar", baz=
 #pylint: disable=unused-variable, line-too-long
 bad_type_hint_db: Storage[str, str, str|int] = Storage("top_lv_key", foo="bar", baz=3.14) #type: ignore
 
-print("Part 1.1 passed.")
+print("Part 1 passed.")
 del type_hint_db
 del bad_type_hint_db
-print("Part 1.2: Storage - global attributes")
+print("Part 2: Storage - global attributes")
 
 Storage.auto_delete_self = True
 Storage.indent = 4
@@ -76,8 +74,8 @@ assert Storage.auto_delete_self is True
 assert Storage.indent == 4
 assert Storage.encode is False
 
-print("Part 1.2 passed.")
-print("Part 1.3: Storage() instance attributes")
+print("Part 2 passed.")
+print("Part 3: Storage() instance attributes")
 
 assert normal_db.key
 assert normal_db.values
@@ -102,8 +100,8 @@ else:
     raise AssertionError("Storage.key attribute exists, but it should not. "+
                          "Are you using the correct version?")
 
-print("Part 1.3 passed.")
-print("Part 1.4: Storage() instance methods")
+print("Part 3 passed.")
+print("Part 4: Storage() instance methods")
 # NOTE: This excludes help(), which is covered by test-meta.
 
 normal_db.store("test_storage.json")
@@ -112,12 +110,7 @@ with open("test_storage.json", 'r', encoding='utf-8') as f:
     store: dict[str, dict[str, Any]] = json.loads(f.read())
 
 assert isinstance(store, dict)
-# FIXME: After #67 is finished, use the commented code instead
-# assert store == dict(normal_db)
-
-# Should fail when == because encoded
-assert store != {normal_db.key: normal_db.values}
-
+assert store != dict(normal_db)
 
 # FIXME: After #68 is fixed, this should work
 # will_be_deleted_db.store("test_storage.json", indent=4, encode=True)
@@ -136,11 +129,7 @@ with open("test_storage.json", 'r', encoding='utf-8') as f:
     store: dict[str, dict[str, Any]] = json.loads(f.read())
 
 assert isinstance(store, dict)
-# FIXME: After #67 is finished, use the commented code instead
-# assert store == dict(bad_str_db)
-
-assert bad_str_db.key in store.keys()
-assert bad_str_db.values in store.values()
+assert dict(bad_str_db).items() <= store.items()
 
 normal_db.store("temp_storage.json", encode=False)
 
@@ -151,6 +140,12 @@ assert {normal_db.key: normal_db.values} == store
 
 os.remove("temp_storage.json")
 
-print("Part 1.4 passed.")
+assert normal_db.key in normal_db.keys()
+assert bad_str_db.key in bad_str_db.keys()
+
+assert isinstance(normal_db.to_dict(), dict)
+assert isinstance(bad_str_db.to_dict(), dict)
+
+print("Part 4 passed.")
 
 os.remove("test_storage.json")
