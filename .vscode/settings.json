@@ -33,5 +33,8 @@
         "unfinished"
     ],
     "python.analysis.completeFunctionParens": true,
-    "python.analysis.typeCheckingMode": "standard"
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingTypeStubs": true
+    }
 }

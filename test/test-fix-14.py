@@ -147,5 +147,3 @@ if isinstance(sys.__stdout__, io.TextIOWrapper):
     print("Part 3 passed.")
 
     print("Test complete, all parts passed.")
-
-    sys.exit(0)

@@ -13,8 +13,10 @@ python test/
 #pylint: disable=exec-used,consider-using-with
 import os
 import sys
+import time
 import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
 import subprocess
+import traceback
 import warnings
 from rich.console import Console
 from rich.traceback import install
@@ -25,15 +27,27 @@ def main(c: Console) -> None:
     if len(sys.argv) == 1 or any(
         item in ["a", "all"] for item in [item.lower() for item in sys.argv]
     ):
-        exec(open("test/test-general.py").read(), globals())
-        c.print("-"*30)
-        exec(open("test/test-meta.py").read(), globals())
-        c.print("-"*30)
-        exec(open("test/test-exceptions.py").read(), globals())
-        c.print("-"*30)
-        exec(open("test/test-fix-26-and-27.py").read(), globals())
-        c.print("-"*30)
-        exec(open("test/test-fix-14.py").read(), globals())
+        tests = [
+            "test/test-general.py",
+            "test/test-meta.py",
+            "test/test-exceptions.py",
+            "test/test-fix-26-and-27.py",
+            "test/test-fix-14.py",
+            "test/test-fix-67.py"
+        ]
+
+        for test_file in tests:
+            try:
+                c.print(f"[blue]Running: {test_file}[/]")
+                exec(open(test_file).read(), globals())
+            except Exception as e:
+                print(f"❌ [red b]Error in {test_file}: {e}[/]")
+                c.print_exception()
+
+            c.print("-" * 30)
+            time.sleep(0.1)
+
+        c.print("[green b]All tests complete![/]")
         return
     if sys.argv[1].lower() == "general":
         exec(open("test/test-general.py").read(), globals())
