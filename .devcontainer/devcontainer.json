@@ -10,6 +10,9 @@
             "version": "latest"
         }
     },
+    "mounts": [
+        "source=vscode-extensions,target=/root/.vscode-server,type=volume"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
