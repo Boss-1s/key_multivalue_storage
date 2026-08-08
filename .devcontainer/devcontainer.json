@@ -2,6 +2,10 @@
     "name": "Key-to-Multivalue Storage Development Container",
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "latest",
+            "installJupyterlab": true
+        },
         "ghcr.io/devcontainers/features/github-cli:1": {
             "version": "latest"
         }
