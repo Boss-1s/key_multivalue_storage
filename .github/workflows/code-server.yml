@@ -21,6 +21,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        imageName: "kms development image"
+        cacheFrom: ghcr.io/${{ github.repository }}/devcontainer:latest
         eventFilterForPush:
         runCmd: |
           # Download the official VS Code binary
