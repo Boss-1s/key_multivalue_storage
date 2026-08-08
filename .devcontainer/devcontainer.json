@@ -44,6 +44,5 @@
                 }
             }
         }
-    },
-    "postCreateCommand": "pip install --upgrade pip && pip install uv && git remote set-url origin https://Boss-1s:$(gh auth token)@github.com && source .venv/bin/activate && uv sync --dev && python test reset_env"
+    }
 }
