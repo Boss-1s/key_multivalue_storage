@@ -21,8 +21,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        event-filter-for-push:
-        run-cmd: |
+        eventFilterForPush:
+        runCmd: |
           # Download the official VS Code binary
           curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
           tar -xf vscode_cli.tar.gz
