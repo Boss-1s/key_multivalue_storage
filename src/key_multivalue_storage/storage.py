@@ -112,7 +112,7 @@ class Storage(metaclass=meta._StorageMeta):
     # Define global variables: indent, encode option, and automatic object release from memory
     indent: int = 4
     encode: bool = True
-    auto_delete_self: bool = False
+    auto_delete_self: bool = False # DEPRECATED
 
     def __init__(self,
                  key: Any,
@@ -305,9 +305,14 @@ class Storage(metaclass=meta._StorageMeta):
                                        "method, don't call it (adding parenthesis after the "+
                                        "method name)."))
 
+    @w._deprecated_arg("instant_delete",
+                       "The attribute `auto_delete_self` has been deprecated as of "+
+                       "kms-semver1.3.1. Please using the `with` keyword instead.\n"+
+                       "with Storage('temp_storage', foo='bar') as s: pass"
+                      )
     def store(self,
               file_path: str,
-              instant_delete: bool | None = None,
+              instant_delete: bool | None = None, # DEPRECATED
               indent: int | None = None,
               encode: bool | None = None
              ) -> None:
@@ -358,7 +363,7 @@ class Storage(metaclass=meta._StorageMeta):
         except IOError as e:
             print(f"store: ERROR: Error writing to file '{file_path}': {e}")
 
-        if instant_delete:
+        if instant_delete: # DEPRECATED
             del self
 
     def to_dict(self) -> dict[str, dict[str, Any]]:
@@ -795,6 +800,11 @@ class Storage(metaclass=meta._StorageMeta):
         """Handles attribute setting attempts."""
         print(f"__setattr__: INFO: Attempting to set '{name}' to '{value}'")
         super().__setattr__(name, value)
+        if name == "auto_delete_self":
+            warnings.warn("The attribute `auto_delete_self` has been deprecated as of "+
+                          "kms-semver1.3.1. Please using the `with` keyword instead.\n"+
+                          "with Storage('temp_storage', foo='bar') as s: pass",
+                          DeprecationWarning)
 
     def __call__(self, **kwargs) -> None:
         """Defines what happens when an instance is called as a function."""

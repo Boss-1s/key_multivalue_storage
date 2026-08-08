@@ -5,22 +5,29 @@ on:
     inputs:
       time:
         type: number
-        default: 1
+        default: 60
         required: true
         description: time to run server in mins
 
 jobs:
   debug-environment:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
-    - env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      run: |
-        # Download the official VS Code binary
-        curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
-        tar -xf vscode_cli.tar.gz
-        ./code tunnel prune || true
-        # Start the tunnel and keep it open for your 1-minute test window
-        timeout ${{inputs.time}}m ./code tunnel --accept-server-license-terms --random-name || true
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+    - uses: devcontainers/ci@v0.3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        eventFilterForPush:
+        runCmd: |
+          # Download the official VS Code binary
+          curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
+          tar -xf vscode_cli.tar.gz
+          ./code tunnel prune || true
+          # Start the tunnel and keep it open for your 1-minute test window
+          timeout ${{inputs.time}}m ./code tunnel --accept-server-license-terms --name runnervmvrwv9 || true
+          echo Terminating server gracefully
 
-        echo Terminating server gracefully

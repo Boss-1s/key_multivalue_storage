@@ -4,7 +4,7 @@
     "python.envFile": "${workspaceRoot}/vscode.env",
     "python.analysis.autoImportCompletions": true,
     "sonarlint.connectedMode.project": {
-        "connectionId": "boss-1s",
+        "connectionId": "kms",
         "projectKey": "Boss-1s_key_multivalue_storage"
     },
     "[python]": {
