@@ -453,17 +453,20 @@ class Storage(metaclass=meta._StorageMeta):
         """Defines how to add two objects, same type or no."""
         if isinstance(other, type(self)):
             if self.key==other.key:
-                self.values.update(other.values)
-                return Storage(self.key, **self.values)
+                _temp_dict: dict[str, Any] = dict(self.values)
+                _temp_dict.update(other.values)
+                return Storage(self.key, **_temp_dict)
             raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
-            self.values.update(other)
-            return Storage(self.key, **self.values)
+            _temp_dict = dict(self.values)
+            _temp_dict.update(other)
+            return Storage(self.key, **_temp_dict)
         if isinstance(other, list):
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
-            self.values.update({"undefined": other})
-            return Storage(self.key, **self.values)
+            _temp_dict = dict(self.values)
+            _temp_dict.update({"undefined": other})
+            return Storage(self.key, **_temp_dict)
         return NotImplemented
 
     def __radd__(self,
