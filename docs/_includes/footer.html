@@ -11,10 +11,10 @@
     <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/docs">Source Code</a>
     <br>
     <p>
-      Last Deployed: {{ site.env.BUILD_DATE | default: Unknown}}
+      Last Deployed: {{ site.env.BUILD_DATE | default: Unknown }}
       {% if site.env.BUILD_SHA %}
-      <br>
-      Build Revision SHA: <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/${{ site.env.BUILD_SHA }}">{{ site.env.BUILD_SHA }}</a>
+          <br>
+          Build Revision SHA: <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/${{ site.env.BUILD_SHA }}">{{ site.env.BUILD_SHA }}</a>
       {% endif %}
     </p>
   </small>
