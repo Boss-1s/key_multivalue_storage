@@ -21,7 +21,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        imageName: "kms development image"
+        imageName: ghcr.io/${{ github.repository }}/devcontainer
         cacheFrom: ghcr.io/${{ github.repository }}/devcontainer:latest
         eventFilterForPush:
         runCmd: |
