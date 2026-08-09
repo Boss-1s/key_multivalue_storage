@@ -112,15 +112,10 @@ with open("test_storage.json", 'r', encoding='utf-8') as f:
 assert isinstance(store, dict)
 assert store != dict(normal_db)
 
-# FIXME: After #68 is fixed, this should work
-# will_be_deleted_db.store("test_storage.json", indent=4, encode=True)
-
-# try:
-#     will_be_deleted_db #type: ignore
-# except NameError:
-#     pass
-# else:
-#     raise AssertionError()
+# DEPRECATED: deprecated test here...
+will_be_deleted_db.store("test_storage.json",
+                         instant_delete=will_be_deleted_db.auto_delete_self,
+                         indent=4, encode=True)
 
 bad_str_db.store("test_storage.json", indent=4)
 
@@ -147,5 +142,40 @@ assert isinstance(normal_db.to_dict(), dict)
 assert isinstance(bad_str_db.to_dict(), dict)
 
 print("Part 4 passed.")
+
+del normal_db
+del will_be_deleted_db
+del bad_str_db
+
+print("Part 5: Dunder Methods")
+
+db: Storage[str, str, Any] = Storage("key", foo="bar")
+
+db_dict: dict[str, dict[str, Any]] = {"key": {"foo": "bar"}}
+
+assert str(db) # __str__
+assert repr(db) # __repr__
+
+# __eq__ #
+
+assert db == Storage("key", foo="bar")
+
+# NOTE: other __eq__ with dict is handled by an issue-patch test
+
+# __lt__ #
+
+try:
+    db < Storage("different_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Why can Storage be compared when top level keys are different...?"
+
+assert not db < Storage("key", foo='bar')
+assert db < Storage("key", foo="bar", baz="qax")
+
+
 
 os.remove("test_storage.json")
