@@ -214,13 +214,69 @@ assert list_db['undefined'] == ['qax', 'foo', 'lorem ipsum']
 
 # __radd__ #
 
-# NOTE: wait until #76 is fixed
 dict_db_r = new_db.values + db
-
-# assert dict_db_r == dict_db
+assert dict_db_r == dict_db
 
 del new_db, dict_db, dict_db_r, list_db
 
+# __call__ #
 
+db(a="b", c="d", e='f')
+
+# __sub__ #
+
+try:
+    db - Storage("different_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Why can Storages be subtracted when top level keys are different...?"
+
+new_db = Storage("key", foo="bar", baz="qax") - db
+
+assert isinstance(new_db, Storage)
+assert 'baz' in new_db.values
+assert new_db['baz'] == 'qax'
+try:
+    new_db['foo']
+except KeyError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "the foo=bar pair should have been deleted by subtraction!"
+
+dict_db = db - {'e': 'f'}
+
+assert isinstance(dict_db, Storage)
+assert 'a' in dict_db.values
+assert dict_db['a'] == 'b'
+assert dict_db['c'] == 'd'
+try:
+    dict_db['e']
+except KeyError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "the e=f pair should have been deleted by subtraction!"
+
+# __rsub__ #
+
+dict_db_r = {'e': 'f'} - db
+assert dict_db_r == dict_db
+
+# NOTE: until #80 is fixed
+# assert dict(db) == {
+#     "key": {
+#         'a': 'b',
+#         'c': 'd',
+#         'e': 'f',
+#         'foo': 'bar',
+#         'baz': 'qax'
+#     }
+# }, f"the original variable db (current value `{db}`) should NOT have changed..."
 
 os.remove("test_storage.json")
