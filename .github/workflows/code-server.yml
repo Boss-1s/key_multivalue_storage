@@ -33,11 +33,8 @@ jobs:
         cacheFrom: ghcr.io/boss-1s/key_multivalue_storage/devcontainer:latest
         eventFilterForPush:
         runCmd: |
-          # Download the official VS Code binary
           curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
           tar -xf vscode_cli.tar.gz
-          ./code tunnel prune || true
-          # Start the tunnel and keep it open for your 1-minute test window
           timeout ${{inputs.time}}m ./code tunnel --accept-server-license-terms --name runnervmvrwv9 || true
           echo Terminating server gracefully
 
