@@ -52,13 +52,13 @@ def main(c: Console) -> None:
 
         c.print("[green b]All tests complete![/]")
         return
-    if sys.argv[1].lower() == "general-1.2":
+    if sys.argv[1].lower() == "general":
         warnings.warn("You are using an OLD version of test-general, "+
                       "sepcifically the one targetd for kms-semver1.2.x.")
         exec(open("test/test-general.py").read(), globals())
         return
-    if sys.argv[1].lower() == "general":
-        exec(open("test/test-general-v1.3.py").read(), globals())
+    if sys.argv[1].lower() == "storage":
+        exec(open("test/test-storage.py").read(), globals())
         return
     if sys.argv[1].lower() == "meta":
         exec(open("test/test-meta.py").read(), globals())
