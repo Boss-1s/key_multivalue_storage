@@ -43,7 +43,7 @@ def main(c: Console) -> None:
                 exec(open(test_file).read(), globals())
             except Exception as e:
                 print(f"❌ [red b]Error in {test_file}: {e}[/]")
-                c.print_exception()
+                c.print_exception(show_locals=True)
                 time.sleep(1.9)
 
             c.print("-" * 30)

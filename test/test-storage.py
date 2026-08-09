@@ -151,8 +151,6 @@ print("Part 5: Dunder Methods")
 
 db: Storage[str, str, Any] = Storage("key", foo="bar")
 
-db_dict: dict[str, dict[str, Any]] = {"key": {"foo": "bar"}}
-
 assert str(db) # __str__
 assert repr(db) # __repr__
 
@@ -175,6 +173,53 @@ else:
 
 assert not db < Storage("key", foo='bar')
 assert db < Storage("key", foo="bar", baz="qax")
+
+# __le__ #
+
+assert db <= Storage("key", foo="bar")
+assert db <= Storage("key", foo="bar", baz="qax")
+
+# __add__ #
+
+try:
+    db + Storage("different_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Why can Storages be added when top level keys are different...?"
+
+new_db = db + Storage("key", baz="qax", default="lorem ipsum")
+
+assert isinstance(new_db, Storage)
+assert 'default' in new_db.values
+assert new_db['default'] == 'lorem ipsum'
+assert new_db['baz'] == 'qax'
+assert new_db['foo'] == db['foo']
+
+dict_db = db + new_db.values
+
+assert isinstance(dict_db, Storage)
+assert 'default' in dict_db.values
+assert dict_db['default'] == 'lorem ipsum'
+assert dict_db['baz'] == 'qax'
+assert dict_db['foo'] == db['foo'] == new_db['foo']
+
+list_db = db + ['qax', 'foo', 'lorem ipsum']
+
+assert isinstance(list_db, Storage)
+assert isinstance(list_db['undefined'], list)
+assert list_db['undefined'] == ['qax', 'foo', 'lorem ipsum']
+
+# __radd__ #
+
+# NOTE: wait until #76 is fixed
+dict_db_r = new_db.values + db
+
+# assert dict_db_r == dict_db
+
+del new_db, dict_db, dict_db_r, list_db
 
 
 
