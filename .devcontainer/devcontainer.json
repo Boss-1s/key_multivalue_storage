@@ -10,6 +10,9 @@
             "version": "latest"
         }
     },
+    "mounts": [
+        "source=vscode-extensions,target=/root/.vscode-server,type=volume"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
@@ -34,7 +37,8 @@
                 "mintlify.document",
                 "alefragnani.project-manager",
                 "redhat.vscode-yaml",
-                "SonarSource.sonarlint-vscode"
+                "SonarSource.sonarlint-vscode",
+                "ryanluker.vscode-coverage-gutters"
             ]
         },
         "codespaces": {
