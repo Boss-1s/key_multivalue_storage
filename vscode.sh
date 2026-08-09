@@ -6,8 +6,7 @@ source .venv/bin/activate
 
 export SSH_PRIVATE_KEY="" # Enter your private key here
 
-python test reset_env "$SSH_PRIVATE_KEY" "user.name" "user.email" || true
-python test reset_env "$SSH_PRIVATE_KEY" "user.name" "user.email" #run twice bc python-enviroment will KeyboardInterrupt
+python test reset_env "$SSH_PRIVATE_KEY" "user.name" "user.email"
 
 gh auth login --scopes "repo,workflow,write:discussion,admin:repo_hook,admin:org,admin:public_key,admin:org_hook,user,project,gist,read:packages,write:packages,delete:packages,codespace"
 
