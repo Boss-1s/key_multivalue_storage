@@ -17,6 +17,7 @@ jobs:
           GH_REPO: ${{github.repository}}
           PR_NUMBER: ${{github.event.pull_request.number}}
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+        shell: bash
         run: |          
           # 1. Fetch closing issues strictly using the API target
           CLOSING_ISSUES=$(gh pr view "$PR_NUMBER" --repo "$GH_REPO" --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null)
@@ -35,6 +36,7 @@ jobs:
           GH_REPO: ${{github.repository}}
           PR_NUMBER: ${{github.event.pull_request.number}}
         if: ${{ github.actor == 'renovate[bot]' || github.actor == 'dependabot[bot]' }}
+        shell: bash
         run: |
           MILESTONE_TITLE=$(gh api repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc --jq '[.[] | select(.due_on != null)][0].title')
 
