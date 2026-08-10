@@ -2,8 +2,7 @@
 test-meta.py - a test file for KMS designed specifaclly to test the new metaclass 
 and help() method implementations.
 
-Test file version: t-meta-kms-v2026.8.0
-Compatible versions for this test file: >=kms-v1.3.0b0/2026.07.22
+Compatible versions for this test file: >=kms-v1.3.0/2026.07.30
 """
 
 import sys
@@ -50,10 +49,10 @@ try:
     Storage.help(Storage.store)
     Storage.Load.help()
     Storage.Load.help(Storage.Load.keys)
-    # Storage.Edit.help()
-    # Storage.Edit.help(Storage.Edit.propkey)
-    # Storage.Delete.help()
-    # Storage.Delete.help(Storage.Delete.all)
+    Storage.Edit.help()
+    Storage.Edit.help(Storage.Edit.propkey)
+    Storage.Delete.help()
+    Storage.Delete.help(Storage.Delete.all)
 except Exception as e:
     console = Console()
     console.print_exception(show_locals=True)
