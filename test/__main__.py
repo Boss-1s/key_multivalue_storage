@@ -30,6 +30,9 @@ def main(c: Console) -> None:
         tests = [
             # "test/test-general.py",
             "test/test-storage.py",
+            "test/test-load.py",
+            "test/test-edit.py",
+            "test/test-delete.py",
             "test/test-meta.py",
             "test/test-exceptions.py",
             "test/test-fix-26-and-27.py",
@@ -60,6 +63,15 @@ def main(c: Console) -> None:
         return
     if sys.argv[1].lower() == "storage":
         exec(open("test/test-storage.py").read(), globals())
+        return
+    if sys.argv[1].lower() == "load":
+        exec(open("test/test-load.py").read(), globals())
+        return
+    if sys.argv[1].lower() == "edit":
+        exec(open("test/test-edit.py").read(), globals())
+        return
+    if sys.argv[1].lower() == "delete":
+        exec(open("test/test-delete.py").read(), globals())
         return
     if sys.argv[1].lower() == "meta":
         exec(open("test/test-meta.py").read(), globals())
