@@ -7,7 +7,11 @@ with open('.devcontainer/devcontainer.json', 'r') as f:
 for extension_id in data['customizations']['vscode']['extensions']:
     try:
         print(f"Installing extension: {extension_id}")
-        subprocess.run(["code", "--install-extension", extension_id], capture_output=True, check=True)
+        subprocess.run(["code", "--install-extension", extension_id, "--force"],
+                    check=True,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL)
     except KeyboardInterrupt:
         pass
 

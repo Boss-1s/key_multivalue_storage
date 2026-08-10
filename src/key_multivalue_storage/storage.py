@@ -477,115 +477,172 @@ class Storage(metaclass=meta._StorageMeta):
     def __sub__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage:
-        """Defines how to subtract two objects, same type or no."""
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys: set = set(self.values.keys()) & set(other.values.keys())
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        del self.values[akey]
-                    else:
-                        self.values[akey] = other.values[akey]
-                return Storage(self.key, **self.values)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
+        """
+        Defines subtaction of Storage objects by Storage/dict objects.
+
+        Use the symbol `-` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be subtracted by.
+
+        ## Output
+        - `Storage`: A `Storage` instance containing the result of the subtraction.
+
+        ## Logic
+        How subtraction works here is first, we take the bitwise `AND` for both objects. After
+        that, we cycle through the set produced by the AND operation and inject the keys in that
+        set (and thier matching values) back into a temporary dict, which is then passed to the
+        Storage constructor as **kwargs.
+
+        Any values stored in `other` that are not in `self` will be lost. If you want to keep those
+        values, use `XOR` instead.
+        """
+        if not isinstance(other, (dict, Storage)):
+            return NotImplemented
+
+        _skeys = set()
+        _other_dict = {}
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            _skeys: set[str] = set(self.values.keys()) & set(other.values.keys())
+            _other_dict = other.values
+
+        elif isinstance(other, dict):
             warnings.warn(w.SubtractionFailureWarning(method="__sub__"))
-            skeys: set = set(self.values.keys()) & set(other)
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    del self.values[akey]
-                else:
-                    self.values[akey] = dict(other.values())[akey]
-            return Storage(self.key, **self.values)
-        return NotImplemented
+            _skeys: set[str] = set(self.values.keys()) & set(other)
+            _other_dict = other
+
+        _temp_dict = dict(self.values)
+
+        for akey in _skeys:
+            if akey in _temp_dict:
+                del _temp_dict[akey]
+            else:
+                _temp_dict[akey] = _other_dict[akey]
+
+        return Storage(self.key, **_temp_dict)
 
     def __rsub__(self,
                  other: Storage | dict[str, Any]
                 ) -> Storage:
         """
-        Defines how to subtract two objects, same type or no.
-        """
+        See __sub__ docstring for more information.
 
-        skeys: set[Any] = set()
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys = set(self.values.keys()) & set(other.values.keys())
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        del self.values[akey]
-                    else:
-                        self.values[akey] = other.values[akey]
-                return Storage(self.key, **self.values)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(method="__rsub__"))
-            skeys = set(self.values.keys()) & set(other)
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    del self.values[akey]
-                else:
-                    self.values[akey] = other[akey]
-            return Storage(self.key, **self.values)
-        return NotImplemented
+        When this method runs, the Storage object will be treated as if it is on the left-hand
+        side of the `-` operand, as opposed to its actual position on the right-hand side.
+        """
+        return self.__sub__(other)
 
     def __truediv__(self,
                     other: Storage | dict[str, Any] | int
                    ) -> list[Storage] | Storage:
         """
-        Defines how to divide two objects, same type or no.
+        Defines **true division** of Storage objects with other Storage objects, dicts, or ints.
 
-        Note that attempting to divide a Storage instance by another instance
-        or a dictionary (and vice versa) will result in the subtraction of the two.
+        Use the operand `/` for operations.
+
+        This method contains overload. See storage.pyi for each specific overload and return value.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]` (overload 1): The object on the right hand-side of the
+        operand, from which self will be divided by.
+        - `other: int` (overload 2): The object on the right-hand side of the operand, from which
+        self will be divided by.
+
+        ## Outputs
+        - `list[Storage]`: Only returned on overload 2 (`other` is `int`). A list of Storage
+        instances, each an equal split of the original (`self`).
+        - `Storage`: Only returned on overload 1 (`other` is `Storage | dict[str, Any]`). A
+        Storage object returned after subtraction.
+
+        ## Logic
+        Storage.__truediv__ has two overloads. The first represents the following signature:
+
+        ```
+        @overload
+        def __truediv__(self, other: Storage | dict[str, Any]) -> Storage: ...
+        ```
+
+        This represents what happens when you pass a Storage or a dict to the right-hand side
+        of the operand symbol: the values simply get subtracted. Let's look at the other overload:
+
+        ```
+        @overload
+        def __truediv__(self, other: int) -> Storage: ...
+        ```
+
+        This overload represets what happens when you pass an integer to divide by. It's really
+        simple: we split the Storage object into *equal parts*. For example, if we had a Storage
+        object with foo=bar, baz=qax, and rad=wav, then divide it by 3, we would get a **list**
+        containing three seperate Storage objects - where each Storage object contains one
+        of the subkey-value pair of the original Storage object.
+
+        ```
+        >>> from key_multivalue_storage import Storage
+        >>> db1 = Storage("key", foo="bar", baz="qax", a="b", c="d", e="f", g="h")
+        >>> db2 = db1 / 2
+        >>> for storage in db2:
+        ...     print(repr(storage))
+        ...     print(len(storage))
+        ...
+        Storage(top_lv_key=key, key_value_pairs=[foo='bar', baz='qax', a='b'])
+        3
+        Storage(top_lv_key=key, key_value_pairs=[c='d', e='f', g='h'])
+        3
+        ```
         """
-        if isinstance(other, (type(self),dict)):
-            return self - other
+        if not isinstance(other, (Storage, dict, int)):
+            return NotImplemented
+
+        if isinstance(other, (Storage, dict)):
+            return self.__sub__(other)
+
         if isinstance(other, int):
-            split: float | int = len(self.values.keys())/other
             if other > 9:
+                # TODO in v2.0: decimal.DivisionImpossible
                 raise ValueError("Dividing by a number greater than nine is unsupported")
+
+            split: float | int = len(self.values.keys()) / other
 
             if len(self.values.keys()) == split:
                 return [Storage(self.key, **self.values)]
 
-            if split.is_integer():
-                i: int = 0
-                templist: list[dict[str, Any]] = []
-                while i < split * other:
-                    nd: dict[Any, str] = {}
-                    nkey: str = list(self.values.keys())[i]
-                    nd[nkey] = self.values[nkey]
-                    i += 1
-                    while i % split != 0:
-                        nkey = list(self.values.keys())[i]
-                        nd[str(nkey)] = self.values[nkey]
-                        i += 1
-                    templist.append(nd)
-                i = 0
-                returnlist: list[Storage] = []
-                while i < other:
-                    returnlist.append(Storage(self.key, **templist[i]))
-                    i+=1
-                if len(returnlist) == 1:
-                    return returnlist[0]
-                return returnlist
-            raise ValueError(f"Cannot divide by number {other} for a "+
-                             f"list length of {len(self.values.keys())}")
-        return NotImplemented
+            if not split.is_integer():
+                # TODO in v2.0: decimal.DivisionImpossible
+                raise ValueError(f"Cannot divide by number {other} for a "+
+                                f"list length of {len(self.values.keys())}")
+
+            _temp_dict: dict[str, Any] = {}
+            _my_keys = list(self.values.keys())
+            split = int(split)
+            returnlist: list[Storage] = []
+
+            for x in range(other):
+                for y in range(split):
+                    _current_key = _my_keys[(y + (x * split))]
+                    _temp_dict.update({_current_key: self.values[_current_key]})
+                returnlist.append(Storage(self.key, **_temp_dict))
+                _temp_dict = {}
+
+            return returnlist
 
     def __rtruediv__(self,
                      other: Storage | dict[str, Any]
                     ) -> Storage:
         """
-        Defines how to divide two objects, same type or no.
-        Note that attempting to divide a Storage instance by another instance
-        or a dictionary (and vice versa) will result in the subtraction of the two.
+        See __sub__ docstring for more info.
+
+        When this method runs, the Storage object will be treated as if it is on the left-hand
+        side of the `/` operand, as opposed to its actual position on the right-hand side.
         """
-        if isinstance(other, (type(self),dict)):
-            return other - self
+        if isinstance(other, (Storage, dict)):
+            return self.__sub__(other)
+
         return NotImplemented
 
     def __and__(self,
