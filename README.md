@@ -16,7 +16,7 @@ __________
 
 [![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
 [![Package](https://img.shields.io/badge/Stable%20Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Beta Nightly](https://img.shields.io/badge/Nightly%20Package-kms--semver1%2E3%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/semver1.3.x/full-kms-nightly.zip)
+[![Beta Nightly](https://img.shields.io/badge/Nightly%20Package-kms--semver1%2E3%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/semver1.3.x/full-kms-semver-1-3-nightly.zip)
 
 ### Status
 
