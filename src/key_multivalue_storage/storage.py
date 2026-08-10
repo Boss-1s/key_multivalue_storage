@@ -635,9 +635,10 @@ class Storage(metaclass=meta._StorageMeta):
                      other: Storage | dict[str, Any]
                     ) -> Storage:
         """
-        Defines how to divide two objects, same type or no.
-        Note that attempting to divide a Storage instance by another instance
-        or a dictionary (and vice versa) will result in the subtraction of the two.
+        See __sub__ docstring for more info.
+
+        When this method runs, the Storage object will be treated as if it is on the left-hand
+        side of the `/` operand, as opposed to its actual position on the right-hand side.
         """
         if isinstance(other, (Storage, dict)):
             return self.__sub__(other)
