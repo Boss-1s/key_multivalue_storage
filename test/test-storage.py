@@ -157,8 +157,7 @@ assert repr(db) # __repr__
 # __eq__ #
 
 assert db == Storage("key", foo="bar")
-
-# NOTE: other __eq__ with dict is handled by an issue-patch test
+assert db == {"key": {'foo': 'bar'}}
 
 # __lt__ #
 
@@ -358,7 +357,7 @@ del db, db1, db2, db3, db4, db5
 
 db1 = Storage("key", foo="bar", baz='qax') # Reassign or else i will be vewy confused
 db2 = Storage("key", foo="bar")
-db3 = Storage("key", baz="qax")
+db3 = Storage("key", qwert='yuiop')
 
 # __and__ #
 
@@ -388,6 +387,42 @@ except TypeError:
 except Exception as e:
     raise AssertionError(e) from e
 else:
-    assert False, "float and Stoarge cannot be operated on with bitwise operators"
+    assert False, "float and Stoarge cannot be operated on with bitwise operator AND"
+
+# __or__ #
+try:
+    db1 | Storage("whoops_wrong_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Storage objects with different keys should not be operable..."
+
+db4 = db1 | db3
+
+assert isinstance(db4, Storage)
+assert db4.values == {'foo': 'bar',
+                      'baz': 'qax',
+                      'qwert':'yuiop'
+}
+
+# NOTE: #80
+# db4 = db1 | dict(db3.values)
+
+# assert isinstance(db4, Storage)
+# assert db4.values == {'foo': 'bar',
+#                       'baz': 'qax',
+#                       'qwert':'yuiop'
+# }
+
+try:
+    1000.625 | db1 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "float and Stoarge cannot be operated on with bitwise operator OR"
 
 os.remove("test_storage.json")
