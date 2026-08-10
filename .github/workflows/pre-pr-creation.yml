@@ -11,7 +11,9 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - parallel:
+        - uses: actions/checkout@v7
+        - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends jq
       - env:
           GITHUB_TOKEN: ${{github.token}}
           GH_REPO: ${{github.repository}}
