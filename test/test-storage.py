@@ -352,6 +352,42 @@ except Exception as e:
 else:
     assert False, "Storage length of 6 is not divisible by 7 (cannot be float)"
 
-del db1, db2, db3, db4, db5
+del db, db1, db2, db3, db4, db5
+
+## Bitwise Operators ##
+
+db1 = Storage("key", foo="bar", baz='qax') # Reassign or else i will be vewy confused
+db2 = Storage("key", foo="bar")
+db3 = Storage("key", baz="qax")
+
+# __and__ #
+
+try:
+    db1 & Storage("whoops_wrong_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Storage objects with different keys should not be operable..."
+
+db4 = db1 & db2
+
+assert isinstance(db4, Storage)
+assert db4 == db2
+
+db4 = db1 & dict(db2.values)
+
+assert isinstance(db4, Storage)
+assert db4 == db2
+
+try:
+    1000.625 & db1 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "float and Stoarge cannot be operated on with bitwise operators"
 
 os.remove("test_storage.json")
