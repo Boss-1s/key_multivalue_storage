@@ -8,11 +8,10 @@ for semver1.2.x, use the original 'test-general.py' file instead.
 """
 import json
 import os
+from types import NotImplementedType
 from typing import Any
 
 from key_multivalue_storage.storage import Storage
-from key_multivalue_storage.load import Load
-from key_multivalue_storage.edit import Edit
 from key_multivalue_storage.delete import Delete
 
 print("Begin test for semver1.3.x")
@@ -390,6 +389,7 @@ else:
     assert False, "float and Stoarge cannot be operated on with bitwise operator AND"
 
 # __or__ #
+
 try:
     db1 | Storage("whoops_wrong_key", foo='bar')
 except ValueError:
@@ -424,5 +424,131 @@ except Exception as e:
     raise AssertionError(e) from e
 else:
     assert False, "float and Stoarge cannot be operated on with bitwise operator OR"
+
+# __xor__ #
+
+try:
+    db1 ^ Storage("whoops_wrong_key", foo='bar')
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Storage objects with different keys should not be operable..."
+
+db4 = db1 ^ db2
+
+assert isinstance(db4, Storage)
+assert db4.values == {'baz': 'qax'}
+
+db4 = db2 ^ db1
+
+assert isinstance(db4, Storage)
+assert db4.values == {'baz': 'qax'}
+
+db4 = db1 ^ dict(db2.values)
+
+assert isinstance(db4, Storage)
+assert db4.values == {'baz': 'qax'}
+
+try:
+    1000.625 ^ db1 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "float and Stoarge cannot be operated on with bitwise operator XOR"
+
+# __lshift__ #
+
+db3(asdfg='hjkl;')
+
+try:
+    db1 << db2 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "You shouldn't be able to left-shift Storage with Storage..."
+
+db4 = db3 << 1
+
+assert isinstance(db4, Storage)
+assert db4 == Storage("key", asdfg='hjkl;')
+
+db4 = db2 << 1
+
+assert db4 == 0 # INFO: In kms-semver1.x series, Storage cannot be empty
+
+# __rshift__ #
+
+try:
+    db1 >> db2 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "You shouldn't be able to left-shift Storage with Storage..."
+
+db4 = db3 >> 1
+
+assert isinstance(db4, Storage)
+assert db4 == Storage("key", qwert='yuiop')
+
+db4 = db2 >> 1
+
+assert db4 == 0 # INFO: In kms-semver1.x series, Storage cannot be empty
+
+del db1, db2, db3, db4
+
+# __getitem__ #
+# INFO: Since __getitem__ (*bracket notation*) str and self.key has already been used like
+# everywhere, only `int` and `slice` overloads will be tested
+
+db: Storage[str, str, Any] = Storage(
+    "key",
+    a=1, # 0
+    b=2, # 1
+    c=3, # 2
+    d=4, # 3
+    e=5, # 4
+    f=6, # 5
+    g=7, # 6
+    h=8, # 7
+    i=9, # 8
+    j=10 # 9
+)
+
+assert db[0] == 1
+assert db[6] == 7
+
+assert db[8:] == [9, 10]
+assert db[1:3] == [2, 3]
+assert db[:3] == [1, 2, 3]
+
+fake = db[{'pi': 3.1415926535897932384626}] # type: ignore
+assert isinstance(fake, NotImplementedType)
+
+del fake
+# __setitem__ #
+db['i'] = 987654321
+
+db[9] = 123456789
+
+assert db['i'] == 987654321
+assert db[9] == 123456789
+
+# __delitem__ / __len__ / __contains__ #
+
+del db[9]
+del db['i']
+
+assert len(db) == 8
+
+assert 'i' not in db
+assert 'g' in db
 
 os.remove("test_storage.json")
