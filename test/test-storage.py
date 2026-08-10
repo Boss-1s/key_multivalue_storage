@@ -268,30 +268,90 @@ else:
 dict_db_r = {'e': 'f'} - db
 assert dict_db_r == dict_db
 
-# NOTE: until #80 is fixed
-# assert dict(db) == {
-#     "key": {
-#         'a': 'b',
-#         'c': 'd',
-#         'e': 'f',
-#         'foo': 'bar',
-#         'baz': 'qax'
-#     }
-# }, f"the original variable db (current value `{db}`) should NOT have changed..."
+assert dict(db) == {
+    "key": {
+        'a': 'b',
+        'c': 'd',
+        'e': 'f',
+        'foo': 'bar'
+    }
+}, f"the original variable db (current value `{db}`) should NOT have changed..."
 
 del new_db, dict_db, dict_db_r
 
+# __truediv__ / __rtruediv__ #
+
 db = Storage("key", foo="bar", baz='qax') # Reassign or else i will be vewy confused
 
-# __truediv__ #
+db1 = Storage("key", foo="bar", baz="qax", a="b", c="d", e="f", g="h")
+db2 = dict(Storage("key", foo="bar", baz="qax", c="d", g="h", i="j").values)
+db3 = Storage("key", a='b', e='f')
 
-assert db - Storage("key", foo="bar") == db / Storage("key", foo="bar")
+db4 = db1 / db2
 
-# NOTE: Also does not work until #80 is fixed
-# new_db = db / 2
+assert db3 == db4 == (db1 - db2)
+assert db1 == Storage("key", foo="bar", baz="qax", a="b", c="d", e="f", g="h")
 
-# __rtruediv__ #
+db5 = db1 / 2
 
-assert {'foo': 'bar'} - db == {'foo': 'bar'} / db
+assert len(db5) == 2
+
+for storage in db5:
+    assert len(storage.values) == 3
+
+assert db5[0] == Storage("key", foo="bar", baz="qax", a="b")
+assert db5[1] == Storage("key", c="d", e="f", g="h")
+
+assert db1 == Storage("key", foo="bar", baz="qax", a="b", c="d", e="f", g="h")
+
+db5 = db1 / 1
+
+assert len(db5) == 1
+assert db1 == db5[0]
+
+try:
+    db1 / 0.5 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "You shuold not be able to divide a Storage by a float..."
+
+try:
+    2 / db1 #type: ignore
+except TypeError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "You shuold not be able to divide an int by a Storage..."
+
+db2 = dict(Storage("key", foo="bar", baz="qax", c="d", g="h", i="j").values)
+
+db4 = db2 / db1
+
+assert db3 == db4
+assert db1 == Storage("key", foo="bar", baz="qax", a="b", c="d", e="f", g="h")
+
+try:
+    db1 / 10000
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Storage length of 6 is not divisible by 10,000 (cannot be greater than 9)"
+
+try:
+    db1 / 7
+except ValueError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Storage length of 6 is not divisible by 7 (cannot be float)"
+
+del db1, db2, db3, db4, db5
 
 os.remove("test_storage.json")
