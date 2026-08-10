@@ -33,7 +33,8 @@ def main(c: Console) -> None:
             "test/test-exceptions.py",
             "test/test-fix-26-and-27.py",
             "test/test-fix-14.py",
-            "test/test-fix-67.py"
+            "test/test-fix-67.py",
+            "test/test-fix-80.py"
         ]
 
         for test_file in tests:

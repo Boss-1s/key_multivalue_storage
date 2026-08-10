@@ -477,60 +477,65 @@ class Storage(metaclass=meta._StorageMeta):
     def __sub__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage:
-        """Defines how to subtract two objects, same type or no."""
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys: set = set(self.values.keys()) & set(other.values.keys())
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        del self.values[akey]
-                    else:
-                        self.values[akey] = other.values[akey]
-                return Storage(self.key, **self.values)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
+        """
+        Defines subtaction of Storage objects by Storage/dict objects.
+
+        Use the symbol `-` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be subtracted by.
+
+        ## Output
+        - `Storage`: A `Storage` instance containing the result of the subtraction.
+
+        ## Logic
+        How subtraction works here is first, we take the bitwise `AND` for both objects. After
+        that, we cycle through the set produced by the AND operation and inject the keys in that
+        set (and thier matching values) back into a temporary dict, which is then passed to the
+        Storage constructor as **kwargs.
+
+        Any values stored in `other` that are not in `self` will be lost. If you want to keep those
+        values, use `XOR` instead.
+        """
+        if not isinstance(other, (dict, Storage)):
+            return NotImplemented
+
+        _skeys = set()
+        _other_dict = {}
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            _skeys: set[str] = set(self.values.keys()) & set(other.values.keys())
+            _other_dict = other.values
+
+        elif isinstance(other, dict):
             warnings.warn(w.SubtractionFailureWarning(method="__sub__"))
-            skeys: set = set(self.values.keys()) & set(other)
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    del self.values[akey]
-                else:
-                    self.values[akey] = dict(other.values())[akey]
-            return Storage(self.key, **self.values)
-        return NotImplemented
+            _skeys: set[str] = set(self.values.keys()) & set(other)
+            _other_dict = other
+
+        _temp_dict = dict(self.values)
+
+        for akey in _skeys:
+            if akey in _temp_dict:
+                del _temp_dict[akey]
+            else:
+                _temp_dict[akey] = _other_dict[akey]
+
+        return Storage(self.key, **_temp_dict)
 
     def __rsub__(self,
                  other: Storage | dict[str, Any]
                 ) -> Storage:
         """
-        Defines how to subtract two objects, same type or no.
-        """
+        See __sub__ docstring for more information.
 
-        skeys: set[Any] = set()
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys = set(self.values.keys()) & set(other.values.keys())
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        del self.values[akey]
-                    else:
-                        self.values[akey] = other.values[akey]
-                return Storage(self.key, **self.values)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(method="__rsub__"))
-            skeys = set(self.values.keys()) & set(other)
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    del self.values[akey]
-                else:
-                    self.values[akey] = other[akey]
-            return Storage(self.key, **self.values)
-        return NotImplemented
+        When this method runs, the Storage object will be treated as if it is on the left-hand
+        side of the `-` operand, as opposed to its actual position on the right-hand side.
+        """
+        return self.__sub__(other)
 
     def __truediv__(self,
                     other: Storage | dict[str, Any] | int
