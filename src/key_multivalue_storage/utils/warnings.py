@@ -51,8 +51,7 @@ class SubtractionFailureWarning(RuntimeWarning):
     def __init__(self, message: str | None=None, method: str|None=None) -> None:
         if not message:
             message = ("WARNING! You are strongly advised against subtracting/dividing a Storage "+
-                      "instance and a dict/list together, as it may break the Storage "+
-                      "instance that is created.")
+                      "instance by a dict, as it may break the Storage instance that is created.")
         if not method:
             method = "unknown"
 
