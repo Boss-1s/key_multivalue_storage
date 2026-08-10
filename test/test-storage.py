@@ -279,4 +279,19 @@ assert dict_db_r == dict_db
 #     }
 # }, f"the original variable db (current value `{db}`) should NOT have changed..."
 
+del new_db, dict_db, dict_db_r
+
+db = Storage("key", foo="bar", baz='qax') # Reassign or else i will be vewy confused
+
+# __truediv__ #
+
+assert db - Storage("key", foo="bar") == db / Storage("key", foo="bar")
+
+# NOTE: Also does not work until #80 is fixed
+# new_db = db / 2
+
+# __rtruediv__ #
+
+assert {'foo': 'bar'} - db == {'foo': 'bar'} / db
+
 os.remove("test_storage.json")
