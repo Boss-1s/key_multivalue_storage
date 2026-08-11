@@ -1,10 +1,14 @@
 """
-WARNING
-This Type Stub is for solving issues #26 and #27 in the key_multivalue_storage project.
-It is not intended for use in production environments.
+Key to Multivalue Storage - 'storage' Module
 
+This module contains the 'Storage' class. This is the
+main class in which this library is centralized about.
+You can create instances of this class using the format
+`Storage(key, subkey=subvalue...)` and storing it in a
+JSON file with `.store(file_path)`.
 
-Type stubs for key_multivalue_storage.storage
+Made with love by Boss_1s.
+(c)2025, 2026. This work is released under the GPL General License v2.0.
 """
 # pylint: skip-file
 from __future__ import annotations
@@ -65,7 +69,7 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
     def __eq__(self, other: Any) -> bool: ...
     def __lt__(self, other: Any) -> bool: ...
     def __le__(self, other: Any) -> bool: ...
-    
+
     def __add__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal] | list[Any]) -> Storage[TopKey, SubKey, SubVal]: ...
     def __radd__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal]: ...
     def __sub__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal]: ...
