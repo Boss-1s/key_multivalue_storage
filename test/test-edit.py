@@ -13,6 +13,7 @@ from rich.console import Console
 from key_multivalue_storage.load import Load
 from key_multivalue_storage.storage import Storage
 from key_multivalue_storage.edit import Edit
+from key_multivalue_storage.utils.exceptions import KeyNotFoundError
 
 print = Console().print
 
@@ -108,5 +109,31 @@ assert (loaded_db ^ db_name_email) == Storage(
 ), (loaded_db ^ db_name_email)
 
 print("Part 1 complete.")
+print("Part 2: Edit.key()")
+
+Edit.key(
+    json_path,
+    'key',
+    'foobar_bazqax'
+)
+
+try:
+    loaded_db = Load.by_key(json_path, 'key')
+except KeyNotFoundError:
+    pass
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "Looks like Edit didn't rename the top lv key correctly..."
+
+
+loaded_db = Load.by_key(json_path, 'foobar_bazqax')
+
+assert loaded_db is not None
+assert loaded_db.key != db_key.key
+assert loaded_db.values == db_key.values
+
+print("Part 2 complete.")
+print("[green]All tests for edit.Edit passed sucessfully![/]")
 
 os.remove('test-edit.json')
