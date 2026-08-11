@@ -615,6 +615,9 @@ print(f"Format Specifier .keys = {db:.keys}")
 print(f"Format Specifier .values = {db:.values}")
 
 print("Part 5 passed.")
+
+del db
+
 print("[green] test of module `storage` completed sucessfully. [/]")
 
 os.remove("test_storage.json")
