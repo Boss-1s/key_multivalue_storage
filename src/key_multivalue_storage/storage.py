@@ -680,34 +680,51 @@ class Storage(metaclass=meta._StorageMeta):
     def __or__(self,
                other: Storage | dict[str, Any]
               ) -> Storage | int:
-        """Defines using OR (|) for bitwise operations with Storage instances and dictionaries."""
+        """
+        Defines using the OR (|) operator for set unions between Storage objects and other Storage
+        objects or dictionaries.
+
+        Use the symbol `|` for actual operations as opposed to `Storage.__or__`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be unionized with.
+
+        ## Outputs
+        - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
+        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        _set_keys: set[Any] = set()
+        _values: dict[Any, Any] = {}
+
         if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys: set = set(self.values.keys()) | set(other.values.keys())
-                if not skeys:
-                    return 0
-                rtd: dict = {}
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        rtd[akey] = self.values[akey]
-                    if akey in other.values:
-                        rtd[akey] = other.values[akey]
-                return Storage(self.key, **rtd)
-            raise ValueError(self._default_valueerror_msg)
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+
+            _set_keys = set(self.values.keys()) | set(other.values.keys())
+            _values = other.values
+
         if isinstance(other, dict):
-            skeys: set = set(self.values.keys()) | set(other)
-            if not skeys:
-                return 0
-            rtd: dict = {}
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    rtd[akey] = self.values[akey]
-                if akey in other.values():
-                    rtd[akey] = dict(other.values())[akey]
-            return Storage(self.key, **rtd)
-        return NotImplemented
+            _set_keys = set(self.values.keys()) | set(other)
+            _values = other
+
+        if not _set_keys:
+            return 0
+
+        _return_dict: dict = {}
+
+        for _key in _set_keys:
+            if _key in self.values:
+                _return_dict[_key] = self.values[_key]
+            elif _key in _values:
+                _return_dict[_key] = _values[_key]
+
+        return Storage(self.key, **_return_dict)
 
     def __xor__(self,
                 other: Storage | dict[str, Any]
