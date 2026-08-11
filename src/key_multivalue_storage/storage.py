@@ -248,44 +248,6 @@ class Storage(metaclass=meta._StorageMeta):
         }
 
     @classmethod
-    @deprecated("This private method will be removed soon.")
-    def _from_dict(cls,
-                   data_dict: dict[str, dict[str, Any]],
-                   raw: bool=False
-                  ) -> Storage:
-        """
-        Extracts data from a dict into seperate key-multivalue pairs,
-        decoding values in the process.
-        """
-
-        print(f"_from_dict: DEBUG: data_dict={data_dict}")
-        print(f"_from_dict: DEBUG: raw={raw}")
-
-        if not isinstance(data_dict, dict) or len(data_dict) != 1:
-            raise ValueError("Expected a dictionary with a single top-level key.")
-
-        top_lv_key: str = next(iter(data_dict.keys()))
-        og_nested_values: dict[str, Any] = data_dict[top_lv_key]
-
-        print(f"_from_dict: DEBUG: top_lv_key={top_lv_key}")
-        print(f"_from_dict: DEBUG: og_nested_values={og_nested_values}")
-
-        if not isinstance(og_nested_values, dict):
-            raise ValueError("Expected nested values to be a dictionary.")
-
-        if not raw:
-            for prop_key, encoded_value in og_nested_values.items():
-                if isinstance(encoded_value, int):
-                    try:
-                        og_nested_values[prop_key] = cls._decode(string=encoded_value)
-                    except ValueError:
-                        continue
-                else:
-                    continue
-
-        return cls(top_lv_key, **og_nested_values)
-
-    @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """
         Help function for class Storage.
