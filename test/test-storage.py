@@ -18,7 +18,7 @@ from key_multivalue_storage.delete import Delete
 c = Console()
 print = c.print
 
-print("Begin test for semver1.3.x")
+print("Begin test for semver1.3.x Storage")
 
 Delete.all("test_storage.json", warn=False)
 
