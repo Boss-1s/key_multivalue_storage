@@ -11,8 +11,13 @@ import os
 from types import NotImplementedType
 from typing import Any
 
+from rich.console import Console
+
 from key_multivalue_storage.storage import Storage
 from key_multivalue_storage.delete import Delete
+
+c = Console()
+print = c.print
 
 print("Begin test for semver1.3.x")
 
@@ -112,7 +117,7 @@ assert isinstance(store, dict)
 assert store != dict(normal_db)
 
 # DEPRECATED: deprecated test here...
-will_be_deleted_db.store("test_storage.json",
+will_be_deleted_db.store("test_storage",
                          instant_delete=will_be_deleted_db.auto_delete_self,
                          indent=4, encode=True)
 
@@ -533,6 +538,7 @@ fake = db[{'pi': 3.1415926535897932384626}] # type: ignore
 assert isinstance(fake, NotImplementedType)
 
 del fake
+
 # __setitem__ #
 db['i'] = 987654321
 
@@ -565,6 +571,51 @@ del iter_list[0]
 for i in range(7):
     assert db[list(iter_list[i].keys())[0]] == db[i] #type: ignore
 
+del iter_list
 
+# __getattr__
+try:
+    db.encod # type: ignore
+except AttributeError:
+    c.print_exception()
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "encod is not an attribute of Storage, yet it passes..."
+
+
+# __enter__ / __exit__ #
+
+db = Storage("key", foo="bar", baz="qax")
+
+with Storage("key", foo="bar", baz="qax") as db_values:
+    assert db.values == db_values
+
+try:
+    with Storage("key", foo="bar", baz="qax") as db_values:
+        assert db.values == db_value # type: ignore # NOSONAR
+except NameError:
+    pass
+except AssertionError:
+    assert False
+except Exception as e:
+    raise AssertionError(e) from e
+else:
+    assert False, "no way python thinks that nonexistent variable exists..."
+
+del db_values
+
+# __format__
+
+print(f"Format Specifier .dictf = {db:.dictf}")
+print(f"Format Specifier .dictt = {db:.dictt}")
+print(f"Format Specifier .tuplef = {db:.tuplef}") # DEPRECATED
+print(f"Format Specifier .tuplet = {db:.tuplet}") # DEPRECATED
+print(f"Format Specifier .key = {db:.key}")
+print(f"Format Specifier .keys = {db:.keys}")
+print(f"Format Specifier .values = {db:.values}")
+
+print("Part 5 passed.")
+print("[green] test of module `storage` completed sucessfully. [/]")
 
 os.remove("test_storage.json")
