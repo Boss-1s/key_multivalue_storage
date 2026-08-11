@@ -411,14 +411,13 @@ assert db4.values == {'foo': 'bar',
                       'qwert':'yuiop'
 }
 
-# NOTE: #80
-# db4 = db1 | dict(db3.values)
+db4 = db1 | dict(db3.values)
 
-# assert isinstance(db4, Storage)
-# assert db4.values == {'foo': 'bar',
-#                       'baz': 'qax',
-#                       'qwert':'yuiop'
-# }
+assert isinstance(db4, Storage)
+assert db4.values == {'foo': 'bar',
+                      'baz': 'qax',
+                      'qwert':'yuiop'
+}
 
 try:
     1000.625 | db1 #type: ignore
@@ -509,8 +508,8 @@ assert db4 == 0 # INFO: In kms-semver1.x series, Storage cannot be empty
 del db1, db2, db3, db4
 
 # __getitem__ #
-# INFO: Since __getitem__ (*bracket notation*) str and self.key has already been used like
-# everywhere, only `int` and `slice` overloads will be tested
+# INFO: Since __getitem__ (*bracket notation*) str and self.key overloads have already been used
+# like almost everywhere, only `int` and `slice` overloads will be tested
 
 db: Storage[str, str, Any] = Storage(
     "key",
@@ -618,6 +617,6 @@ print("Part 5 passed.")
 
 del db
 
-print("[green] test of module `storage` completed sucessfully. [/]")
+print("[green]Tests of `storage.Storage` completed sucessfully![/]")
 
 os.remove("test_storage.json")
