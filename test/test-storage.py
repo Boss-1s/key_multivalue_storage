@@ -169,7 +169,7 @@ except Exception as e:
 else:
     assert False, "Why can Storage be compared when top level keys are different...?"
 
-assert not db < Storage("key", foo='bar')
+assert not db < Storage("key", foo='bar') # pylint: disable=unnecessary-negation
 assert db < Storage("key", foo="bar", baz="qax")
 
 # __le__ #
@@ -550,5 +550,21 @@ assert len(db) == 8
 
 assert 'i' not in db
 assert 'g' in db
+
+# __iter__ #
+
+iter_list: list[str|dict[str, int]] = []
+
+for item in db:
+    iter_list.append(item)
+
+assert iter_list[0] == db.key
+
+del iter_list[0]
+
+for i in range(7):
+    assert db[list(iter_list[i].keys())[0]] == db[i] #type: ignore
+
+
 
 os.remove("test_storage.json")
