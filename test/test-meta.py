@@ -1,5 +1,5 @@
 """
-test-meta.py - a test file for KMS designed specifaclly to test the new metaclass 
+test-meta.py - a test file for KMS designed specifaclly to test the new metaclass
 and help() method implementations.
 
 Compatible versions for this test file: >=kms-v1.3.0/2026.07.30
@@ -8,6 +8,12 @@ Compatible versions for this test file: >=kms-v1.3.0/2026.07.30
 import sys
 from rich.console import Console
 import key_multivalue_storage as kms
+from key_multivalue_storage import (
+    storage,
+    load,
+    edit,
+    delete
+)
 from key_multivalue_storage.storage import Storage
 from key_multivalue_storage.load import Load
 from key_multivalue_storage.edit import Edit
@@ -44,15 +50,23 @@ print("Part 2: help() method for each class")
 
 try:
     kms.help() # Module Help
-    kms.kms.help() # storage Module Help
-    Storage.help() # Storage *class* Help
+
+    storage.help() # storage Module Help
+    Storage.help()
     Storage.help(Storage.store)
+
+    load.help()
     Storage.Load.help()
     Storage.Load.help(Storage.Load.keys)
+
+    edit.help()
     Storage.Edit.help()
     Storage.Edit.help(Storage.Edit.propkey)
+
+    delete.help()
     Storage.Delete.help()
     Storage.Delete.help(Storage.Delete.all)
+
 except Exception as e:
     console = Console()
     console.print_exception(show_locals=True)
@@ -64,7 +78,7 @@ print("-"*20)
 print("Part 3: Ensure _KmsMeta can fail correctly")
 
 try:
-    class BadMetaClass(metaclass=_KmsMeta): # pylint: disable=unused-variable
+    class BadMetaClass(metaclass=_KmsMeta): # pylint: disable=unused-variable, too-few-public-methods, line-too-long
         pass
 except TypeError as e:
     print(f"Expected TypeError caught: {e}")
