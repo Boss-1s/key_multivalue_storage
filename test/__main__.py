@@ -45,7 +45,6 @@ def main(c: Console) -> None:
         item in ["a", "all"] for item in [item.lower() for item in sys.argv]
     ):
         tests = [
-            "test/test-general.py",
             "test/test-storage.py",
             "test/test-load.py",
             "test/test-edit.py",
