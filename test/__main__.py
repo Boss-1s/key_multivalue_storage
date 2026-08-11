@@ -55,7 +55,7 @@ def main(c: Console) -> None:
             "test/test-fix-14.py",
             "test/test-fix-67.py",
             "test/test-fix-76.py",
-            "test/test-fix-80.py"
+            "test/test-fix-80.py",
             "test/test-fix-84.py"
         ]
 
