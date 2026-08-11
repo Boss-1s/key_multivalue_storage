@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |          
           # 1. Fetch closing issues strictly using the API target
-          CLOSING_ISSUES=$(gh pr view "$PR_NUMBER" --repo "$GH_REPO" --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null)
+          CLOSING_ISSUES=$(gh pr view "$PR_NUMBER" --repo "$GH_REPO" --json closingIssuesReferences --q '.closingIssuesReferences[].number' 2>/dev/null)
           
           if [[ -z "$CLOSING_ISSUES" ]]; then 
               gh pr close "$PR_NUMBER" --repo "$GH_REPO" --comment "**WARNING** This PR was auto-closed because it does not reference any issues. Please reference an issue in the PR description and re-open the PR."
