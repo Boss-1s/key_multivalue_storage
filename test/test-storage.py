@@ -1,8 +1,7 @@
 """
-test-general-v1.3.py - A better general test file for kms, designed
-specifically for the new `semver1.3.x` update series in mind.
+test-storage.py - A targeted test file for storage.Storage.
 
-Compatible versions for this test file: >=kms-v1.3.0/2026.07.30
+Compatible versions for this test file: >=kms-v1.3.1/2026.08.12
 
 for semver1.2.x, use the original 'test-general.py' file instead.
 """
