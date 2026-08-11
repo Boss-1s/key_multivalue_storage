@@ -94,6 +94,7 @@ class Edit(metaclass=meta._EditMeta):
     @w._deprecated_arg("new",
                       "The 'new' argument is no longer used. Please use 'noexist_ok' instead."
     )
+    # TODO in v2.0: rename to subkey()
     def propkey(cls,
                 file_path: str,
                 top_lv_key: Any,
@@ -120,10 +121,6 @@ class Edit(metaclass=meta._EditMeta):
         """
 
         from . import Storage
-
-        warnings.warn("WARNING! The 'new' argument is no longer used. If you still use new="+
-                        "True or new=False, please use noexist_ok=True or noexist_ok=False. "+
-                        "This argument will be removed in v2.0.", DeprecationWarning)
 
         if new:
             noexist_ok = new
