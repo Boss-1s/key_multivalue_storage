@@ -19,9 +19,6 @@ c = Console()
 print = c.print
 
 print("Begin test for semver1.3.x Storage")
-
-Delete.all("test_storage.json", warn=False)
-
 print("Part 1: Storage instantiation and type hinting")
 
 normal_db = Storage("top_lv_key", foo="bar", baz="qux")

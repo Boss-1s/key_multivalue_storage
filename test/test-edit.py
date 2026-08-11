@@ -13,11 +13,11 @@ from rich.console import Console
 from key_multivalue_storage.load import Load
 from key_multivalue_storage.storage import Storage
 from key_multivalue_storage.edit import Edit
-from key_multivalue_storage.utils.exceptions import KeyNotFoundError
+from key_multivalue_storage import KeyNotFoundError
 
 print = Console().print
 
-print("Begin test for edit.Edit")
+print("Begin test for semver1.3.x Edit")
 
 json_path = 'test-edit.json'
 
