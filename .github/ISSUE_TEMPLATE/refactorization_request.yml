@@ -1,5 +1,5 @@
 name: Refactorization Request
-title: "feat: "
+title: "refactor: "
 description: Request a feature and/or enhancement.
 labels: ["refactor", "Needs Triage"]
 body:
