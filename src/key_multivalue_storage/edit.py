@@ -100,7 +100,7 @@ class Edit(metaclass=meta._EditMeta):
                 top_lv_key: Any,
                 oldpropkey: str,
                 newpropkey: str,
-                new: bool=True, #deprecated
+                new: bool=True, # DEPRECATED
                 noexist_ok: bool=True) -> None:
         """
         Edits the name of a subkey within a key within a JSON file.
@@ -129,8 +129,7 @@ class Edit(metaclass=meta._EditMeta):
             warnings.warn("It is recommended that the 'top_lv_key' value be passed as a "+
                           "string.",
                           w.CastWarning)
-
-        top_lv_key=str(top_lv_key)
+            top_lv_key=str(top_lv_key)
 
         loaded_data: Storage | None = Storage.Load.by_key(
             file_path,
@@ -141,23 +140,24 @@ class Edit(metaclass=meta._EditMeta):
             return
 
         if oldpropkey in loaded_data:
-            for propkey, propval in loaded_data.values:
-                if propkey == oldpropkey:
-                    loaded_data[newpropkey] = propval
+            propval = loaded_data[oldpropkey]
+            del loaded_data[oldpropkey]
+            loaded_data[newpropkey] = propval
         elif noexist_ok:
             warnings.warn(f"Subkey {oldpropkey} was not found. "+
                             "Creating a new subkey under the name"+
                             f" {newpropkey} with value '' (override this with"+
                             " noexist_ok=False, will raise exception)"
                             )
-            for propkey, propval in loaded_data.values:
-                loaded_data[propkey] = propval
-            loaded_data[newpropkey] = ''
+            loaded_data.values.update({
+                newpropkey: ''
+            })
         else:
             print("Edit.propkey: ERROR: Encountered _KeyNotFoundError")
             raise exceptions.KeyNotFoundError(file_path, oldpropkey)
 
-        Storage(top_lv_key, **loaded_data.values).store(file_path)
+        loaded_data.store(file_path)
+        del loaded_data
         print("Edit.propkey: INFO: Sucessfully ",
                 f"renamed {oldpropkey} to {newpropkey}.")
 

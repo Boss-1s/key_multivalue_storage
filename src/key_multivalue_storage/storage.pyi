@@ -1,10 +1,14 @@
 """
-WARNING
-This Type Stub is for solving issues #26 and #27 in the key_multivalue_storage project.
-It is not intended for use in production environments.
+Key to Multivalue Storage - 'storage' Module
 
+This module contains the 'Storage' class. This is the
+main class in which this library is centralized about.
+You can create instances of this class using the format
+`Storage(key, subkey=subvalue...)` and storing it in a
+JSON file with `.store(file_path)`.
 
-Type stubs for key_multivalue_storage.storage
+Made with love by Boss_1s.
+(c)2025, 2026. This work is released under the GPL General License v2.0.
 """
 # pylint: skip-file
 from __future__ import annotations
@@ -16,6 +20,8 @@ from types import TracebackType
 from typing import Any, Callable, Generator, overload
 from typing_extensions import deprecated
 
+from .utils import metadata as meta
+
 # Top-level functions
 def help() -> None: ...
 def print(*args: Any, **kwargs: Any) -> None: ...
@@ -23,7 +29,7 @@ def print(*args: Any, **kwargs: Any) -> None: ...
 @total_ordering
 # 🎯 Inheriting from dict[Any, Any] provides complete structural freedom!
 # This clears your assignment errors while welcoming your custom overloads naturally.
-class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any]):
+class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass=meta._StorageMeta):
     # Global attributes
     indent: int
     encode: bool
@@ -73,6 +79,8 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any]):
     @overload
     def __truediv__(self, other: int) -> list[Storage[TopKey, SubKey, SubVal]]:...
     def __rtruediv__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal]: ...
+
+    #FIXME: needs overloads
     def __and__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal] | int: ...
     def __or__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal] | int: ... # pyright: ignore[reportIncompatibleMethodOverride]
     def __xor__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal] | int: ...

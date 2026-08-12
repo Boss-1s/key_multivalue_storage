@@ -76,7 +76,14 @@ class CastWarning(SyntaxWarning):
 def _deprecated_arg[**P, R](arg_name: str,
                             message: str | None = None
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:
-    """Decorator to issue a warning when a specific method argument is used."""
+    """
+    Custom decorator to issue a warning when a specific deprecated method argument is used.
+    
+    ## Arguments
+    - `arg_name: str`: The name of the argument that is deprecated.
+    - `message: str | None`: Optional custom warning message. If not provided, a default
+    message will be used.
+    """
     def decorator(func: Callable[P, R]) -> Callable[P, R]:
         @functools.wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:

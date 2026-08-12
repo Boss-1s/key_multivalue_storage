@@ -458,6 +458,7 @@ class Storage(metaclass=meta._StorageMeta):
                 return Storage(self.key, **_temp_dict)
             raise ValueError(self._default_valueerror_msg)
         if isinstance(other, dict):
+            # FIXME: warn when nested dict is passed
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
             _temp_dict = dict(self.values)
             _temp_dict.update(other)

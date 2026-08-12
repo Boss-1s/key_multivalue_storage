@@ -289,8 +289,8 @@ class Load(metaclass=meta._LoadMeta):
 
         key=str(key)
 
-        print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
         if key in loaded_data:
+            print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
             try:
                 subsection: Storage = Storage._from_dict({key: loaded_data[key]}, raw)
             except ValueError as e:
