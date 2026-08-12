@@ -2,7 +2,7 @@ name: Release
 description: Workflow for official releases to PyPi, run when a release is created on GitHub.
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -20,17 +20,17 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          
+
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      
+
       - name: Setup SSH and signing
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: bash .github/workflows/src/ssh.sh
-        
+
       - name: Set up Python
         uses: actions/setup-python@v7
 
@@ -55,7 +55,7 @@ jobs:
         run: python -m build # Generates the dist/ files
 
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
 
       - name: Generate Github Attestations
         # GH's attestations are different from PyPI's.
@@ -77,12 +77,12 @@ jobs:
           BRANCH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
 
           export BRANCH
-          
+
           echo "$REF is sourced from branch: $BRANCH"
-          
-          # 2. Realign HEAD onto the tracking stream 
+
+          # 2. Realign HEAD onto the tracking stream
           git checkout -B "$BRANCH" "origin/$BRANCH"
-          
+
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
