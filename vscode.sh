@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pip install uv
-uv venv -y && uv sync --dev
+uv venv && uv sync --dev
 source .venv/bin/activate
 
 export SSH_PRIVATE_KEY="" # Enter your private key here
