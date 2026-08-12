@@ -42,6 +42,7 @@ jobs:
 
         - name: Find Latest Tag
           id: ltag
+          shell: bash
           run: |
             # AI-Generated
             git fetch --tags --prune
