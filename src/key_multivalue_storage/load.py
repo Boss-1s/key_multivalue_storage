@@ -14,7 +14,7 @@ import sys
 import json
 import warnings
 import builtins
-# TODO in v1.3.2: import logger
+# TODO in v1.4: import logger
 from typing import Any, TYPE_CHECKING, Callable
 
 from rich.console import Console

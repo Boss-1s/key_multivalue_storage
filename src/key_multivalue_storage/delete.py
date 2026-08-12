@@ -16,7 +16,7 @@ import json
 import warnings
 import builtins
 from typing import Any, Callable
-# TODO in v1.3.2: import logger
+# TODO in v1.4: import logger
 
 from rich.console import Console
 from rich.markdown import Markdown
