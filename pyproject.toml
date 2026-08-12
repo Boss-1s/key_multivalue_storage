@@ -43,7 +43,7 @@ dependencies = [
 dev = [
     "pylint==4.0.7",
     "pylint-per-file-ignores==3.2.1",
-    "griffe==2.1.0", 
+    "griffe==2.1.0",
 ]
 
 [project.urls]
@@ -297,7 +297,7 @@ per-file-ignores = [
     "**/__init__.py:unused-import,unused-variable,protected-access",
 
     "src/**:protected-access",
-    
+
     "**/tests/*:duplicate-code,protected-access,line-too-long,missing-module-docstring",
 
     "src/*/utils/*:invalid-name,missing-function-docstring",
@@ -326,7 +326,7 @@ disable = [
     "broad-exception-caught",
     "unspecified-encoding",
     "multiple-statements",
-    
+
 ]
 
 # Enable the message, report, category or checker with the given id(s). You can
@@ -529,6 +529,9 @@ test = [
 ]
 
 [tool.coverage.run]
+relative_files = true
+
 omit = [
-    "test/*",
+    "test/**",
+    "**/test-*.py"
 ]

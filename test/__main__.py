@@ -24,7 +24,9 @@ def _run_tests(c: Console, tests: list[str]) -> None:
     for test_file in tests:
         try:
             c.print(f"[blue]Running: {test_file}[/]")
-            exec(open(test_file).read(), globals())
+            with open(test_file, "r", encoding='utf-8') as f:
+                compiled_code = compile(f.read(), os.path.abspath(test_file), "exec")
+                exec(compiled_code, globals())
         except Exception as e:
             print(f"❌ [red b]Error in {test_file}: {e}[/]")
             c.print_exception(show_locals=True)
