@@ -110,8 +110,8 @@ class Delete(metaclass=meta._DeleteMeta):
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data: dict[str, dict[str, Any]] = json.load(f)
         except FileNotFoundError:
-            print("Delete.by_propkey: ERROR: Failed to load"+
-                    f"file '{file_path}': does not exist.")
+            print(f"Delete.by_propkey: ERROR: Failed to load file '{file_path}': "+
+                  "does not exist.")
             return
         except json.JSONDecodeError:
             print(f"Delete.by_propkey: ERROR: Failed to load file '{file_path}': "+
@@ -120,36 +120,24 @@ class Delete(metaclass=meta._DeleteMeta):
 
         if not isinstance(top_lv_key, str):
             warnings.warn("It is recommended that the 'top_lv_key' value be passed as a string."
-                            ,w.CastWarning)
+                          ,w.CastWarning)
+            top_lv_key=str(top_lv_key)
 
-        top_lv_key=str(top_lv_key)
-
-        if top_lv_key in loaded_data:
-            try:
-                subsection = Storage._from_dict({top_lv_key: loaded_data[top_lv_key]})
-            except ValueError as e:
-                print("Delete.by_propkey: ERROR: Error reconstructing "+
-                        f"object for key '{top_lv_key}': {e}")
-                return
-        else:
+        if top_lv_key not in loaded_data:
             print("Delete.by_propkey: ERROR: Encountered _KeyNotFoundError")
             raise exceptions.KeyNotFoundError(file_path, top_lv_key)
 
-        items: dict[str, Any] = {}
+        try:
+            del loaded_data[top_lv_key][property_key]
+        except KeyError as e:
+            raise exceptions.KeyNotFoundError(file_path, e)
 
-        for propkey, propval in subsection.values.items():
-            if propkey != property_key:
-                items[propkey] = propval
-
-        print(f"Delete.by_propkey: DEBUG: items={items}, type={type(items)}")
-        print(f"Delete.by_propkey: DEBUG: subsection={subsection}")
-        print(f"Delete.by_propkey: DEBUG: top_lv_key={top_lv_key}, type=({type(top_lv_key)})")
-
-        to_dump: dict[str, dict[str, Any]] = {top_lv_key: items}
-
-        print(f"Delete.by_propkey: DEBUG: to_dump={to_dump}")
-
-        Storage(top_lv_key, **to_dump).store(file_path)
+        try:
+            with open(file_path, "w", encoding='utf-8') as f:
+                json.dump(loaded_data, f)
+        except IOError as e:
+            print(f"Delete.by_propkey: ERROR: Error writing to file '{file_path}'",
+                    f"after deletion: {e}")
         print("Delete.by_propkey: INFO: Sucessfully deleted subkey",
                 f"{property_key} and its value.")
 
@@ -170,7 +158,7 @@ class Delete(metaclass=meta._DeleteMeta):
         ## Returns
         `None`
         """
-        # TODO v1.5: return_as_obj
+        # TODO v1.5: return_as_obj / return_from_obj
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -185,26 +173,26 @@ class Delete(metaclass=meta._DeleteMeta):
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value be passed as a string.",
                             w.CastWarning)
-
-        key = str(key)
+            key = str(key)
 
         print(f"Delete.by_key: DEBUG: loaded_data.keys()={loaded_data.keys()}")
         print(f"Delete.by_key: DEBUG: loaded_data.values()={loaded_data.values()}")
         print(f"Delete.by_key: DEBUG: loaded_data={loaded_data}")
 
-        if key in loaded_data:
-            del loaded_data[key]
-            try:
-                with open(file_path, "w", encoding="utf-8") as f:
-                    json.dump(loaded_data, f)
-                    print(f"Delete.by_key: INFO: Successfully deleted key '{key}' from",
-                            f"'{file_path}'.")
-            except IOError as e:
-                print(f"Delete.by_key: ERROR: Error writing to file '{file_path}'",
-                        f"after deletion: {e}")
-        else:
+        if key not in loaded_data:
             print("Delete.by_key: ERROR: Encountered _KeyNotFoundError")
             raise exceptions.KeyNotFoundError(file_path, key)
+
+        del loaded_data[key]
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(loaded_data, f)
+                print(f"Delete.by_key: INFO: Successfully deleted key '{key}' from",
+                        f"'{file_path}'.")
+        except IOError as e:
+            print(f"Delete.by_key: ERROR: Error writing to file '{file_path}'",
+                    f"after deletion: {e}")
+
 
     @staticmethod
     def all(file_path: str,
@@ -236,6 +224,17 @@ class Delete(metaclass=meta._DeleteMeta):
                 method="Delete.all"
                 )
             )
+            return
+
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                json.load(f)
+        except FileNotFoundError:
+            print(f"Delete.all: ERROR: Failed to load file '{file_path}': does not exist.")
+            return
+        except json.JSONDecodeError:
+            print(f"Delete.all: ERROR: Failed to load file '{file_path}': contains",
+                  "invalid JSON.")
             return
 
         with open(file_path, "w", encoding="utf-8") as f:
