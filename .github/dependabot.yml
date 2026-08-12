@@ -27,7 +27,7 @@ updates:
     open-pull-requests-limit: 0
 
   - package-ecosystem: "uv" # See documentation for possible values
-    directory: "/test" # Location of package manifests
+    directory: "./test/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "semver1.3.x"
@@ -49,3 +49,25 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "docs"
+
+  # Legacy
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    target-branch: "semver1.2.x"
+    open-pull-requests-limit: 0
+    
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    target-branch: "semver1.2.x"
+    open-pull-requests-limit: 0
+    
+  - package-ecosystem: "uv" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    target-branch: "semver1.2.x"
+    open-pull-requests-limit: 0
