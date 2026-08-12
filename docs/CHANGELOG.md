@@ -4,6 +4,7 @@
 
 <!--TOC-->
 
+- [📦 v1.3.1.20260812 — *kms-semver1.3.1/2026.08.12*](#-v13120260812--kms-semver13120260812)
 - [📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*](#-v13020260731--kms-v13020260731)
 - [📦 v1.3.0.20260730.1 — *kms-v1.3.0/2026.07.30a*](#-v130202607301--kms-v13020260730a)
 - [📦 v1.3.0.20260730 — *kms-v1.3.0/2026.07.30*](#-v13020260730--kms-v13020260730)
@@ -42,6 +43,118 @@
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 
 <!--TOC-->
+
+## 📦 v1.3.1.20260812 — *kms-semver1.3.1/2026.08.12*
+
+⚙ **Target Node Commit:** `8f98cb36`
+
+📝 **Release Type:** Major Patch
+
+### 📝 Release Notes
+
+#### Table of Contents
+
+- [💡 Features](#-features)
+- [🪲 Bug Fixes](#-bug-fixes)
+- [🤖 Dependency Updates](#-dependency-updates)
+- [⏰ Other Important Changes](#-other-important-changes)
+- [🪫 Graceful Deprecation cycle 1.3.1](#-graceful-deprecation-cycle-131)
+- [🗒 Notes](#-notes)
+- [📢 Plans for next update](#-plans-for-next-update)
+
+#### 💡 Features
+
+This release has a lot of quality-of-life and automation work, plus some solid module improvements:
+
+- `feat(automations): auto-change version for sonar-project.properties` (3f731eb)
+- `feat: implement storage type stubs for strict dictionary type-hinting` (855f8ae)
+- `feat: create pull request template` (#53, a4b0256)
+- SonarQube Cloud - analysis + quality gate setup (`d6fc50c`, `7edc65f`, `1fa383d`)
+- `feat: command reset_env in testing` (c0d3a6c)
+- `feat(automations): sync docs every hour` (ec80247)
+- `feat: have TODO tree mark comments with DEPRECATED` (3d74e16)
+- Testing revamp (`feat: merge all tests together`, `feat: new test dependency coverage`) (89d9977, c7668a1, 07f8a73)
+
+#### 🪲 Bug Fixes
+
+Big focus here was correctness + CI stability:
+
+- Fixed storage operator behavior and refactors:
+  - `Storage.__or__` fix/refactor (#84, #86) (f42b2eb)
+  - `Storage.__sub__` and `Storage.__truediv__` fixes/refactors (#82, #79, #76) (72645a6, 7f7d501, 3eeccb6)
+  - `refactor(delete.py): refactor and fix` (efa2726)
+- `fix(help): make Console robust to legacy Windows encodings` (#62, e6243d8)
+- Multiple CI/automation fixes (permissions, shell handling, SARIF/reporting, fetch behavior, registry/login flow)
+- Coverage/test reliability fixes (`fix: better test coverage` #59, `fix(tests): inaccurate coverage in CI/CD`)
+
+#### 🤖 Dependency Updates
+
+Dependency maintenance was heavy in this cycle:
+
+- Switched dependency management direction from Dependabot to Renovate (`da06dba`, `141e5c0`, `705ce2f`)
+
+> [!important]
+> Dependabot still handles dependency updates on the following branches: `docs`. It also still handles global vulnerability warnings.
+
+- Action updates:
+  - `github/codeql-action` → v4.37.4 / v4.37.5 / v4.37.6 (#50, #54, #60)
+  - `actions/attest` → v4.2.1 / v4.2.2 (#42, #63)
+  - `astral-sh/setup-uv` → v9 (#48)
+  - `docker/login-action` → v4 (#77)
+- Package updates:
+  - `gitpython` → v3.1.58 / v3.1.59 (#61, #81)
+  - `pylint` → v4.0.7 (#78)
+  - `pre-commit` → v4.6.2 (#85)
+  - `packaging` → v26.3 (#64)
+  - `coverage` → v7.15.4 (#70)
+  - Python Docker tag → v3.14.6 / v3.14.7 (#66)
+  - `setuptools` updates in test scope (#72)
+- Environment updates:
+  - CPython → v3.14.6 / v3.14.7 (#66)
+
+#### ⏰ Other Important Changes
+
+- Lots of CI/workflow hardening (permissions, check runs, branch/repo path handling, action sequencing)
+- Documentation - automation and sync improvements
+- Devcontainer and VSCode Tunnel introduction, cleanup, and stabilization
+- SonarQube Cloud introduction and stabilization
+- Brand new release template
+- Beginning to use Copilot Agent for [**certain tasks that do not break rules in the contribution guidelines.**](https://boss-1s.github.io/key_multivalue_storage/contribution-guidelines)
+
+#### 🪫 Graceful Deprecation cycle 1.3.1
+
+- `chore(storage.Storage): deprecate instance deletion attr and args` (9024b3e)
+
+#### 🗒 Notes
+
+Main vibe of this release: **stability + cleanup + automation maturing**. 
+
+This update, besides bug fixes, also focused on **formalizing and standardizing the development environment for kms.**
+
+**This release was intended for August 10th, 2026**, but **was delayed two days due to GitHub Actions being down for over 7 hours on August 8th** and **over 12 hours overall between August 3rd and 7th.**
+
+##### 🏅By The Numbers
+
+There were **154 commits since `v1.3.0.20260731`**.
+**10** issues were closed.
+**6** issues were closed by a matching pull request.
+**10** pull requests were merged by various authors.
+**@renovate[bot]** made their first contribution.
+
+#### 📢 Plans for next update
+
+**Regarding `kms-semver1.3.2`,** sadly, because school is starting up, I was forced to [rewrite the whole roadmap](https://boss-1s.github.io/key_multivalue_storage/wiki/Roadmap#full-roadmap) and push `kms-semver1.3.2` for two extra weeks, giving us **8 weeks until the next major patch.** ([You can see the new release cycles here.](https://boss-1s.github.io/key_multivalue_storage/Development#release-cycles)) The next patch will mostly be **refactors** (unlike this one which was mostly **bug fixes**) to the modules, especially those `Storage` dunder methods...those ones are the real deal. The final **release date** of `kms-semver1.3.2` is set to be on ***September 30th, 2026.*** Until then, there...ahem...
+
+> [!caution]
+> There **will be dragons.....** of *artificial intelligence....*
+
+Sorry. Anyways....
+
+**Regarding `kms-semver1.4.0`,** after the roadmap rewrite, the new `kms-semver1.4.0` *stable* release date is **_2027/01/03_**, and the **first alpha will come out on **2026/10/12**.  Currently planned features are listed in the [roadmap](https://boss-1s.github.io/key_multivalue_storage/Roadmap#kms-semver140) and the [milestone](https://github.com/Boss-1s/key_multivalue_storage/milestone/7). Not much more to say about this update, more info will come out as alpha0 lurks closer.
+
+**📑 Full Changelog**: [`v1.3.0.20260731` vs `v1.3.1.20260812`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.0.20260731...v1.3.1.20260812)
+
+---
 
 ## 📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*
 
