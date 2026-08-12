@@ -4,7 +4,7 @@
 
 <!--TOC-->
 
-- [📦 v1.3.1.20260812 — *kms-semver1.3.1/2026.08.12*](#-v13120260812--kms-semver13120260812)
+- [📦 v1.3.1.20260812 — *kms-v1.3.1/2026.08.12*](#-v13120260812--kms-v13120260812)
 - [📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*](#-v13020260731--kms-v13020260731)
 - [📦 v1.3.0.20260730.1 — *kms-v1.3.0/2026.07.30a*](#-v130202607301--kms-v13020260730a)
 - [📦 v1.3.0.20260730 — *kms-v1.3.0/2026.07.30*](#-v13020260730--kms-v13020260730)
@@ -44,7 +44,7 @@
 
 <!--TOC-->
 
-## 📦 v1.3.1.20260812 — *kms-semver1.3.1/2026.08.12*
+## 📦 v1.3.1.20260812 — *kms-v1.3.1/2026.08.12*
 
 ⚙ **Target Node Commit:** `8f98cb36`
 
@@ -123,7 +123,8 @@ Dependency maintenance was heavy in this cycle:
 
 #### 🪫 Graceful Deprecation cycle 1.3.1
 
-- `chore(storage.Storage): deprecate instance deletion attr and args` (9024b3e)
+- **Deprecated format specifiers `.tuplef` and `.tuplet`.**
+- Attribute `auto_delete_self` and argument `instant_delete` of `Storage.store()` has been deprecated.
 
 #### 🗒 Notes
 
@@ -135,11 +136,11 @@ This update, besides bug fixes, also focused on **formalizing and standardizing 
 
 ##### 🏅By The Numbers
 
-There were **154 commits since `v1.3.0.20260731`**.
-**10** issues were closed.
-**6** issues were closed by a matching pull request.
-**10** pull requests were merged by various authors.
-**@renovate[bot]** made their first contribution.
+- There were **154 commits since `v1.3.0.20260731`**.
+- **10** issues were closed.
+- **6** issues were closed by a matching pull request.
+- **10** pull requests were merged by various authors.
+- **@renovate[bot]** made their first contribution.
 
 #### 📢 Plans for next update
 
