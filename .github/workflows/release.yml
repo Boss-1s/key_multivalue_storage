@@ -72,15 +72,22 @@ jobs:
           REPO: ${{ github.repository }}
           CUSTOM_COMMIT_MSG: "version update"
         run: |
-          # AI-Generated (Google AI Mode, Gemini 2.5)
-          # 1. Safely evaluate environment variables without syntax parsing flaws
-          BRANCH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
+          TARGET_COMMITISH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
+
+          BRANCH="$TARGET_COMMITISH"
+          if [[ "$TARGET_COMMITISH" =~ ^[0-9a-f]{40}$ ]]; then
+            BRANCH=$(git for-each-ref --format='%(refname:short)' refs/remotes/origin --contains "$TARGET_COMMITISH" | grep -v '^origin/HEAD$' | sed 's|^origin/||' | head -n 1)
+          fi
+
+          if [ -z "$BRANCH" ]; then
+            echo "Could not resolve source branch for release ref: $REF"
+            exit 1
+          fi
 
           export BRANCH
 
           echo "$REF is sourced from branch: $BRANCH"
 
-          # 2. Realign HEAD onto the tracking stream
           git checkout -B "$BRANCH" "origin/$BRANCH"
 
           bash .github/workflows/src/push.sh
