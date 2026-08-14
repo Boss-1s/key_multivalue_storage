@@ -50,8 +50,8 @@ from .utils import warnings as kms_warnings
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
 
-__version__ = "v1.3.0.20260731"
-__version_internal__ = "kms-v1.3.0/2026.07.31"
+__version__ = "v1.3.1.20260812"
+__version_internal__ = "kms-v1.3.1/2026.08.12"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
