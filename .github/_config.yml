@@ -65,12 +65,12 @@ defaults:
 optional_front_matter:
   remove_extension: true
 
-global_banner:
-  background_color: "#221854"
-  title: "Welcome to kms-semver1.3.0"
-  subtitle: "The beginning of a beautiful library is here."
-  title_color: "#ffffff"
-  subtitle_color: "#8c15bf"
+# global_banner:
+#   background_color: "#221854"
+#   title: "Welcome to kms-semver1.3.0"
+#   subtitle: "The beginning of a beautiful library is here."
+#   title_color: "#ffffff"
+#   subtitle_color: "#8c15bf"
 
 sidebar:
   - name: Boss_1s Home
