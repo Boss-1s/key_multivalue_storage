@@ -31,24 +31,48 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "semver1.3.x"
+    pull-request-branch-name:
+      template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
+      separator: "_"
+      word-separator: "_"
+      branch-name-case: "lowercase"
+      max-length: 100
     
   - package-ecosystem: "bundler"
     directory: "/docs"
     schedule:
       interval: "daily"
     target-branch: "docs"
+    pull-request-branch-name:
+      template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
+      separator: "_"
+      word-separator: "_"
+      branch-name-case: "lowercase"
+      max-length: 100
     
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "docs"
+    pull-request-branch-name:
+      template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
+      separator: "_"
+      word-separator: "_"
+      branch-name-case: "lowercase"
+      max-length: 100
     
   - package-ecosystem: "uv" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "docs"
+    pull-request-branch-name:
+      template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
+      separator: "_"
+      word-separator: "_"
+      branch-name-case: "lowercase"
+      max-length: 100
 
   # Legacy
   - package-ecosystem: "github-actions" # See documentation for possible values
