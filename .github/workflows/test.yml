@@ -161,7 +161,7 @@ jobs:
     needs: [main, codeql]
     uses: ./.github/workflows/release-nightly.yml
     if: |
-      contains(github.ref_name, 'semver1.3.x') ||
+      contains(github.ref_name, 'semver1.') ||
       contains(github.actor, 'renovate') ||
       contains(github.actor, 'dependabot') ||
       contains(github.actor, 'github-actions')
