@@ -31,9 +31,8 @@ body:
     id: ver
     attributes:
       label: Requested Version
-      description: "What version would you like this feature to come out in? If a feature contains small breaking changes that can be covered by something none-breaking, please choose the next minor version. If it contains uncoverable breaking changes, please choose the next major version. [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)"
+      description: "What version would you like this feature to come out in? If a feature contains small breaking changes that can be patched, please choose the next minor version. If it contains full-scale breaking changes, please choose the next major version. [See more about versioning here](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/SECURITY.md#pypi-versioning)."
       options: [
-        "`>=kms-semver1.3.x`",
         "`>=kms-semver1.4.x`",
         "`>=kms-semver1.5.x`",
         "`>=kms-semver1.6.x`",
