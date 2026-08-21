@@ -35,6 +35,7 @@ keywords = [
     "wrapper-library"
 ]
 dependencies = [
+    "dill",
     "rich==15.0.0",
     "typing-extensions~=4.16",
 ]
