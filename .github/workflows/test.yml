@@ -52,6 +52,7 @@ jobs:
 
       - name: Install and Ensure Dependecies
         run: |
+          uv python pin ${{ matrix.py-ver }}
           uv sync --group test
           uv run coverage --version
           uv run shellcheck --version
