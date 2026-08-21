@@ -4,7 +4,7 @@
 dev = [
     "coverage>=7.15.3",
     "gitpython>=3.1.57",
-    "griffe>=2.1.0",
+    "griffe>=2.2.0",
     "key-multivalue-storage",
     "md-toc>=9.0.0",
     "packaging>=26.2",
