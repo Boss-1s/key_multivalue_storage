@@ -33,7 +33,7 @@ updates:
     target-branch: "semver1.3.x"
     pull-request-branch-name:
       template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
-      separator: "_"
+      separator: "/"
       word-separator: "_"
       branch-name-case: "lowercase"
       max-length: 100
@@ -45,7 +45,7 @@ updates:
     target-branch: "docs"
     pull-request-branch-name:
       template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
-      separator: "_"
+      separator: "/"
       word-separator: "_"
       branch-name-case: "lowercase"
       max-length: 100
@@ -57,7 +57,7 @@ updates:
     target-branch: "docs"
     pull-request-branch-name:
       template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
-      separator: "_"
+      separator: "/"
       word-separator: "_"
       branch-name-case: "lowercase"
       max-length: 100
@@ -69,7 +69,7 @@ updates:
     target-branch: "docs"
     pull-request-branch-name:
       template: "deps/semver1.3.x/{package_manager}-{dependency}-{version}"
-      separator: "_"
+      separator: "/"
       word-separator: "_"
       branch-name-case: "lowercase"
       max-length: 100
