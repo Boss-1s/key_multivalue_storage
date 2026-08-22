@@ -28,7 +28,7 @@ def main():
         # Construct the GitHub Issue title and body
         title = f"fatal: pylint error {msg_id}"
         body = f"""
-**File:** [{path}](https://github.com/key_multivalue_storage/tree/semver1.4.x/{path})
+**File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/{path})
 **Line:** {line}
 **Error ID:** {msg_id}
 
