@@ -526,6 +526,7 @@ test = [
     "pylint-per-file-ignores==3.2.1",
     "coverage==7.15.4",
     "shellcheck-py==0.11.0.1",
+    "dill",
 ]
 
 [tool.coverage.run]
@@ -535,3 +536,6 @@ omit = [
     "test/**",
     "**/test-*.py"
 ]
+
+[tool.uv.sources]
+dill = { git = "https://github.com/uqfoundation/dill" }
