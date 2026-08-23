@@ -139,7 +139,7 @@ def close_issues():
         if title not in error_titles:
             print(f"[green]Closing resolved issue \"{title}\" with id {issue_id}...[/green]")
             subprocess.run(['gh', 'issue', 'close', str(issue_id)], check=True)
-            return
+            continue
 
         print(f"[yellow]Issue \"{title}\" with id {issue_id} is still unresolved; skipping.[/]")
 
