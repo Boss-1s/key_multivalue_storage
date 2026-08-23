@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
       security-events: write # allows SonarCloud to write reports directly to the Security and Quality tab.
       code-quality: write
       checks: write
