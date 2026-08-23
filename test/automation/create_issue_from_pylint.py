@@ -60,17 +60,20 @@ def open_issues():
 
 ### Information
 
-**Type:** {error['type']}
-Symbol: {error['symbol']}
-**Path:** {error['path']}
-Line: {error['line']}
-Column: {error['column']}
-Object: {error['obj']}
-Module: {error['module']}
-**Pylint Message ID:** {error['messageId']}
-Confidence: {error['confidence']}
+**Type:** `{error['type']}`
+**Symbol**: `{error['symbol']}`
+**Path:** `{error['path']}`
+**Line:** {error['line']}
+**Column:** {error['column']}
+**Object:** `{error['obj']}`
+**Module:** `{error['module']}`
+**Pylint Message ID:** `{error['messageId']}`
+**Confidence:** `{error['confidence']}`
 
-**Error Message:** {message}
+**Error Message:**
+```txt
+{message}
+```
 """
 
         # Check if the issue already exists
