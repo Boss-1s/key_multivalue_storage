@@ -72,7 +72,7 @@ jobs:
       - name: Lint using Pylint
         background: true
         id: pylint
-        with:
+        env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           uv run pylint --output-format=parseable:pylint-report.txt,colorized,json2:pylint_report.json  --recursive=y key_multivalue_storage test/ .github/workflows/src/
