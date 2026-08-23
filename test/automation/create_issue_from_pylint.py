@@ -91,7 +91,7 @@ Confidence: {error['confidence']}
             'gh', 'issue', 'create',
             '--title', title,
             '--body', body,
-            '--label', 'bug,pylint,Needs Triage,Priority: CRITICAL'
+            '--label', 'bug,pylint,Priority: CRITICAL'
             ], check=True)
 
     print("[b green]Successfully processed all Pylint errors into GitHub issues![/]")
