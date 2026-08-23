@@ -80,7 +80,7 @@ def open_issues():
         issue_exists = False
         issue_id = None
         for issue in existing_issues:
-            issue_exists = title in issue['title']
+            issue_exists = title == issue['title']
             if issue_exists:
                 issue_id = issue['number']
                 break
