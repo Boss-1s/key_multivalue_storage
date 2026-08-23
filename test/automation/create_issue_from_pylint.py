@@ -6,10 +6,9 @@ def main():
     with open('pylint_report.json', 'r') as f:
         errors = json.load(f)
 
-    subprocess.run('gh issue list --json number,title,body > issues.json',
+    subprocess.run('gh issue list --limit 10000 --json number,title,body > issues.json',
                    shell=True,
-                   check=True,
-                   capture_output=True)
+                   check=True)
 
     with open('issues.json', 'r') as f:
         existing_issues = json.load(f)
@@ -26,7 +25,7 @@ def main():
         message: str = error['message']
 
         # Construct the GitHub Issue title and body
-        title = f"fatal: pylint error {msg_id}"
+        title = f"fatal: pylint error {msg_id} at {path}:{line}"
         body = f"""
 **File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/{path})
 **Line:** {line}
@@ -40,7 +39,7 @@ def main():
         issue_exists = False
         issue_id = None
         for issue in existing_issues:
-            issue_exists = title in issue['title'] and body in issue['body']
+            issue_exists = title in issue['title']
             if issue_exists:
                 issue_id = issue['number']
                 break
@@ -55,8 +54,7 @@ def main():
             '--title', title,
             '--body', body,
             '--label', 'bug,pylint,Needs Triage'
-            ], check=True, capture_output=True
-        )
+            ], check=True)
 
     print("Successfully processed all Pylint errors into GitHub issues!")
 
