@@ -213,6 +213,12 @@ assert isinstance(list_db, Storage)
 assert isinstance(list_db['undefined'], list)
 assert list_db['undefined'] == ['qax', 'foo', 'lorem ipsum']
 
+multistorage_db = db + {"nested": Storage("key", foo="bar", baz="qax")}
+
+assert isinstance(multistorage_db, Storage)
+assert isinstance(multistorage_db['nested'], Storage)
+assert multistorage_db['nested'] == Storage("key", foo="bar", baz="qax")
+
 # __radd__ #
 
 dict_db_r = new_db.values + db
