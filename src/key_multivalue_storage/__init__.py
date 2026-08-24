@@ -16,6 +16,20 @@ that came with it.**
 So far, this is the ***greatest piece of a python program I have ever made.***
 """
 
+from __future__ import annotations
+
+__lazy_modules__ = ["sys",
+                    "inspect",
+                    "warnings",
+                    "rich.console",
+                    "rich.syntax",
+                    "rich.panel",
+                    "rich.markdown",
+                    "rich.tree",
+                    "rich.traceback",
+                    "io",
+                    "os"]
+
 # Built-ins
 import sys
 import warnings as std_warnings
@@ -29,8 +43,6 @@ from rich.panel import Panel
 from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
-
-
 
 # First-party
 # Modules
