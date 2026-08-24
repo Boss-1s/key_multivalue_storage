@@ -15,9 +15,10 @@ that came with it.**
 
 So far, this is the ***greatest piece of a python program I have ever made.***
 """
+
 # Built-ins
 import sys
-import warnings
+import warnings as std_warnings
 import inspect
 from typing import Any, Callable
 
@@ -28,6 +29,8 @@ from rich.panel import Panel
 from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
+
+
 
 # First-party
 # Modules
@@ -43,9 +46,10 @@ from .edit import Edit
 from .delete import Delete
 
 # Custom Warnings and Exceptions
-from .utils import exceptions as exceptions 
-#NOTE: Maybe just warnings? Bc tbh the recommended import for this is kms.warnings anyways...
+from .utils import exceptions as exceptions
+# NOTE: Deprecate in 1.5
 from .utils import warnings as kms_warnings
+warnings = kms_warnings
 
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
@@ -65,25 +69,17 @@ __all__ = [
     "Delete", # Delete class
     "exceptions", # custom exceptions
     "kms_warnings", # custom warnings
+    "warnings",
 ]
 
-warnings.filterwarnings("always",
+std_warnings.filterwarnings("always",
                         category=PendingDeprecationWarning,
                         module="key_multivalue_storage")
-warnings.filterwarnings("always",
+std_warnings.filterwarnings("always",
                         category=DeprecationWarning,
                         module="key_multivalue_storage")
 
 install(show_locals=True)
-
-warnings.warn("Going from kms-semver2.0, the module "+
-              "name 'key_multivalue_storage' will be deprecated "+
-              "in favor of the name 'kms'. Please note this "+
-              "change accordingly, thank you! See the documentation "+
-              "for more information.",
-              PendingDeprecationWarning,
-              stacklevel=5
-             )
 
 # NOTE: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
@@ -153,7 +149,7 @@ def help() -> None: #pylint: disable=redefined-builtin
             if "utf" in str(enc).lower():
                 return Console()
         except Exception as e:
-            warnings.warn(str(e), RuntimeWarning)
+            std_warnings.warn(str(e), RuntimeWarning)
             # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
 
         try:
@@ -162,7 +158,7 @@ def help() -> None: #pylint: disable=redefined-builtin
             safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
             return Console(file=safe_out, force_terminal=False)
         except Exception as e:
-            warnings.warn(str(e), RuntimeWarning)
+            std_warnings.warn(str(e), RuntimeWarning)
             # Last-resort fallback: a console without color/advanced rendering so
             # we avoid control characters that some terminals might mishandle.
             return _RawConsole()
