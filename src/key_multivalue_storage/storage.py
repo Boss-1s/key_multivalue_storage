@@ -578,7 +578,9 @@ class Storage(metaclass=meta._StorageMeta):
             _temp_values = other.values
 
         if isinstance(other, dict):
-            # FIXME: warn when nested dict is passed
+            if str(other).count("{") > 1:
+                warnings.warn("Passing a nested dictionary may break the addition process.",
+                              RuntimeWarning)
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
             _temp_values = other
 
