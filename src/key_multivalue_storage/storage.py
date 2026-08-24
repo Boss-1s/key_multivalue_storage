@@ -403,11 +403,10 @@ class Storage(metaclass=meta._StorageMeta):
     _default_valueerror_msg: str = "Both instances must have the same top level key"
 
     def __str__(self) -> str:
-        """Defines how the object should be represented in a easy-to-read, user-friendly form."""
-        values_str: str = ',\n'.join([
-            f"    {prop}: {repr(value)}" for prop, value in self.values.items()
-        ])
-        return "{\n" + f"  {self.key}: {{\n{values_str}\n  }}\n" + "}"
+        """
+        Defines how the object should be represented in a easy-to-read, user-friendly form.
+        """
+        return json.dumps(dict(self), indent=4)
 
     def __repr__(self) -> str:
         """Defines how the object should be represented in an unambiguous, dev-friendly form."""
