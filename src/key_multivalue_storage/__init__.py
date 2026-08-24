@@ -70,6 +70,12 @@ __all__ = [
     "exceptions", # custom exceptions
     "kms_warnings", # custom warnings
     "warnings",
+    "KeyNotFoundError",
+    "NoInstantiationError",
+    "DeleteWarning",
+    "AdditionFailureWarning",
+    "SubtractionFailureWarning",
+    "CastWarning",
 ]
 
 std_warnings.filterwarnings("always",
