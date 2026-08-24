@@ -5,6 +5,7 @@ Enums are for Pythonic purposes only, escpecially in a case where one specific l
 different values that can be passed, and these values also affect the library as a whole.
 """
 from __future__ import annotations
+from typing import Literal
 
 __lazy_modules__ = ["sys"]
 
@@ -17,7 +18,7 @@ class Encoding(StrEnum):
     """
     Enum class for encoding types, new in kms-semver1.4.0.
     """
-    _ignore_ = ["DEFAULT", "_missing_"]
+    _ignore_ = ["DEFAULT"]
 
     UTF8 = "utf-8"
     UTF16 = "utf-16"
@@ -34,7 +35,6 @@ class Encoding(StrEnum):
     PIGPEN = "pigpen"
     MORSE = "morse_code"
 
-
     DEFAULT = KMS
 
     @classmethod
@@ -42,6 +42,6 @@ class Encoding(StrEnum):
         """
         Handle missing values by returning the DEFAULT encoding.
         """
-        warnings.warn(f"{value} is not a valid Encoding. Defaulting to {cls.DEFAULT}.",
+        warnings.warn(f"{value} is not a valid Encoding; defaulting to {cls.KMS}",#type: ignore
                       UserWarning)
-        return cls.DEFAULT
+        return cls.KMS
