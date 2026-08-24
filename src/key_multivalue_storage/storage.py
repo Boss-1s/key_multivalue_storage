@@ -405,73 +405,196 @@ class Storage(metaclass=meta._StorageMeta):
     def __str__(self) -> str:
         """
         Defines how the object should be represented in a easy-to-read, user-friendly form.
+
+        ## Arguments
+        None.
+
+        ## Output
+        - `str`: An easy-to-read string representation of the object.
+
+        ## Format
+        ```json
+        {
+            self.key: {
+                self.values
+            }
+        }
+        ```
         """
         return json.dumps(dict(self), indent=4)
 
     def __repr__(self) -> str:
-        """Defines how the object should be represented in an unambiguous, dev-friendly form."""
-        values_str: str = ', '.join([
-            f"{prop}={repr(value)}" for prop, value in self.values.items()
-        ])
-        return f"Storage(top_lv_key={self.key}, key_value_pairs=[{values_str}])"
+        """
+        Defines how the object should be represented in an unambiguous, dev-friendly form.
+
+        ## Arguments
+        None.
+
+        ## Output
+        - `str`: An unambiguous string representation of the object.
+
+        ## Format
+        `Storage(top_lv_key={self.key}, key_value_pairs={self.values})`
+        """
+        return f"Storage(top_lv_key={self.key}, key_value_pairs={self.values})"
 
     def __eq__(self, other: Any) -> bool:
-        """Defines how the object should be compared as equal."""
+        """
+        Defines equality between Storage objects and other Storage objects/dicts.
+
+        Use the `==` symbol in operations instead of directly calling `__eq__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the `==` symbol.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        `==` symbol, from which self will be compared against.
+
+        ## Output
+        Per [PEP 285](https://peps.python.org/pep-0285/), this method returns a
+        a boolean containing the result of the comparison.
+
+        ## Logic
+        When comparing two `Storage` objects, both the **top-level key** and the **values
+        of the subkey-value pairs** must be the same for equality to be `True`.
+
+        When comparing a `Storage` object to a `dict`, the `Storage` object is casted into a dict
+        and compared against the other dict.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
         if isinstance(other, type(self)):
-            if self.key==other.key and self.values.items()==other.values.items():
+            if self.key == other.key and self.values.items() == other.values.items():
                 return True
-            return False
 
-        if isinstance(other, dict):
-            if other == dict(self):
-                return True
-            return False
+        if isinstance(other, dict) and other == dict(self):
+            return True
 
-        return NotImplemented
+        return False
 
     def __lt__(self, other: Any) -> bool:
-        """Defines how the object should be compared as less than."""
-        if isinstance(other, type(self)):
-            if self.key!=other.key:
-                raise ValueError(self._default_valueerror_msg)
-            if len(self.values.items()) < len(other.values.items()):
-                return True
-            return False
-        return NotImplemented
+        """
+        Defines less than comparison between Storage objects and other Storage objects.
+
+        Use the `<` symbol in operations instead of directly calling `__lt__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the `<` symbol.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        `<` symbol, from which self will be compared against.
+
+        ## Output
+        Per [PEP 285](https://peps.python.org/pep-0285/), this method returns a
+        a boolean containing the result of the comparison.
+
+        ## Logic
+        When comparing two `Storage` objects, both the **top-level key** must be the same
+        and the **number of subkey-value pairs** must be less than the other for the comparison
+        to be `True`.
+
+        If the top-level keys are different, a ValueError will be raised. This will change in
+        `kms-semver2.0.0`.
+        """
+        if not isinstance(other, Storage):
+            return NotImplemented
+
+        if self.key != other.key:
+            # NOTE: I can't change this logic, however in 2.0 we should make it so that instead
+            # of raising ValueError, it returns False
+            raise ValueError(self._default_valueerror_msg)
+
+        if len(self.values.items()) < len(other.values.items()):
+            return True
+        return False
 
     def __le__(self, other: Any) -> bool:
-        """Defines how the object should be compared as less than or equal to."""
-        if isinstance(other, type(self)):
-            if len(self.values.items()) < len(other.values.items()) or self==other:
-                return True
-            return False
-        return NotImplemented
+        """
+        Defines less than or equal comparison between Storage objects and other Storage objects.
+
+        Use the `<=` symbol in operations instead of directly calling `__le__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the `<=` symbol.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        `<=` symbol, from which self will be compared against.
+
+        ## Output
+        Per [PEP 285](https://peps.python.org/pep-0285/), this method returns a
+        a boolean containing the result of the comparison.
+
+        ## Logic
+        When comparing two `Storage` objects, both the **top-level key** must be the same
+        and the **number of subkey-value pairs** must be less than the other for the comparison
+        to be `True`.
+
+        Top-level keys are irrelevant here for some reason.
+        """
+        if not isinstance(other, Storage):
+            return NotImplemented
+
+        if len(self.values.items()) < len(other.values.items()) or self == other:
+            return True
+
+        return False
 
     def __add__(self,
                 other: Storage | dict[str, Any] | list[Any]) -> Storage:
-        """Defines how to add two objects, same type or no."""
-        if isinstance(other, type(self)):
-            if self.key==other.key:
-                _temp_dict: dict[str, Any] = dict(self.values)
-                _temp_dict.update(other.values)
-                return Storage(self.key, **_temp_dict)
-            raise ValueError(self._default_valueerror_msg)
+        """
+        Defines addition of Storage objects by Storage/dict objects.
+
+        Use the symbol `+` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any] | list[Any]`: The object on the right hand-side of the
+        operand, from which self will be added with.
+
+        ## Output
+        - `Storage`: A `Storage` instance containing the result of the addition.
+
+        ## Logic
+        When adding Storage objects:
+        - If the keys are the same, the values are merged.
+        - If the keys are different, a ValueError is raised.
+
+        When adding Storage objects with a dict:
+        - The values from the dict are added to the Storage object, using dict().update().
+        - If a key already exists in the Storage object, its value is updated, per dict.update().
+
+        When adding Storage objects with a list:
+        - The list is added as a new value under the key "undefined" in the Storage object.
+
+        Note that this method is functionally identical to set union/biwise AND.
+        """
+
+        if not isinstance(other, (Storage, dict, list)):
+            return NotImplemented
+
+        _temp_values: dict[Any, Any] = {}
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            _temp_values = other.values
+
         if isinstance(other, dict):
             # FIXME: warn when nested dict is passed
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
-            _temp_dict = dict(self.values)
-            _temp_dict.update(other)
-            return Storage(self.key, **_temp_dict)
+            _temp_values = other
+
         if isinstance(other, list):
             warnings.warn(w.AdditionFailureWarning(method="__add__"))
-            _temp_dict = dict(self.values)
-            _temp_dict.update({"undefined": other})
-            return Storage(self.key, **_temp_dict)
-        return NotImplemented
+            _temp_values = {"undefined": other}
+
+        _temp_dict: dict[str, Any] = dict(self.values)
+        _temp_dict.update(_temp_values)
+        return Storage(self.key, **_temp_dict)
 
     def __radd__(self,
                  other: Storage | dict[str, Any]) -> Storage:
-        """Defines how to add two objects, same type or no."""
+        """
+        See __add__ docstring.
+        """
         return self.__add__(other)
 
     def __sub__(self,
