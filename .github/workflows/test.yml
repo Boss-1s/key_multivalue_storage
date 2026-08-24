@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
       security-events: write # allows SonarCloud to write reports directly to the Security and Quality tab.
       code-quality: write
       checks: write
@@ -71,8 +72,14 @@ jobs:
       - name: Lint using Pylint
         background: true
         id: pylint
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          uv run pylint --output-format=parseable:pylint-report.txt,colorized --recursive=y key_multivalue_storage test/ .github/workflows/src/
+          uv run pylint --output-format=parseable:pylint-report.txt,colorized,json2:pylint_report.json  --recursive=y key_multivalue_storage test/ .github/workflows/src/
+          if [[ ${{ matrix.py-ver }} == '3.15' && ${{ runner.os }} == 'Linux' ]]; then
+            uv run python test/automation/create_issue_from_pylint.py
+          fi
 
       - name: Lint pyproject.toml
         id: toml
