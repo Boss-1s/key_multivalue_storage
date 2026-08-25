@@ -38,6 +38,7 @@ plugins:
   - jekyll-gfm-admonitions
   - jekyll-optional-front-matter
   - jekyll-seo-tag
+  - jekyll-sticky-toc
 color-scheme: auto # Options: auto, light, dark
 
 markdown: kramdown
