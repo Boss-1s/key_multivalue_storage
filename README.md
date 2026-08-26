@@ -55,25 +55,40 @@ The development package includes Pylint and Griffe for testing and finding break
 ## Usage
 - Create a Storage object to wrap the data to be stored:
 ```py
-from key_multivalue_storage import Storage
-my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
+>>> from key_multivalue_storage import Storage
+>>> my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
 ```
 - To store the object, use `Storage.store()`.
 ```py
-my_db.store("database.json")
+>>> my_db.store("database.json")
+Data stored successfully in 'database.json'.
 ```
 - You can change certain global variables for each `Storage` instance.
 ```py
-Storage.indent = 4 # indent size of JSON files
-Storage.encode = True # Whether to encode stored values
-Storage.auto_delete_self = True
-# Whether to automatically release the object
-# from memory after certain operations i.e.
-# Storage.store()
+>>> Storage.indent = 4 # indent size of JSON files
+>>> Storage.encode = True # Whether to encode stored values
 ```
+- Load the data back into a Storage object:
+```py
+>>> import key_multivalue_storage as kms
+>>> loaded_db = kms.Load.by_key("database.json", "my_top_level_key") # You can also use Storage.Load.by_key()
+>>> loaded_db = my_db
+True
+```
+- You can also cast a Storage object into a dictionary!
+```py
+>>> dict(my_db)
+>>> my_db
+{"my_top_level_key":{"mysubkey":"myvalue","myothersk":"anotherval"}}
+```
+
+There's a _lot_ more to this library that what _meets the eye_.
 
 ### See the full documentation [here](https://boss-1s.github.io/key_multivalue_storage)!
 
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
 ## [Roadmap](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#possible-future-features)
 ## [Report a Bug](https://github.com/Boss-1s/key_multivalue_storage/issues)
+
+
+Have a GREAT day/night! :)
