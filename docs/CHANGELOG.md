@@ -4,6 +4,9 @@
 
 <!--TOC-->
 
+- [📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*](#-v13220260826b2--kms-v132b220260826)
+- [📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*](#-v13220260826b1--kms-v132b120260826)
+- [📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*](#-v13220260826b0--kms-v132b020260826)
 - [📦 v1.3.1.20260812 — *kms-v1.3.1/2026.08.12*](#-v13120260812--kms-v13120260812)
 - [📦 v1.3.0.20260731 — *kms-v1.3.0/2026.07.31*](#-v13020260731--kms-v13020260731)
 - [📦 v1.3.0.20260730.1 — *kms-v1.3.0/2026.07.30a*](#-v130202607301--kms-v13020260730a)
@@ -43,6 +46,42 @@
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 
 <!--TOC-->
+
+## 📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*
+
+⚙ **Target Node Commit:** `de8d6fca`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+one last thing
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.2.20260826b1...v1.3.2.20260826b2
+
+---
+
+## 📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*
+
+⚙ **Target Node Commit:** `8d3a1573`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+I'm just gonna keep doing this until it works
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.2.20260826b0...v1.3.2.20260826b1
+
+---
+
+## 📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*
+
+⚙ **Target Node Commit:** `ed82d269`
+
+📝 **Release Type:** Pre-release - Major Patch
+
+testing new release script now
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260826b0
+
+---
 
 ## 📦 v1.3.1.20260812 — *kms-v1.3.1/2026.08.12*
 
