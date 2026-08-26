@@ -16,6 +16,20 @@ that came with it.**
 So far, this is the ***greatest piece of a python program I have ever made.***
 """
 
+from __future__ import annotations
+
+__lazy_modules__ = ["sys",
+                    "inspect",
+                    "warnings",
+                    "rich.console",
+                    "rich.syntax",
+                    "rich.panel",
+                    "rich.markdown",
+                    "rich.tree",
+                    "rich.traceback",
+                    "io",
+                    "os"]
+
 # Built-ins
 import sys
 import warnings as std_warnings
@@ -70,6 +84,12 @@ __all__ = [
     "exceptions", # custom exceptions
     "kms_warnings", # custom warnings
     "warnings",
+    "KeyNotFoundError",
+    "NoInstantiationError",
+    "DeleteWarning",
+    "AdditionFailureWarning",
+    "SubtractionFailureWarning",
+    "CastWarning",
 ]
 
 std_warnings.filterwarnings("always",

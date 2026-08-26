@@ -25,6 +25,11 @@ class _NameMeta(type, metaclass=_KmsMeta):
 """
 
 from __future__ import annotations
+
+__lazy_modules__ = ["sys",
+                    "rich.console",
+                    "rich.text",]
+
 import sys
 from typing_extensions import deprecated
 from rich.console import Console

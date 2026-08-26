@@ -6,6 +6,12 @@ Best if new warnings are kept to a minimum. Always try to use existing built-in 
 #pylint: disable=too-many-ancestors, unused-variable
 from __future__ import annotations
 
+__lazy_modules__ = ["sys",
+                    "functools",
+                    "inspect",
+                    "warnings",
+                    "builtins",]
+
 import functools
 import inspect
 import sys
@@ -78,7 +84,7 @@ def _deprecated_arg[**P, R](arg_name: str,
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """
     Custom decorator to issue a warning when a specific deprecated method argument is used.
-    
+
     ## Arguments
     - `arg_name: str`: The name of the argument that is deprecated.
     - `message: str | None`: Optional custom warning message. If not provided, a default
