@@ -12,5 +12,6 @@
     "branchPrefix": "deps/",
     "additionalBranchPrefix": "semver1.4.x/",
     "ignorePaths": [],
-    "baseBranches": ["semver1.3.x", "semver1.4.x"]
+    "baseBranches": ["semver1.3.x", "semver1.4.x"],
+    "useBaseBranchConfig": "merge"
 }
