@@ -77,8 +77,8 @@ True
 ```
 - You can also cast a Storage object into a dictionary!
 ```py
->>> dict(my_db)
->>> my_db
+>>> dict_db = dict(my_db)
+>>> dict_db
 {"my_top_level_key":{"mysubkey":"myvalue","myothersk":"anotherval"}}
 ```
 
