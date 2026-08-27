@@ -388,7 +388,7 @@ wheels = [
 
 [[package]]
 name = "key-multivalue-storage"
-version = "1.3.2.20260826b1"
+version = "1.3.2.20260826b2"
 source = { editable = "." }
 dependencies = [
     { name = "dill" },
