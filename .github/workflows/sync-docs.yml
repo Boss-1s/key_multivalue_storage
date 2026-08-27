@@ -26,7 +26,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: bash .github/workflows/src/ssh.sh
 
-      - name: Sync Documentation
+      - name: Sync Documentation (semver1.3.x)
         run: |
           git fetch --all
           git checkout -B "docs" "origin/docs"
@@ -34,7 +34,7 @@ jobs:
           git checkout docs -- ./docs
           rm -rf docs/_includes/ docs/_layouts/ docs/assets/ docs/Gemfile
 
-      - name: Commit version change
+      - name: Commit version change (semver1.3.x)
         continue-on-error: true
         env:
           REF: "semver1.3.x"
@@ -45,6 +45,35 @@ jobs:
           # AI-Generated (Google AI Mode, Gemini 2.5)
           # 1. Safely evaluate environment variables without syntax parsing flaws
           BRANCH="semver1.3.x"
+
+          export BRANCH
+          
+          echo "$REF is sourced from branch: $BRANCH"
+          
+          # 2. Realign HEAD onto the tracking stream 
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          
+          bash .github/workflows/src/push.sh
+
+      - name: Sync Documentation (semver1.4.x)
+        run: |
+          git fetch --all
+          git checkout -B "docs" "origin/docs"
+          git switch semver1.4.x
+          git checkout docs -- ./docs
+          rm -rf docs/_includes/ docs/_layouts/ docs/assets/ docs/Gemfile
+
+      - name: Commit version change (semver1.4.x)
+        continue-on-error: true
+        env:
+          REF: "semver1.4.x"
+          DUMMY: "false"
+          REPO: ${{ github.repository }}
+          CUSTOM_COMMIT_MSG: "sync docs"
+        run: |
+          # AI-Generated (Google AI Mode, Gemini 2.5)
+          # 1. Safely evaluate environment variables without syntax parsing flaws
+          BRANCH="semver1.4.x"
 
           export BRANCH
           
