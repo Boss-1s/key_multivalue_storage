@@ -69,15 +69,11 @@ Storage.auto_delete_self = True
 # Structure of the Library
 
 > [!note]
-> Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here
+> Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
-- `README.md`               — project overview & quick usage
-- `pyproject.toml`          — packaging, dependencies, dev/test config
-- `LICENSE`                 — GPL-2.0-only license
+- `LICENSE`                 — `GPL-2.0-only` license
 - `src/key_multivalue_storage/`
-  - `__init__.py`           — package exports, version, rich help
   - `storage.py`            — main Storage class (core functionality)
-  - `storage.pyi`           — type stubs for Storage API
   - `load.py`               — loading helpers (Load class)
   - `edit.py`               — editing helpers (Edit class)
   - `delete.py`             — deletion helpers (Delete class)
@@ -90,6 +86,7 @@ Storage.auto_delete_self = True
 	    - `CastWarning`
 	    - `AddtionFailureWarning`
 	    - `SubtractionFailureWarning`
+    - `metadata.py`
 - `test/`
   - `test-storage.py` — **Mainstream test targeting `kms.storage`**
   - `test-load.py` — **Mainstream test targeting `kms.load`**
@@ -805,6 +802,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjE5NzYyMzQ2LDQzNzE4ODI3
-NCwxNjI4MDMwODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlsyMTQwMzc4NjYxLDE2MTk3NjIz
+NDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
 -->
