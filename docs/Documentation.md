@@ -96,11 +96,11 @@ Storage.auto_delete_self = True
 	  - `test-load.py`
 	  - `test-edit.py`
 	  - `test-delete.py`
-	  - `test-general.py` *(legacy, only used to ensure backwards compatibility)*
+	  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
 	  - `test-meta.py`
 	  - `test-exceptions.py`
-	  - `test-fix-*.py` / `test
-  - `__main__.py`           — test runner entrypoint / automation helpers
+	  - `test-fix-*.py` / `test-feat-*.py` — targeted tests from PRs. Inte
+  - `__main__.py` — test runner entrypoint / automation helpers
 
 # Main Classes
 
@@ -807,6 +807,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTExNDc0OTA3Niw0MzcxODgy
-NzQsMTYyODAzMDg3Ml19
+BnZm1cbiIsImhpc3RvcnkiOlsyMTkyMjI1NjYsNDM3MTg4Mjc0
+LDE2MjgwMzA4NzJdfQ==
 -->
