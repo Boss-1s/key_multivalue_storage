@@ -82,8 +82,13 @@ Storage.auto_delete_self = True
   - `edit.py`               — editing helpers (Edit class)
   - `delete.py`             — deletion helpers (Delete class)
   - `utils/`
-    - `exceptions.py`       — custom exceptions 
-    - `warnings.py`         — custom warning classes and private decorators
+    - `exceptions.py`       — custom exceptions
+	    - `KeyNotFoundError`
+	    - `NoInstantiationWarning`
+    - `warnings.py`         — custom warning classes and private warning decorators
+	    - `CastWarning`
+	    - `AddtionFailureWarning`
+	    - `SubtractionFailureWarning`
 - `test/`
   - `test-*.py`             — extensive test scripts exercising storage and helpers
   - `__main__.py`           — test runner entrypoint / automation helpers
@@ -793,5 +798,5 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNzM5NTkwMDA1XX0=
+BnZm1cbiIsImhpc3RvcnkiOlsxOTM5OTU3NTE2XX0=
 -->
