@@ -79,6 +79,7 @@ Storage.auto_delete_self = True
 	  - `Delete`
 		  - `by_key`
 		  - `by_propkey`
+		  - `all`
   - `utils/`
     - `exceptions.py`       — custom exceptions
 	    - `KeyNotFoundError`
@@ -804,7 +805,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTc1NzY5Nzg0MCwyMTQwMzc4
-NjYxLDE2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ
-==
+BnZm1cbiIsImhpc3RvcnkiOlstMTk5MDc2ODA2LDIxNDAzNzg2
+NjEsMTYxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
 -->
