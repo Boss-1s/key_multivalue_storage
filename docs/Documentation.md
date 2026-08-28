@@ -368,7 +368,7 @@ for item in db:
 - `__sub__(self, other: Storage | dict[str, Any]) -> Storage` — subtraction based on overlapping keys.
 - `__truediv__(self, other: Storage | dict | int) -> Storage | list[Storage]` — with `int`: split into equal parts; with `Storage`/`dict`: performs subtraction logic.
 - `__and__`, `__or__`, `__xor__` — set-like intersection/union/symmetric-difference of subkeys; often return `Storage` or `0` if empty.
-- `__eq__`, `__lt__`, `__le__`
+- `__eq__`, `__lt__`, `__le__` — comparisons between `Storage` and other `Storage`s / `dicts`. With `functools.total_ordering`, `__ge__` and `__gt__` are autocompleted.
 - `__lshift__`, `__rshift__` — slice-like operations by index.
 - Comparison dunders follow `total_ordering` semantics with key-matching restrictions.
 
@@ -829,7 +829,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxODg1MDgyMzI4LDE2NjExNzgx
+BnZm1cbiIsImhpc3RvcnkiOlsxNTI0MDUzMTAwLDE2NjExNzgx
 MjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLDE2MTk3NjIzNDYsND
 M3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
 -->
