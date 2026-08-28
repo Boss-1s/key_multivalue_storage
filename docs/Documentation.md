@@ -69,24 +69,50 @@ Storage.auto_delete_self = True
 # Structure of the Library
 
 > [!note]
-> Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here
+> Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
-- `README.md`               — project overview & quick usage
-- `pyproject.toml`          — packaging, dependencies, dev/test config
-- `LICENSE`                 — GPL-2.0-only license
 - `src/key_multivalue_storage/`
-  - `__init__.py`           — package exports, version, rich help
   - `storage.py`            — main Storage class (core functionality)
-  - `storage.pyi`           — type stubs for Storage API
+	  - `Storage`
+		  - `__init__`
+		  - `store`
+		  - `keys`
+		  - `to_dict`
   - `load.py`               — loading helpers (Load class)
+	  - `Load`
+		  - `by_key`
+		  - `by_index`
+		  - `keys`
+		  - `values`
   - `edit.py`               — editing helpers (Edit class)
+	  - `Edit`
+		  - `propkey`
+		  - `propval`
+		  - `key`
   - `delete.py`             — deletion helpers (Delete class)
+	  - `Delete`
+		  - `by_key`
+		  - `by_propkey`
+		  - `all`
   - `utils/`
-    - `exceptions.py`       — custom exceptions (KeyNotFoundError, NoInstantiationError, etc.)
-    - `warnings.py`         — custom warning classes and private decorators
+    - `exceptions.py`       — custom exceptions
+	    - `KeyNotFoundError`
+	    - `NoInstantiationWarning`
+    - `warnings.py`         — custom warning classes and private warning decorators
+	    - `DeleteWarning`
+	    - `CastWarning`
+	    - `AddtionFailureWarning`
+	    - `SubtractionFailureWarning`
+    - `metadata.py`
 - `test/`
-  - `test-*.py`             — extensive test scripts exercising storage and helpers
-  - `__main__.py`           — test runner entrypoint / automation helpers
+  - `test-storage.py` — **Mainstream test targeting `kms.storage`**
+  - `test-load.py` — **Mainstream test targeting `kms.load`**
+  - `test-edit.py` — **Mainstream test targeting `kms.edit`**
+  - `test-delete.py` — **Mainstream test targeting `kms.delete`**
+  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
+  - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
+  - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
+  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 
 # Main Classes
 
@@ -791,3 +817,9 @@ non-instantiable class.
 
 **Example**: if attempting to instantiate a helper class like `Load`,
 this would be raised.
+<!--stackedit_data:
+eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
+BnZm1cbiIsImhpc3RvcnkiOlsxNjYxMTc4MTI2LC0xOTkwNzY4
+MDYsMjE0MDM3ODY2MSwxNjE5NzYyMzQ2LDQzNzE4ODI3NCwxNj
+I4MDMwODcyXX0=
+-->
