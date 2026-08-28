@@ -91,15 +91,15 @@ Storage.auto_delete_self = True
 	    - `AddtionFailureWarning`
 	    - `SubtractionFailureWarning`
 - `test/`
-  - `test-*.py`             — extensive test scripts exercising storage and helpers
-	  - `test-storage.py`
-	  - `test-load.py`
+  - `test-*.py` — extensive test scripts exercising storage and helpers
+	  - `test-storage.py` — Mainstream test targeting `storage.py`
+	  - `test-load.py` — Mainstream te
 	  - `test-edit.py`
 	  - `test-delete.py`
 	  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
 	  - `test-meta.py`
 	  - `test-exceptions.py`
-	  - `test-fix-*.py` / `test-feat-*.py` — targeted tests from PRs. Inte
+	  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
   - `__main__.py` — test runner entrypoint / automation helpers
 
 # Main Classes
@@ -807,6 +807,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsyMTkyMjI1NjYsNDM3MTg4Mjc0
-LDE2MjgwMzA4NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTM3OTU5NjU4Myw0MzcxODgy
+NzQsMTYyODAzMDg3Ml19
 -->
