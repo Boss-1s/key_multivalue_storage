@@ -83,7 +83,7 @@ Storage.auto_delete_self = True
   - `delete.py`             — deletion helpers (Delete class)
   - `utils/`
     - `exceptions.py`       — custom exceptions
-	    - `KeyNotFoundError`
+	    - [`KeyNotFoundError`](#kmskeynotfounderror)
 	    - `NoInstantiationWarning`
     - `warnings.py`         — custom warning classes and private warning decorators
 	    - `DeleteWarning`
@@ -799,5 +799,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjI4MDMwODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstOTIyNzYxMjA5LDE2MjgwMzA4
+NzJdfQ==
 -->
