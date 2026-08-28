@@ -26,7 +26,7 @@ jobs:
   build:
     if: github.ref_name == 'docs'
     runs-on: ubuntu-latest
-    timeout-minutes: 5 
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -40,11 +40,7 @@ jobs:
       - parallel:
         - name: Clone and Setup Wiki
           run: |
-            git clone https://github.com/Boss-1s/key_multivalue_storage.wiki.git temp-wiki
-            rsync -avq --exclude='.git' temp-wiki/ docs/
-            rm -v -rf temp-wiki
             rm -v -f docs/release-template.md docs/CODEOWNERS
-            mv docs/Home.md docs/index.md
             mv docs/SECURITY.md docs/security.md
             mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
             mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md

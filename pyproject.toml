@@ -2,7 +2,8 @@
 dev = [
     { include-group = "test" },
     { include-group = "release" },
-    { include-group = 'site' }
+    { include-group = 'site' },
+    "pre-commit>=4.6.2",
 ]
 release = [
     "gitpython>=3.1.59",
