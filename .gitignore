@@ -180,3 +180,4 @@ __marimo__/
 # Ruby stuff
 **/.bundle/**
 **/vendor/bundle/**
+**/_site/**
