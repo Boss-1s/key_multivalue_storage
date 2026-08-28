@@ -2,12 +2,12 @@
 
 source "https://rubygems.org"
 
-gem "jekyll"
+gem "jekyll", "~> 4.4.1"
 
 group :jekyll_plugins do
   gem "jekyll-gfm-admonitions"
   gem "jekyll-remote-theme"
   gem "jekyll-optional-front-matter"
   gem "jekyll-seo-tag"
-  gem "jekyll-sticky-toc"
+  gem 'jekyll-env'
 end
