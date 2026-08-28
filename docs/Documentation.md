@@ -91,16 +91,14 @@ Storage.auto_delete_self = True
 	    - `AddtionFailureWarning`
 	    - `SubtractionFailureWarning`
 - `test/`
-  - `test-*.py` — extensive test scripts exercising storage and helpers
-	  - `test-storage.py` — Mainstream test targeting `kms.storage`
-	  - `test-load.py` — Mainstream test targeting `kms.load`
-	  - `test-edit.py` — Mainstream test targeting `kms.edit`
-	  - `test-delete.py` — Mainstream test targeting `kms.delete`
-	  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
-	  - `test-meta.py` — Mainstream test targeting `kms.utils.metadata`
-	  - `test-exceptions.py` — Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`
-	  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
-  - `__main__.py` — test runner entrypoint / automation helpers
+  - `test-storage.py` — **Mainstream test targeting `kms.storage`**
+  - `test-load.py` — **Mainstream test targeting `kms.load`**
+  - `test-edit.py` — **Mainstream test targeting `kms.edit`**
+  - `test-delete.py` — **Mainstream test targeting `kms.delete`**
+  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
+  - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
+  - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
+  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 
 # Main Classes
 
@@ -807,6 +805,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTcyNjg2MDU2LDQzNzE4ODI3
+BnZm1cbiIsImhpc3RvcnkiOlsxNjE5NzYyMzQ2LDQzNzE4ODI3
 NCwxNjI4MDMwODcyXX0=
 -->
