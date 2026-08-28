@@ -1,0 +1,104 @@
+# Jekyll x Github Pages - Configuration
+
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: kms Docs
+description: >-
+  <strong>Docs for key-multivalue-storage, a PyPI package also known as kms.</strong><br>
+  <em>kms is a <strong>simple, yet growing, JSON wrapper library</strong> that allows the <strong>JSON storage of
+  one key to multiple values.</strong></em><br>
+  <big>Made with love by Boss_1s.</big>
+baseurl: "/key_multivalue_storage" # the subpath of your site, e.g. /blog
+url: "https://boss-1s.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+repository: Boss-1s/key_multivalue_storage
+github_username: Boss-1s
+
+# Build settings
+remote_theme: "BDHU/minimalist@f19d6a6ef015ba93c5aee9ce80339e4959b0ffa7"
+plugins:
+  - jekyll-remote-theme
+  - jekyll-gfm-admonitions
+  - jekyll-optional-front-matter
+  - jekyll-seo-tag
+  - jekyll-env
+color-scheme: auto # Options: auto, light, dark
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Sass configuration
+sass:
+  quiet_deps: true
+  silence_deprecations: ["import"]
+  style: :compressed
+  sass_dir: ./docs/_sass
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: "index.md"
+    values:
+      layout: "banner"
+
+optional_front_matter:
+  remove_extension: true
+
+# global_banner:
+#   background_color: "#221854"
+#   title: "Welcome to kms-semver1.3.0"
+#   subtitle: "The beginning of a beautiful library is here."
+#   title_color: "#ffffff"
+#   subtitle_color: "#8c15bf"
+
+sidebar:
+  - name: GitHub (source code)
+    icon: <i class="fa-brands fa-github"></i>
+    link: https://github.com/Boss-1s/key_multivalue_storage
+  - name: PyPI (package)
+    icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg" width="20" height="20"/>
+    link: https://pypi.org/project/key-multivalue-storage
+
+sticky_toc:
+  target_collection: ["**"]
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+include:
+  - ./docs/*.md
+  - ./docs/*.html
+  - _sass/*
+  - _layouts/*
+  - _includes/*
+
+# Simplified clean exclude list
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
