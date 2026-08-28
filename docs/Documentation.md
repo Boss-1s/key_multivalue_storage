@@ -303,7 +303,7 @@ def __delitem__(self, key: str | int | slice) -> None
 ```py
 del db["a"]
 del db[0]
-
+nonexistent = db["a"] # KeyError
 ```
 
 ---
@@ -334,7 +334,7 @@ def __contains__(self, item: Any) -> bool
 ##### Examples
 ```py
 if "alice" in db:
-    print("exists")
+    print("Alice is in the database!")
 ```
 
 ---
@@ -346,6 +346,10 @@ def __iter__(self) -> Generator[str | uuid.UUID | dict[str, Any], None, None]
 ```
 
 - Yields top-level key first, then each `{subkey: value}` as single-item dicts.
+
+##### Issues
+
+[#97 - refactor!: more robust `Storage.__iter__()`](https://github.com/Boss-1s/key_multivalue_storage/issues/97)
 
 ##### Examples
 ```py
@@ -364,6 +368,7 @@ for item in db:
 - `__sub__(self, other: Storage | dict[str, Any]) -> Storage` — subtraction based on overlapping keys.
 - `__truediv__(self, other: Storage | dict | int) -> Storage | list[Storage]` — with `int`: split into equal parts; with `Storage`/`dict`: performs subtraction logic.
 - `__and__`, `__or__`, `__xor__` — set-like intersection/union/symmetric-difference of subkeys; often return `Storage` or `0` if empty.
+- `__eq__`, `__lt__`, `__le__`
 - `__lshift__`, `__rshift__` — slice-like operations by index.
 - Comparison dunders follow `total_ordering` semantics with key-matching restrictions.
 
@@ -406,6 +411,10 @@ with Storage("tmp", a=1, b=2) as data:
     # data is dict of values
     print(data)
 ```
+
+##### Issues
+
+[#74 - feat!: More robust `__enter__`](https://github.com/Boss-1s/key_multivalue_storage/issues/74)
 
 ### Other Info
 
@@ -820,7 +829,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjI4NTU0MTk3LDE2NjExNzgx
+BnZm1cbiIsImhpc3RvcnkiOlsxODg1MDgyMzI4LDE2NjExNzgx
 MjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLDE2MTk3NjIzNDYsND
 M3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
 -->
