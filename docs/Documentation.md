@@ -72,24 +72,24 @@ Storage.auto_delete_self = True
 > Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
 - `src/key_multivalue_storage/`
-  - `storage.py`            — main Storage class (core functionality)
+  - `storage.py` — main Storage class (core functionality)
 	  - `Storage`
 		  - `__init__`
 		  - `store`
 		  - `keys`
 		  - `to_dict`
-  - `load.py`               — loading helpers (Load class)
+  - `load.py` — loading helpers (Load class)
 	  - `Load`
 		  - `by_key`
 		  - `by_index`
 		  - `keys`
 		  - `values`
-  - `edit.py`               — editing helpers (Edit class)
+  - `edit.py` — editing helpers (Edit class)
 	  - `Edit`
 		  - `propkey`
 		  - `propval`
 		  - `key`
-  - `delete.py`             — deletion helpers (Delete class)
+  - `delete.py` — deletion helpers (Delete class)
 	  - `Delete`
 		  - `by_key`
 		  - `by_propkey`
@@ -241,7 +241,7 @@ print(db.to_dict())  # {"users": {"alice": "id1"}}
 def keys(self) -> KeysView[Any]
 ```
 
-Return a keys-view for the top-level key (helper to make `dict(Storage)` possible).
+Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 3106](https://peps.python.org/pep-3106/)) for the top-level key (helper to make `dict(Storage)` possible).
 
 ##### Arguments
 - None
@@ -303,6 +303,7 @@ def __delitem__(self, key: str | int | slice) -> None
 ```py
 del db["a"]
 del db[0]
+
 ```
 
 ---
@@ -819,7 +820,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjYxMTc4MTI2LC0xOTkwNzY4
-MDYsMjE0MDM3ODY2MSwxNjE5NzYyMzQ2LDQzNzE4ODI3NCwxNj
-I4MDMwODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlsxNjI4NTU0MTk3LDE2NjExNzgx
+MjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLDE2MTk3NjIzNDYsND
+M3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
 -->
