@@ -83,7 +83,7 @@ Storage.auto_delete_self = True
   - `delete.py`             — deletion helpers (Delete class)
   - `utils/`
     - `exceptions.py`       — custom exceptions
-	    - [`KeyNotFoundError`](#kmskeynotfounderror)
+	    - `KeyNotFoundError`
 	    - `NoInstantiationWarning`
     - `warnings.py`         — custom warning classes and private warning decorators
 	    - `DeleteWarning`
@@ -92,6 +92,12 @@ Storage.auto_delete_self = True
 	    - `SubtractionFailureWarning`
 - `test/`
   - `test-*.py`             — extensive test scripts exercising storage and helpers
+	  - `test-storage.py`
+	  - `test-load.py`
+	  - `test-edit.py`
+	  - `test-delete.py`
+	  - `test-general.py` *(legacy, only used to ensure backwards compatibility)*
+	  - 
   - `__main__.py`           — test runner entrypoint / automation helpers
 
 # Main Classes
@@ -799,6 +805,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstOTIyNzYxMjA5LDE2MjgwMzA4
-NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOls0MzcxODgyNzQsMTYyODAzMDg3
+Ml19
 -->
