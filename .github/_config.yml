@@ -62,7 +62,7 @@ defaults:
       path: "index.md"
     values:
       layout: "banner"
-      
+
 optional_front_matter:
   remove_extension: true
 
@@ -74,10 +74,6 @@ optional_front_matter:
 #   subtitle_color: "#8c15bf"
 
 sidebar:
-  - name: Boss_1s Home
-    link: https://boss-1s.github.io
-  - name: Home
-    link: https://boss-1s.github.io/key_multivalue_storage
   - name: GitHub (source code)
     icon: <i class="fa-brands fa-github"></i>
     link: https://github.com/Boss-1s/key_multivalue_storage
