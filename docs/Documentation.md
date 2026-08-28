@@ -71,12 +71,14 @@ Storage.auto_delete_self = True
 > [!note]
 > Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
-- `LICENSE`                 — `GPL-2.0-only` license
 - `src/key_multivalue_storage/`
   - `storage.py`            — main Storage class (core functionality)
   - `load.py`               — loading helpers (Load class)
   - `edit.py`               — editing helpers (Edit class)
   - `delete.py`             — deletion helpers (Delete class)
+	  - `Delete`
+		  - `by_key`
+		  - `by_propkey`
   - `utils/`
     - `exceptions.py`       — custom exceptions
 	    - `KeyNotFoundError`
@@ -802,6 +804,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsyMTQwMzc4NjYxLDE2MTk3NjIz
-NDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTc1NzY5Nzg0MCwyMTQwMzc4
+NjYxLDE2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ
+==
 -->
