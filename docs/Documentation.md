@@ -93,9 +93,9 @@ Storage.auto_delete_self = True
 - `test/`
   - `test-*.py` — extensive test scripts exercising storage and helpers
 	  - `test-storage.py` — Mainstream test targeting `storage.py`
-	  - `test-load.py` — Mainstream te
-	  - `test-edit.py`
-	  - `test-delete.py`
+	  - `test-load.py` — Mainstream test targeting `load.py`
+	  - `test-edit.py` — Mainstream test targeting `edit.py`
+	  - `test-delete.py` — Mainstream test targeting `delete.py`
 	  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
 	  - `test-meta.py`
 	  - `test-exceptions.py`
@@ -807,6 +807,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTM3OTU5NjU4Myw0MzcxODgy
+BnZm1cbiIsImhpc3RvcnkiOlstMTkzOTY0NzgxOSw0MzcxODgy
 NzQsMTYyODAzMDg3Ml19
 -->
