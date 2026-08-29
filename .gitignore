@@ -180,17 +180,7 @@ otest.json
 
 .github/.tmp/
 
-tmp/
-temp/
-
-code
-vscode_cli.tar.gz
-
-coverage.xml
-.coverage
-
-vscode.sh
-
-pylint_report.json
-pylint-report.txt
-_issues.json
+# Ruby stuff
+**/.bundle/**
+**/vendor/bundle/**
+**/_site/**
