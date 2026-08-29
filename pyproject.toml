@@ -42,7 +42,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pylint==4.0.7",
+    "pylint==4.0.8",
     "pylint-per-file-ignores==3.2.1",
     "griffe==2.2.0",
 ]
@@ -521,7 +521,7 @@ release = [
     "requests==2.34.2",
 ]
 test = [
-    "pylint==4.0.7",
+    "pylint==4.0.8",
     "griffe==2.2.0",
     "pyproject==1!0.2.1",
     "pylint-per-file-ignores==3.2.1",
