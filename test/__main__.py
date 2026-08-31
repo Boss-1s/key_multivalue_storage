@@ -52,7 +52,7 @@ def _run_tests(c: Console, tests: list[str]) -> None:
     c.print(f"[red]Tracebacks:[/]\n{tracebacks}")
     if len(failed_tests) > 0:
         c.print(f"Failed Tests: {failed_tests}")
-        sys.exit(1)
+        assert False
 
 def main(c: Console) -> None:
     """Main method for testing via command line"""
