@@ -146,11 +146,10 @@ class Storage(metaclass=meta._StorageMeta):
         self.key = str(key)
         self.values = kwargs
 
+    @deprecated("Redundant method.")
     def __init_subclass__(cls, **kwargs) -> None:
         """
-        Method to ensure that helper classes cannot be instantiated.
-
-        The helper classes in question are `Load`, `Edit`, and `Delete`.
+        Deprecated.
         """
         super().__init_subclass__(**kwargs)
 
