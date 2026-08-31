@@ -21,15 +21,21 @@ from rich.console import Console
 from rich.traceback import install
 
 def _run_tests(c: Console, tests: list[str]) -> None:
+    total_tests = len(tests)
+    tracebacks: list[Any] = []
+    failed_tests: list[str] = []
     for test_file in tests:
         try:
             c.print(f"[blue]Running: {test_file}[/]")
             with open(test_file, "r", encoding='utf-8') as f:
                 compiled_code = compile(f.read(), os.path.abspath(test_file), "exec")
                 exec(compiled_code, globals())
+            tracebacks.append(None)
         except Exception as e:
             print(f"❌ [red b]Error in {test_file}: {e}[/]")
             c.print_exception(show_locals=True)
+            tracebacks.append(console.export_text())
+            failed_tests.append(test_file)
             c.print(
                 "[b][blue]Hint:[/b] hit Ctrl+Z/Ctrl+C to examine the issue more carefully[/]"
             )
@@ -38,7 +44,15 @@ def _run_tests(c: Console, tests: list[str]) -> None:
         c.print("-" * 30)
         time.sleep(0.1)
 
+    tracebacks = list(filter(lambda x: x is not None, tracebacks))
+    
     c.print("[green b]All tests complete![/]")
+    c.print("[blue]Final Statistics: [/]")
+    c.print(f"[green]{total_tests - len(failed_tests)} of {total_tests} tests passed[/]")
+    c.print(f"[red]Tracebacks:[/]\n{tracebacks}")
+    if len(failed_tests) > 0:
+        c.print(f"Failed Tests: {failed_tests}")
+        sys.exit(1)
 
 def main(c: Console) -> None:
     """Main method for testing via command line"""
