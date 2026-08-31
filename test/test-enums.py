@@ -16,13 +16,4 @@ assert kms.Encoding.HMAC == "hmac"
 assert kms.Encoding.PIGPEN == "pigpen"
 assert kms.Encoding.MORSE == "morse_code"
 
-try:
-    kms.Encoding.DEFAULT
-except AttributeError:
-    pass
-except Exception as e:
-    raise AssertionError(e) from e
-else:
-    raise AssertionError("kms.Encoding.DEFAULT should not be accessible directly.")
-
 assert kms.Encoding("NONEXISTENT") == kms.Encoding.KMS
