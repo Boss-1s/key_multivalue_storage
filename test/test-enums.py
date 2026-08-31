@@ -15,5 +15,5 @@ assert kms.Encoding.AES == "aes"
 assert kms.Encoding.HMAC == "hmac"
 assert kms.Encoding.PIGPEN == "pigpen"
 assert kms.Encoding.MORSE == "morse_code"
-
+assert kms.Encoding.NONE == ""
 assert kms.Encoding("NONEXISTENT") == kms.Encoding.KMS
