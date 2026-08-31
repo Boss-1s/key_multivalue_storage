@@ -9,12 +9,12 @@ from typing import Literal
 
 __lazy_modules__ = ["sys"]
 
-from enum import Enum
+from enum import StrEnum
 import sys
 
 warnings = sys.modules.get("warnings")
 
-class Encoding(Enum):
+class Encoding(StrEnum):
     """
     Enum class for encoding types, new in kms-semver1.4.0.
     """
@@ -32,7 +32,7 @@ class Encoding(Enum):
     HMAC = "hmac"
     PIGPEN = "pigpen"
     MORSE = "morse_code"
-    NONE = None
+    NONE = ""
 
     @classmethod
     def _missing_(cls, value):
