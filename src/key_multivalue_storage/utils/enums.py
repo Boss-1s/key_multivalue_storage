@@ -9,17 +9,15 @@ from typing import Literal
 
 __lazy_modules__ = ["sys"]
 
-from enum import StrEnum
+from enum import Enum
 import sys
 
 warnings = sys.modules.get("warnings")
 
-class Encoding(StrEnum):
+class Encoding(Enum):
     """
     Enum class for encoding types, new in kms-semver1.4.0.
     """
-    _ignore_ = ["DEFAULT"]
-
     UTF8 = "utf-8"
     UTF16 = "utf-16"
     UTF32 = "utf-32"
@@ -34,14 +32,13 @@ class Encoding(StrEnum):
     HMAC = "hmac"
     PIGPEN = "pigpen"
     MORSE = "morse_code"
-
-    DEFAULT = KMS
+    NONE = None
 
     @classmethod
     def _missing_(cls, value):
         """
         Handle missing values by returning the DEFAULT encoding.
         """
-        warnings.warn(f"{value} is not a valid Encoding; defaulting to {cls.KMS}",#type: ignore
+        warnings.warn(f"{value} is not a valid Encoding; defaulting to '{cls.KMS}'",#type: ignore
                       UserWarning)
         return cls.KMS
