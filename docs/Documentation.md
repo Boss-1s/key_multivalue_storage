@@ -213,7 +213,23 @@ db.store("config", encode=True)    # will append .json -> config.json and encode
 
 ### Type Hinting
 
-Support 
+Support for type hinting dropped in kms-v1.3.1/2026.08.12, along with fixing #26, meaning `Storage` can now be assigned to `dict[str, dict[str, Any]]`, along with anything type hinted as the following:
+```py
+Storage[TopKey, SubKey, SubVal]
+```
+Depending on what you type-hint on the first assignment, your type checkers will flag you down any time
+- the top-level key type does not match `TopKey`
+- the subkey type does not match `SubKey`
+- the value type does not match `SubVal`
+
+Remember that **type-hints do not affect the actual execution of your code.** 
+
+#### Examples
+
+- Good type hint:
+- ```py
+
+```
 
 ---
 
@@ -825,7 +841,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMzU0OTU3MzQ4LDE1MjQwNTMx
-MDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxNDAzNzg2NjEsMT
-YxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
+BnZm1cbiIsImhpc3RvcnkiOls0MjQyNTkwODAsMTUyNDA1MzEw
+MCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMjE0MDM3ODY2MSwxNj
+E5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMwODcyXX0=
 -->
