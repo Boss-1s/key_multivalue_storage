@@ -325,10 +325,10 @@ def __getitem__(self, key: str | int | slice) -> Any
 
 | Argument | Overload type | Overload return | Description
 | :---: | :---: | :---: | --- |
-| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
-| `key` | `Subkey` (`str`) | `SubVal` | When passing the top-level key for `key`, `self.values` will be returned. |
-| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
-| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` (`self.values`) | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `SubKey` (`str`) | `SubVal` (`self.values[key]`) | When passing any existing subkey for `key`, its corresponding value will be returned. |
+| `key` | `int` | `SubVal` (`self.values.values()[key]`) | When passing an integer for `key`, the value of the index of the subkey in `list(self.values.keys())` is returned. ***Note*: In `kms-semver2.0.0`, this may be changed to return a key-value pair OR removed completely to mimic `dict`.** |
+| `key` | `slice` | `list[SubVal]` (`list(self.values.values())[key]`) | When passing a slice object (`[start:stop]`) to `key`, a list of the value od the index of the subkey in `list(self.values.keys())` is returned. ***Note*: In `kms-semver2.0.0`, this may be changed to return key-value pairs OR removed completely to mimic `dict`.** |
 
 ##### Example
 ```py
@@ -886,8 +886,8 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTc4OTkyNTMsMzc4MjUzOTc0
-LDE1MjQwNTMxMDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxND
-AzNzg2NjEsMTYxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3
-Ml19
+BnZm1cbiIsImhpc3RvcnkiOlstMTM1MDAyMTI0MCwzNzgyNTM5
+NzQsMTUyNDA1MzEwMCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMj
+E0MDM3ODY2MSwxNjE5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMw
+ODcyXX0=
 -->
