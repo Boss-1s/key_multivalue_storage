@@ -127,7 +127,7 @@ The `Storage` class is the main class in this library, in which all operations r
 - `**kwargs: Any` - The keyword arguments that are converted into the instance variable `values`. It is, in technicality, a `dict[str, Any]`.
 
 > [!important]
-> These two parameters make the Storage object's type to be `dict[str, dict[str, Any]]`. However, since Storage does not (and won't) inhierit from `dict`, static type checkers get confused and say that `Storage` cannot be assignable to `dict[str, dict[str, Any]]`. See [#26](https://github.com/Boss-1s/key_multivalue_storage/issues/26) for more information.
+> These two parameters make the Storage object's type to be `dict[str, dict[str, Any]]`. 
 
 ### Attributes
 
@@ -203,12 +203,52 @@ This method must be run on a `Storage` instance for it to work properly.
 
 This method does not return anything.
 
-##### Examples
+##### Example
 
 ```py
 db = Storage("settings", theme="dark", timeout=30)
 db.store("config.json")            # writes config.json
 db.store("config", encode=True)    # will append .json -> config.json and encode values
+```
+
+### Type Hinting
+
+Support for type hinting dropped in kms-v1.3.1/2026.08.12, along with fixing #26, meaning `Storage` can now be assigned to `dict[str, dict[str, Any]]`, along with anything type hinted as the following:
+```py
+Storage[TopKey, SubKey, SubVal]
+```
+Depending on what you type-hint on the first assignment, your type checkers will flag you down any time
+- the top-level key type does not match `TopKey`
+- the subkey type does not match `SubKey`
+- the value type does not match `SubVal`
+
+The default type hint, if you just pass `db: Storage = Storage(...)`, is `Storage[str, str, Any]`, which is functionally the same as `dict[str, dict[str, Any]]`.
+
+Remember that **type-hints do not affect the actual execution of your code.** 
+
+> [!warning]
+> If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See [PEP 0649](https://peps.python.org/pep-0649/).
+
+#### Example
+
+```py
+from __future__ import annotations # Required for CPython <= 3.13
+
+from key_multivalue_storage import Storage
+from typing import Any, get_type_hints
+
+db: Storage[str, Any, Any] = Storage("string",
+                             abf="abc",
+                             bbb=123, # Works
+                             cdb=b'0x\0x\1x') # Also works
+
+bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
+                                           abc=123, # Fine
+                                           whoops=3.14159) # A type checker like Pyright will flag this
+
+print(bad_type_hint_db["whoops"]) # still accessible though, as type hints do not affect execution as a whole
+
+default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionally `Storage[str, str, Any]` or `dict[str, dict[str, Any]]`
 ```
 
 ---
@@ -219,7 +259,10 @@ db.store("config", encode=True)    # will append .json -> config.json and encode
 def to_dict(self) -> dict[str, dict[str, Any]]
 ```
 
-Return the `Storage` instance represented as a nested dict `{top_level_key: {subkey: value}}`. **Use this method as a fallback if `dict(Storage)` ever fails.**
+Return the `Storage` instance represented as a nested dict `{top_level_key: {subkey: value}}`.
+
+> [!warning]
+> **Only use this method as a fallback if `dict(Storage)` ever fails.**
 
 ##### Arguments
 - None
@@ -227,7 +270,7 @@ Return the `Storage` instance represented as a nested dict `{top_level_key: {sub
 ##### Outputs
 - `dict[str, dict[str, Any]]` — dict representation of the `Storage` instance.
 
-##### Examples
+##### Example
 ```py
 db = Storage("users", alice="id1")
 print(db.to_dict())  # {"users": {"alice": "id1"}}
@@ -241,7 +284,7 @@ print(db.to_dict())  # {"users": {"alice": "id1"}}
 def keys(self) -> KeysView[Any]
 ```
 
-Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 3106](https://peps.python.org/pep-3106/)) for the top-level key (helper to make `dict(Storage)` possible).
+Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 3106](https://peps.python.org/pep-3106/)) for the top-level key.
 
 ##### Arguments
 - None
@@ -249,23 +292,45 @@ Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 310
 ##### Outputs
 - `KeysView[Any]` — view containing the top-level key.
 
-##### Examples
+##### Example
 ```py
 db = Storage("k", a=1)
 print(list(db.keys()))  # ["k"]
 ```
+---
 
 ### Special Methods
 
 #### `__getitem__`
 
 ```py
+    @overload
+    def __getitem__(self, key: TopKey) -> dict[SubKey, SubVal]: ...
+
+    @overload
+    def __getitem__(self, key: SubKey) -> SubVal: ...
+
+    @overload
+    def __getitem__(self, key: int) -> SubVal: ...
+
+    @overload
+    def __getitem__(self, key: slice) -> list[SubVal]: ...
+
+
 def __getitem__(self, key: str | int | slice) -> Any
 ```
-
 - If `key` equals the top-level key returns the values dict; if `str` returns the subvalue; if `int` returns subvalue by index; if `slice` returns a list of values.
 
-##### Examples
+##### Overloads
+
+| Argument | Overload type | Overload return | Description
+| :---: | :---: | :---: | --- |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `Subkey` (`str`) | `SubVal` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+
+##### Example
 ```py
 db = Storage("s", a=1, b=2)
 print(db["a"])      # 1
@@ -283,7 +348,7 @@ def __setitem__(self, key: str | int, value: Any) -> None
 
 - Set subkey by name or set value by integer index.
 
-##### Examples
+##### Example
 ```py
 db["c"] = 3
 db[0] = "new"   # replace value at index 0
@@ -299,7 +364,7 @@ def __delitem__(self, key: str | int | slice) -> None
 
 - Delete subkey by name, or by index/slice.
 
-##### Examples
+##### Example
 ```py
 del db["a"]
 del db[0]
@@ -316,7 +381,7 @@ def __len__(self) -> int
 
 - Returns number of subkeys.
 
-##### Examples
+##### Example
 ```py
 len(db)  # number of subkeys
 ```
@@ -331,7 +396,7 @@ def __contains__(self, item: Any) -> bool
 
 - Membership in subkeys.
 
-##### Examples
+##### Example
 ```py
 if "alice" in db:
     print("Alice is in the database!")
@@ -347,11 +412,7 @@ def __iter__(self) -> Generator[str | uuid.UUID | dict[str, Any], None, None]
 
 - Yields top-level key first, then each `{subkey: value}` as single-item dicts.
 
-##### Issues
-
-[#97 - refactor!: more robust `Storage.__iter__()`](https://github.com/Boss-1s/key_multivalue_storage/issues/97)
-
-##### Examples
+##### Example
 ```py
 for item in db:
     print(item)
@@ -372,7 +433,7 @@ for item in db:
 - `__lshift__`, `__rshift__` — slice-like operations by index.
 - Comparison dunders follow `total_ordering` semantics with key-matching restrictions.
 
-##### Examples
+##### Example
 ```py
 a = Storage("k", foo=1, bar=2)
 b = Storage("k", baz=3, bar=9)
@@ -405,16 +466,12 @@ Use `Storage` in a `with`-statement. Preferred over deprecated `auto_delete_self
 - `__enter__`: returns `dict(self.values)`
 - `__exit__`: returns `True` on success; prints info on errors and returns `False` to propagate exceptions.
 
-##### Examples
+##### Example
 ```py
 with Storage("tmp", a=1, b=2) as data:
     # data is dict of values
     print(data)
 ```
-
-##### Issues
-
-[#74 - feat!: More robust `__enter__`](https://github.com/Boss-1s/key_multivalue_storage/issues/74)
 
 ### Other Info
 
@@ -602,7 +659,7 @@ Rename a subkey within a top-level key.
 ##### Outputs
 - `None`. `KeyNotFoundError` may be raised if any key is not found.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.propkey("db.json", "users", "username", "user_name")
 ```
@@ -635,7 +692,7 @@ Changes the value for an existing subkey under a top-level key.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if top-level key missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.propval("db.json", "users", "alice", "new-id")
 ```
@@ -662,7 +719,7 @@ Renames any top-level key in the JSON file; values stay unchanged.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if `oldkey` missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.key("db.json", "users", "accounts")
 ```
@@ -699,7 +756,7 @@ Delete a subkey inside a top-level key.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if key or property missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Delete.by_propkey("db.json", "users", "temp")
 ```
@@ -725,7 +782,7 @@ Delete a top-level key (and its subkeys) entirely from the JSON file.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if key missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Delete.by_key("db.json", "old_key")
 ```
@@ -751,7 +808,7 @@ Delete all data in the JSON file (overwrite with `{}`). Shows a `DeleteWarning` 
 ##### Outputs
 - `None`.
 
-##### Examples
+##### Example
 ```py
 # Normal run: warns
 Storage.Delete.all("db.json")
@@ -829,7 +886,8 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTI0MDUzMTAwLDE2NjExNzgx
-MjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLDE2MTk3NjIzNDYsND
-M3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlsxNTc4OTkyNTMsMzc4MjUzOTc0
+LDE1MjQwNTMxMDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxND
+AzNzg2NjEsMTYxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3
+Ml19
 -->
