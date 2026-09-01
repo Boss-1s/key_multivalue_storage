@@ -225,14 +225,20 @@ Depending on what you type-hint on the first assignment, your type checkers will
 Remember that **type-hints do not affect the actual execution of your code.** 
 
 > [!warning]
-> If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See enter code here
+> If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See [PEP 0649](https://peps.python.org/pep-0649/).
 
 #### Examples
 
-- Good type hint:
+- CPython >= 3.14
 
 ```py
+from key_multivalue_storage import Storage
+from typing import Any
 
+db: Storage[str, Any, Any] = Storage("string",
+                                     abf="abc",
+                                     bbb=123, # Works
+                                     cdb=b'0x\0x\1x'
 ```
 
 ---
@@ -845,7 +851,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOls5NTgwMzcxNjQsMTUyNDA1MzEw
-MCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMjE0MDM3ODY2MSwxNj
-E5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMwODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlsxMDUxNjgzNjIwLDE1MjQwNTMx
+MDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxNDAzNzg2NjEsMT
+YxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
 -->
