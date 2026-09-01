@@ -306,7 +306,6 @@ print(list(db.keys()))  # ["k"]
 ```py
 def __getitem__(self, key: str | int | slice) -> Any
 ```
-
 - If `key` equals the top-level key returns the values dict; if `str` returns the subvalue; if `int` returns subvalue by index; if `slice` returns a list of values.
 
 ##### Example
@@ -865,7 +864,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNTY5ODMyMDEzLDM3ODI1Mzk3
+BnZm1cbiIsImhpc3RvcnkiOlsxMDk0NDYwNDg1LDM3ODI1Mzk3
 NCwxNTI0MDUzMTAwLDE2NjExNzgxMjYsLTE5OTA3NjgwNiwyMT
 QwMzc4NjYxLDE2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4
 NzJdfQ==
