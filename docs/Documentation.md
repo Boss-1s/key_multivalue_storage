@@ -127,7 +127,7 @@ The `Storage` class is the main class in this library, in which all operations r
 - `**kwargs: Any` - The keyword arguments that are converted into the instance variable `values`. It is, in technicality, a `dict[str, Any]`.
 
 > [!important]
-> These two parameters make the Storage object's type to be `dict[str, dict[str, Any]]`. However, since Storage does not (and won't) inhierit from `dict`, static type checkers get confused and say that `Storage` cannot be assignable to `dict[str, dict[str, Any]]`. See [#26](https://github.com/Boss-1s/key_multivalue_storage/issues/26) for more information.
+> These two parameters make the Storage object's type to be `dict[str, dict[str, Any]]`. 
 
 ### Attributes
 
@@ -210,6 +210,10 @@ db = Storage("settings", theme="dark", timeout=30)
 db.store("config.json")            # writes config.json
 db.store("config", encode=True)    # will append .json -> config.json and encode values
 ```
+
+### Type Hinting
+
+Support 
 
 ---
 
@@ -347,10 +351,6 @@ def __iter__(self) -> Generator[str | uuid.UUID | dict[str, Any], None, None]
 
 - Yields top-level key first, then each `{subkey: value}` as single-item dicts.
 
-##### Issues
-
-[#97 - refactor!: more robust `Storage.__iter__()`](https://github.com/Boss-1s/key_multivalue_storage/issues/97)
-
 ##### Examples
 ```py
 for item in db:
@@ -411,10 +411,6 @@ with Storage("tmp", a=1, b=2) as data:
     # data is dict of values
     print(data)
 ```
-
-##### Issues
-
-[#74 - feat!: More robust `__enter__`](https://github.com/Boss-1s/key_multivalue_storage/issues/74)
 
 ### Other Info
 
@@ -829,7 +825,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTI0MDUzMTAwLDE2NjExNzgx
-MjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLDE2MTk3NjIzNDYsND
-M3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMzU0OTU3MzQ4LDE1MjQwNTMx
+MDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxNDAzNzg2NjEsMT
+YxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
 -->
