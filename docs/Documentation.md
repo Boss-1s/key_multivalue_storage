@@ -248,16 +248,7 @@ bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
 
 print(bad_type_hint_db["whoops"]) # still accessible though, as type hints do not affect execution as a whole
 
-default_db: Storage = Storage("last_string", foo="bar", fah="hah")
-
-print(get_type_hints(default_db))
-```
-
-**Output**
-
-```
-3.14159
-
+default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionally `Storage[str, str, Any]` or `dict[str, dict[str, Any]]`
 ```
 
 ---
@@ -870,7 +861,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTc5MzUyNDYxMCwxNTI0MDUz
-MTAwLDE2NjExNzgxMjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLD
-E2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlszNzgyNTM5NzQsMTUyNDA1MzEw
+MCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMjE0MDM3ODY2MSwxNj
+E5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMwODcyXX0=
 -->
