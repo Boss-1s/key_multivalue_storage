@@ -18,7 +18,7 @@ jobs:
           GITHUB_TOKEN: ${{github.token}}
           GH_REPO: ${{github.repository}}
           PR_NUMBER: ${{github.event.pull_request.number}}
-        if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+        if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' }}
         shell: bash
         run: |          
           # 1. Fetch closing issues strictly using the API target
@@ -46,5 +46,5 @@ jobs:
             gh pr edit $PR_NUMBER --repo $GH_REPO --milestone "$MILESTONE_TITLE"
           fi
 
-          gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Needs Triage" --add-label "dependencies"
+          gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Priority: Low" --add-label "dependencies"
           exit 0
