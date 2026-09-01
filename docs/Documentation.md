@@ -222,6 +222,8 @@ Depending on what you type-hint on the first assignment, your type checkers will
 - the subkey type does not match `SubKey`
 - the value type does not match `SubVal`
 
+The default type hint, if you just pass `db: Storage = Storage(...)`, is `Storage[str, str, Any]`, which is functionally the same as `dict[str, dict[str, Any]]`.
+
 Remember that **type-hints do not affect the actual execution of your code.** 
 
 > [!warning]
@@ -229,16 +231,22 @@ Remember that **type-hints do not affect the actual execution of your code.**
 
 #### Examples
 
-- CPython >= 3.14
-
 ```py
+from __future__ import annotations # Required for CPython <= 3.13
+
 from key_multivalue_storage import Storage
 from typing import Any
 
 db: Storage[str, Any, Any] = Storage("string",
-                                     abf="abc",
-                                     bbb=123, # Works
-                                     cdb=b'0x\0x\1x'
+                             abf="abc",
+                             bbb=123, # Works
+                             cdb=b'0x\0x\1x') # Also works
+
+bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
+                                           abc=123, # Fine
+                                           whoops=3.14159) # A type checker like Pyright will flag this
+
+print(bad_type_hint_db["whoops"]) # still acce though, as type hitns do not affect execution as a whole
 ```
 
 ---
@@ -851,7 +859,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxMDUxNjgzNjIwLDE1MjQwNTMx
+BnZm1cbiIsImhpc3RvcnkiOlsxMjA3NDk5MDQwLDE1MjQwNTMx
 MDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxNDAzNzg2NjEsMT
 YxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
 -->
