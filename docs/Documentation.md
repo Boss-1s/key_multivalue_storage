@@ -304,9 +304,31 @@ print(list(db.keys()))  # ["k"]
 #### `__getitem__`
 
 ```py
+    @overload
+    def __getitem__(self, key: TopKey) -> dict[SubKey, SubVal]: ...
+
+    @overload
+    def __getitem__(self, key: SubKey) -> SubVal: ...
+
+    @overload
+    def __getitem__(self, key: int) -> SubVal: ...
+
+    @overload
+    def __getitem__(self, key: slice) -> list[SubVal]: ...
+
+
 def __getitem__(self, key: str | int | slice) -> Any
 ```
 - If `key` equals the top-level key returns the values dict; if `str` returns the subvalue; if `int` returns subvalue by index; if `slice` returns a list of values.
+
+##### Overloads
+
+| Argument | Overload type | Overload return | Description
+| :---: | :---: | :---: | --- |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `Subkey` (`str`) | `SubVal` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
+| `key` | `TopKey` (`str`) | `dict[SubKey, SubVal]` | When passing the top-level key for `key`, `self.values` will be returned. |
 
 ##### Example
 ```py
@@ -864,8 +886,8 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxMDk0NDYwNDg1LDM3ODI1Mzk3
-NCwxNTI0MDUzMTAwLDE2NjExNzgxMjYsLTE5OTA3NjgwNiwyMT
-QwMzc4NjYxLDE2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4
-NzJdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlsxNTc4OTkyNTMsMzc4MjUzOTc0
+LDE1MjQwNTMxMDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxND
+AzNzg2NjEsMTYxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3
+Ml19
 -->
