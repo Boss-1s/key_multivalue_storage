@@ -203,7 +203,7 @@ This method must be run on a `Storage` instance for it to work properly.
 
 This method does not return anything.
 
-##### Examples
+##### Example
 
 ```py
 db = Storage("settings", theme="dark", timeout=30)
@@ -229,7 +229,7 @@ Remember that **type-hints do not affect the actual execution of your code.**
 > [!warning]
 > If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See [PEP 0649](https://peps.python.org/pep-0649/).
 
-#### Examples
+#### Example
 
 ```py
 from __future__ import annotations # Required for CPython <= 3.13
@@ -259,7 +259,10 @@ default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionall
 def to_dict(self) -> dict[str, dict[str, Any]]
 ```
 
-Return the `Storage` instance represented as a nested dict `{top_level_key: {subkey: value}}`. **Use this method as a fallback if `dict(Storage)` ever fails.**
+Return the `Storage` instance represented as a nested dict `{top_level_key: {subkey: value}}`.
+
+> [!warning]
+> **Only use this method as a fallback if `dict(Storage)` ever fails.**
 
 ##### Arguments
 - None
@@ -267,7 +270,7 @@ Return the `Storage` instance represented as a nested dict `{top_level_key: {sub
 ##### Outputs
 - `dict[str, dict[str, Any]]` — dict representation of the `Storage` instance.
 
-##### Examples
+##### Example
 ```py
 db = Storage("users", alice="id1")
 print(db.to_dict())  # {"users": {"alice": "id1"}}
@@ -281,7 +284,7 @@ print(db.to_dict())  # {"users": {"alice": "id1"}}
 def keys(self) -> KeysView[Any]
 ```
 
-Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 3106](https://peps.python.org/pep-3106/)) for the top-level key (helper to make `dict(Storage)` possible).
+Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 3106](https://peps.python.org/pep-3106/)) for the top-level key.
 
 ##### Arguments
 - None
@@ -289,11 +292,12 @@ Return a `dict_keys` object (internally `collections.abc.KeysView`, see [PEP 310
 ##### Outputs
 - `KeysView[Any]` — view containing the top-level key.
 
-##### Examples
+##### Example
 ```py
 db = Storage("k", a=1)
 print(list(db.keys()))  # ["k"]
 ```
+---
 
 ### Special Methods
 
@@ -305,7 +309,7 @@ def __getitem__(self, key: str | int | slice) -> Any
 
 - If `key` equals the top-level key returns the values dict; if `str` returns the subvalue; if `int` returns subvalue by index; if `slice` returns a list of values.
 
-##### Examples
+##### Example
 ```py
 db = Storage("s", a=1, b=2)
 print(db["a"])      # 1
@@ -323,7 +327,7 @@ def __setitem__(self, key: str | int, value: Any) -> None
 
 - Set subkey by name or set value by integer index.
 
-##### Examples
+##### Example
 ```py
 db["c"] = 3
 db[0] = "new"   # replace value at index 0
@@ -339,7 +343,7 @@ def __delitem__(self, key: str | int | slice) -> None
 
 - Delete subkey by name, or by index/slice.
 
-##### Examples
+##### Example
 ```py
 del db["a"]
 del db[0]
@@ -356,7 +360,7 @@ def __len__(self) -> int
 
 - Returns number of subkeys.
 
-##### Examples
+##### Example
 ```py
 len(db)  # number of subkeys
 ```
@@ -371,7 +375,7 @@ def __contains__(self, item: Any) -> bool
 
 - Membership in subkeys.
 
-##### Examples
+##### Example
 ```py
 if "alice" in db:
     print("Alice is in the database!")
@@ -387,7 +391,7 @@ def __iter__(self) -> Generator[str | uuid.UUID | dict[str, Any], None, None]
 
 - Yields top-level key first, then each `{subkey: value}` as single-item dicts.
 
-##### Examples
+##### Example
 ```py
 for item in db:
     print(item)
@@ -408,7 +412,7 @@ for item in db:
 - `__lshift__`, `__rshift__` — slice-like operations by index.
 - Comparison dunders follow `total_ordering` semantics with key-matching restrictions.
 
-##### Examples
+##### Example
 ```py
 a = Storage("k", foo=1, bar=2)
 b = Storage("k", baz=3, bar=9)
@@ -441,7 +445,7 @@ Use `Storage` in a `with`-statement. Preferred over deprecated `auto_delete_self
 - `__enter__`: returns `dict(self.values)`
 - `__exit__`: returns `True` on success; prints info on errors and returns `False` to propagate exceptions.
 
-##### Examples
+##### Example
 ```py
 with Storage("tmp", a=1, b=2) as data:
     # data is dict of values
@@ -634,7 +638,7 @@ Rename a subkey within a top-level key.
 ##### Outputs
 - `None`. `KeyNotFoundError` may be raised if any key is not found.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.propkey("db.json", "users", "username", "user_name")
 ```
@@ -667,7 +671,7 @@ Changes the value for an existing subkey under a top-level key.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if top-level key missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.propval("db.json", "users", "alice", "new-id")
 ```
@@ -694,7 +698,7 @@ Renames any top-level key in the JSON file; values stay unchanged.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if `oldkey` missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Edit.key("db.json", "users", "accounts")
 ```
@@ -731,7 +735,7 @@ Delete a subkey inside a top-level key.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if key or property missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Delete.by_propkey("db.json", "users", "temp")
 ```
@@ -757,7 +761,7 @@ Delete a top-level key (and its subkeys) entirely from the JSON file.
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if key missing.
 
-##### Examples
+##### Example
 ```py
 Storage.Delete.by_key("db.json", "old_key")
 ```
@@ -783,7 +787,7 @@ Delete all data in the JSON file (overwrite with `{}`). Shows a `DeleteWarning` 
 ##### Outputs
 - `None`.
 
-##### Examples
+##### Example
 ```py
 # Normal run: warns
 Storage.Delete.all("db.json")
@@ -861,7 +865,8 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlszNzgyNTM5NzQsMTUyNDA1MzEw
-MCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMjE0MDM3ODY2MSwxNj
-E5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMwODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstNTY5ODMyMDEzLDM3ODI1Mzk3
+NCwxNTI0MDUzMTAwLDE2NjExNzgxMjYsLTE5OTA3NjgwNiwyMT
+QwMzc4NjYxLDE2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4
+NzJdfQ==
 -->
