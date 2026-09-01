@@ -4,6 +4,7 @@ and help() method implementations.
 
 Compatible versions for this test file: >=kms-v1.3.0/2026.07.30
 """
+from __future__ import annotations
 
 import sys
 from rich.console import Console

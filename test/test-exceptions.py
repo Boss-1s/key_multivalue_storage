@@ -4,6 +4,7 @@ test-exceptions.py - a test file for KMS exceptions and warnings.
 
 Compatible versions for this test file: >=kms-v1.3.0a0/2026.05.23
 """
+from __future__ import annotations
 
 from rich.traceback import install
 from packaging.version import Version

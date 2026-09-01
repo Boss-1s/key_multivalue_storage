@@ -5,8 +5,8 @@ Compatible versions for this test file: >=kms-v1.3.1/2026.08.12
 
 for semver1.2.x, use the original 'test-general.py' file instead.
 """
+from __future__ import annotations
 
-import ast
 import os
 from typing import Any
 
