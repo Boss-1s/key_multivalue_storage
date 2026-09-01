@@ -235,7 +235,7 @@ Remember that **type-hints do not affect the actual execution of your code.**
 from __future__ import annotations # Required for CPython <= 3.13
 
 from key_multivalue_storage import Storage
-from typing import Any
+from typing import Any, get_type_hints
 
 db: Storage[str, Any, Any] = Storage("string",
                              abf="abc",
@@ -246,7 +246,18 @@ bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
                                            abc=123, # Fine
                                            whoops=3.14159) # A type checker like Pyright will flag this
 
-print(bad_type_hint_db["whoops"]) # still acce though, as type hitns do not affect execution as a whole
+print(bad_type_hint_db["whoops"]) # still accessible though, as type hints do not affect execution as a whole
+
+default_db: Storage = Storage("last_string", foo="bar", fah="hah")
+
+print(get_type_hints(default_db))
+```
+
+**Output**
+
+```
+3.14159
+
 ```
 
 ---
@@ -859,7 +870,7 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxMjA3NDk5MDQwLDE1MjQwNTMx
-MDAsMTY2MTE3ODEyNiwtMTk5MDc2ODA2LDIxNDAzNzg2NjEsMT
-YxOTc2MjM0Niw0MzcxODgyNzQsMTYyODAzMDg3Ml19
+BnZm1cbiIsImhpc3RvcnkiOlstMTc5MzUyNDYxMCwxNTI0MDUz
+MTAwLDE2NjExNzgxMjYsLTE5OTA3NjgwNiwyMTQwMzc4NjYxLD
+E2MTk3NjIzNDYsNDM3MTg4Mjc0LDE2MjgwMzA4NzJdfQ==
 -->
