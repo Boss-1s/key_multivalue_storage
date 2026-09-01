@@ -10,13 +10,6 @@ Made with love by Boss_1s.
 #pylint: disable=import-outside-toplevel
 from __future__ import annotations
 
-__lazy_modules__ = ["sys",
-                    "json",
-                    "warnings",
-                    "builtins",
-                    "rich.console",
-                    "rich.markdown",]
-
 import sys
 import json
 import warnings

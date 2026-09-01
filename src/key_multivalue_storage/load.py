@@ -10,14 +10,6 @@ Made with love by Boss_1s.
 """
 from __future__ import annotations
 
-__lazy_modules__ = ["sys",
-                    "json",
-                    "rich.console",
-                    "rich.markdown",
-                    "warnings",
-                    "builtins",
-                    "rich.console",]
-
 import sys
 import json
 import warnings

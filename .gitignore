@@ -184,3 +184,14 @@ otest.json
 **/.bundle/**
 **/vendor/bundle/**
 **/_site/**
+
+tmp/
+temp/
+
+code
+vscode_cli.tar.gz
+
+coverage.xml
+.coverage
+
+vscode.sh

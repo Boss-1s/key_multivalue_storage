@@ -19,15 +19,6 @@ Made with love by Boss_1s.
 
 from __future__ import annotations
 
-__lazy_modules__ = ["sys",
-                    "json",
-                    "uuid",
-                    "warnings",
-                    "difflib",
-                    "builtins",
-                    "rich.console",
-                    "rich.markdown",]
-
 import sys
 import json
 import uuid

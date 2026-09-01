@@ -13,8 +13,6 @@ Made with love by Boss_1s.
 # pylint: skip-file
 from __future__ import annotations
 
-__lazy_modules__ = ["uuid"]
-
 from collections.abc import KeysView
 import uuid
 from functools import total_ordering
@@ -29,6 +27,8 @@ def help() -> None: ...
 def print(*args: Any, **kwargs: Any) -> None: ...
 
 @total_ordering
+# 🎯 Inheriting from dict[Any, Any] provides complete structural freedom!
+# This clears your assignment errors while welcoming your custom overloads naturally.
 class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass=meta._StorageMeta):
     # Global attributes
     indent: int

@@ -25,11 +25,6 @@ class _NameMeta(type, metaclass=_KmsMeta):
 """
 
 from __future__ import annotations
-
-__lazy_modules__ = ["sys",
-                    "rich.console",
-                    "rich.text",]
-
 import sys
 from typing_extensions import deprecated
 from rich.console import Console
@@ -59,7 +54,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.07"
+        return "2026.09.01"
 
     @property
     def version(cls) -> str:
@@ -69,7 +64,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/07"
+        return "2026/09/01"
 
     @property
     def Load(cls):
@@ -163,7 +158,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.09.01"
 
     @property
     def version(cls) -> str:
@@ -173,7 +168,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/09/01"
 
     def __repr__(cls) -> str:
         """
@@ -200,7 +195,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.09.01"
 
     @property
     def version(cls) -> str:
@@ -210,7 +205,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/09/01"
 
     def __repr__(cls) -> str:
         """
@@ -237,7 +232,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.09.01"
 
     @property
     def version(cls) -> str:
@@ -247,7 +242,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/09/01"
 
     def __repr__(cls) -> str:
         """
