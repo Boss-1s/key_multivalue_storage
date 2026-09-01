@@ -17,13 +17,14 @@ import time
 import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
 import subprocess
 import warnings
+import traceback
 from rich.console import Console
 from rich.traceback import install
 
 def _run_tests(c: Console, tests: list[str]) -> None:
     total_tests = len(tests)
-    tracebacks: list[Any] = []
-    failed_tests: list[str] = []
+    tracebacks = []
+    failed_tests = []
     for test_file in tests:
         try:
             c.print(f"[blue]Running: {test_file}[/]")
@@ -34,7 +35,7 @@ def _run_tests(c: Console, tests: list[str]) -> None:
         except Exception as e:
             print(f"❌ [red b]Error in {test_file}: {e}[/]")
             c.print_exception(show_locals=True)
-            tracebacks.append(console.export_text())
+            tracebacks.append(traceback.format_exc())
             failed_tests.append(test_file)
             c.print(
                 "[b][blue]Hint:[/b] hit Ctrl+Z/Ctrl+C to examine the issue more carefully[/]"
@@ -45,11 +46,10 @@ def _run_tests(c: Console, tests: list[str]) -> None:
         time.sleep(0.1)
 
     tracebacks = list(filter(lambda x: x is not None, tracebacks))
-    
+
     c.print("[green b]All tests complete![/]")
-    c.print("[blue]Final Statistics: [/]")
-    c.print(f"[green]{total_tests - len(failed_tests)} of {total_tests} tests passed[/]")
-    c.print(f"[red]Tracebacks:[/]\n{tracebacks}")
+    c.print(f"[blue]{total_tests - len(failed_tests)} of {total_tests} tests passed[/]")
+    c.print(f"[red]Tracebacks:[/]\n{'\n'.join(x for x in tracebacks)}")
     if len(failed_tests) > 0:
         c.print(f"Failed Tests: {failed_tests}")
         sys.exit(1)

@@ -63,6 +63,8 @@ jobs:
       - name: Run Python Tests
         id: self-tests
         background: true
+        env:
+          PYTHONUTF8: 1
         run: |
           uv run coverage erase
           uv run coverage run test
