@@ -773,34 +773,52 @@ class Storage(metaclass=meta._StorageMeta):
     def __and__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
-        """Defines using AND (&) for bitwise operations with Storage instances and dictionaries."""
+        """
+        Defines using the AND (&) operator for set intersections between Storage objects and other
+        Storage objects or dictionaries.
+
+        Use the symbol `&` for actual operations as opposed to `Storage.__and__`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be unionized with.
+
+        ## Outputs
+        - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
+        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        _set_keys: set[Any] = set()
+        _values: dict[Any, Any] = {}
+
         if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys: set = set(self.values.keys()) & set(other.values.keys())
-                if not skeys:
-                    return 0
-                rtd: dict = {}
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        rtd[akey] = self.values[akey]
-                    if akey in other.values:
-                        rtd[akey] = other.values[akey]
-                return Storage(self.key, **rtd)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
-            skeys: set = set(self.values.keys()) & set(other)
-            if not skeys:
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+
+            _set_keys = set(self.values.keys()) & set(other.values.keys())
+            if not _set_keys:
                 return 0
-            rtd: dict = {}
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    rtd[akey] = self.values[akey]
-                if akey in other.values():
-                    rtd[akey] = dict(other.values())[akey]
-            return Storage(self.key, **rtd)
-        return NotImplemented
+            _values = other.values
+
+        if isinstance(other, dict):
+            _set_keys = set(self.values.keys()) & set(other)
+            if not _set_keys:
+                return 0
+            _values = other
+
+        _return_dict: dict = {}
+        for k in _set_keys:
+            k: str
+            if k in self.values:
+                _return_dict[k] = self.values[k]
+            if k in _values:
+                _return_dict[k] = _values[k]
+
+        return Storage(self.key, **_return_dict)
 
     def __or__(self,
                other: Storage | dict[str, Any]
@@ -855,37 +873,51 @@ class Storage(metaclass=meta._StorageMeta):
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
         """
-        Defines using XOR (^) for bitwise operations with Storage instances and dictionaries.
+        Defines using the XOR (^) operator for symmetric differentiation between Storage objects
+        and other Storage objects or dictionaries.
+
+        Use the symbol `^` for operations instead of explicitly calling `Storage.__xor__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the operand, from
+        which self will be symmetrically differentiated by.
+
+        ## Outputs
+        - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
+        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
         """
-        skeys: set[Any] = set()
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        _set_keys: set[Any] = set()
+        _values: dict[Any, Any] = {}
 
         if isinstance(other, type(self)):
-            if self.key==other.key:
-                skeys = set(self.values.keys()) ^ set(other.values.keys())
-                if not skeys:
-                    return 0
-                rtd: dict = {}
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        rtd[akey] = self.values[akey]
-                    if akey in other.values:
-                        rtd[akey] = other.values[akey]
-                return Storage(self.key, **rtd)
-            raise ValueError(self._default_valueerror_msg)
-        if isinstance(other, dict):
-            skeys = set(self.values.keys()) ^ set(other)
-            if not skeys:
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+
+            _set_keys = set(self.values.keys()) ^ set(other.values.keys())
+            if not _set_keys:
                 return 0
-            rtd: dict = {}
-            for akey in skeys:
-                akey: str
-                if akey in self.values:
-                    rtd[akey] = self.values[akey]
-                if akey in other.values():
-                    rtd[akey] = other[akey]
-            return Storage(self.key, **rtd)
-        return NotImplemented
+            _values = other.values
+
+        if isinstance(other, dict):
+            _set_keys = set(self.values.keys()) ^ set(other)
+            if not _set_keys:
+                return 0
+            _values = other
+
+        _return_dict: dict = {}
+        for k in _set_keys:
+            k: str
+            if k in self.values:
+                _return_dict[k] = self.values[k]
+            if k in _values:
+                _return_dict[k] = _values[k]
+
+        return Storage(self.key, **_return_dict)
 
     def __lshift__(self,
                    other: int
