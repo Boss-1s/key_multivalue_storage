@@ -922,44 +922,105 @@ class Storage(metaclass=meta._StorageMeta):
     def __lshift__(self,
                    other: int
                   ) -> Storage | int:
-        """Defines using left shifting (<<) for bitwise operations with Storage instances."""
-        if isinstance(other, int):
-            if other > len(self.values.keys()):
+        """
+        Defines using the left shifting (<<) operator for bitwise operations with Storage
+        instances.
+
+        Use `<<` in operations instead of explicitly invoking `Storage.__lshift__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: int`: The integer on the right hand-side of the operand, from which self
+        will be left-shifted by.
+
+        ## Outputs
+        - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
+        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Logic
+        Left-shifting `Storage` objects is like left-shifting in binary. In binary, **when a number
+        is left-shifted, all bits are moved to the left *x* times.** *Any bits that get shifted out
+        are lost.* I like to think off them dropping off a cliff, never to be seen again...but I
+        digress. **The same logic applies here,** except instead of bits, we are **left-shifting
+        the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
+        edge of that cliff will be lost forever. Thankfully, your original reference will
+        (hopefully) still be there in case anything goes very, very wrong...
+        """
+        if not isinstance(other, int):
+            return NotImplemented
+
+        if other > len(self.values.keys()):
+            return 0
+
+        try:
+            _keys: list = list(self.values.keys())[other:]
+
+            if not _keys:
                 return 0
-            try:
-                skeys: list = list(self.values.keys())[other:]
-                if not skeys:
-                    return 0
-                rtd: dict = {}
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        rtd[akey] = self.values[akey]
-                return Storage(self.key, **rtd)
-            except IndexError:
-                return 0
-        return NotImplemented
+
+            _return_dict: dict = {}
+
+            for k in _keys:
+                if k in self.values:
+                    _return_dict[k] = self.values[k]
+
+            return Storage(self.key, **_return_dict)
+
+        except IndexError:
+            return 0
+
 
     def __rshift__(self,
                    other: int
                   ) -> Storage | int:
-        """Defines using right shifting (>>) for bitwise operations with Storage instances."""
-        if isinstance(other, int):
-            if other > len(self.values.keys()):
+        """
+    Defines using the right shifting (>>) operator for bitwise operations with Storage
+    instances.
+
+    Use `>>` in operations instead of explicitly invoking `Storage.__rshift__()`.
+
+    ## Arguments
+    - `self`: The object on the left-hand side of the operand.
+    - `other: int`: The integer on the right hand-side of the operand, from which self
+    will be right-shifted by.
+
+    ## Outputs
+    - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
+    - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+    returning `False` or `None`.
+
+    ## Logic
+    Right-shifting `Storage` objects is like right-shifting in binary. In binary, **when a number
+    is right-shifted, all bits are moved to the right *x* times.** *Any bits that get shifted out
+    are lost.* I like to think off them dropping off a cliff, never to be seen again...but I
+    digress. **The same logic applies here,** except instead of bits, we are **right-shifting
+    the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
+    edge of that cliff will be lost forever. Thankfully, your original reference will
+    (hopefully) still be there in case anything goes very, very wrong...
+        """
+        if not isinstance(other, int):
+            return NotImplemented
+
+        if other > len(self.values.keys()):
+            return 0
+
+        try:
+            _keys: list = list(self.values.keys())[:-other]
+
+            if not _keys:
                 return 0
-            try:
-                skeys: list = list(self.values.keys())[:-other]
-                if not skeys:
-                    return 0
-                rtd: dict = {}
-                for akey in skeys:
-                    akey: str
-                    if akey in self.values:
-                        rtd[akey] = self.values[akey]
-                return Storage(self.key, **rtd)
-            except IndexError:
-                return 0
-        return NotImplemented
+
+            _return_dict: dict = {}
+
+            for k in _keys:
+                if k in self.values:
+                    _return_dict[k] = self.values[k]
+
+            return Storage(self.key, **_return_dict)
+
+        except IndexError:
+            return 0
 
     def __getitem__(self,
                     key: str | int | slice
