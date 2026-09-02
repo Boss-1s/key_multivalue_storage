@@ -9,6 +9,7 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 [![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://github.com/Boss-1s/key_multivalue_storage/releases)
+[![](https://img.shields.io/github/v/release/boss-1s/key_multivalue_storage?include_prereleases&style=for-the-badge&label=Latest%20Unstable&color=%231b6e6e)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 
 ### It is __strongly__ recommended to learn Python before using kms. The best environment to learn in is CPython 3.12 for this library.
 
@@ -139,5 +140,5 @@ Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 
 <br><br><br><br><br><br>
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgwNjAyMDA5NF19
+eyJoaXN0b3J5IjpbNzg4Njg3Mzk2LC04MDYwMjAwOTRdfQ==
 -->
