@@ -43,11 +43,11 @@ def open_issues():
         path: str = error['path']
         message: str = error['message']
 
-        title = f"fatal: pylint: pylint error {msg_id} at {path}:{line}"
+        title = f"fatal: pylint: pylint error {msg_id} at {path}:{line} (semver1.4.x)"
         body = f"""
 ## Quick Glance
 
-**File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/{path})
+**File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/{path}#L{line})
 **Line:** {line}
 **Error ID:** {msg_id}
 
@@ -59,6 +59,10 @@ def open_issues():
 ```
 
 ### Information
+
+> [!note]
+> Only things that are actually important is Type, Symbol, Path, Line, and Module.
+> The rest is there for debug purposes.
 
 **Type:** `{error['type']}`
 **Symbol**: `{error['symbol']}`
@@ -75,7 +79,6 @@ def open_issues():
 {message}
 ```
 """
-
         # Check if the issue already exists
         issue_exists = False
         issue_id = None
@@ -94,7 +97,7 @@ def open_issues():
             'gh', 'issue', 'create',
             '--title', title,
             '--body', body,
-            '--label', 'bug,pylint,Priority: CRITICAL'
+            '--label', 'bug,pylint,Priority: CRITICAL,semver1.4'
             ], check=True)
 
     print("[b green]Successfully processed all Pylint errors into GitHub issues![/]")
