@@ -38,21 +38,22 @@ jobs:
           bundler-cache: true
           working-directory: "./docs"
       - parallel:
-        - name: Clone and Setup Wiki
+        - name: Setup some pages
           run: |
             rm -v -f docs/release-template.md docs/CODEOWNERS
             mv docs/SECURITY.md docs/security.md
             mv docs/CONTRIBUTING.md docs/contribution-guidelines.md
             mv docs/CODE_OF_CONDUCT.md docs/code-of-conduct.md
-            echo "----------CONFIRM STAT----------"
-            git status
-            echo "----------CONFIRM FILES----------"
-            ls -a docs/
+            # Not really needed anymore but keeping comment here just in case
+            # echo "----------CONFIRM STAT----------"
+            # git status
+            # echo "----------CONFIRM FILES----------"
+            # ls -a docs/
         - name: Find Date
           uses: hudsonm62/datetime-action@v1
           id: datetime
           with:
-            format: yyyy-MM-dd at HH:mm:ss (UTC)
+            format: "yyyy-MM-dd 'at' HH:mm:ss '(UTC)'"
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
