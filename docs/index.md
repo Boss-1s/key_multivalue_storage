@@ -27,7 +27,7 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 - [PyPi Package Page](https://pypi.org/project/key-multivalue-storage/)
 
 ## Contributor Resources
-- [**Structure of the library**]
+- [**Structure of the library**](https://boss-1s.github.io/key_multivalue_storage/Documentation#structure-of-the-library)
 - [Contributor Guidelines](contribution-guidelines)
 - [Changelog](CHANGELOG)
 - [Development Help](Development)
@@ -138,3 +138,6 @@ Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 ## Thanks for using kms! ❤
 
 <br><br><br><br><br><br>
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTgwNjAyMDA5NF19
+-->
