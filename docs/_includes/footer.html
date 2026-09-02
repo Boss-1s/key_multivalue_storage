@@ -1,0 +1,37 @@
+<p>
+  <small>
+    Powered by <a href="https://jekyllrb.com/">
+      Jekyll
+    </a> &mdash; Theme by <a href="https://www.bodunhu.com/">
+      BDHU
+    </a> &mdash; Website by <a href="https://github.com/Boss-1s">
+      Boss_1s
+    </a>
+    <br>
+    <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/docs">Source Code</a>
+    <p>
+      <strong>Last Deployed:</strong> {{ site.env.BUILD_DATE | default: Unknown }}
+      {% if site.env.BUILD_SHA %}
+          <br>
+          <strong>Build Revision SHA:</strong> <a href="https://github.com/Boss-1s/key_multivalue_storage/tree/{{ site.env.BUILD_SHA }}">{{ site.env.BUILD_SHA | slice: 0, 7 }}</a>
+      {% endif %}
+    </p>
+  </small>
+</p>
+
+<!--
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("link-wrapper-mobile");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", function() {
+        // Toggle active status to reveal/hide links
+        mobileMenu.classList.toggle("active");
+        // Toggle open status to animate hamburger bars into an X
+        menuToggle.classList.toggle("open");
+      });
+    }
+  });
+</script>-->

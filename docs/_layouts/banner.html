@@ -1,0 +1,83 @@
+---
+layout: default
+---
+
+{% if site.head_banner %}
+  <div id="top-head-banner" style="background-color: {{ site.head_banner.color | default: 'red' }};">
+    <p style="color: {{ site.head_banner.text_color | default: 'black' }};">${{ site.head_banner.text }}</p>
+  </div>
+{% endif %}
+
+<!-- Only show the splash screen if global_banner configuration exists in _config.yml -->
+{% if site.global_banner %}
+<div id="hero-splash" class="full-screen-hero" style="display: none; background-color: {{ site.global_banner.background_color | default: '#000000' }};">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1 style="color: {{ site.global_banner.title_color | default: '#ffffff' }};">
+        {{ site.global_banner.title }}
+      </h1>
+      <p style="color: {{ site.global_banner.subtitle_color | default: '#eeeeee' }};">
+        {{ site.global_banner.subtitle }}
+      </p>
+    </div>
+    
+    <button class="scroll-down-btn" onclick="dismissSplash()" aria-label="Scroll down to content">
+      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const splash = document.getElementById('hero-splash');
+  let splashDismissed = false;
+
+  if (!sessionStorage.getItem('splashSeen')) {
+  splash.style.display = 'block'; 
+  } else {
+    splash.remove(); 
+    splashDismissed = true;
+  }
+
+  function dismissSplash() {
+    if (!splashDismissed) {
+      splashDismissed = true;
+
+      sessionStorage.setItem('splashSeen', 'true');
+      
+      splash.classList.add('slide-up');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 800); 
+    }
+  }
+
+  window.addEventListener('wheel', function(event) {
+    if (event.deltaY > 0) { dismissSplash(); }
+  });
+
+  let touchStartVal = 0;
+  window.addEventListener('touchstart', function(event) {
+    if (!splashDismissed) {
+      touchStartVal = event.touches[0].clientY;
+    }
+  }, { passive: true });
+  
+  window.addEventListener('touchmove', function(event) {
+    if (splashDismissed) return;
+    let touchMoveVal = event.touches[0].clientY;
+    
+    // Triggers the animation if the user drags their finger vertically more than 30 pixels
+    if (Math.abs(touchStartVal - touchMoveVal) > 30) { 
+      dismissSplash(); 
+    }
+  }, { passive: true });
+</script>
+{% endif %}
+
+<!-- The Actual Website Content Container -->
+<div id="main-site-content" class="actual-website-wrapper">
+  {{ content }}
+</div>
