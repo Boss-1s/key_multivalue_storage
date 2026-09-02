@@ -1133,12 +1133,12 @@ class Storage(metaclass=meta._StorageMeta):
             # DEPRECATED: remove in 2.0
             warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
                           "removed in v2.0.", DeprecationWarning)
-            rtn = str(tuple({self.key: self.values}))
+            rtn = str(tuple({self.key: self.values})) # NOSONAR
         elif format_spec == '.tuplet':
             # DEPRECATED: remove in 2.0
             warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
                           "removed in v2.0.", DeprecationWarning)
-            rtn = str(tuple(self.values))
+            rtn = str(tuple(self.values)) # NOSONAR
         elif format_spec == '.key':
             rtn = str(self.key)
         elif format_spec == '.keys':
