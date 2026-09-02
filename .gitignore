@@ -195,3 +195,7 @@ coverage.xml
 .coverage
 
 vscode.sh
+
+pylint_report.json
+pylint-report.txt
+_issues.json
