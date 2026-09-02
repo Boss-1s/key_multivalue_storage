@@ -47,7 +47,7 @@ def open_issues():
         body = f"""
 ## Quick Glance
 
-**File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.3.x/{path})
+**File:** [{path}](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/{path}#L{line})
 **Line:** {line}
 **Error ID:** {msg_id}
 
@@ -59,6 +59,10 @@ def open_issues():
 ```
 
 ### Information
+
+> [!note]
+> Only things that are actually important is Type, Symbol, Path, Line, and Module.
+> The rest is there for debug purposes.
 
 **Type:** `{error['type']}`
 **Symbol**: `{error['symbol']}`
