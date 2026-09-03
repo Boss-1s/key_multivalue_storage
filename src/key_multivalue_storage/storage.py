@@ -1025,20 +1025,32 @@ class Storage(metaclass=meta._StorageMeta):
     def __getitem__(self,
                     key: str | int | slice
                    ) -> Any:
-        """Defines how to get an item from the object."""
+        """
+        Defines using bracket notation to access the values of the Storage object.
+
+        Use `Storage[key]` in operations instead of explicitly invoking
+        `Storage.__getitem__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `key: str | int | slice`: The key, index, or slice to access the value(s) of the Storage
+        object.
+
+        ## Outputs
+        - `Any`: The value(s) associated with the key, index, or slice.
+        """
         if key == self.key:
             return self.values
 
-        if isinstance(key, str):
-            return self.values[key]
-
-        if isinstance(key,int):
-            return self.values[list(self.values.keys())[key]]
-
-        if isinstance(key,slice):
-            return [self.values[k] for k in list(self.values.keys())[key]]
-
-        return NotImplemented
+        match key:
+            case str():
+                return self.values[key]
+            case int():
+                return self.values[list(self.values.keys())[key]]
+            case slice():
+                return [self.values[k] for k in list(self.values.keys())[key]]
+            case _:
+                return NotImplemented
 
     def __setitem__(self,
                     key: str | int, value: Any
