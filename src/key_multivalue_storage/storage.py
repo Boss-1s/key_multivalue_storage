@@ -421,7 +421,7 @@ class Storage(metaclass=meta._StorageMeta):
         }
         ```
         """
-        return json.dumps(repr(dict(self)), indent=4)
+        return json.dumps(dict(self), indent=4, default=repr)
 
     def __repr__(self) -> str:
         """
