@@ -1130,18 +1130,26 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return item in self.values
 
-    def __iter__(self) -> Generator[str|uuid.UUID|dict[str,Any], None, None]:
-        """Defines how the object will act in an iteration loop."""
-        counter = 0
-        while counter <= len(self.values):
-            if counter == 0:
-                yield self.key
-            elif counter > 0:
-                yield {
-                    list(self.values.keys())[counter-1]:
-                    self.values[list(self.values.keys())[counter-1]]
-                }
-            counter+=1
+    def __iter__(self) -> Generator[
+            str | uuid.UUID | dict[str,Any],
+            None,
+            None
+        ]:
+        """
+        Defines how Storage objects are iterated over.
+
+        Use the `for` keyword for operations instead of explicily calling
+        `Storage.__iter__()`, i.e.
+        ```
+        for item in Storage: pass
+        ```
+
+        ## Arguments
+        None.
+        """
+        yield self.key
+        for k, v in self.values.items():
+            yield {k: v}
 
     def __getattr__(self, name: Any) -> None:
         """Fallback function for handling an attempt to call an undefined attribute."""
