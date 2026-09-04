@@ -1190,13 +1190,45 @@ class Storage(metaclass=meta._StorageMeta):
                           DeprecationWarning)
 
     def __call__(self, **kwargs) -> None:
-        """Defines what happens when an instance is called as a function."""
-        print(f"__call__: INFO: updating Storage object {self.instance_id} with {kwargs}")
+        """
+        Defines the behavior of Storage objects when it is called as a function.
+
+        Use `Storage(**kwargs)` in operations instead of explicitly calling
+        `Storage.__call__()`.
+
+        ## Arguments
+        - `**kwargs`: The key-value pairs to update the Storage object's values with.
+
+        ## Outputs
+        - `None`: None, as this mutates the Storage object directly.
+
+        **This functionality will be kept, though it may be replaced by a more
+        unambiguous method in the near future.**
+        """
+        # print(f"__call__: INFO: updating Storage object {self.instance_id} with {kwargs}")
         self.values.update(kwargs)
 
     def __enter__(self) -> dict:
-        """Defines the begginning interaction with the 'with' keyword"""
-        print("__enter__: INFO: Acquring storage from object")
+        """
+        Defines beginning interaction with the 'with' keyword.
+
+        Use `with Storage(...) as s:` in operations instead of explicitly calling
+        `Storage.__enter__()`.
+
+        ## Arguments
+        None.
+
+        ## Outputs
+        - `dict`: A dictionary containing the Storage object's values.
+
+        ## Notes
+        - This method officially replaces the deprecated `auto_delete_self` attribute,
+        which will be removed in kms-semver2.0.0.
+        - The logic here is very weird. Instead of returning the Storage object itself,
+        it returns a dict of the values. This functionality will be changed in
+        kms-semver2.0.0 to match convention.
+        """
+        # print("__enter__: INFO: Acquring storage from object")
         return dict(self.values)
 
     def __exit__(self, exc_type: type[BaseException] | None,
