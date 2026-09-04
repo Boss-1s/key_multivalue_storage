@@ -59,14 +59,17 @@ from .load import Load
 from .edit import Edit
 from .delete import Delete
 
-# Custom Warnings and Exceptions
+# Utilities
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import warnings as kms_warnings
+from .utils import enums
+
 warnings = kms_warnings
 
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
+from .utils.enums import Encoding
 
 __version__ = "v1.3.1.20260812"
 __version_internal__ = "kms-v1.3.1/2026.08.12"
@@ -90,6 +93,7 @@ __all__ = [
     "AdditionFailureWarning",
     "SubtractionFailureWarning",
     "CastWarning",
+    "Encoding"
 ]
 
 std_warnings.filterwarnings("always",
