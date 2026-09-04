@@ -1174,13 +1174,19 @@ class Storage(metaclass=meta._StorageMeta):
                     name: str,
                     value: Any
                    ) -> None:
-        """Handles attribute setting attempts."""
-        print(f"__setattr__: INFO: Attempting to set '{name}' to '{value}'")
+        """
+        Method that handles attribute setting.
+
+        Use `Storage.attr = value` in operations instead of explicitly calling
+        `Storage.__setattr__()`.
+        """
+        # print(f"__setattr__: INFO: Attempting to set '{name}' to '{value}'")
         super().__setattr__(name, value)
         if name == "auto_delete_self":
             warnings.warn("The attribute `auto_delete_self` has been deprecated as of "+
                           "kms-semver1.3.1. Please using the `with` keyword instead.\n"+
-                          "with Storage('temp_storage', foo='bar') as s: pass",
+                          "with Storage('temp_storage', foo='bar') as s: pass\n"+
+                          "This attribute will be officially removed in kms-semver2.0.0.",
                           DeprecationWarning)
 
     def __call__(self, **kwargs) -> None:
