@@ -926,7 +926,7 @@ class Storage(metaclass=meta._StorageMeta):
         Defines using the left shifting (<<) operator for bitwise operations with Storage
         instances.
 
-        Use `<<` in operations instead of explicitly invoking `Storage.__lshift__()`.
+        Use `<<` in operations instead of explicitly calling `Storage.__lshift__()`.
 
         ## Arguments
         - `self`: The object on the left-hand side of the operand.
@@ -978,7 +978,7 @@ class Storage(metaclass=meta._StorageMeta):
     Defines using the right shifting (>>) operator for bitwise operations with Storage
     instances.
 
-    Use `>>` in operations instead of explicitly invoking `Storage.__rshift__()`.
+    Use `>>` in operations instead of explicitly calling `Storage.__rshift__()`.
 
     ## Arguments
     - `self`: The object on the left-hand side of the operand.
@@ -1028,7 +1028,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         Defines using bracket notation to access the values of the Storage object.
 
-        Use `Storage[key]` in operations instead of explicitly invoking
+        Use `Storage[key]` in operations instead of explicitly calling
         `Storage.__getitem__()`.
 
         ## Arguments
@@ -1053,29 +1053,81 @@ class Storage(metaclass=meta._StorageMeta):
                 return NotImplemented
 
     def __setitem__(self,
-                    key: str | int, value: Any
+                    key: str | int,
+                    value: Any
                    ) -> None:
-        """Defines how to set an item in the object to another value."""
-        if isinstance(key, str):
-            self.values[key] = value
-        elif isinstance(key, int):
-            self.values[list(self.values.keys())[key]] = value
+        """
+        Defines using bracket notation to assign new values to a Storage object's contents.
+
+        Use `Storage[key] = value` in operations instead of explicitly calling
+        `Storage.__setitem__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `key: str | int`: The key or index to assign the value to.
+        - `value: Any`: The new value to assign to the key or index.
+
+        ## Outputs
+        - `None`: None, as this mutates the Storage object directly.
+        """
+        match key:
+            case str():
+                self.values[key] = value
+            case int():
+                self.values[list(self.values.keys())[key]] = value
 
     def __delitem__(self,
                     key: str | int | slice
                    ) -> None:
-        """Defines how to delete an item in the object."""
-        if isinstance(key, str):
-            del self.values[key]
-        elif isinstance(key, (int,slice)):
-            del self.values[str(list(self.values.keys())[key])]
+        """
+        Defines using the `del` keyword on a Storage object to remove a key-value pair.
+
+        Use `del Storage[key]` in operations instead of explicitly calling
+        `Storage.__delitem__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `key: str | int | slice`: The key, index, or slice to remove from the Storage object.
+
+        ## Outputs
+        - `None`: None, as this mutates the Storage object directly.
+        """
+        match key:
+            case str():
+                del self.values[key]
+            case int() | slice():
+                del self.values[str(list(self.values.keys())[key])]
 
     def __len__(self) -> int:
-        """Returns the length of the object."""
+        """
+        Returns the number of subkey-value pairs in the Storage object.
+
+        ## Arguments
+
+        None.
+
+        ## Outputs
+        - `int`: The number of subkey-value pairs in the Storage object.
+        """
         return len(self.values.keys())
 
     def __contains__(self, item: Any) -> bool:
-        """Defines how the object reacts to the 'in' keyword."""
+        """
+        Defines how Storage objects react to the `in` keyword.
+
+        Use `item in Storage` in operations instead of explicitly calling
+        `Storage.__contains__()`.
+
+        ## Arguments
+        - `item: Any`: The item to check for in the Storage object.
+
+        ## Outputs
+        - `bool`: True if the item is in the Storage object's values,
+        False otherwise. **Note that this means the top-level key
+        is technically not "in" the object. To check if a top-level
+        key exists in a Storage object, cast it to a dict first. This
+        will be fixed in kms-semver2.0.0.**
+        """
         return item in self.values
 
     def __iter__(self) -> Generator[str|uuid.UUID|dict[str,Any], None, None]:
