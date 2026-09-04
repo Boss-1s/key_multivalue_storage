@@ -1152,13 +1152,23 @@ class Storage(metaclass=meta._StorageMeta):
             yield {k: v}
 
     def __getattr__(self, name: Any) -> None:
-        """Fallback function for handling an attempt to call an undefined attribute."""
+        """
+        Fallback method when a attempt to access a nonexistent
+        attribute is made. This method will raise an AttributeError with a
+        helpful message suggesting the closest matching attribute name, if any.
+
+        # Arguemnts
+        - `name: Any`: The name of the attribute being accessed.
+
+        # Outputs
+        - `None`: None, as this method prints directly to `stderr`.
+        """
         cm = difflib.get_close_matches(name,
-                                       self.__dict__.keys(),
-                                       n=1,
-                                       cutoff=0.5)
+                                            self.__dict__.keys(),
+                                            n=1,
+                                            cutoff=0.5)
         raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'" +
-                             (f". Did you mean '{cm[0]}'?" if cm else ""))
+                            (f". Did you mean '{cm[0]}'?" if cm else ""))
 
     def __setattr__(self,
                     name: str,
