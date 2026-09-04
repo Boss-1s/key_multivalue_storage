@@ -1237,6 +1237,8 @@ class Storage(metaclass=meta._StorageMeta):
                  exc_tb: TracebackType | None
                 ) -> bool:
         """
+        Defines the end of interaction with the 'with' keyword.
+
         See __enter__ docstring for more information.
         """
         # print("__exit__: INFO: Releasing storage from object")
@@ -1246,26 +1248,46 @@ class Storage(metaclass=meta._StorageMeta):
         return True
 
     def __format__(self, format_spec: str) -> str:
-        """Defines interaction with format() and within f-strings."""
+        """
+        Defines the string representation of the Storage object when used in f-strings or with
+        format().
+
+        ## Arguments
+        - `format_spec`: A string specifying the format to use.
+          - Available format specifiers:
+            - `.dictf`: Full storage as a dict.
+            - `.dictt`: Truncated top-level key as a dict.
+            - `.tuplef`: Full storage as a tuple. (DEPRECATED)
+            - `.tuplet`: Truncated top-level key as a tuple. (DEPRECATED)
+            - `.key`: Only the top-level key.
+            - `.keys`: Only the subkeys as a list.
+            - `.values`: Only the values as a list.
+
+        > All of these return strings, but you can convert them using ast.literal_eval().
+
+        ## Outputs
+        - `str`: The formatted string representation of the Storage object.
+        """
         rtn: str = repr(self)
-        if format_spec == '.dictf':
-            rtn = str({self.key: {**self.values}}) # full storage
-        elif format_spec == '.dictt':
-            rtn = str(self.values) #truncated top level key
-        elif format_spec == '.tuplef':
-            # DEPRECATED: remove in 2.0
-            warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
-                          "removed in v2.0.", DeprecationWarning)
-            rtn = str(tuple({self.key: self.values})) # NOSONAR
-        elif format_spec == '.tuplet':
-            # DEPRECATED: remove in 2.0
-            warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
-                          "removed in v2.0.", DeprecationWarning)
-            rtn = str(tuple(self.values)) # NOSONAR
-        elif format_spec == '.key':
-            rtn = str(self.key)
-        elif format_spec == '.keys':
-            rtn = str(list(self.values.keys()))
-        elif format_spec == '.values':
-            rtn = str(list(self.values.values()))
+        match format_spec:
+            case '.dictf':
+                rtn = str({self.key: {**self.values}}) # full storage
+            case '.dictt':
+                rtn = str(self.values) #truncated top level key
+            case '.tuplef':
+                # DEPRECATED: remove in 2.0
+                warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
+                              "removed in v2.0.", DeprecationWarning)
+                rtn = str(tuple({self.key: self.values})) # NOSONAR
+            case '.tuplet':
+                # DEPRECATED: remove in 2.0
+                warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
+                              "removed in v2.0.", DeprecationWarning)
+                rtn = str(tuple(self.values)) # NOSONAR
+            case '.key':
+                rtn = str(self.key)
+            case '.keys':
+                rtn = str(list(self.values.keys()))
+            case '.values':
+                rtn = str(list(self.values.values()))
         return rtn
