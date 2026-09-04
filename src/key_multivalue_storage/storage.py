@@ -1231,12 +1231,15 @@ class Storage(metaclass=meta._StorageMeta):
         # print("__enter__: INFO: Acquring storage from object")
         return dict(self.values)
 
-    def __exit__(self, exc_type: type[BaseException] | None,
+    def __exit__(self,
+                 exc_type: type[BaseException] | None,
                  exc_val: BaseException | None,
                  exc_tb: TracebackType | None
                 ) -> bool:
-        """Defines ending interaction with the 'with' keyword"""
-        print("__exit__: INFO: Releasing storage from object")
+        """
+        See __enter__ docstring for more information.
+        """
+        # print("__exit__: INFO: Releasing storage from object")
         if exc_type:
             print(f"__exit__: ERROR: \n{exc_type}:\n{exc_tb}\n{exc_val}")
             return False
