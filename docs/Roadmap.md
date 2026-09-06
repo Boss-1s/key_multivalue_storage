@@ -59,21 +59,46 @@ Roadmap format:
 
 #### Graceful Deprecation cycle 1.3.2
 
-- None for now...
+Nothing to be deprecated in this version.
 
 ---
 
 ### kms-semver1.4.0
 - **Projected Stable Release Date: 2027/01/03**
 - **Projected Alpha 0 Release Date: 2026/10/12**
+- **Projected Beta 0 Release Date: 2026/12/05**
+- **Projected Release Candidate 0 Release Date: 2026/12/27**
 
 *Stable Release tag: `v1.4.0.20260103`*
 
+#### Release Plan
+
+> [!warning]
+> The dates below are subject to change.
+
+- **`alpha0`: 2026/10/12**
+- `alpha1`: 2026/10/24
+- `alpha2`: 2026/11/07
+- `alpha3`: 2026/11/28
+- **`beta0`: 2026/12/05** *(No features allowed past this point)*
+- `beta1`: 2026/12/13
+- `beta2`: 2026/12/21
+- **`rc0`: 2026/12/27**
+
+> (*there may be more `rc`s in between; however, that is very unlikely.*)
+
+- **`final`: 2027/01/03**
+
+***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
+
 #### Features
+* More encoding options
 * Make certain functions accept a `Storage` object so that arithmetic/bitwise operators can be avoided
 * Make certain functions return `Storage` objects instead of `None`
 * New methods allowing for easy modification of `Storage` objects in `Edit` class instead of using operators
 * Native scratchattach support
+* Full switch to `logging.Logger`
+* Full switch to `rich`
 
 #### Bug Fixes
 * None for now...
@@ -95,6 +120,23 @@ Roadmap format:
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
 * Begin shift to 2.0
+  * This means that certain 2.0 features will be implemented in a non-breaking change way.
+  * You can test these changes out through the following script:
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+  * To turn on 2.0 mode in a specific module, you can set the attribute in that module.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+    
+    Storage = storage.Storage
+  
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that if a module did not exist prior to 2.0, you must use the `kms.nextgen` attribute to activate it.
 
 #### Bug Fixes
 * None for now...
@@ -142,17 +184,6 @@ This update will bring many changes and features, including the ability to store
 > These are all planned features and projected (breaking) changes; they are not guaranteed to make it into the final release.
 
 #### Breaking Changes
-
-- **Module name changes**: Import `kms` to use the library, and `kms.storage` for `Storage`.
-
-```py
-# before v2.0.0
-import key_multivalue_storage as kms
-from key_multivalue_storage import Storage
-# after v2.0.0
-import kms
-from kms.storage import Storage
-```
 
 - **Explicit submodule import style**: When importing classes, the format `from kms.<module> import <class>` will be used.
 
