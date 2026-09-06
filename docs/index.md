@@ -24,7 +24,7 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 
 ## Resources
 - [Versioning, Release, and Security](security)
-- [Info on kms-semver2.0](Roadmap#kms-semver20-20270817)
+- [Info on kms-semver2.0](Roadmap#kms-semver200)
 - [PyPi Package Page](https://pypi.org/project/key-multivalue-storage/)
 
 ## Contributor Resources
