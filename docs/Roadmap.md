@@ -55,11 +55,16 @@ Roadmap format:
 #### Bug Fixes
 
 - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
-- Prettified all Storage dunder methods
+- Prettified all Storage dunder methods[**#52**](https://github.com/Boss-1s/key_multivalue_storage/issues/52) - *`logging.Logger`*
+- [**#75**](https://github.com/Boss-1s/key_multivalue_storage/issues/75) - *`__iadd__` for `Storage`*
+
+#### Bug Fixes
+
+None for now...
 
 #### Graceful Deprecation cycle 1.3.2
 
-Nothing to be deprecated in this version.
+Nothing to be deprecated in this version- None for now...
 
 ---
 
@@ -92,7 +97,10 @@ Nothing to be deprecated in this version.
 ***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
 #### Features
-* More encoding options
+* More encoding option
+*Stable Release tag: `v1.4.0.20260103`*
+
+#### Features
 * Make certain functions accept a `Storage` object so that arithmetic/bitwise operators can be avoided
 * Make certain functions return `Storage` objects instead of `None`
 * New methods allowing for easy modification of `Storage` objects in `Edit` class instead of using operators
@@ -185,6 +193,17 @@ This update will bring many changes and features, including the ability to store
 
 #### Breaking Changes
 
+- **Module name changes**: Import `kms` to use the library, and `kms.storage` for `Storage`.
+
+```py
+# before v2.0.0
+import key_multivalue_storage as kms
+from key_multivalue_storage import Storage
+# after v2.0.0
+import kms
+from kms.storage import Storage
+```
+
 - **Explicit submodule import style**: When importing classes, the format `from kms.<module> import <class>` will be used.
 
 - **Implementation of `__slots__`**: By implementing `__slots__`, `kms` can be more lightweight and reduce memory footprints in especially MASSIVE `Storage` instances.
@@ -258,3 +277,6 @@ Another, proposed by [**#74**](https://github.com/Boss-1s/key_multivalue_storage
 These types of refactorizations - whether it's argument positioning, logic, or just a tweak of a variable name - will prove how each change makes kms more and more **memory-efficient** and **lightweight**.
 
 See all other new features in the [release notes](/Boss-1s/key_multivalue_storage/releases).
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTA4NDcyMDI0NF19
+-->

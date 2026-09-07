@@ -30,7 +30,7 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 - [PyPi Package Page](https://pypi.org/project/key-multivalue-storage/)
 
 ## Contributor Resources
-- [**Structure of the library**](https://boss-1s.github.io/key_multivalue_storage/Documentation#structure-of-the-library)
+- [**Structure of the library**](Documentation#structure-of-the-library)
 - [Contributor Guidelines](contribution-guidelines)
 - [Changelog](CHANGELOG)
 - [Development Help](Development)
@@ -139,9 +139,7 @@ Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 ---
 
 ## Thanks for using kms! ❤
-
-<br><br><br><br><br><br>
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzY0Nzk1ODgsNzg4Njg3Mzk2LC04MDYwMj
-AwOTRdfQ==
+eyJoaXN0b3J5IjpbMTQwODIxNTI0MSw3NjQ3OTU4OCw3ODg2OD
+czOTYsLTgwNjAyMDA5NF19
 -->
