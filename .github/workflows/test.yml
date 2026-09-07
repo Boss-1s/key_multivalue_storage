@@ -130,7 +130,7 @@ jobs:
             -Dsonar.sources=src/key_multivalue_storage
             -Dsonar.tests=test
             -Dsonar.verbose=true
-            -Dsonar.python.versions=3.12,3.13,3.14
+            -Dsonar.python.versions=3.12,3.13,3.14,3.15
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
