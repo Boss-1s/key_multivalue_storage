@@ -35,36 +35,36 @@ pip install key-multivalue-storage[dev]
 > import key_multivalue_storage as kms # note the module name!
 > ```
 - Create a Storage object to prepare the data to be stored:
-```py
-from key_multivalue_storage import Storage # note the module name!
-my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
-```
+	```py
+	from key_multivalue_storage import Storage # note the module name!
+	my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
+	```
 - To store the object, use `Storage.store()`.
-```py
-my_db.store("database.json")
-```
+	```py
+	my_db.store("database.json")
+	```
 - Load data from a JSON file back into a Storage object:
-```py
-my_db = Storage.Load.by_key("my_top_level_key")
-print(my_db)
-```
->Output:
->```json
->{
->    "my_top_level_key": {
->        "mysubkey": "myvalue",
->        "myothersk": "anotherval"
->    }
->}
->```
+	```py
+	my_db = Storage.Load.by_key("my_top_level_key")
+	print(my_db)
+	```
+	>Output:
+	>```json
+	>{
+	>    "my_top_level_key": {
+	>        "mysubkey": "myvalue",
+	>        "myothersk": "anotherval"
+	>    }
+	>}
+	>```
 - Change global settings:
-```py
-Storage.indent = 4 #indent size of JSON files
-Storage.encode = True # Whether to encode stored values
-Storage.auto_delete_self = True
-# Whether to automatically release the object
-# from memory after certain operations
-```
+	```py
+	Storage.indent = 4 #indent size of JSON files
+	Storage.encode = True # Whether to encode stored values
+	Storage.auto_delete_self = True
+	# Whether to automatically release the object
+	# from memory after certain operations
+	```
 
 # Structure of the Library
 
@@ -118,5 +118,5 @@ Storage.auto_delete_self = True
   - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOls5OTU5Mjk2NzFdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTM1MzUwODI1N119
 -->
