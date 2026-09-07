@@ -22,6 +22,9 @@ from key_multivalue_storage.utils.exceptions import NoInstantiationError
 
 ## Structure of the Submodule
 
+> [!tip]
+> Click on a module, class, or method below to go straight to its documentation!
+
 - `utils/`
 	- [`exceptions.py`](exceptions)       — custom exceptions
 		- [`KeyNotFoundError`](exceptions#kmskeynotfounderror)
@@ -33,5 +36,5 @@ from key_multivalue_storage.utils.exceptions import NoInstantiationError
 		- [`SubtractionFailureWarning`](warnings#kmssubtractionfailurewarning)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsyNDAwODA3NzVdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlsxMjc3NzExNDIzXX0=
 -->
