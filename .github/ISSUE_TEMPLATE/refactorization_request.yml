@@ -1,6 +1,6 @@
 name: Refactorization Request
 title: "refactor: "
-description: Request a feature and/or enhancement.
+description: Request refactorization in (a) module(s). This also covers prettification.
 labels: ["refactor", "Needs Triage"]
 body:
   - type: markdown
