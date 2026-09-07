@@ -28,14 +28,14 @@ Warns you about deleting all contents of a database file.
 
 > [!tip]
 > If you ignore this warning, `Delete.all()` will function as if `warn=False` was passed to it!
-
-```py
-warnings.filterwarning(action='ignore',
-					   category=kms.DeleteWarning)
-
-# Works just like when warn is set to False
-Storage.Delete.all("db.json")
-```
+>
+>	```py
+>	warnings.filterwarning(action='ignore',
+>						   category=kms.DeleteWarning)
+>	
+>	# Works just like when warn is set to False
+>	Storage.Delete.all("db.json")
+>	```
 
 ---
 
@@ -70,5 +70,5 @@ Warns you when attempting to subtract a Storage instance by a dictionary, and vi
 **Used in:** `Storage.__sub__()`, `Storage.__truediv__()`
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNzkxNTgwNzk1XX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTQ3ODI1MjgxNV19
 -->
