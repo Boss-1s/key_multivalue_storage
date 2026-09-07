@@ -58,16 +58,16 @@ Currently, the only **released** package versions _(not necessarially supported)
 
 [See more about the upcoming kms-semver2.0 update.](Roadmap#kms-semver200)
 
-| Version | Production Stage | Current Status | Expected EOL |
-| :------: | :-------: | ------------------ | :-: |
-| 1.0.x | Inactive(7) | Unsupported | Already reached EOL |
-| 1.1.x | Inactive(7) | Unsupported | Already reached EOL |
-| 1.2.x | Production/Stable (5)| LTS | 1.5 |
-| 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 |
-| 1.4.x | Planning(1) | Unreleased | 2.0 |
-| 1.5.x | Planning(1) | Unreleased | 2.1 |
-| 1.6.x | None(0) | Unreleased | 2.2 |
-| 2.0.x | Planning(1) | Unreleased | 2.3 |
+| Version | Production Stage | Current Status | Expected EOL | Latest |
+| :------: | :-------: | ------------------ | :-: | :-: |
+| 1.0.x | Inactive(7) | Unsupported | Already reached EOL | Unknown |
+| 1.1.x | Inactive(7) | Unsupported | Already reached EOL | Unknown|
+| 1.2.x | Production/Stable (5)| LTS | 1.5 | 1.2.5.20260724 |
+| 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 | 1.3.1.20260812 |
+| 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0 | Unreleased |
+| 1.5.x | Planning(1) | Unreleased | 2.1 | None |
+| 1.6.x | Planning(1) | Unreleased | 2.2 | None |
+| 2.0.x | Planning(1) | Unreleased | 2.3 | None |
 
 ## Reporting a Vulnerability
 
