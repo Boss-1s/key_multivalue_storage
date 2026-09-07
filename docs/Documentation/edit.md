@@ -11,10 +11,10 @@ This module houses the class `Edit`. Despite being implemented a bit later than 
 > Click on a class or method below to go straight to its documentation!
 
 - `edit.py` — editing helpers (Edit class)
-	- [`Edit`](#storage-edit)
-	  - [`propkey`](#storage-edit-propkey)
-	  - [`propval`](#storage-edit-propval)
-	  - [`key`](#storage-edit-key)
+	- [`Edit`](#storageedit)
+	  - [`propkey`](#storageeditpropkey)
+	  - [`propval`](#storageeditpropval)
+	  - [`key`](#storageeditkey)
 
 ## `Storage.Edit`
 
@@ -119,5 +119,5 @@ Storage.Edit.key("db.json", "users", "accounts")
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTk5ODAzMjYyNF19
+BnZm1cbiIsImhpc3RvcnkiOlstNTA2ODA2MjQ3XX0=
 -->
