@@ -1,6 +1,14 @@
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
+<div style="display: flex; justify-content: center; width: 100%;">
+
+| [<< Back](..) | [Next >>](../load) |
+| :--: | :--: |
+| Documentation | `load.py`
+
+</div>
+
 # `storage.py`
 
 Main module housing the most important class in `kms`: `Storage`.
@@ -385,5 +393,5 @@ default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionall
 	- Type-hint `Storage`with the subscription format `Storage[TopKey, SubKey, SubVal]`
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTEzNjA4MDIzMV19
+BnZm1cbiIsImhpc3RvcnkiOlstMTk5Mjg4NTg1XX0=
 -->
