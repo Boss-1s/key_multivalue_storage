@@ -19,10 +19,10 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 
 ## Documentation
 - [**Documentation**](Documentation)
-- [`Storage`](Documentation#storage)
-- [Loading](Documentation#storageload)
-- [Editing](Documentation#storageedit)
-- [Deleting](Documentation#storagedelete)
+- [`Storage`](Documentation/storage#storage)
+- [Loading](Documentation/load)
+- [Editing](Documentation/edit)
+- [Deleting](Documentation/delete)
 
 ## Resources
 - [Versioning, Release, and Security](security)
@@ -140,6 +140,6 @@ Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 
 ## Thanks for using kms! ❤
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQwODIxNTI0MSw3NjQ3OTU4OCw3ODg2OD
+eyJoaXN0b3J5IjpbLTYzMzQ2NjY1Miw3NjQ3OTU4OCw3ODg2OD
 czOTYsLTgwNjAyMDA5NF19
 -->
