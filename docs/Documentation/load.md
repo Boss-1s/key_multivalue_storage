@@ -3,9 +3,12 @@
 
 # `load.py`
 
-This module houses the `Load` class, a helper class that loads JSON objects in a single-nested format (`dict[str, dict[str, Any]]`) back into `Storage` objects.
+This module houses the `Load` class, a helper class that loads JSON objects stored with `Storage.store()` back into `Storage` objects.
 
 ## Structure of the Module
+
+> [!tip]
+> Click on a class or method below to go straight to its documentation!
 
 - `load.py` — loading helpers (Load class)
   - [`Load`](#storage-load)
@@ -160,5 +163,5 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxMTYyODc5NzU4XX0=
+BnZm1cbiIsImhpc3RvcnkiOlsxODc4MjE5NDY0XX0=
 -->
