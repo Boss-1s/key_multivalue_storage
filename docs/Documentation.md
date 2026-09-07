@@ -127,7 +127,7 @@ The `Storage` class is the main class in this library, in which all operations r
 - `**kwargs: Any` - The keyword arguments that are converted into the instance variable `values`. It is, in technicality, a `dict[str, Any]`.
 
 > [!important]
-> These two parameters make the Storage object's type to be `dict[str, dict[str, Any]]`. 
+> These two parameters make the Storage object's default type to be `dict[str, dict[str, Any]]`. However, by [type-hinting Storage specifically](#type-hinting), you can change that.
 
 ### Attributes
 
@@ -209,46 +209,6 @@ This method does not return anything.
 db = Storage("settings", theme="dark", timeout=30)
 db.store("config.json")            # writes config.json
 db.store("config", encode=True)    # will append .json -> config.json and encode values
-```
-
-### Type Hinting
-
-Support for type hinting dropped in kms-v1.3.1/2026.08.12, along with fixing #26, meaning `Storage` can now be assigned to `dict[str, dict[str, Any]]`, along with anything type hinted as the following:
-```py
-Storage[TopKey, SubKey, SubVal]
-```
-Depending on what you type-hint on the first assignment, your type checkers will flag you down any time
-- the top-level key type does not match `TopKey`
-- the subkey type does not match `SubKey`
-- the value type does not match `SubVal`
-
-The default type hint, if you just pass `db: Storage = Storage(...)`, is `Storage[str, str, Any]`, which is functionally the same as `dict[str, dict[str, Any]]`.
-
-Remember that **type-hints do not affect the actual execution of your code.** 
-
-> [!warning]
-> If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See [PEP 0649](https://peps.python.org/pep-0649/).
-
-#### Example
-
-```py
-from __future__ import annotations # Required for CPython <= 3.13
-
-from key_multivalue_storage import Storage
-from typing import Any, get_type_hints
-
-db: Storage[str, Any, Any] = Storage("string",
-                             abf="abc",
-                             bbb=123, # Works
-                             cdb=b'0x\0x\1x') # Also works
-
-bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
-                                           abc=123, # Fine
-                                           whoops=3.14159) # A type checker like Pyright will flag this
-
-print(bad_type_hint_db["whoops"]) # still accessible though, as type hints do not affect execution as a whole
-
-default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionally `Storage[str, str, Any]` or `dict[str, dict[str, Any]]`
 ```
 
 ---
@@ -472,6 +432,50 @@ with Storage("tmp", a=1, b=2) as data:
     # data is dict of values
     print(data)
 ```
+
+---
+
+### Type Hinting
+
+Support for type hinting dropped in kms-v1.3.1/2026.08.12, along with fixing #26, meaning `Storage` can now be assigned to `dict[str, dict[str, Any]]`, along with anything type hinted as the following:
+```py
+Storage[TopKey, SubKey, SubVal]
+```
+Depending on what you type-hint on the first assignment, your type checkers will flag you down any time
+- the top-level key type does not match `TopKey`
+- the subkey type does not match `SubKey`
+- the value type does not match `SubVal`
+
+The default type hint, if you just pass `db: Storage = Storage(...)`, is `Storage[str, str, Any]`, which is functionally the same as `dict[str, dict[str, Any]]`.
+
+Remember that **type-hints do not affect the actual execution of your code.** 
+
+> [!warning]
+> If you are running Python version 3.13 or earlier, you must add `from __future__ import annotations` at the top of your file to avoid a `TypeError: 'Storage' type not subscriptable` exception. This is because on 3.13 and earlier, deferred type hints had not been fully implemented yet. See [PEP 0649](https://peps.python.org/pep-0649/).
+
+#### Example
+
+```py
+from __future__ import annotations # Required for CPython <= 3.13
+
+from key_multivalue_storage import Storage
+from typing import Any, get_type_hints
+
+db: Storage[str, Any, Any] = Storage("string",
+                             abf="abc",
+                             bbb=123, # Works
+                             cdb=b'0x\0x\1x') # Also works
+
+bad_type_hint_db: Storage[str, str, int] = Storage("string_again",
+                                           abc=123, # Fine
+                                           whoops=3.14159) # A type checker like Pyright will flag this
+
+print(bad_type_hint_db["whoops"]) # still accessible though, as type hints do not affect execution as a whole
+
+default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionally `Storage[str, str, Any]` or `dict[str, dict[str, Any]]`
+```
+
+---
 
 ### Other Info
 
