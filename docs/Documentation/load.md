@@ -11,11 +11,11 @@ This module houses the `Load` class, a helper class that loads JSON objects stor
 > Click on a class or method below to go straight to its documentation!
 
 - `load.py` — loading helpers (Load class)
-  - [`Load`](#storage-load)
-	  - [`by_key`](#storage-load-by-key)
-	  - [`by_index`](#storage-load-by-index)
-	  - [`keys`](#storage-load-keys)
-	  - [`values`](#storage-load-values)
+  - [`Load`](#storageload)
+	  - [`by_key`](#storageloadby_key)
+	  - [`by_index`](#storageloadby_index)
+	  - [`keys`](#storageloadkeys)
+	  - [`values`](#storageloadvalues)
 
 ## `Storage.Load`
 
@@ -163,5 +163,5 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxODc4MjE5NDY0XX0=
+BnZm1cbiIsImhpc3RvcnkiOlstNjQ3ODIzMDAxXX0=
 -->
