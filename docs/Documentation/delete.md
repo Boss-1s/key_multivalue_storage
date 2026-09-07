@@ -11,10 +11,10 @@ This module houses the `Delete` class. As the 'Grim Reaper' of the library, it r
 > Click on a class or method below to go straight to its documentation!
 
 - `delete.py` — deletion helpers (Delete class)
-	- [`Delete`](#storage-delete)
-		- [`by_key`](#storage-delete-by-key)
-		- [`by_propkey`](#storage-delete-by-propkey)
-		- [`all`](#storage-delete-all)
+	- [`Delete`](#storagedelete)
+		- [`by_key`](#storagedeleteby_key)
+		- [`by_propkey`](#storagedeleteby_propkey)
+		- [`all`](#storagedeleteall)
 
 ## `Storage.Delete`
 
@@ -116,5 +116,5 @@ Storage.Delete.all("db.json") # Works just like when warn is set to False
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTg1NjczOTA1OV19
+BnZm1cbiIsImhpc3RvcnkiOlstNzY4NTUyMzU2XX0=
 -->
