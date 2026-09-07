@@ -1,0 +1,528 @@
+
+> [!Note]
+> **To use this library, you must have Python installed on your device.**
+>
+> *Don't have Python? Install it here: https://python.org/downloads*
+
+# Installation
+You can install `kms` with `pip`:
+```sh
+pip install key-multivalue-storage
+```
+Or, install it with uv:
+```sh
+uv add key-multivalue-storage
+```
+You can also install the `dev` extra. This extra provides Pylint and Griffe on the side, allowing for easier development and testing.
+```sh
+pip install key-multivalue-storage[dev]
+```
+> [!warning]
+> This extra is only available on versions later than kms-v1.2.2/2026.05.06b.
+
+> [!TIP]
+> No `pip` or `uv`? Install the wheel here:
+> https://pypi.org/project/key-multivalue-storage/#files
+
+# Basic Usage
+> [!TIP]
+> When importing just logic related to `Storage` (i.e. `Storage`, `Load`, `Edit`, `Delete`), the recommended import statement is:
+> ```py
+> from key_multivalue_storage import Storage # note the module name!
+> ```
+> Otherwise, the main recommended import statement stands as:
+> ```py
+> import key_multivalue_storage as kms # note the module name!
+> ```
+- Create a Storage object to prepare the data to be stored:
+```py
+from key_multivalue_storage import Storage # note the module name!
+my_db = Storage("my_top_level_key", mysubkey="myvalue", myothersk="anotherval")
+```
+- To store the object, use `Storage.store()`.
+```py
+my_db.store("database.json")
+```
+- Load data from a JSON file back into a Storage object:
+```py
+my_db = Storage.Load.by_key("my_top_level_key")
+print(my_db)
+```
+>Output:
+>```json
+>{
+>    "my_top_level_key": {
+>        "mysubkey": "myvalue",
+>        "myothersk": "anotherval"
+>    }
+>}
+>```
+- Change global settings:
+```py
+Storage.indent = 4 #indent size of JSON files
+Storage.encode = True # Whether to encode stored values
+Storage.auto_delete_self = True
+# Whether to automatically release the object
+# from memory after certain operations
+```
+
+# Structure of the Library
+
+> [!note]
+> Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
+
+- `src/key_multivalue_storage/`
+  - [`storage.py`](storage) — main Storage class (core functionality)
+	  - [`Storage`](storage)
+		  - [`__init__`](storage#arguments)
+		  - [`store`](storage#storage-store)
+		  - [`keys`](storage#storage-keys)
+		  - [`to_dict`](storage#storage-to-dict)
+  - `load.py` — loading helpers (Load class)
+	  - `Load`
+		  - `by_key`
+		  - `by_index`
+		  - `keys`
+		  - `values`
+  - `edit.py` — editing helpers (Edit class)
+	  - `Edit`
+		  - `propkey`
+		  - `propval`
+		  - `key`
+  - `delete.py` — deletion helpers (Delete class)
+	  - `Delete`
+		  - `by_key`
+		  - `by_propkey`
+		  - `all`
+  - `utils/`
+    - `exceptions.py`       — custom exceptions
+	    - `KeyNotFoundError`
+	    - `NoInstantiationWarning`
+    - `warnings.py`         — custom warning classes and private warning decorators
+	    - `DeleteWarning`
+	    - `CastWarning`
+	    - `AddtionFailureWarning`
+	    - `SubtractionFailureWarning`
+    - `metadata.py`
+- `test/`
+  - `test-storage.py` — **Mainstream test targeting `kms.storage`**
+  - `test-load.py` — **Mainstream test targeting `kms.load`**
+  - `test-edit.py` — **Mainstream test targeting `kms.edit`**
+  - `test-delete.py` — **Mainstream test targeting `kms.delete`**
+  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
+  - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
+  - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
+  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
+
+# Main Classes
+
+> [!note]
+> Note that each main class **has a help() method**, accessible via `<class>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
+
+## `Storage.Load`
+
+### Methods
+
+#### `Storage.Load.by_key()`
+
+```py
+@classmethod
+def by_key(cls,
+           file_path: str,
+           key: Any,
+           raw: bool=False
+          ) -> Storage | None:
+```
+
+Load a json file and find the key to extract
+a single key-multivalue pair and its values.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`key`|`Any`|Required|Top-level key to search for (strings recommended).|
+|`raw`|`bool`|`False`|If `False` attempt to decode encoded values; if `True` return raw stored values.|
+
+##### Output
+
+- `Storage`: Returns a Storage object containing the loaded data if found.
+- `None`: Returns None if the key was not found or if there was an error.
+
+##### Example
+
+```py
+s = Storage.Load.by_key("db.json", "users")
+print(repr(s))
+```
+
+---
+
+#### `Storage.Load.by_index()`
+
+```py
+@classmethod
+def by_index(cls,
+             file_path: str,
+             index: int,
+             raw: bool=False
+            ) -> Storage | None:
+```
+
+Load a json file and find the index at which to
+extract a single key-multivalue pair and its values.
+
+Do note that this method bases the start index at 0.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`index`|`int`|Required|0-based index of top-level key to return.|
+|`raw`|`bool`|`False`|If `False` attempt to decode encoded values; if `True` return raw stored values.|
+
+##### Returns
+
+- `Storage`: If sucessful, a Storage object will be returned with the loaded data.
+- `None`: Only returned on failure to load the file or if the index is out of bounds.
+
+##### Example
+
+```py
+```
+
+---
+
+#### `Storage.Load.keys()`
+
+```py
+@classmethod
+def keys(cls,
+         file_path: str
+        ) -> list[str] | None:
+```
+
+Load a json file and returns the keys of that file.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+
+##### Returns
+- `list[str]`: A list containing strings of the top level keys in the loaded JSON file.
+- `None`: May return None on error or if no keys were found.
+
+##### Example
+
+```py
+```
+
+---
+
+#### `Storage.Load.values()`
+
+```py
+@classmethod
+def values(cls,
+           file_path: str,
+           key: Any,
+           keys: bool=False,
+           raw: bool=True
+          ) -> list[str] | None:
+```
+
+Loads a json file and returns the values under the inputed key.
+
+Unlike other loading methods, this one returns the raw values by default.
+
+Keys can also be returned as a key-value pair if keys=True.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`key`|`Any`|Required|Top-level key to fetch values for.|
+|`keys`|`bool`|`False`|If `True`, returns `["prop: value", ...]` strings; otherwise returns list of values.|
+|`raw`|`bool`|`True`|If `True`, return raw stored values (no decode). If `False`, attempt to decode encoded ints.|
+
+##### Returns
+- `list[str]`: A list containing the values under the specified key in the loaded data. If `keys=True`, then the list will contain key-value pairs in the format "key: value".
+- `None`: Returns None if the key was not found or if there was an error.
+
+##### Example
+
+```py
+```
+
+### Other Info
+
+- This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
+- Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
+
+## `Storage.Edit`
+
+### Methods
+
+#### `Storage.Edit.propkey()`
+
+```py
+@classmethod
+def propkey(cls,
+            file_path: str,
+            top_lv_key: Any,
+            oldpropkey: str,
+            newpropkey: str,
+            noexist_ok: bool=True
+           ) -> None
+```
+
+Rename a subkey within a top-level key.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----:|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
+|`oldpropkey`|`str`|Required|Existing subkey to rename.|
+|`newpropkey`|`str`|Required|New name for the subkey.|
+|`new`|`bool`|`True` (DEPRECATED)|Deprecated alias for `noexist_ok`.|
+|`noexist_ok`|`bool`|`True`|If `True`, create `newpropkey` with empty value when `oldpropkey` missing; otherwise raise `KeyNotFoundError`.|
+
+##### Outputs
+- `None`. `KeyNotFoundError` may be raised if any key is not found.
+
+##### Example
+```py
+Storage.Edit.propkey("db.json", "users", "username", "user_name")
+```
+
+---
+
+#### `Storage.Edit.propval()`
+
+```py
+@classmethod
+def propval(cls,
+            file_path: str,
+            top_lv_key: Any,
+            propkey: str,
+            newval: str
+           ) -> None
+```
+
+Changes the value for an existing subkey under a top-level key.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----:|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
+|`propkey`|`str`|Required|Subkey whose value will be changed.|
+|`newval`|`str`|Required|New value for the subkey.|
+
+##### Outputs
+- `None`. Raises `KeyNotFoundError` if top-level key missing.
+
+##### Example
+```py
+Storage.Edit.propval("db.json", "users", "alice", "new-id")
+```
+
+---
+
+#### `Storage.Edit.key()`
+
+```py
+@classmethod
+def key(cls, file_path: str, oldkey: Any, newkey: Any) -> None
+```
+
+Renames any top-level key in the JSON file; values stay unchanged.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----:|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`oldkey`|`Any`|Required|Existing top-level key to rename.|
+|`newkey`|`Any`|Required|New top-level key name.|
+
+##### Outputs
+- `None`. Raises `KeyNotFoundError` if `oldkey` missing.
+
+##### Example
+```py
+Storage.Edit.key("db.json", "users", "accounts")
+```
+
+### Other Info
+
+- This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
+
+## `Storage.Delete`
+
+### Methods
+
+#### `Storage.Delete.by_propkey()`
+
+```py
+@classmethod
+def by_propkey(cls,
+               file_path: str,
+               top_lv_key: Any,
+               property_key: str
+              ) -> None
+```
+
+Delete a subkey inside a top-level key.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
+|`property_key`|`str`|Required|Subkey to delete.|
+
+##### Outputs
+- `None`. Raises `KeyNotFoundError` if key or property missing.
+
+##### Example
+```py
+Storage.Delete.by_propkey("db.json", "users", "temp")
+```
+
+---
+
+#### `Storage.Delete.by_key()`
+
+```py
+@classmethod
+def by_key(cls, file_path: str, key: Any) -> None
+```
+
+Delete a top-level key (and its subkeys) entirely from the JSON file.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`key`|`Any`|Required|Top-level key to delete.|
+
+##### Outputs
+- `None`. Raises `KeyNotFoundError` if key missing.
+
+##### Example
+```py
+Storage.Delete.by_key("db.json", "old_key")
+```
+
+---
+
+#### `Storage.Delete.all()`
+
+```py
+@staticmethod
+def all(file_path: str, warn: bool=True) -> None
+```
+
+Delete all data in the JSON file (overwrite with `{}`). Shows a `DeleteWarning` unless `warn=False` or the `DeleteWarning` is being ignored via `warnings` filters.
+
+##### Arguments
+
+| Symbol | Type Hint | Default | Description |
+|----|----|----|----|
+|`file_path`|`str`|Required|Path to JSON file.|
+|`warn`|`bool`|`True`|If `True` show a `DeleteWarning` before deleting. If `False`, skip the warning. Ignoring `DeleteWarning` via `warnings.filterwarnings` also suppresses the prompt.|
+
+##### Outputs
+- `None`.
+
+##### Example
+```py
+# Normal run: warns
+Storage.Delete.all("db.json")
+
+# To force without warning:
+Storage.Delete.all("db.json", warn=False)
+
+# Or, filter out the warning to skip warn
+import warnings, key_multivalue_storage as kms
+
+warnings.filterwarning(action='ignore', category=kms.DeleteWarning)
+Storage.Delete.all("db.json") # Works just like when warn is set to False!
+```
+
+### Other Info
+
+- This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
+
+# Custom Warnings and Exceptions
+
+> [!warning]
+> From kms-semver1.3.0 onward, the usage of `kms.Storage.<warning or exception>` has been deprecated. Please use the format `kms.<warning or exception>` instead.
+
+## Warnings
+
+Custom warnings for `kms` are stored in the `utils.warnings` module.
+
+### `kms.DeleteWarning`
+
+**Inherits from:** `UserWarning`
+
+> Warns you about deleting all contents of a database file.
+
+### `kms.AdditionFailureWarning`
+
+**Inherits from:** `RuntimeWarning`
+
+> Warns you when attempting to add a Storage instance and a dictionary or list.
+
+### `kms.SubtractionFailureWarning`
+
+**Inherits from:** `RuntimeWarning`
+
+> Warns you when attempting to subtract a Storage instance by a dictionary, and vice versa.
+> 
+> Also applies to division, despite the name.
+
+### `kms.CastWarning`
+
+**Inherits from:** `UserWarning`
+
+> Warns you about attempting to pass a key argument as something other than a string.
+
+## Exceptions
+
+Custom exceptions for `kms` are stored in the `utils.exceptions` module.
+
+#### `kms.KeyNotFoundError`
+
+**Inherits from:** `KeyError`
+
+> Custom exception raised when a key is not found.
+
+**Example**: if attempting to search for a nonexistent key with
+`Storage.Load.by_key`, this would be raised.
+
+#### `kms.NoInstantiationError`
+
+**Inherits from:** `TypeError`
+
+> Custom exception raised when attempting to instantiate a
+non-instantiable class.
+
+**Example**: if attempting to instantiate a helper class like `Load`,
+this would be raised.
+<!--stackedit_data:
+eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
+BnZm1cbiIsImhpc3RvcnkiOlsxMzk4NTY1Njk0XX0=
+-->
