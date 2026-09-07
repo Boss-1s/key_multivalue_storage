@@ -7,6 +7,9 @@ Main module housing the most important class in `kms`: `Storage`.
 
 ## Structure of the Module
 
+> [!tip]
+> Click on a class or method below to go straight to its documentation!
+
 - `storage.py` — main Storage class (core functionality)
 	- [`Storage`](#storage)
 		- [`__init__`](#arguments)
@@ -382,5 +385,5 @@ default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionall
 	- Type-hint `Storage`with the subscription format `Storage[TopKey, SubKey, SubVal]`
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsyMjkxMjgwNDRdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTgyMDQxNjEyMl19
 -->
