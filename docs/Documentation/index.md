@@ -78,34 +78,34 @@ Storage.auto_delete_self = True
   - [`storage.py`](storage) — main Storage class (core functionality)
 	  - [`Storage`](storage#storage)
 		  - [`__init__`](storage#arguments)
-		  - [`store`](storage#storage-store)
-		  - [`keys`](storage#storage-keys)
-		  - [`to_dict`](storage#storage-to-dict)
+		  - [`store`](storage#storagestore)
+		  - [`keys`](storage#storagekeys)
+		  - [`to_dict`](storage#storageto_dict)
   - [`load.py`](load) — loading helpers (Load class)
-	  - [`Load`](load#storage-load)
-		  - [`by_key`](load#storage-load-by-key)
-		  - [`by_index`](load#storage-load-by-index)
-		  - [`keys`](load#storage-load-keys)
-		  - [`values`](load#storage-load-values)
+	  - [`Load`](load#storageload)
+		  - [`by_key`](load#storageloadbykey)
+		  - [`by_index`](load#storageloadby_index)
+		  - [`keys`](load#storageloadkeys)
+		  - [`values`](load#storageloadvalues)
   - [`edit.py`](edit) — editing helpers (Edit class)
-	  - [`Edit`](edit#storage-edit)
-		  - [`propkey`](edit#storage-edit-propkey)
-		  - [`propval`](edit#storage-edit-propval)
-		  - [`key`](edit#storage-edit-key)
+	  - [`Edit`](edit#storageedit)
+		  - [`propkey`](edit#storageeditpropkey)
+		  - [`propval`](edit#storageeditpropval)
+		  - [`key`](edit#storageeditkey)
   - [`delete.py`](delete) — deletion helpers (Delete class)
-	  - [`Delete`](delete#storage-delete)
-		  - [`by_key`](delete#storage-delete-by-key)
-		  - [`by_propkey`](delete#storage-delete-by-propkey)
-		  - [`all`](delete#storage-delete-all)
-  - `utils/`
-    - `exceptions.py`       — custom exceptions
-	    - `KeyNotFoundError`
-	    - `NoInstantiationWarning`
-    - `warnings.py`         — custom warning classes and private warning decorators
-	    - `DeleteWarning`
-	    - `CastWarning`
-	    - `AddtionFailureWarning`
-	    - `SubtractionFailureWarning`
+	  - [`Delete`](delete#storagedelete)
+		  - [`by_key`](delete#storagedeleteby_key)
+		  - [`by_propkey`](delete#storagedeleteby_propkey)
+		  - [`all`](delete#storagedeleteall)
+  - [`utils/`](utils)
+    - [`exceptions.py`](utils/exceptions)       — custom exceptions
+	    - [`KeyNotFoundError`](utils/exceptions#kmskeynotfounderror)
+	    - [`NoInstantiationError`](utils/exceptions#kmsnoinstatiationerror)
+    - [`warnings.py`](utils/warnings)         — custom warning classes and private warning decorators
+	    - [`DeleteWarning`](utils/warnings#kmsdeletewarning)
+	    - [`CastWarning`](utils/warnings#kmscastwarning)
+	    - [`AddtionFailureWarning`](utils/warnings#kmsadditionfailurewarning)
+	    - [`SubtractionFailureWarning`](utils/warnings#kmssubtractionfailurewarning)
     - `metadata.py`
 - `test/`
   - `test-storage.py` — **Mainstream test targeting `kms.storage`**
@@ -116,65 +116,7 @@ Storage.auto_delete_self = True
   - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
   - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
   - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
-
-# Custom Warnings and Exceptions
-
-> [!warning]
-> From kms-semver1.3.0 onward, the usage of `kms.Storage.<warning or exception>` has been deprecated. Please use the format `kms.<warning or exception>` instead.
-
-## Warnings
-
-Custom warnings for `kms` are stored in the `utils.warnings` module.
-
-### `kms.DeleteWarning`
-
-**Inherits from:** `UserWarning`
-
-> Warns you about deleting all contents of a database file.
-
-### `kms.AdditionFailureWarning`
-
-**Inherits from:** `RuntimeWarning`
-
-> Warns you when attempting to add a Storage instance and a dictionary or list.
-
-### `kms.SubtractionFailureWarning`
-
-**Inherits from:** `RuntimeWarning`
-
-> Warns you when attempting to subtract a Storage instance by a dictionary, and vice versa.
-> 
-> Also applies to division, despite the name.
-
-### `kms.CastWarning`
-
-**Inherits from:** `UserWarning`
-
-> Warns you about attempting to pass a key argument as something other than a string.
-
-## Exceptions
-
-Custom exceptions for `kms` are stored in the `utils.exceptions` module.
-
-#### `kms.KeyNotFoundError`
-
-**Inherits from:** `KeyError`
-
-> Custom exception raised when a key is not found.
-
-**Example**: if attempting to search for a nonexistent key with
-`Storage.Load.by_key`, this would be raised.
-
-#### `kms.NoInstantiationError`
-
-**Inherits from:** `TypeError`
-
-> Custom exception raised when attempting to instantiate a
-non-instantiable class.
-
-**Example**: if attempting to instantiate a helper class like `Load`,
-this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNDIzNjM2NTMyXX0=
+BnZm1cbiIsImhpc3RvcnkiOls5OTU5Mjk2NzFdfQ==
 -->
