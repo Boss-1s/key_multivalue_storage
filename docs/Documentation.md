@@ -73,9 +73,9 @@ Storage.auto_delete_self = True
 
 - `src/key_multivalue_storage/`
   - `storage.py` — main Storage class (core functionality)
-	  - `Storage`
-		  - `__init__`
-		  - `store`
+	  - [`Storage`](#storage)
+		  - [`__init__`](#arguments)
+		  - [`store`](#storagestore)
 		  - `keys`
 		  - `to_dict`
   - `load.py` — loading helpers (Load class)
@@ -890,8 +890,8 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTM1MDAyMTI0MCwzNzgyNTM5
-NzQsMTUyNDA1MzEwMCwxNjYxMTc4MTI2LC0xOTkwNzY4MDYsMj
-E0MDM3ODY2MSwxNjE5NzYyMzQ2LDQzNzE4ODI3NCwxNjI4MDMw
-ODcyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTA3MTg4MDQ4MCwtMTM1MDAy
+MTI0MCwzNzgyNTM5NzQsMTUyNDA1MzEwMCwxNjYxMTc4MTI2LC
+0xOTkwNzY4MDYsMjE0MDM3ODY2MSwxNjE5NzYyMzQ2LDQzNzE4
+ODI3NCwxNjI4MDMwODcyXX0=
 -->
