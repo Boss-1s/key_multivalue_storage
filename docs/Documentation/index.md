@@ -71,6 +71,9 @@ Storage.auto_delete_self = True
 > [!note]
 > Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
+> [!tip]
+> Click on a module, class, or method below to go straight to its documentation!
+
 - `src/key_multivalue_storage/`
   - [`storage.py`](storage) — main Storage class (core functionality)
 	  - [`Storage`](storage#storage)
@@ -84,16 +87,16 @@ Storage.auto_delete_self = True
 		  - [`by_index`](load#storage-load-by-index)
 		  - [`keys`](load#storage-load-keys)
 		  - [`values`](load#storage-load-values)
-  - `edit.py` — editing helpers (Edit class)
-	  - `Edit`
-		  - `propkey`
-		  - `propval`
-		  - `key`
-  - `delete.py` — deletion helpers (Delete class)
-	  - `Delete`
-		  - `by_key`
-		  - `by_propkey`
-		  - `all`
+  - [`edit.py`](edit) — editing helpers (Edit class)
+	  - [`Edit`](edit#storage-edit)
+		  - [`propkey`](edit#storage-edit-propkey)
+		  - [`propval`](edit#storage-edit-propval)
+		  - [`key`](edit#storage-edit-key)
+  - [`delete.py`](delete) — deletion helpers (Delete class)
+	  - [`Delete`](delete#storage-delete)
+		  - [`by_key`](delete#storage-delete-by-key)
+		  - [`by_propkey`](delete#storage-delete-by-propkey)
+		  - [`all`](delete#storage-delete-all)
   - `utils/`
     - `exceptions.py`       — custom exceptions
 	    - `KeyNotFoundError`
@@ -113,212 +116,6 @@ Storage.auto_delete_self = True
   - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
   - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
   - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
-
-# Main Classes
-
-> [!note]
-> Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
-
-## `Storage.Edit`
-
-### Methods
-
-#### `Storage.Edit.propkey()`
-
-```py
-@classmethod
-def propkey(cls,
-            file_path: str,
-            top_lv_key: Any,
-            oldpropkey: str,
-            newpropkey: str,
-            noexist_ok: bool=True
-           ) -> None
-```
-
-Rename a subkey within a top-level key.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----:|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
-|`oldpropkey`|`str`|Required|Existing subkey to rename.|
-|`newpropkey`|`str`|Required|New name for the subkey.|
-|`new`|`bool`|`True` (DEPRECATED)|Deprecated alias for `noexist_ok`.|
-|`noexist_ok`|`bool`|`True`|If `True`, create `newpropkey` with empty value when `oldpropkey` missing; otherwise raise `KeyNotFoundError`.|
-
-##### Outputs
-- `None`. `KeyNotFoundError` may be raised if any key is not found.
-
-##### Example
-```py
-Storage.Edit.propkey("db.json", "users", "username", "user_name")
-```
-
----
-
-#### `Storage.Edit.propval()`
-
-```py
-@classmethod
-def propval(cls,
-            file_path: str,
-            top_lv_key: Any,
-            propkey: str,
-            newval: str
-           ) -> None
-```
-
-Changes the value for an existing subkey under a top-level key.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----:|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
-|`propkey`|`str`|Required|Subkey whose value will be changed.|
-|`newval`|`str`|Required|New value for the subkey.|
-
-##### Outputs
-- `None`. Raises `KeyNotFoundError` if top-level key missing.
-
-##### Example
-```py
-Storage.Edit.propval("db.json", "users", "alice", "new-id")
-```
-
----
-
-#### `Storage.Edit.key()`
-
-```py
-@classmethod
-def key(cls, file_path: str, oldkey: Any, newkey: Any) -> None
-```
-
-Renames any top-level key in the JSON file; values stay unchanged.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----:|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`oldkey`|`Any`|Required|Existing top-level key to rename.|
-|`newkey`|`Any`|Required|New top-level key name.|
-
-##### Outputs
-- `None`. Raises `KeyNotFoundError` if `oldkey` missing.
-
-##### Example
-```py
-Storage.Edit.key("db.json", "users", "accounts")
-```
-
-### Other Info
-
-- This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
-
-## `Storage.Delete`
-
-### Methods
-
-#### `Storage.Delete.by_propkey()`
-
-```py
-@classmethod
-def by_propkey(cls,
-               file_path: str,
-               top_lv_key: Any,
-               property_key: str
-              ) -> None
-```
-
-Delete a subkey inside a top-level key.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
-|`property_key`|`str`|Required|Subkey to delete.|
-
-##### Outputs
-- `None`. Raises `KeyNotFoundError` if key or property missing.
-
-##### Example
-```py
-Storage.Delete.by_propkey("db.json", "users", "temp")
-```
-
----
-
-#### `Storage.Delete.by_key()`
-
-```py
-@classmethod
-def by_key(cls, file_path: str, key: Any) -> None
-```
-
-Delete a top-level key (and its subkeys) entirely from the JSON file.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`key`|`Any`|Required|Top-level key to delete.|
-
-##### Outputs
-- `None`. Raises `KeyNotFoundError` if key missing.
-
-##### Example
-```py
-Storage.Delete.by_key("db.json", "old_key")
-```
-
----
-
-#### `Storage.Delete.all()`
-
-```py
-@staticmethod
-def all(file_path: str, warn: bool=True) -> None
-```
-
-Delete all data in the JSON file (overwrite with `{}`). Shows a `DeleteWarning` unless `warn=False` or the `DeleteWarning` is being ignored via `warnings` filters.
-
-##### Arguments
-
-| Symbol | Type Hint | Default | Description |
-|----|----|----|----|
-|`file_path`|`str`|Required|Path to JSON file.|
-|`warn`|`bool`|`True`|If `True` show a `DeleteWarning` before deleting. If `False`, skip the warning. Ignoring `DeleteWarning` via `warnings.filterwarnings` also suppresses the prompt.|
-
-##### Outputs
-- `None`.
-
-##### Example
-```py
-# Normal run: warns
-Storage.Delete.all("db.json")
-
-# To force without warning:
-Storage.Delete.all("db.json", warn=False)
-
-# Or, filter out the warning to skip warn
-import warnings, key_multivalue_storage as kms
-
-warnings.filterwarning(action='ignore', category=kms.DeleteWarning)
-Storage.Delete.all("db.json") # Works just like when warn is set to False!
-```
-
-### Other Info
-
-- This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 
 # Custom Warnings and Exceptions
 
@@ -379,5 +176,5 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTAzNDIwOTc3OV19
+BnZm1cbiIsImhpc3RvcnkiOlsxNDIzNjM2NTMyXX0=
 -->
