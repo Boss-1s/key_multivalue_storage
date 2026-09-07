@@ -1,6 +1,11 @@
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
+| [<< Back](./storage) | [Next >>](./edit) |
+| :--------: | :---------: |
+| `storage.py` | `edit.py` |
+{: style="display: flex; justify-content: center; width: 100%;"}
+
 # `load.py`
 
 This module houses the `Load` class, a helper class that loads JSON objects stored with `Storage.store()` back into `Storage` objects.
@@ -163,5 +168,5 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNjQ3ODIzMDAxXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMjAzNzg2NDkxNV19
 -->
