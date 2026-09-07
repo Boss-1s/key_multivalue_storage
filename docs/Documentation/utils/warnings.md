@@ -4,6 +4,9 @@ Custom warnings for `kms` are stored in the `utils.warnings` module, relative pa
 
 ## Structure of the Module
 
+> [!tip]
+> Click on a class or method below to go straight to its documentation!
+
 - `warnings.py`         — custom warning classes and private warning decorators
 	- [`DeleteWarning`](#kmsdeletewarning)
 	- [`CastWarning`](#kmscastwarning)
@@ -43,5 +46,5 @@ Custom warnings for `kms` are stored in the `utils.warnings` module, relative pa
 > Also applies to division, despite the name.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNDEyODgwMTI4XX0=
+BnZm1cbiIsImhpc3RvcnkiOlszNzg1MzM0NDhdfQ==
 -->
