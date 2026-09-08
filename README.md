@@ -1,6 +1,8 @@
 # Key to Multivalue Storage - kms
 kms - a _tiny side project_ tuned into a **library**.
 
+<img width="100" alt="kms logo" src="https://github.com/user-attachments/assets/fa6cf7a7-710f-424b-87e8-02f799747ea4" />
+
 **JSON storage wrapper and editor.** Created with love by Boss_1s.
 
 Once upon a time, this was just a small project to solve a problem: the over-steep learning curve for [scratchattach](https://github.com/TimMcCool/scratchattach)'s database functionality. Now, I have decided to make it a library, something with humble beginnings with big hopes in its future.
@@ -87,7 +89,7 @@ There's a _lot_ more to this library that what _meets the eye_.
 ### See the full documentation [here](https://boss-1s.github.io/key_multivalue_storage)!
 
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
-## [Roadmap](https://github.com/Boss-1s/key_multivalue_storage/wiki/Roadmap#possible-future-features)
+## [Roadmap](https://boss-1s.github.io/Roadmap#possible-future-features)
 ## [Report a Bug](https://github.com/Boss-1s/key_multivalue_storage/issues)
 
 
