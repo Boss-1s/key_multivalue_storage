@@ -1,3 +1,8 @@
+| [<< Back](./warnings) | [Return >>](..#structure-of-the-library) |
+| :--------: | :---------: |
+| `utils/warnings.py` | to Documentation |
+{: style="display: flex; justify-content: center; width: 100%;"}
+
 # `utils/exceptions.py`
 
 Custom exceptions for `kms` are stored in the `utils.exceptions` module, relative path `./utils/exceptions.py`.
@@ -36,5 +41,5 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxMjkzODEwNTAwXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTIwNDU2OTgyOF19
 -->
