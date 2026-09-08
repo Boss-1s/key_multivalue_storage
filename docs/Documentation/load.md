@@ -1,3 +1,8 @@
+---
+title: Documentation - load
+sidebar_type: documentation
+---
+
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
@@ -168,6 +173,6 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTg4NTE3MjI2MywtMjAzNzg2
-NDkxNV19
+BnZm1cbiIsImhpc3RvcnkiOlsxMDAzNDIzMDg5LC0xODg1MTcy
+MjYzLC0yMDM3ODY0OTE1XX0=
 -->

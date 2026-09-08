@@ -1,3 +1,8 @@
+---
+title: Documentation - exceptions
+sidebar_type: documentation
+---
+
 
 | [<< Back](./warnings) (*`utils/warnings.py`*) | [Return >>](..#structure-of-the-library) (*to Documentation*) |
 | :--------: | :---------: |
@@ -42,6 +47,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTU0MzgxNjg2MiwtMTIwNDU2
-OTgyOF19
+BnZm1cbiIsImhpc3RvcnkiOlstOTE4MzU2OTQ4LC0xMjA0NTY5
+ODI4XX0=
 -->

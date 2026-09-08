@@ -1,3 +1,8 @@
+---
+title: Documentation - utils
+sidebar_type: documentation
+---
+
 
 | [<< Back](../delete) (*`delete.py`*) | [Next >>](warnings) (*`utils/warnings.py`*) |
 | :--------: | :---------: |
@@ -42,5 +47,5 @@ from key_multivalue_storage.utils.exceptions import NoInstantiationError
 		- [`SubtractionFailureWarning`](warnings#kmssubtractionfailurewarning)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTM3MTQ3NTZdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlsxMDkyNDk0NjQ5XX0=
 -->

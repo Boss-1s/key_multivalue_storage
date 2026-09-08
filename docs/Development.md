@@ -1,3 +1,7 @@
+---
+title: Development
+---
+
 # Development
 
 **Before contributing to this library, it is crucial that you read the [contribution guidelines](https://boss-1s.github.io/key_multivalue_storage/contribution-guidelines), to ensure max preparation before contributing anything.**
@@ -226,5 +230,5 @@ This is especially useful when developing `kms` in VSCode, and you want the full
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY0NTQ3NDQ5Ml19
+eyJoaXN0b3J5IjpbLTMxODQ1MzcyMV19
 -->
