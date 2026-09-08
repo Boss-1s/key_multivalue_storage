@@ -100,7 +100,7 @@ pip install key-multivalue-storage[dev]
   - [`utils/`](utils)
     - [`exceptions.py`](utils/exceptions)       — custom exceptions
 	    - [`KeyNotFoundError`](utils/exceptions#kmskeynotfounderror)
-	    - [`NoInstantiationError`](utils/exceptions#kmsnoinstatiationerror)
+	    - [`NoInstantiationError`](utils/exceptions#kmsnoinstantiationerror)
     - [`warnings.py`](utils/warnings)         — custom warning classes and private warning decorators
 	    - [`DeleteWarning`](utils/warnings#kmsdeletewarning)
 	    - [`CastWarning`](utils/warnings#kmscastwarning)
@@ -118,5 +118,5 @@ pip install key-multivalue-storage[dev]
   - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTM1MzUwODI1N119
+BnZm1cbiIsImhpc3RvcnkiOlstMTE0MDI4NDM0N119
 -->
