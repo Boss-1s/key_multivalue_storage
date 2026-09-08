@@ -1,6 +1,11 @@
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
+| [<< Back](./edit) | [Next >>](./utils) |
+| :--------: | :---------: |
+| `edit.py` | `utils/` |
+{: style="display: flex; justify-content: center; width: 100%;"}
+
 # `delete.py`
 
 This module houses the `Delete` class. As the 'Grim Reaper' of the library, it removes objects stored in a JSON file via `Storage.store()`.
@@ -116,5 +121,5 @@ Storage.Delete.all("db.json") # Works just like when warn is set to False
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNzY4NTUyMzU2XX0=
+BnZm1cbiIsImhpc3RvcnkiOlstNjQyODQxMzcwXX0=
 -->
