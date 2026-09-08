@@ -1,6 +1,7 @@
-| [<< Back](./warnings) | [Return >>](..#structure-of-the-library) |
+
+| [<< Back](./warnings) (*`utils/warnings.py`*) | [Return >>](..#structure-of-the-library) (*to Documentation*) |
 | :--------: | :---------: |
-| `utils/warnings.py` | to Documentation |
+| | |
 {: style="display: flex; justify-content: center; width: 100%;"}
 
 # `utils/exceptions.py`
@@ -14,7 +15,7 @@ Custom exceptions for `kms` are stored in the `utils.exceptions` module, relativ
 
 - `exceptions.py`       — custom exceptions
 	- [`KeyNotFoundError`](#kmskeynotfounderror)
-	- [`NoInstantiationError`](#kmsnoinstatiationerror)
+	- [`NoInstantiationError`](#kmsnoinstantiationerror)
 
 ## Classes
 
@@ -41,5 +42,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTIwNDU2OTgyOF19
+BnZm1cbiIsImhpc3RvcnkiOlstMTU0MzgxNjg2MiwtMTIwNDU2
+OTgyOF19
 -->
