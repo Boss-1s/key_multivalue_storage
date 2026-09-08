@@ -38,3 +38,8 @@ This is, after all, an open-source project. Anyone and everyone is invited to co
 - [**See more about Conventional Commits here.**](https://www.conventionalcommits.org/en/v1.0.0/)
 
 Note that these contributor guidelines are subject to change. Happy contributing!
+
+[***<< Back to home***](.)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEyMjY2MDA4NDJdfQ==
+-->
