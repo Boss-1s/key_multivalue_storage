@@ -34,7 +34,7 @@ from key_multivalue_storage.utils.exceptions import NoInstantiationError
 - `utils/`
 	- [`exceptions.py`](exceptions)       — custom exceptions
 		- [`KeyNotFoundError`](exceptions#kmskeynotfounderror)
-		- [`NoInstantiationError`](exceptions#kmsnoinstatiationerror)
+		- [`NoInstantiationError`](exceptions#kmsnoinstantiationerror)
 	- [`warnings.py`](warnings)         — custom warning classes and private warning decorators
 		- [`DeleteWarning`](warnings#kmsdeletewarning)
 		- [`CastWarning`](warnings#kmscastwarning)
@@ -42,5 +42,5 @@ from key_multivalue_storage.utils.exceptions import NoInstantiationError
 		- [`SubtractionFailureWarning`](warnings#kmssubtractionfailurewarning)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTM2ODExODZdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlsxNTM3MTQ3NTZdfQ==
 -->
