@@ -1,5 +1,6 @@
 ---
 title: Contributor Guidelines
+sidebar_type: toc
 ---
 
 # Contributor Guidelines
@@ -45,5 +46,5 @@ Note that these contributor guidelines are subject to change. Happy contributing
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzQ5MjQwNTMwXX0=
+eyJoaXN0b3J5IjpbMjYxMjI4OTY5XX0=
 -->

@@ -30,6 +30,8 @@ baseurl: "/key_multivalue_storage" # the subpath of your site, e.g. /blog
 url: "https://boss-1s.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 repository: Boss-1s/key_multivalue_storage
 github_username: Boss-1s
+favicon: true
+logo: 'favicon.ico'
 
 # Build settings
 remote_theme: "BDHU/minimalist@f19d6a6ef015ba93c5aee9ce80339e4959b0ffa7"
@@ -81,8 +83,6 @@ sidebar:
     icon: <img src="https://pypi.org/static/images/white-cube.2351a86c.svg" width="20" height="20"/>
     link: https://pypi.org/project/key-multivalue-storage
 
-sticky_toc:
-  target_collection: ["**"]
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to

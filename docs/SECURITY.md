@@ -1,5 +1,6 @@
 ---
 title: Versioning, Release, and Security
+sidebar_type: toc
 ---
 
 # Versioning, Release, and Security
@@ -79,5 +80,5 @@ Currently, the only **released** package versions _(not necessarially supported)
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NjU0NjU5MjVdfQ==
+eyJoaXN0b3J5IjpbLTIxMzAwODEzODJdfQ==
 -->
