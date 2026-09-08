@@ -1,9 +1,8 @@
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
-| [<< Back](./storage) | [Next >>](./edit) |
+| [<< Back](./storage) (*`storage.py`*) | [Next >>](./edit) (*`edit.py`*) |
 | :--------: | :---------: |
-| `storage.py` | `edit.py` |
 {: style="display: flex; justify-content: center; width: 100%;"}
 
 # `load.py`
@@ -168,5 +167,6 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMjAzNzg2NDkxNV19
+BnZm1cbiIsImhpc3RvcnkiOls3NzMxNjQyMTcsLTIwMzc4NjQ5
+MTVdfQ==
 -->
