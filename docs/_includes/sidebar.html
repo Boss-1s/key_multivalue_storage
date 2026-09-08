@@ -71,7 +71,9 @@
         </ul>
       </li>
     </ul>
-    <!-- {% elsif page.sidebar_type == 'roadmap' %} -->
+    {% elsif page.sidebar_type == 'toc' %}
+    <ul id="dynamic-toc">  
+    </ul>
     {% else %}
       {%- for platform in site.sidebar %}
       <li>
