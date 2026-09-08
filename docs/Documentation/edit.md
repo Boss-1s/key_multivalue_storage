@@ -3,6 +3,7 @@
 
 | [<< Back](./load) (*`load.py`*) | [Next >>](./delete) (*`delete.py`*) |
 | :--------: | :---------: |
+| | |
 {: style="display: flex; justify-content: center; width: 100%;"}
 
 # `edit.py`
@@ -123,5 +124,5 @@ Storage.Edit.key("db.json", "users", "accounts")
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTM1MzA5MzI2NV19
+BnZm1cbiIsImhpc3RvcnkiOlsxODUxMTk3MDU1XX0=
 -->
