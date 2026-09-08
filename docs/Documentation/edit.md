@@ -1,6 +1,11 @@
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
+| [<< Back](./load) | [Next >>](./delete) |
+| :--------: | :---------: |
+| `load.py` | `delete.py` |
+{: style="display: flex; justify-content: center; width: 100%;"}
+
 # `edit.py`
 
 This module houses the class `Edit`. Despite being implemented a bit later than the other helper classes, this one is just as equally as important, as it allows remote editing of JSON data stored with [`Storage.store()`](/key_multivalue_storage/Documentation/storage#storage-store).
@@ -119,5 +124,5 @@ Storage.Edit.key("db.json", "users", "accounts")
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNTA2ODA2MjQ3XX0=
+BnZm1cbiIsImhpc3RvcnkiOlsxNTQwMTIzNTUxXX0=
 -->
