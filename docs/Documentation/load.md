@@ -3,6 +3,7 @@
 
 | [<< Back](./storage) (*`storage.py`*) | [Next >>](./edit) (*`edit.py`*) |
 | :--------: | :---------: |
+| | |
 {: style="display: flex; justify-content: center; width: 100%;"}
 
 # `load.py`
@@ -167,6 +168,6 @@ Keys can also be returned as a key-value pair if keys=True.
 - Aside from `Storage`, this is the only class with [a] method(s) that return(s) a `Storage` object.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOls3NzMxNjQyMTcsLTIwMzc4NjQ5
-MTVdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTg4NTE3MjI2MywtMjAzNzg2
+NDkxNV19
 -->
