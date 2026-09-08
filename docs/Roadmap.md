@@ -277,6 +277,8 @@ Another, proposed by [**#74**](https://github.com/Boss-1s/key_multivalue_storage
 These types of refactorizations - whether it's argument positioning, logic, or just a tweak of a variable name - will prove how each change makes kms more and more **memory-efficient** and **lightweight**.
 
 See all other new features in the [release notes](/Boss-1s/key_multivalue_storage/releases).
+
+[***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4NDcyMDI0NF19
+eyJoaXN0b3J5IjpbLTE4NjY4MDQwMDRdfQ==
 -->
