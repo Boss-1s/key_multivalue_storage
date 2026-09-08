@@ -1,3 +1,8 @@
+---
+title: Documentation - delete
+sidebar_type: documentation
+---
+
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
@@ -122,5 +127,5 @@ Storage.Delete.all("db.json") # Works just like when warn is set to False
 - This class cannot be instantiated. Attempting to do so will raise [`kms.NoInstantiationError`](#kmsnoinstantiationerror).
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsyMTA3MjA2NDEyXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMjA3NDAyMDE0NV19
 -->
