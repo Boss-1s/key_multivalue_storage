@@ -1,4 +1,5 @@
 ---
+title: Documentation
 sidebar_type: documentation
 ---
 
@@ -123,6 +124,6 @@ pip install key-multivalue-storage[dev]
 [***<< Back to home***](..)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNTA0NTc2OTIyLC0yOTEwMzI4
+BnZm1cbiIsImhpc3RvcnkiOlstNTM0MjU2MjQ4LC0yOTEwMzI4
 NTFdfQ==
 -->
