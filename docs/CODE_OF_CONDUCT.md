@@ -1,3 +1,7 @@
+---
+title: Code Of Conduct
+---
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
@@ -129,5 +133,5 @@ https://www.contributor-covenant.org/translations.
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgzMjYyMjM3Nl19
+eyJoaXN0b3J5IjpbLTM1ODUzODA1Nl19
 -->
