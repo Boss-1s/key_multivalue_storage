@@ -15,7 +15,7 @@ Custom exceptions for `kms` are stored in the `utils.exceptions` module, relativ
 
 - `exceptions.py`       — custom exceptions
 	- [`KeyNotFoundError`](#kmskeynotfounderror)
-	- [`NoInstantiationError`](#kmsnoinstatiationerror)
+	- [`NoInstantiationError`](#kmsnoinstantiationerror)
 
 ## Classes
 
@@ -42,6 +42,6 @@ non-instantiable class.
 this would be raised.
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjM1MTE3NjE2LC0xMjA0NTY5
-ODI4XX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTU0MzgxNjg2MiwtMTIwNDU2
+OTgyOF19
 -->
