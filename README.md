@@ -1,6 +1,8 @@
 # Key to Multivalue Storage - kms
 kms - a _tiny side project_ tuned into a **library**.
 
+<img width="100" height="100" alt="kms logo" src="https://github.com/user-attachments/assets/aff8b51a-8dde-4485-8f8f-9c4e14490f01" />
+
 **JSON storage wrapper and editor.** Created with love by Boss_1s.
 
 ## `docs` branch
