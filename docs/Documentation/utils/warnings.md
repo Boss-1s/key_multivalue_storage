@@ -1,6 +1,6 @@
-| [<< Back](.) | [Next >>](./exceptions) |
+
+| [<< Back](.) (*`utils/`*) | [Next >>](./edit) (*`utils/exceptions.py`*) |
 | :--------: | :---------: |
-| `utils/` | `utils/exceptions.py` |
 {: style="display: flex; justify-content: center; width: 100%;"}
 
 # `utils/warnings.py`
@@ -75,5 +75,5 @@ Warns you when attempting to subtract a Storage instance by a dictionary, and vi
 **Used in:** `Storage.__sub__()`, `Storage.__truediv__()`
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTY4NTEwNDcwNV19
+BnZm1cbiIsImhpc3RvcnkiOlsxNzEzMDIzMDIxXX0=
 -->
