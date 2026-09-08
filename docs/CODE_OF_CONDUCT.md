@@ -1,5 +1,6 @@
 ---
 title: Code Of Conduct
+sidebar_type: toc
 ---
 
 # Contributor Covenant Code of Conduct
@@ -133,5 +134,5 @@ https://www.contributor-covenant.org/translations.
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM1ODUzODA1Nl19
+eyJoaXN0b3J5IjpbLTQwNzEyNjYxNV19
 -->
