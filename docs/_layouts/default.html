@@ -62,27 +62,17 @@
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        try {
-          const headings = document.querySelectorAll("main h1, main h2, main h3");
-          const tocList = document.getElementById("dynamic-toc");
-        
-          headings.forEach(heading => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.textContent = heading.textContent;
-            a.href = "#" + heading.id;
-            li.appendChild(a);
-            tocList.appendChild(li);
-          });
-        } catch (error) {
-          console.error("Caught exception:", error.message)
-          const tocList = document.getElementById("link")
-          const li = document.createElement("li")
-          const p = document.createElement("p")
-          p.textContent = "⚠ Could not generate dynamic table of contents. ⚠"
-          li.appendChild(p)
-          tocList.appendChild(li)
-        }
+        const headings = document.querySelectorAll("h1, h2, h3");
+        const tocList = document.getElementById("dynamic-toc");
+      
+        headings.forEach(heading => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.textContent = heading.textContent;
+          a.href = "#" + heading.id;
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
       });
     </script>
   </body>
