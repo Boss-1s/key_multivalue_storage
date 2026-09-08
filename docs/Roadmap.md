@@ -1,5 +1,6 @@
 ---
 title: Roadmap
+sidebar_type: toc
 ---
 
 # Roadmap
@@ -25,25 +26,27 @@ kms will **NEVER** have the following features:
 
 ## Full Roadmap
 
-> [!warning]
-> This roadmap has been completely rewritten to follow a five-to-six-month minor release cycle.
+> [!tip]
+> See [this page](https://boss-1s.github.io/key_multivalue_storage/Development#release-cycles) for more information about the release cycles.
+
+---
 
 <!--
 Roadmap format:
 
-#### kms-semver<semver>
+### kms-semver<semver>
 - **Projected Release Date: YYYY/MM/DD**
 - **Projected Alpha 0 Release Date: YYYY/MM/DD** (only for minor and major updates)
 
 *Stable Release tag: `<PyPi Version>`
 
-##### Features
+#### Features
 - List features here.
 
-##### Bug Fixes
+#### Bug Fixes
 - List bug fixes here
 
-##### Graceful Deprecation cycle <semver>
+#### Graceful Deprecation cycle <semver>
 - List 'partial' breaking changes and deprecations here.
 -->
 
@@ -54,21 +57,114 @@ Roadmap format:
 
 #### Features
 
-- No new features are planned.
+No new features will be introduced in this update.
 
 #### Bug Fixes
 
 - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
-- Prettified all Storage dunder methods[**#52**](https://github.com/Boss-1s/key_multivalue_storage/issues/52) - *`logging.Logger`*
-- [**#75**](https://github.com/Boss-1s/key_multivalue_storage/issues/75) - *`__iadd__` for `Storage`*
-
-#### Bug Fixes
-
-None for now...
+- Prettified all Storage dunder methods
 
 #### Graceful Deprecation cycle 1.3.2
 
-Nothing to be deprecated in this version- None for now...
+Nothing to be deprecated in this version.
+
+---
+
+### kms-semver1.3.3
+- **Projected Release Date: 2026/11/07**
+
+*Stable Release tag: `v1.3.3.20261107`*
+
+> [!important]
+> This major patch coincides with the 3rd alpha release of `kms-semver1.4`, `kms-v1.4.0a2/2026.11.07`.
+
+#### Features
+
+No new features will be introduced in this update.
+
+#### Bug Fixes
+
+- No bugs to fixed...._yet_...
+
+#### Graceful Deprecation cycle 1.3.3
+
+> [!note]
+> `kms-semver1.4.0a2` has its own list of deprecations.
+
+- None yet...
+
+---
+
+### kms-semver1.3.4
+- **Projected Release Date: 2026/12/05**
+
+*Stable Release tag: `v1.3.4.20261205`*
+
+> [!important]
+> This major patch coincides with the 1st beta release of `kms-semver1.4`, `kms-v1.4.0b0/2026.12.05`.
+
+#### Features
+
+No new features will be introduced in this update.
+
+#### Bug Fixes
+
+- No bugs to be fixed...._yet_...
+
+#### Graceful Deprecation cycle 1.3.4
+
+> [!note]
+> `kms-semver1.4.0b0` has its own list of deprecations.
+
+- None yet...
+
+---
+
+### kms-semver1.3.5
+- **Projected Release Date: 2026/12/21**
+
+*Stable Release tag: `v1.3.5.20261221`*
+
+> [!important]
+> This major patch coincides with the 3rd beta release of `kms-semver1.4`, `kms-v1.4.0b2/2026.12.21`.
+
+#### Features
+
+No new features will be introduced in this update.
+
+#### Bug Fixes
+
+- No bugs to be fixed...._yet_...
+
+#### Graceful Deprecation cycle 1.3.5
+
+> [!note]
+> `kms-semver1.4.0b2` has its own list of deprecations.
+
+- None yet...
+
+---
+
+### kms-semver1.3.6
+- **Projected Release Date: 2027/01/03**
+
+*Stable Release tag: `v1.3.6.20261107`*
+
+> [!important]
+> This major patch coincides with the stable release of `kms-semver1.4.0`.
+
+> [!important]
+> This update will commence the beginning of LTS for `kms-semver1.3.x`.
+
+#### Features
+
+No new features will be introduced in this update.
+
+#### Bug Fixes
+
+- No bugs to be fixed...._yet_...
+
+This update will not have a deprecation cycle.
 
 ---
 
@@ -105,12 +201,16 @@ Nothing to be deprecated in this version- None for now...
 *Stable Release tag: `v1.4.0.20260103`*
 
 #### Features
-* Make certain functions accept a `Storage` object so that arithmetic/bitwise operators can be avoided
+
+I'm gonna have to sort these at some point....docs is harder than coding the module itself trust
+
+* **Make certain functions accept a `Storage` object** -- that way, complex arithmetic/bitwise operators can be avoided
 * Make certain functions return `Storage` objects instead of `None`
 * New methods allowing for easy modification of `Storage` objects in `Edit` class instead of using operators
-* Native scratchattach support
-* Full switch to `logging.Logger`
+* Native scratchattach support (maybe)
+* **Full switch to `logging.Logger` over `print()`**
 * Full switch to `rich`
+* **Adding `__iadd__` and related methods to `Storage`** -- allows saving memory by using only one object for binary operations that have a unary counterpart
 
 #### Bug Fixes
 * None for now...
@@ -126,6 +226,10 @@ Nothing to be deprecated in this version- None for now...
 
 *Stable Release tag: `v1.5.0.20270630`*
 
+#### Release Plan
+
+I have no idea. Sorry.
+
 #### Features
 * Multiple file format support (`.json`, `.yaml`, `.yml`)
 * YAML parsing and editing
@@ -133,12 +237,12 @@ Nothing to be deprecated in this version- None for now...
 * Allow choosing type of UUID as the instance ID
 * Begin shift to 2.0
   * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * You can test these changes out through the following script:
+  * You can test ALL these changes out through the following script:
     ```py
     import key_multivalue_storage as kms
     kms.nextgen = True
     ```
-  * To turn on 2.0 mode in a specific module, you can set the attribute in that module.
+  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
     ```py
     from key_multivalue_storage import storage
     storage.nextgen = True
@@ -148,12 +252,15 @@ Nothing to be deprecated in this version- None for now...
     with Storage("tlk", sk='sv') as s:
         print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
     ```
-  * Note that if a module did not exist prior to 2.0, you must use the `kms.nextgen` attribute to activate it.
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
+
 * None for now...
 
 #### Graceful Deprecation cycle 1.5.0
+
 * None for now...
 
 ---
@@ -173,7 +280,7 @@ Nothing to be deprecated in this version- None for now...
 #### Bug Fixes
 * None for now...
 
-This update will not have a deprecation cycle.
+This update will not have a deprecation cycle, due to it being the last version in the `kms-semver1.x` series.
 
 ---
 
@@ -284,5 +391,5 @@ See all other new features in the [release notes](/Boss-1s/key_multivalue_storag
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTE2ODg0MTRdfQ==
+eyJoaXN0b3J5IjpbLTQ1ODQ1OTU0M119
 -->

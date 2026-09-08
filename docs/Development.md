@@ -1,5 +1,6 @@
 ---
 title: Development
+sidebar_type: toc
 ---
 
 # Development
@@ -230,5 +231,5 @@ This is especially useful when developing `kms` in VSCode, and you want the full
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMxODQ1MzcyMV19
+eyJoaXN0b3J5IjpbLTE3MDgxNDExMDRdfQ==
 -->
