@@ -2,70 +2,66 @@
   <ul class="link">
     {% if page.sidebar_type == 'documentation' %}
     <ul>
-      <li><code>src/key_multivalue_storage/</code>
+      <li><a href="storage"><code>storage.py</code></a> — main Storage class (core functionality)
         <ul>
-          <li><a href="storage"><code>storage.py</code></a> — main Storage class (core functionality)
+          <li><a href="storage#storage"><code>Storage</code></a>
             <ul>
-              <li><a href="storage#storage"><code>Storage</code></a>
-                <ul>
-                  <li><a href="storage#arguments"><code>__init__</code></a></li>
-                  <li><a href="storage#storagestore"><code>store</code></a></li>
-                  <li><a href="storage#storagekeys"><code>keys</code></a></li>
-                  <li><a href="storage#storageto_dict"><code>to_dict</code></a></li>
-                </ul>
-              </li>
+              <li><a href="storage#arguments"><code>__init__</code></a></li>
+              <li><a href="storage#storagestore"><code>store</code></a></li>
+              <li><a href="storage#storagekeys"><code>keys</code></a></li>
+              <li><a href="storage#storageto_dict"><code>to_dict</code></a></li>
             </ul>
           </li>
-          <li><a href="load"><code>load.py</code></a> — loading helpers (Load class)
+        </ul>
+      </li>
+      <li><a href="load"><code>load.py</code></a> — loading helpers (Load class)
+        <ul>
+          <li><a href="load#storageload"><code>Load</code></a>
             <ul>
-              <li><a href="load#storageload"><code>Load</code></a>
-                <ul>
-                  <li><a href="load#storageloadbykey"><code>by_key</code></a></li>
-                  <li><a href="load#storageloadby_index"><code>by_index</code></a></li>
-                  <li><a href="load#storageloadkeys"><code>keys</code></a></li>
-                  <li><a href="load#storageloadvalues"><code>values</code></a></li>
-                </ul>
-              </li>
+              <li><a href="load#storageloadbykey"><code>by_key</code></a></li>
+              <li><a href="load#storageloadby_index"><code>by_index</code></a></li>
+              <li><a href="load#storageloadkeys"><code>keys</code></a></li>
+              <li><a href="load#storageloadvalues"><code>values</code></a></li>
             </ul>
           </li>
-          <li><a href="edit"><code>edit.py</code></a> — editing helpers (Edit class)
+        </ul>
+      </li>
+      <li><a href="edit"><code>edit.py</code></a> — editing helpers (Edit class)
+        <ul>
+          <li><a href="edit#storageedit"><code>Edit</code></a>
             <ul>
-              <li><a href="edit#storageedit"><code>Edit</code></a>
-                <ul>
-                  <li><a href="edit#storageeditpropkey"><code>propkey</code></a></li>
-                  <li><a href="edit#storageeditpropval"><code>propval</code></a></li>
-                  <li><a href="edit#storageeditkey"><code>key</code></a></li>
-                </ul>
-              </li>
+              <li><a href="edit#storageeditpropkey"><code>propkey</code></a></li>
+              <li><a href="edit#storageeditpropval"><code>propval</code></a></li>
+              <li><a href="edit#storageeditkey"><code>key</code></a></li>
             </ul>
           </li>
-          <li><a href="delete"><code>delete.py</code></a> — deletion helpers (Delete class)
+        </ul>
+      </li>
+      <li><a href="delete"><code>delete.py</code></a> — deletion helpers (Delete class)
+        <ul>
+          <li><a href="delete#storagedelete"><code>Delete</code></a>
             <ul>
-              <li><a href="delete#storagedelete"><code>Delete</code></a>
-                <ul>
-                  <li><a href="delete#storagedeleteby_key"><code>by_key</code></a></li>
-                  <li><a href="delete#storagedeleteby_propkey"><code>by_propkey</code></a></li>
-                  <li><a href="delete#storagedeleteall"><code>all</code></a></li>
-                </ul>
-              </li>
+              <li><a href="delete#storagedeleteby_key"><code>by_key</code></a></li>
+              <li><a href="delete#storagedeleteby_propkey"><code>by_propkey</code></a></li>
+              <li><a href="delete#storagedeleteall"><code>all</code></a></li>
             </ul>
           </li>
-          <li><a href="utils"><code>utils/</code></a>
+        </ul>
+      </li>
+      <li><a href="utils"><code>utils/</code></a>
+        <ul>
+          <li><a href="utils/exceptions"><code>exceptions.py</code></a>       — custom exceptions
             <ul>
-              <li><a href="utils/exceptions"><code>exceptions.py</code></a>       — custom exceptions
-                <ul>
-                  <li><a href="utils/exceptions#kmskeynotfounderror"><code>KeyNotFoundError</code></a></li>
-                  <li><a href="utils/exceptions#kmsnoinstantiationerror"><code>NoInstantiationError</code></a></li>
-                </ul>
-              </li>
-              <li><a href="utils/warnings"><code>warnings.py</code></a>         — custom warning classes and private warning decorators
-                <ul>
-                  <li><a href="utils/warnings#kmsdeletewarning"><code>DeleteWarning</code></a></li>
-                  <li><a href="utils/warnings#kmscastwarning"><code>CastWarning</code></a></li>
-                  <li><a href="utils/warnings#kmsadditionfailurewarning"><code>AddtionFailureWarning</code></a></li>
-                  <li><a href="utils/warnings#kmssubtractionfailurewarning"><code>SubtractionFailureWarning</code></a></li>
-                </ul>
-              </li>
+              <li><a href="utils/exceptions#kmskeynotfounderror"><code>KeyNotFoundError</code></a></li>
+              <li><a href="utils/exceptions#kmsnoinstantiationerror"><code>NoInstantiationError</code></a></li>
+            </ul>
+          </li>
+          <li><a href="utils/warnings"><code>warnings.py</code></a>         — custom warning classes and private warning decorators
+            <ul>
+              <li><a href="utils/warnings#kmsdeletewarning"><code>DeleteWarning</code></a></li>
+              <li><a href="utils/warnings#kmscastwarning"><code>CastWarning</code></a></li>
+              <li><a href="utils/warnings#kmsadditionfailurewarning"><code>AddtionFailureWarning</code></a></li>
+              <li><a href="utils/warnings#kmssubtractionfailurewarning"><code>SubtractionFailureWarning</code></a></li>
             </ul>
           </li>
         </ul>
