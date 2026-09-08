@@ -1,6 +1,8 @@
 # Key to Multivalue Storage - kms
 kms - a _tiny side project_ tuned into a **library**.
 
+<img width="100" alt="kms logo" src="https://github.com/user-attachments/assets/0b569791-672b-4954-a377-fd1cbe4543ae" />
+
 **JSON storage wrapper and editor.** Created with love by Boss_1s.
 
 Once upon a time, this was just a small project to solve a problem: the over-steep learning curve for [scratchattach](https://github.com/TimMcCool/scratchattach)'s database functionality. Now, I have decided to make it a library, something with humble beginnings with big hopes in its future.
@@ -14,9 +16,9 @@ __________
 ## Badges
 ### Download
 
-[![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
+[![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14%20%7C%203.15-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
 [![Package](https://img.shields.io/badge/Stable%20Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
-[![Beta Nightly](https://img.shields.io/badge/Nightly%20Package-kms--semver1%2E3%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/semver1.3.x/full-kms-semver-1-3-nightly.zip)
+[![Beta Nightly](https://img.shields.io/badge/Nightly%20Package-kms--semver1%2E4%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/semver1.4.x/full-kms-semver-1-3-nightly.zip)
 
 ### Status
 
@@ -48,7 +50,7 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
-The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.3.x/test/). 
+The development package includes Pylint for testing and Griffe for finding breaking changes. You can see every test script in the repo's [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/test/). 
 
 [*See more about tests here.*](https://boss-1s.github.io/key_multivalue_storage/Development)
 
