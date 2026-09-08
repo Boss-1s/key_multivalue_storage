@@ -1,3 +1,7 @@
+---
+title: Documentation
+sidebar_type: documentation
+---
 
 > [!Note]
 > **To use this library, you must have Python installed on your device.**
@@ -120,6 +124,6 @@ pip install key-multivalue-storage[dev]
 [***<< Back to home***](..)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMTUzMTg5MDQ5MywtMjkxMDMy
-ODUxXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstNTM0MjU2MjQ4LC0yOTEwMzI4
+NTFdfQ==
 -->

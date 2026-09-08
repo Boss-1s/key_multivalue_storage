@@ -1,3 +1,8 @@
+---
+title: Documentation - storage
+sidebar_type: documentation
+---
+
 > [!note]
 > Note that each main class and module **has a help() method**, accessible via `<class/module>.help()`. These `help()` methods are simply docstring printers and hinters, so they will not be touched on in this documentation.
 
@@ -390,5 +395,6 @@ default_db: Storage = Storage("last_string", foo="bar", fah="hah") # Functionall
 	- Type-hint `Storage`with the subscription format `Storage[TopKey, SubKey, SubVal]`
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlsxNjQ3Nzk2ODE1XX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTg1MTc1MjAxNiwxNjQ3Nzk2
+ODE1XX0=
 -->
