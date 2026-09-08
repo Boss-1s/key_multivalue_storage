@@ -117,8 +117,9 @@ pip install key-multivalue-storage[dev]
   - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
   - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 
-[***<< Back to home***](.)
+[***<< Back to home***](..)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstMjkxMDMyODUxXX0=
+BnZm1cbiIsImhpc3RvcnkiOlstMTUzMTg5MDQ5MywtMjkxMDMy
+ODUxXX0=
 -->

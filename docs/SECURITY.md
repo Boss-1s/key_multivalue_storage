@@ -64,8 +64,7 @@ Currently, the only **released** package versions _(not necessarially supported)
 | 1.1.x | Inactive(7) | Unsupported | Already reached EOL | Unknown|
 | 1.2.x | Production/Stable (5)| LTS | 1.5 | 1.2.5.20260724 |
 | 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 | 1.3.1.20260812 |
-| 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0
-| 1.4.x | Planning(1) | Unreleased | 2.0 |
+| 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0 | Unreleased |
 | 1.5.x | Planning(1) | Unreleased | 2.1 | None |
 | 1.6.x | Planning(1None(0) | Unreleased | 2.2 | None |
 | 2.0.x | Planning(1) | Unreleased | 2.3 | None |
@@ -76,5 +75,5 @@ Currently, the only **released** package versions _(not necessarially supported)
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAzMTE4MzU5NV19
+eyJoaXN0b3J5IjpbLTExMzgzMTM3NTddfQ==
 -->
