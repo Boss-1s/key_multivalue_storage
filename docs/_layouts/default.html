@@ -58,5 +58,22 @@
       </footer>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+    {% if page.sidebar_type == 'toc' %}
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const headings = document.querySelectorAll("main h1, main h2, main h3");
+          const tocList = document.getElementById("dynamic-toc");
+        
+          headings.forEach(heading => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.textContent = heading.textContent;
+            a.href = "#" + heading.id;
+            li.appendChild(a);
+            tocList.appendChild(li);
+          });
+        });
+      </script>
+    {% endif %}
   </body>
 </html>
