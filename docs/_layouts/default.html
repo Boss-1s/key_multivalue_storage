@@ -60,9 +60,9 @@
       </footer>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
-    {% if page.sidebar_type == 'toc' %}
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        try {
           const headings = document.querySelectorAll("main h1, main h2, main h3");
           const tocList = document.getElementById("dynamic-toc");
         
@@ -74,8 +74,16 @@
             li.appendChild(a);
             tocList.appendChild(li);
           });
-        });
-      </script>
-    {% endif %}
+        } catch (error) {
+          console.error("Caught exception:", error.message)
+          const tocList = document.getElementById("link")
+          const li = document.createElement("li")
+          const p = document.createElement("p")
+          p.textContent = "⚠ Could not generate dynamic table of contents. ⚠"
+          li.appendChild(p)
+          tocList.appendChild(li)
+        }
+      });
+    </script>
   </body>
 </html>
