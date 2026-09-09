@@ -127,3 +127,10 @@ html {
   overflow-y: scroll;
   -ms-overflow-style: -ms-autohiding-scrollbar; // IE10+
 }
+
+// Center Logo //
+.img-circle {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
