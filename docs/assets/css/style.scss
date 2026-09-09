@@ -110,7 +110,6 @@ html {
 .wrapper {
   width: 955px;
   margin: 0 auto;
-  border-left: 4px solid #3498db;
 }
 
 .sidebar {
@@ -126,6 +125,7 @@ html {
   height: calc(100vh - 108px);
   overflow-x: hidden;
   overflow-y: scroll;
+  border-right: 8px solid #3498db;
   -ms-overflow-style: -ms-autohiding-scrollbar; // IE10+
 }
 
