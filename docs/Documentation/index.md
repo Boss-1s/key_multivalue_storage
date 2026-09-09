@@ -1,14 +1,16 @@
 ---
 title: Documentation
-sidebar_type: documentation
+sidebar_type: toc
 ---
+
+# Documentation - Home
 
 > [!Note]
 > **To use this library, you must have Python installed on your device.**
 >
 > *Don't have Python? Install it here: https://python.org/downloads*
 
-# Installation
+## Installation
 You can install `kms` with `pip`:
 ```sh
 pip install key-multivalue-storage
@@ -28,7 +30,7 @@ pip install key-multivalue-storage[dev]
 > No `pip` or `uv`? Install the wheel here:
 > https://pypi.org/project/key-multivalue-storage/#files
 
-# Basic Usage
+## Basic Usage
 > [!TIP]
 > When importing just logic related to `Storage` (i.e. `Storage`, `Load`, `Edit`, `Delete`), the recommended import statement is:
 > ```py
@@ -70,13 +72,13 @@ pip install key-multivalue-storage[dev]
 	# from memory after certain operations
 	```
 
-# Structure of the Library
+## Structure of the Library
 
 > [!note]
 > Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
 
 > [!tip]
-> Click on a module, class, or method below to go straight to its documentation!
+> **Click on a module, class, or method below to go straight to its documentation!**
 
 - `src/key_multivalue_storage/`
   - [`storage.py`](storage) — main Storage class (core functionality)
@@ -110,16 +112,16 @@ pip install key-multivalue-storage[dev]
 	    - [`CastWarning`](utils/warnings#kmscastwarning)
 	    - [`AddtionFailureWarning`](utils/warnings#kmsadditionfailurewarning)
 	    - [`SubtractionFailureWarning`](utils/warnings#kmssubtractionfailurewarning)
-    - `metadata.py`
-- `test/`
-  - `test-storage.py` — **Mainstream test targeting `kms.storage`**
-  - `test-load.py` — **Mainstream test targeting `kms.load`**
-  - `test-edit.py` — **Mainstream test targeting `kms.edit`**
-  - `test-delete.py` — **Mainstream test targeting `kms.delete`**
-  - `test-general.py` — *legacy, only used to ensure backwards compatibility*
-  - `test-meta.py` — **Mainstream test targeting `kms.utils.metadata`**
-  - `test-exceptions.py` — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
-  - `test-fix-*.py` / `test-feat-*.py` — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
+    - *`metadata.py`*
+- _`test/`_
+  - _`test-storage.py`_ — **Mainstream test targeting `kms.storage`**
+  - _`test-load.py`_ — **Mainstream test targeting `kms.load`**
+  - _`test-edit.py`_ — **Mainstream test targeting `kms.edit`**
+  - _`test-delete.py`_ — **Mainstream test targeting `kms.delete`**
+  - _`test-general.py`_ — *legacy, only used to ensure backwards compatibility*
+  - _`test-meta.py`_ — **Mainstream test targeting `kms.utils.metadata`**
+  - _`test-exceptions.py`_ — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
+  - _`test-fix-*.py` / `test-feat-*.py`_ — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 
 [***<< Back to home***](..)
 <!--stackedit_data:
