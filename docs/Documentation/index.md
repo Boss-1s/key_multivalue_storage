@@ -1,6 +1,6 @@
 ---
 title: Documentation
-sidebar_type: documentation
+sidebar_type: toc
 ---
 
 > [!Note]
