@@ -1,5 +1,5 @@
-__version__ = "v1.1.1.20251205"
-__version_internal__ = "kms-v1.1.1/2025.12.05"
+__version__ = "v1.2.0.20261231a0"
+__version_internal__ = "kms-v1.2.0a0/2026.12.31"
 __author__ = "Boss_1s"
 __email__ = "95505913+Boss-1s@users.noreply.github.com"
 __license__ = "GPLv2"
