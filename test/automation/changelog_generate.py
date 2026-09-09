@@ -177,6 +177,7 @@ def generate_changelog():
 
     # Write formatted payload data to CHANGELOG.md
     with open(changelog_path, "w", encoding="utf-8") as f:
+        f.write("---\ntitle: Changelog\n---\n") # Front Matter
         f.write("# Changelog\n\n")
         f.write("## Table Of Contents\n\n")
         f.write("<!--TOC-->\n\n")
@@ -196,7 +197,8 @@ def generate_changelog():
             flattened_body = clean_and_demote_headers(rel['body'])
             f.write(f"{flattened_body}\n\n")
             f.write("---\n\n")
-
+        f.write("[***<< Back to Home***](.)")
+    
     toc = md_toc.build_toc(changelog_path, keep_header_levels=2, skip_lines=4)
     md_toc.write_string_on_file_between_markers(changelog_path, toc, '<!--TOC-->')
 
