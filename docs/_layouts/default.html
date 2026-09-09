@@ -18,7 +18,7 @@
 
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Pinyon+Script&display=swap"
 
       
     <link rel="preload" href="{{site.logo | relative_url}}" as="image">
@@ -38,7 +38,7 @@
           {% if site.blank_title %}
             <h1 id="title-head">{{ site.title | default: site.github.repository_name }}</h1>
           {% else %}
-            <h1 id="title-head"><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+            <h1><a id="title-head" href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
           {% endif %}
 
           {% unless page.sidebar_type %}
