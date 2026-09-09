@@ -1,9 +1,13 @@
+---
+title: Changelog
+---
 # Changelog
 
 ## Table Of Contents
 
 <!--TOC-->
 
+- [Table Of Contents](#table-of-contents)
 - [📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*](#-v13220260826b2--kms-v132b220260826)
 - [📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*](#-v13220260826b1--kms-v132b120260826)
 - [📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*](#-v13220260826b0--kms-v132b020260826)
@@ -51,7 +55,6 @@
 - [📦 v1.0.1.20251005 — *kms-v1.0.0/2025.10.05*](#-v10120251005--kms-v10020251005)
 - [📦 v1.0.0.20250910 — *kms-v1.0.0/2025.09.10*](#-v10020250910--kms-v10020250910)
 - [📦 v1.0.0.20250817 — *kms-v1.0.0/2025.08.17*](#-v10020250817--kms-v10020250817)
-- [📦  — *kms-v1.4.0/2026.10.12*](#---kms-v14020261012)
 
 <!--TOC-->
 
@@ -2022,54 +2025,4 @@ loaded_db = Storage.Load.by_key("example.json", "my_top_level_key")
 
 ---
 
-## 📦  — *kms-v1.4.0/2026.10.12*
-
-⚙ **Target Node Commit:** `Unknown `
-
-📝 **Release Type:** Legacy Tag
-
-### 📝 Release Notes
-
-#### Table of Contents
-
-- [💡 Features](#-features)
-- [🪲 Bug Fixes](#-bug-fixes)
-- [🤖 Dependency Updates](#-dependency-updates)
-- [⏰ Other Important Changes](#-other-important-changes)
-- [🪫 Graceful Deprecation cycle \<new_semver_version>](#-graceful-deprecation-cycle-new_semver_version)
-- [🗒 Notes](#-notes)
-- [📢 Plans for next update](#-plans-for-next-update)
-
-#### 💡 Features
-
-This section focuses on important new features added to kms.
-
-#### 🪲 Bug Fixes
-
-This section focuses on bugs fixed throughout the release.
-
-#### 🤖 Dependency Updates
-
-This section shares all Dependency updates, along with the PR numbers and the bot that pushed it.
-
-#### ⏰ Other Important Changes
-
-Other miscellaneous changes go here. This is basically the original release template's "Repo Updates" section.
-
-#### 🪫 Graceful Deprecation cycle 1.4.0 (Working list)
-
-> [!note]
-> This is a working list of deprecations in kms-semver1.4.0. The final list of deprecations will come out in kms-semver1.4.0b0.
-
-#### 🗒 Notes
-
-This section disseminates all security updates, reasoning for yanking a previous version linked to this one, fatal bugs that were fixed, etc.
-
-#### 📢 Plans for next update
-
-All plans about the next update go here.
-
-**📑 Full Changelog**: [`oldversiontag` vs `newversiontag`](https://github.com/Boss-1s/key_multivalue_storage/compare/oldversiontag...newversiontag)
-
----
-
+[***<< Back to Home***](.)
