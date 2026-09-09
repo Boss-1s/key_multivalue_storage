@@ -3,6 +3,7 @@ name: Regenerate Changelog (trigger)
 on:
   release:
     types: [edited, published]
+  workflow_dispatch: 
 
 jobs:
   trigger:
