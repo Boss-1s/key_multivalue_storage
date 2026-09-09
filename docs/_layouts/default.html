@@ -50,11 +50,11 @@
           {%- include footer.html -%}
         </div>
       </div>
-      <section>
+      <main>
 
       {{ content }}
 
-      </section>
+      </main>
       <footer>
         {%- include footer.html -%}
       </footer>
@@ -62,7 +62,7 @@
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        const headings = document.querySelectorAll("h1, h2, h3");
+        const headings = document.querySelectorAll("main h1, main h2, main h3")
         const tocList = document.getElementById("dynamic-toc");
       
         headings.forEach(heading => {
