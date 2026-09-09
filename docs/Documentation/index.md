@@ -160,7 +160,7 @@ warnings.filterwarning(category=kms.Storage.DeleteWarning) # Old, will raise Dep
 warnings.filterwarning(category=kms.DeleteWarning) # New, will work properly
 ```
 
-## `kms-semver1.2.3`
+### `kms-semver1.2.3`
 
 * **All metadata variables from `kms-semver1.2.2` were renamed.** *You can still use the old names, however they are no longer recommended for use and will display a `DeprecationWarning` warning.*
 
@@ -176,9 +176,13 @@ warnings.filterwarning(category=kms.DeleteWarning) # New, will work properly
 Storage.Delete.by_propkey(_,top_lv_key='key')
 ```
 
+### `kms-semver1.2.0`
+
+- **Keyword argument `new` of method [`Storage.Edit.propkey`](/key_multivalue_storage/Documentation/edit#editpropkey) was deprecated in favor of the argument `noexist_ok`.**
+
 [***<< Back to home***](..)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstOTU5NjQ1ODY5LC01MzQyNTYy
-NDgsLTI5MTAzMjg1MV19
+BnZm1cbiIsImhpc3RvcnkiOlstMTk3Mzk1MDY0OCwtNTM0MjU2
+MjQ4LC0yOTEwMzI4NTFdfQ==
 -->
