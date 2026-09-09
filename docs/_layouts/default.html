@@ -66,28 +66,28 @@
         const tocList = document.getElementById("dynamic-toc");
       
         headings.forEach(heading => {
-          const headingType = heading.tagName
-          if (headingType === "H2") {
-            const ul1 = document.createElement("ul");
-          } else if (hedingType === "H3") {
-            const ul1 = document.createElement("ul");
-            const ul2 = document.createElement("ul");
-          }
+          // const headingType = heading.tagName
+          // if (headingType === "H2") {
+          //   const ul1 = document.createElement("ul");
+          // } else if (hedingType === "H3") {
+          //   const ul1 = document.createElement("ul");
+          //   const ul2 = document.createElement("ul");
+          // }
           const li = document.createElement("li");
           const a = document.createElement("a");
           a.textContent = heading.textContent;
           a.href = "#" + heading.id;
           li.appendChild(a);
-          if (headingType === "H2") {
-            ul1.appendChild(li);
-            tocList.appendChild(ul1);
-          } else if (hedingType === "H3") {
-            ul2.appendChild(ul2);
-            ul1.appendChild(ul2)
-            tocList.appendChild(ul1);
-          } else {
+          // if (headingType === "H2") {
+          //   ul1.appendChild(li);
+          //   tocList.appendChild(ul1);
+          // } else if (hedingType === "H3") {
+          //   ul2.appendChild(ul2);
+          //   ul1.appendChild(ul2)
+          //   tocList.appendChild(ul1);
+          // } else {
             tocList.appendChild(li);
-          }
+          // }
         });
       });
     </script>
