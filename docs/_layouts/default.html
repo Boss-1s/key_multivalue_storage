@@ -50,7 +50,7 @@
           {%- include footer.html -%}
         </div>
       </div>
-      <section>
+      <section id="main-content">
 
       {{ content }}
 
@@ -62,16 +62,32 @@
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        const headings = document.querySelectorAll("main h1, main h2, main h3")
+        const headings = document.querySelectorAll("#main-content h1, #main-content h2, #main-content h3")
         const tocList = document.getElementById("dynamic-toc");
       
         headings.forEach(heading => {
+          const headingType = heading.tagName
+          if (headingType === "H2") {
+            const ul1 = document.createElement("ul");
+          } else if (hedingType === "H3") {
+            const ul1 = document.createElement("ul");
+            const ul2 = document.createElement("ul");
+          }
           const li = document.createElement("li");
           const a = document.createElement("a");
           a.textContent = heading.textContent;
           a.href = "#" + heading.id;
           li.appendChild(a);
-          tocList.appendChild(li);
+          if (headingType === "H2") {
+            ul1.appendChild(li);
+            tocList.appendChild(ul1);
+          } else if (hedingType === "H3") {
+            ul2.appendChild(ul2);
+            ul1.appendChild(ul2)
+            tocList.appendChild(ul1);
+          } else {
+            tocList.appendChild(li);
+          }
         });
       });
     </script>
