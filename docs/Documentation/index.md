@@ -123,9 +123,66 @@ pip install key-multivalue-storage[dev]
   - _`test-exceptions.py`_ — **Mainstream test targeting `kms.utils.exceptions` and `kms.utils.warnings`**
   - _`test-fix-*.py` / `test-feat-*.py`_ — Targeted tests from PRs. **Integrated into mainstream tests every minor update**, starting from `kms-semver1.4.x`.
 
+## List of Current Deprecations
+
+> [!important]
+> Only public deprecations are included. Deprecations to private methods, modules, or logic are not included.
+
+List of current deprecations, sorted by the version they were deprecated. **All deprecations listed below will be formally removed in `kms-semver2.0.0`.**
+
+### `kms-semver1.3.1`
+
+- **Deprecated format specifiers `.tuplef` and `.tuplet`.**
+- Attribute `auto_delete_self` and argument `instant_delete` of `Storage.store()` has been deprecated.
+
+### `kms-semver1.3.0`
+
+* **All metadata variables from `kms-semver1.2.2` were renamed.** *You can still use the old names, however they are no longer recommended for use and will display a `DeprecationWarning` warning.*
+
+| Old name | New name |
+| :------: | :------: |
+| `VERSION` | `semver` |
+| `DATE_VERSION` |`calver` |
+| `LAST_UPDATE` | `last_update` |
+
+* In `Storage.Delete.by_propkey`: **the required argument `top_level_key` has been deprecated.** Please use the renamed `top_lv_key` instead. *This change was made to match with other methods with the same parameter.*
+
+```py
+Storage.Delete.by_propkey(_,top_lv_key='key')
+```
+
+* **All warnings and exceptions will no longer be under `kms.Storage` but rather be under just `kms`.**
+
+```py
+import key_multivalue_storage as kms
+
+warnings.filterwarning(category=kms.Storage.DeleteWarning) # Old, will raise DeprecationWarning
+warnings.filterwarning(category=kms.DeleteWarning) # New, will work properly
+```
+
+### `kms-semver1.2.3`
+
+* **All metadata variables from `kms-semver1.2.2` were renamed.** *You can still use the old names, however they are no longer recommended for use and will display a `DeprecationWarning` warning.*
+
+| Old name | New name |
+| :------: | :------: |
+| `VERSION` | `semver` |
+| `DATE_VERSION` |`calver` |
+| `LAST_UPDATE` | `last_update` |
+
+* In `Storage.Delete.by_propkey`: **the required argument `top_level_key` has been deprecated.** Please use the renamed `top_lv_key` instead. *This change was made to match with other methods with the same parameter.*
+
+```py
+Storage.Delete.by_propkey(_,top_lv_key='key')
+```
+
+### `kms-semver1.2.0`
+
+- **Keyword argument `new` of method [`Storage.Edit.propkey`](/key_multivalue_storage/Documentation/edit#editpropkey) was deprecated in favor of the argument `noexist_ok`.**
+
 [***<< Back to home***](..)
 <!--stackedit_data:
 eyJwcm9wZXJ0aWVzIjoiZXh0ZW5zaW9uczpcbiAgcHJlc2V0Oi
-BnZm1cbiIsImhpc3RvcnkiOlstNTM0MjU2MjQ4LC0yOTEwMzI4
-NTFdfQ==
+BnZm1cbiIsImhpc3RvcnkiOlstMTk3Mzk1MDY0OCwtNTM0MjU2
+MjQ4LC0yOTEwMzI4NTFdfQ==
 -->
