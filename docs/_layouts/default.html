@@ -95,6 +95,37 @@
           // }
         });
       });
+      document.addEventListener("DOMContentLoaded", () => {
+        const headings = document.querySelectorAll("#main-content h1, #main-content h2, #main-content h3");
+        
+        const observerOptions = {
+          root: null, // uses the browser viewport
+          rootMargin: "0px 0px -70% 0px", // triggers when heading reaches upper portion of screen
+          threshold: 1.0
+        };
+      
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Remove active class from all links/sections
+              document.querySelectorAll("#dynamic-toc a").forEach((link) => {
+                link.classList.remove("active");
+              });
+      
+              // Find matching table of contents link and set active
+              const activeLink = document.querySelector(`#dynamic-toc a[href="#${entry.target.id}"]`);
+              if (activeLink) {
+                activeLink.classList.add("active");
+              }
+              
+              // Log current heading ID or do work
+              console.log("Current heading:", entry.target.id);
+            }
+          });
+        }, observerOptions);
+      
+        headings.forEach((heading) => observer.observe(heading));
+      });
     </script>
   </body>
 </html>
