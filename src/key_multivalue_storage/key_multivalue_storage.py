@@ -42,7 +42,7 @@ class Storage:
     |  --> Storage.Load.values(file_path: str, key: str|uuid.UUID, keys: bool, raw: bool) -> returns the values of a key. Can return keys if keys=True
     |
     | Storage.Edit
-    |  --> Storage.Edit.propkey(file_path: str, top_lv_key: str | uuid.UUID, oldpropkey: str, newpropkey: str, new: bool) -> Edits the name of a subkey within a key within a JSON file.
+    |  --> Storage.Edit.propkey(file_path: str, top_lv_key: str | uuid.UUID, oldpropkey: str, newpropkey: str) -> Edits the name of a subkey within a key within a JSON file.
     |  --> Storage.Edit.propval(file_path: str, top_lv_key: str | uuid.UUID, propkey: str, newval: str) -> Edits the value of a subkey within a key within a JSON file.
     |  --> Storage.Edit.key(file_path: str, oldkey: str | uuid.UUID, newkey: str | uuid.UUID)
     | 
