@@ -3,12 +3,14 @@ title: Documentation
 sidebar_type: toc
 ---
 
+# Documentation - Home
+
 > [!Note]
 > **To use this library, you must have Python installed on your device.**
 >
 > *Don't have Python? Install it here: https://python.org/downloads*
 
-# Installation
+## Installation
 You can install `kms` with `pip`:
 ```sh
 pip install key-multivalue-storage
@@ -28,7 +30,7 @@ pip install key-multivalue-storage[dev]
 > No `pip` or `uv`? Install the wheel here:
 > https://pypi.org/project/key-multivalue-storage/#files
 
-# Basic Usage
+## Basic Usage
 > [!TIP]
 > When importing just logic related to `Storage` (i.e. `Storage`, `Load`, `Edit`, `Delete`), the recommended import statement is:
 > ```py
@@ -70,7 +72,7 @@ pip install key-multivalue-storage[dev]
 	# from memory after certain operations
 	```
 
-# Structure of the Library
+## Structure of the Library
 
 > [!note]
 > Certain items that aren't part of the public API and/or are part of repo systems like workflows are not shown here.
