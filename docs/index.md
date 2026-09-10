@@ -11,10 +11,10 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 [![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://pypi.org/project/key-multivalue-storage/#history)
-[![](https://img.shields.io/github/v/release/boss-1s/key_multivalue_storage?include_prereleases&style=for-the-badge&label=Latest%20Unstable&color=%231b6e6e)](https://pypi.org/project/key-multivalue-storage/#history)
 
 ### It is __strongly__ recommended to learn Python before using kms. The best environment to learn in is CPython 3.12 for this library.
 
+> [!note]
 > Please do note that throughout this repository, the library `key-multivalue-storage` may also be referred to as its repo/package name (`key_multivalue_storage`) or its abbreviation (`kms`).
 
 ## Documentation
