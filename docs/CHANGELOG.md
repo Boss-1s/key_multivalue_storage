@@ -46,10 +46,10 @@ title: Changelog
 - [📦 v1.2.2.20260515 — *kms-v1.2.2/2026.05.15*](#-v12220260515--kms-v12220260515)
 - [📦 v1.2.2.20260506.2 — *kms-v1.2.2/2026.05.06b*](#-v122202605062--kms-v12220260506b)
 - [📦 v1.2.1.20260417.2 — *kms-v1.2.1/2026.04.17b*](#-v121202604172--kms-v12120260417b)
-- [📦 v1.2.0.20261231a0 — *kms-v1.2.0a0/2026.12.31*](#-v12020261231a0--kms-v120a020261231)
 - [📦 v1.2.0.20260128.1 — *kms-v1.2/2026.01.28a*](#-v120202601281--kms-v1220260128a)
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
 - [📦 v1.2.0.20260101.1a1 — *kms-v1.2.0a1/2026.01.01a*](#-v120202601011a1--kms-v120a120260101a)
+- [📦 v1.2.0.20251231a0 — *kms-v1.2.0a0/2025.12.31*](#-v12020251231a0--kms-v120a020251231)
 - [📦 v1.1.1.20251205 — *kms-v1.1.1/2025.12.05*](#-v11120251205--kms-v11120251205)
 - [📦 v1.1.0.20251007.4 — *kms-v1.1.0/2025.10.07d*](#-v110202510074--kms-v11020251007d)
 - [📦 v1.0.1.20251005 — *kms-v1.0.0/2025.10.05*](#-v10120251005--kms-v10020251005)
@@ -1573,21 +1573,6 @@ Changelog:
 
 ---
 
-## 📦 v1.2.0.20261231a0 — *kms-v1.2.0a0/2026.12.31*
-
-⚙ **Target Node Commit:** `4a91cfbf`
-
-📝 **Release Type:** Pre-release - Minor Patch
-
-> [!CAUTION]
-> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
-
-feat: prevent non-json files by adding `.json` prefix if the file does not contain one
-
-**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.1.1.20251205...v1.2.0.20261231a0
-
----
-
 ## 📦 v1.2.0.20260128.1 — *kms-v1.2/2026.01.28a*
 
 ⚙ **Target Node Commit:** `f0c2322b`
@@ -1629,7 +1614,7 @@ Changelog: https://github.com/Boss-1s/scratchattach/commit/84a75fc3847bcc2de0e7f
 
 ⚙ **Target Node Commit:** `3956a80b`
 
-📝 **Release Type:** Pre-release - Minor Update
+📝 **Release Type:** Pre-release - Minor Patch
 
 > [!CAUTION]
 > This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
@@ -1832,7 +1817,22 @@ For users upgrading from the previous baseline:
   storage.store(file_path, instant_delete=True)
   ```
 
-**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.0.20261231a0...v1.2.0.20260101.1a1
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.0.20251231a0...v1.2.0.20260101.1a1
+
+---
+
+## 📦 v1.2.0.20251231a0 — *kms-v1.2.0a0/2025.12.31*
+
+⚙ **Target Node Commit:** `4a91cfbf`
+
+📝 **Release Type:** Pre-release - Minor Update
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+feat: prevent non-json files by adding `.json` prefix if the file does not contain one
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.1.1.20251205...v1.2.0.20251231a0
 
 ---
 
