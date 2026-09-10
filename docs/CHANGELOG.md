@@ -1,9 +1,13 @@
+---
+title: Changelog
+---
 # Changelog
 
 ## Table Of Contents
 
 <!--TOC-->
 
+- [Table Of Contents](#table-of-contents)
 - [📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*](#-v13220260826b2--kms-v132b220260826)
 - [📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*](#-v13220260826b1--kms-v132b120260826)
 - [📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*](#-v13220260826b0--kms-v132b020260826)
@@ -42,8 +46,15 @@
 - [📦 v1.2.2.20260515 — *kms-v1.2.2/2026.05.15*](#-v12220260515--kms-v12220260515)
 - [📦 v1.2.2.20260506.2 — *kms-v1.2.2/2026.05.06b*](#-v122202605062--kms-v12220260506b)
 - [📦 v1.2.1.20260417.2 — *kms-v1.2.1/2026.04.17b*](#-v121202604172--kms-v12120260417b)
+- [📦 v1.2.0.20261231a0 — *kms-v1.2.0a0/2026.12.31*](#-v12020261231a0--kms-v120a020261231)
 - [📦 v1.2.0.20260128.1 — *kms-v1.2/2026.01.28a*](#-v120202601281--kms-v1220260128a)
 - [📦 v1.2.0.20260104 — *kms-v1.2/2026.01.04*](#-v12020260104--kms-v1220260104)
+- [📦 v1.2.0.20260101.1a1 — *kms-v1.2.0a1/2026.01.01a*](#-v120202601011a1--kms-v120a120260101a)
+- [📦 v1.1.1.20251205 — *kms-v1.1.1/2025.12.05*](#-v11120251205--kms-v11120251205)
+- [📦 v1.1.0.20251007.4 — *kms-v1.1.0/2025.10.07d*](#-v110202510074--kms-v11020251007d)
+- [📦 v1.0.1.20251005 — *kms-v1.0.0/2025.10.05*](#-v10120251005--kms-v10020251005)
+- [📦 v1.0.0.20250910 — *kms-v1.0.0/2025.09.10*](#-v10020250910--kms-v10020250910)
+- [📦 v1.0.0.20250817 — *kms-v1.0.0/2025.08.17*](#-v10020250817--kms-v10020250817)
 
 <!--TOC-->
 
@@ -1562,6 +1573,21 @@ Changelog:
 
 ---
 
+## 📦 v1.2.0.20261231a0 — *kms-v1.2.0a0/2026.12.31*
+
+⚙ **Target Node Commit:** `4a91cfbf`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+feat: prevent non-json files by adding `.json` prefix if the file does not contain one
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.1.1.20251205...v1.2.0.20261231a0
+
+---
+
 ## 📦 v1.2.0.20260128.1 — *kms-v1.2/2026.01.28a*
 
 ⚙ **Target Node Commit:** `f0c2322b`
@@ -1582,7 +1608,7 @@ Changelog: https://github.com/Boss-1s/scratchattach/commit/b64dd8bd9891e664d8498
 
 ⚙ **Target Node Commit:** `5aced039`
 
-📝 **Release Type:** Initial Release
+📝 **Release Type:** Minor Patch
 
 > [!CAUTION]
 > This is an older release of this library brought back to life through archives in [this commit history](url). Things may be broken and not work.
@@ -1599,3 +1625,404 @@ Changelog: https://github.com/Boss-1s/scratchattach/commit/84a75fc3847bcc2de0e7f
 
 ---
 
+## 📦 v1.2.0.20260101.1a1 — *kms-v1.2.0a1/2026.01.01a*
+
+⚙ **Target Node Commit:** `3956a80b`
+
+📝 **Release Type:** Pre-release - Minor Update
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+> [!warning]
+> These release notes are AI-generated.
+
+#### Release Notes
+
+##### Major Features Added
+
+###### 1. **Bitwise AND Operator (`&`)** - Intersection
+```python
+combined = storage1 & storage2  # Returns Storage with shared keys
+```
+- Computes intersection of keys between `Storage` instances or `Storage` and dict
+- Returns new `Storage` containing only shared keys
+- Returns `0` if no intersection found
+- Requires matching top-level keys for two `Storage` instances
+- **Method:** `__and__(self, other) -> Self | int`
+
+###### 2. **Bitwise OR Operator (`|`)** - Union
+```python
+merged = storage1 | storage2  # Returns Storage with all keys
+```
+- Computes union of all keys from both sources
+- Returns new `Storage` with combined keys
+- Returns `0` if no keys result
+- Requires matching top-level keys for two `Storage` instances
+- **Method:** `__or__(self, other) -> Self | int`
+
+###### 3. **Bitwise XOR Operator (`^`)** - Symmetric Difference
+```python
+unique = storage1 ^ storage2  # Returns Storage with unique keys only
+```
+- Computes symmetric difference (keys in only one source)
+- Returns new `Storage` with non-overlapping keys
+- Returns `0` if no difference exists
+- Requires matching top-level keys for two `Storage` instances
+- **Method:** `__xor__(self, other) -> Self | int`
+
+###### 4. **Left Shift Operator (`<<`)** - Prefix Slicing
+```python
+rest = storage << 2  # Skip first 2 key-value pairs
+```
+- Removes first N key-value pairs
+- Returns new `Storage` with remaining pairs
+- Returns `0` if offset exceeds total keys
+- **Method:** `__lshift__(self, other: int) -> Self | int`
+
+###### 5. **Right Shift Operator (`>>`)** - Suffix Slicing
+```python
+partial = storage >> 3  # Remove last 3 key-value pairs
+```
+- Removes last N key-value pairs
+- Returns new `Storage` with remaining pairs
+- Returns `0` if offset exceeds total keys
+- **Method:** `__rshift__(self, other: int) -> Self | int`
+
+###### 6. **Arithmetic Operators**
+- `__add__(self, other)` - Addition operation
+- `__truediv__(self, other)` - Division operation
+- `__sub__(self, other)` - Subtraction operation
+- `__radd__(self, other)` - Reverse addition operation
+- `__rtruediv__(self, other)` - Reverse division operation
+- `__rsub__(self, other)` - Reverse subtraction operation
+
+###### 7. **Comparisons**
+- `__eq__` - Equality comparison
+- `__lt__` and `__le__` - less than & less than or equal to, respectively.
+- `@total_ordering` fills in `__gt__` and `__ge__`.
+
+**See [this section](https://boss-1s.github.io/key_multivalue_storage/Documentation/storage#special-methods) of the docs for more information.**
+
+---
+
+##### Enhanced Type System
+
+###### Import Updates
+- Added `Self` from `typing` module for improved self-referential type hints
+- Added `@total_ordering` decorator for comprehensive comparison support
+
+###### Type Annotation Improvements
+- Updated legacy `Dict`, `List`, `Optional` annotations to modern syntax
+- Changed `Dict[str, Dict[str, Any]]` to `dict[str, dict[str, Any]]`
+- Changed `List[str]` to `list[str]`
+- Enhanced bitwise operator return types: `Self | int`
+
+---
+
+##### New Custom Warning Classes
+
+###### 1. **AdditionFailureWarning**
+- Raised when attempting to add `Storage` with `dict` or `list`
+- Runtime warning to prevent unintended data corruption
+- Usage: `Storage.__add__()` and `Storage.__radd__()`
+
+###### 2. **SubtractionFailureWarning**
+- Raised when attempting to subtract dict from `Storage` or vice versa
+- Runtime warning for potentially problematic operations
+- Usage: `Storage.__sub__()` and `Storage.__rsub__()`
+
+---
+
+##### Enhanced store() Method
+
+```python
+def store(self, file_path: str, instant_delete: bool=False, indent: int=4) -> None:
+```
+
+###### New Parameters
+- **`instant_delete`** (default: `False`)
+  - When `True`, automatically deletes the instance after successful storage
+  - Useful for one-time write operations
+  - Preserves data in file while clearing memory
+
+###### Updated Documentation
+- Improved docstring with all parameter documentation
+
+---
+
+##### Logging Improvements
+
+###### Configuration Changes
+- Changed logging level from `WARNING` to `INFO`
+- Enables capture of more operational details
+- Better visibility into file I/O operations
+
+---
+
+##### Module Exports
+
+###### Updated `__all__` Declarations
+
+**Top-level module exports:**
+```python
+__all__ = ["Storage", "Storage.Delete", "Storage.Load", "Storage.Edit", "Delete", "Load", "Edit"]
+```
+
+**Storage class exports:**
+```python
+__all__ = ["store", "DeleteWarning", "Load", "Edit", "Delete", "__str__"]
+```
+
+###### Backward Compatibility
+- Module-level convenience exports at end:
+  ```python
+  Delete = Storage.Delete
+  Load = Storage.Load
+  Edit = Storage.Edit
+  ```
+
+---
+
+##### Code Quality & Edge Cases
+
+###### Operator Behavior Details
+- All bitwise operators support both `Storage`-to-`Storage` and `Storage`-to-dict operations
+- Operators maintain immutability (always return new instances)
+- Comprehensive bounds checking for shift operations
+- Division limits validation (max divisor: 9)
+- Proper error messages for key mismatches
+
+###### Data Integrity
+- All operations preserve original data unless explicitly deleted
+- New instances created for all set operations
+- Consistent type checking throughout
+
+---
+
+##### Breaking Changes
+
+✅ **None** - This release maintains full backward compatibility with existing code.
+
+---
+
+##### Migration Guide
+
+For users upgrading from the previous baseline:
+
+- **Before: No operations available**
+
+- **After (New capabilities):**
+  ```python
+  # Arithmetic operations
+  result = storage1 + storage2
+  combined = storage1 - storage2
+  chunks = storage1 / 3
+  
+  # Bitwise set operations
+  intersection = storage1 & storage2  # Common keys
+  union = storage1 | storage2          # All keys
+  difference = storage1 ^ storage2     # Unique keys only
+  
+  # Slicing operations
+  skip_first_2 = storage << 2
+  skip_last_3 = storage >> 3
+  
+  # Store and auto-delete
+  storage.store(file_path, instant_delete=True)
+  ```
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.0.20261231a0...v1.2.0.20260101.1a1
+
+---
+
+## 📦 v1.1.1.20251205 — *kms-v1.1.1/2025.12.05*
+
+⚙ **Target Node Commit:** `8e5265cb`
+
+📝 **Release Type:** Major Patch
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+fix incorrect calling of _dprint in child classes
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.1.0.20251007.4...v1.1.1.20251205
+
+---
+
+## 📦 v1.1.0.20251007.4 — *kms-v1.1.0/2025.10.07d*
+
+⚙ **Target Node Commit:** `67cd7725`
+
+📝 **Release Type:** Minor Update
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+> [!warning]
+> These release notes are AI generated.
+
+#### Release Notes: key_multivalue_storage.py
+
+##### 📝 What's New
+
+A big overhaul focusing on better output handling and adding some quality-of-life features. Mostly behind-the-scenes stuff, but it makes the code way more manageable.
+
+---
+
+##### ✨ New Stuff
+
+###### 1. **`_dprint()` Method - The New Output King**
+- Added a custom print function that outputs to both console AND shell
+- Basically replaces all those scattered `print()` calls with one unified thing
+- Makes it super easy to control where your output goes without editing a million places
+
+###### 2. **`DeleteWarning` Class**
+- A custom warning specifically for when you're about to nuke all your data
+- Lets you silence these warnings separately if you want
+- Way less annoying than getting hit with generic warnings
+
+###### 3. **`__is_warning_category_ignored()` Method**
+- Checks if a warning type is already being ignored
+- Helps the code (specifically `Delete.all()`) be smarter about whether to warn you or not
+- Basically the code's way of asking "hey, did you already mute this?"
+
+###### 4. **Better Exports**
+- Added `Storage.Edit` to the public API (whoops, forgot that before)
+- Also threw in `DeleteWarning` so people can actually use it
+
+---
+
+##### 🔧 What Got Changed
+
+###### Output Refactor (The Big One)
+Pretty much everywhere that had `print()` now uses `_dprint()` instead. We're talking:
+- File storage operations
+- Loading data 
+- Editing stuff
+- Deleting things
+
+All ~15+ locations now pipe through the new function. Cleaner, simpler, easier to debug.
+
+###### `Delete.all()` Got Smarter
+- Used to just throw a `UserWarning` if you enabled warnings
+- Now uses the fancy new `DeleteWarning` class
+- Checks if you've already muted these warnings and doesn't nag if you have
+- Less spam, same protection
+- Note that if you ignore `DeleteWarning`, this will cause all `Delete.all()` calls to act as if `warn` was set to `True`.
+
+###### Code Style Cleanup
+- Fixed some wonky indentation in a couple places
+- Nothing major, just unifying the type of indent
+
+---
+
+##### 💡 Why This Matters
+
+- **One place to control output** - Don't like console spam? Just mess with `_dprint()`
+- **Better warning control** - Silence delete warnings without muting everything else
+- **Easier debugging** - Can redirect all diagnostic output without touching a bunch of code
+- **Feels more professional** - The dual output to shell + console is kinda neat
+- **Expanded API** - More stuff is actually exported now
+
+---
+
+##### 🤔 Will This Break My Code?
+
+Nope. Zero breaking changes. Everything works exactly like before, just with better guts under the hood. Your code doesn't care how the sausage gets made.
+
+---
+
+##### 📦 Quick Stats
+
+- **New Methods**: 2 (`_dprint()`, `__is_warning_category_ignored()`)
+- **New Classes**: 1 (`DeleteWarning`)
+- **Modified Methods**: ~12 (just swapped `print()` for `_dprint()`)
+- **Breaking Changes**: 0
+- **Lines of Code**: ~560 (basically same as before)
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.0.1.20251005...v1.1.0.20251007.4
+
+---
+
+## 📦 v1.0.1.20251005 — *kms-v1.0.0/2025.10.05*
+
+⚙ **Target Node Commit:** `85f5df66`
+
+📝 **Release Type:** Major Patch
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+Fixed potential problems:
+
+- prettified imports
+- prettified some docstrings and print statements
+- removed duplicated code in `__str__`
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.0.0.20250910...v1.0.1.20251005
+
+---
+
+## 📦 v1.0.0.20250910 — *kms-v1.0.0/2025.09.10*
+
+⚙ **Target Node Commit:** `729a6ce4`
+
+📝 **Release Type:** Minor Patch
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+Small docstring change
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.0.0.20250817...v1.0.0.20250910
+
+---
+
+## 📦 v1.0.0.20250817 — *kms-v1.0.0/2025.08.17*
+
+⚙ **Target Node Commit:** `f1571882`
+
+📝 **Release Type:** Initial Release
+
+> [!CAUTION]
+> This is an older release of this library brought back to life through archives in [this commit history](https://github.com/Boss-1s/scratchattach/commits/c2ac6affabf7c36eb64e6a5fafc8005d1e81c3ad/key_multivalue_storage.py). Things may be broken and not work.
+
+### **Initial Release!**
+
+#### Overview
+
+1. Create a `Storage` object with the arguments `key` and `**kwargs`
+2. Store the object's data inside a JSON file with `.store(file_path)`
+3. Load the object back with `Storage.Load.by_key(file_path, key)`
+4. Edit JSON data remotely with `Storage.Edit.<method>()`
+5. Delete all data in the JSON file with `Storage.Delete.all(file_path, warn=False)`
+
+```py
+from key_multivalue_storage import Storage
+import uuid
+
+db = Storage("my_top_level_key", mykey="myvalue")
+db_uuid = Storage(uuid.uuid4(), mykey="myvalue") # Can also be uuid.UUID instance
+
+db.store("example.json")
+
+loaded_db = Storage.Load.by_key("example.json", "my_top_level_key")
+
+assert str(loaded_db) == str(db) # True
+
+Storage.Edit.key("example.json", "my_top_level_key", "this_is_a_new_key")
+
+### So now, Storage("my_top_level_key", mykey="myvalue") is actually
+### Storage("this_is_a_new_key", mykey="myvalue") IN THE FILE. The original instance is not affected.
+
+Storage.Delete.all("example.json", warn=False) # By default, warn is True to prevent accidental deletion.
+
+### This will raise an error since everything has been deleted
+loaded_db = Storage.Load.by_key("example.json", "my_top_level_key")
+```
+
+---
+
+[***<< Back to Home***](.)
