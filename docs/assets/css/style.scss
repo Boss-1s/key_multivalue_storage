@@ -134,13 +134,17 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 // Center Title //
 .title-head {
     color: #68399e;
     text-align: center;
-    font-family: 'Pinyon Script', cursive;
+    font-family: 'Pinyon Script', cursive, "Sans Serif";
 }
 
 // //
