@@ -14,6 +14,7 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 
 ### It is __strongly__ recommended to learn Python before using kms. The best environment to learn in is CPython 3.12 for this library.
 
+> [!note]
 > Please do note that throughout this repository, the library `key-multivalue-storage` may also be referred to as its repo/package name (`key_multivalue_storage`) or its abbreviation (`kms`).
 
 ## Documentation
