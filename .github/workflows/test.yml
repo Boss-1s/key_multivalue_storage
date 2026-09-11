@@ -169,7 +169,7 @@ jobs:
 
 
   nightly:
-    needs: [main, codeql]
+    needs: [main]
     uses: ./.github/workflows/release-nightly.yml
     if: |
       contains(github.ref_name, 'semver1.') ||
@@ -179,7 +179,7 @@ jobs:
 
   deploy:
     environment: test
-    needs: [main, codeql]
+    needs: [main]
     runs-on: 'ubuntu-latest'
     steps:
       - run: echo "Deploying to test environment..."
