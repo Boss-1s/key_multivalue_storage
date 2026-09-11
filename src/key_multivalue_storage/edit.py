@@ -99,7 +99,8 @@ class Edit(metaclass=meta._EditMeta):
 
     @classmethod
     @w._deprecated_arg("new",
-                      "The 'new' argument is no longer used. Please use 'noexist_ok' instead."
+                       "The 'new' argument has been deprecated since kms-semver1.2.0, and is no "+
+                       "longer used. Please use 'noexist_ok' instead."
     )
     # TODO in v2.0: rename to subkey()
     def propkey(cls,
@@ -286,3 +287,33 @@ class Edit(metaclass=meta._EditMeta):
         else:
             print("Edit.key: ERROR: Encountered _KeyNotFoundError")
             raise exceptions.KeyNotFoundError(file_path, oldkey)
+
+    # @classmethod # NOSONAR
+    # def storage_key(cls,
+    #                 storage_obj: "Storage",
+    #                 key: Any,
+    #                 *,
+    #                 mutate_self: bool = False) -> "Storage" | None:
+    #     """
+    #     Renames the top level key in a Storage object. The value(s) of that key do not change.
+
+    #     This method should only be used as a fallback if `Storage.key = newkey` does not work.
+
+    #     ## Arguments
+    #     - `storage_obj: Storage`: The Storage object to modify.
+    #     - `key: Any`: The new name for the top level key.
+    #     - `kwarg mutate_self: bool = False`: Keyword argument - if set to True, the original instance
+    #     will be mutated instead of creating a new object.
+
+    #     ## Returns
+    #     - `Storage`: A Storage object with the new top level key.
+    #     """
+    #     from . import Storage
+
+    #     if not isinstance(key, str):
+    #         warnings.warn("It is recommended that the 'newkey' value be passed as a string.",
+    #                         w.CastWarning)
+
+    #     key = str(key)
+
+    #     return Storage(key, **storage_obj.values)
