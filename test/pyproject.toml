@@ -3,7 +3,7 @@
 [dependency-groups]
 dev = [
     "coverage>=7.16.0",
-    "gitpython>=3.1.61",
+    "gitpython>=3.1.62",
     "griffe>=2.3.0",
     "key-multivalue-storage",
     "md-toc>=9.0.0",
