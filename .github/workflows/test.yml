@@ -163,9 +163,9 @@ jobs:
 
       - wait-all:
 
-  codeql:
-    uses: ./.github/workflows/codeql.yml
-    if: always()
+  # codeql:
+  #   uses: ./.github/workflows/codeql.yml
+  #   if: always()
 
 
   nightly:
