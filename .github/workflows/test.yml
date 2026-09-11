@@ -169,6 +169,7 @@ jobs:
 
 
   nightly:
+    permissions: {}
     needs: [main]
     uses: ./.github/workflows/release-nightly.yml
     if: |
