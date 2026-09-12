@@ -58,7 +58,7 @@ Minor patches are never scheduled. They are only released when a fatal bug is in
 
 #### Major Patches
 
-Starting from `kms-semver1.3.0`, **major patches will occur every 5~6 _weeks_.** This, of course, is subject to change, and may be temporarily altered to sync up with other real-life schedules, as in the case of `kms-semver1.3.1` being released **two weeks after `kms-semver1.3.0`** but `kms-semver1.3.2` being released ***eight weeks* after `kms-semver1.3.1`**. I will usually try to match up major patches with the development branch's pre-releases.
+Starting from `kms-semver1.3.0`, **major patches will occur every 4~6 _weeks_.** This, of course, is subject to change, and may be temporarily altered to sync up with other real-life schedules, as in the case of `kms-semver1.3.1` being released **two weeks after `kms-semver1.3.0`** but `kms-semver1.3.2` being released ***eight weeks* after `kms-semver1.3.1`**. I will usually try to match up major patches with the development branch's pre-releases.
 
 #### Minor Updates
 
