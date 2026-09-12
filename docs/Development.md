@@ -62,7 +62,7 @@ Starting from `kms-semver1.3.0`, **major patches will occur every 4~6 _weeks_.**
 
 #### Minor Updates
 
-Starting from `kms-semver1.3.1`, **minor updates will occur every 5~6 _months_.** Like major patches, this is subject to, what is usually, a temporary change. Each minor update has its own branch, starting from the `kms-semver1.2.x` series (which starts at update `kms-semver1.2.2/2026.05.06b`), which is housed on the branch `semver1.2.x`. **The default branch will be the current stable series's branch until the development branch has reached its first alpha.**
+Starting from `kms-semver1.3.1`, **minor updates will occur every 5~6 _months_.** Like major patches, this is subject to, what is usually, a temporary change. Each minor update is housed on its own branch. **The default branch will be the current stable series's branch until the development branch has reached its first alpha.**
 
 Also, regarding update lifecycles, here is a table showing the usual lifecycle of an update. `kms-semver1.3.x` is used as an example.
 
