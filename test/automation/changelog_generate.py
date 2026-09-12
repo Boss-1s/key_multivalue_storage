@@ -199,7 +199,7 @@ def generate_changelog():
             f.write("---\n\n")
         f.write("[***<< Back to Home***](.)")
     
-    toc = md_toc.build_toc(changelog_path, keep_header_levels=2, skip_lines=4)
+    toc = md_toc.build_toc(changelog_path, keep_header_levels=2, skip_lines=7)
     md_toc.write_string_on_file_between_markers(changelog_path, toc, '<!--TOC-->')
 
     print(f"\n🎉 {changelog_path} successfully generated!")
