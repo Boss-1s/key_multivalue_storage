@@ -56,3 +56,27 @@ jobs:
         - name: Debug log
           if: ${{ failure() }}
           run: cat ~/.backport/backport.debug.log
+    backport-commit:
+      if: github.event_name == 'push'
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        pull-requests: write
+      steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v7.0.1
+        - name: Extract Prefix from Commit
+          id: prefix
+          uses: somaz94/commit-info-extractor@v1
+          with:
+            commit_limit: 1
+            extract_pattern: "\\[(?i)backport(?-i)\\s+([^\\]]+)\\]"
+            pretty: true
+        - name: Setup node.js
+          if: steps.prefix.outputs.value_variable
+          uses: actions/setup-node@v6.5.0
+        - name: Backport latest commit (if possible)
+          if: steps.prefix.outputs.value_variable
+          run: |
+            npx backport -b ${{ steps.prefix.outputs.value_variable }} --non-interactive --sha ${{ github.event.after }}
+            
