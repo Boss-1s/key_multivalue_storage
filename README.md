@@ -8,8 +8,10 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 
 This is, after all, the greatest piece of a CPython progam I have made. ;)
 
-> [!important]
-> `kms-v1.3.0/2026.07.29`, the first stable version of `kms-semver1.3.x`, will release soon! Please note the changes stated in the roadmap and changelog, and prepare accordingly. Thanks!
+> [!caution]
+> This version is in LTS for stability. If you are able, please update to the newest version.
+>
+> **`kms-semver1.2.x` will officially reach its End-Of-Life on January 3rd, 2027.**
 
 __________
 
@@ -19,17 +21,16 @@ __________
 [![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge)](https://www.python.org/downloads/release/python-3122/)
 [![Package](https://img.shields.io/badge/Stable%20Package-PyPi-violet?style=for-the-badge)](https://pypi.org/project/key-multivalue-storage/)
 [![Nightly](https://img.shields.io/badge/Development%20Package-kms--semver1%2E2%2Ex%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/main/full-kms-nightly.zip)
-[![Beta Nightly](https://img.shields.io/badge/Beta%20Package-kms--semver1%2E3%2E0%20Nightly-purple?style=for-the-badge)](https://nightly.link/boss-1s/key_multivalue_storage/workflows/test.yml/beta/full-kms-nightly.zip)
 
 ### Status
 
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
-[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
-[![Nightly](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease%2Dnightly.yaml?style=for-the-badge&label=Nightly&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/deployments/nightly)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?branch=semver1.2.x&style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 
 ### Info & Docs
 
-[![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=gray&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/releases)
+[![Latest Version](https://img.shields.io/github/v/release/Boss-1s/key_multivalue_storage?include_prereleases&sort=semver&filter=v1.2.*&style=for-the-badge&label=Latest&labelColor=purple&color=gray
+)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 [![Documentation](https://img.shields.io/badge/Documentation-Click-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=gray&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 [![Contributing](https://img.shields.io/badge/Contribution%20Guidelines-Click-gray?style=for-the-badge&labelColor=orange)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/docs/CONTRIBUTING.md)
@@ -75,4 +76,3 @@ Storage.auto_delete_self = True
 ## [Contribute](https://github.com/Boss-1s/key_multivalue_storage/fork)
 ## [Roadmap](https://boss-1s.github.io/key_multivalue_storageRoadmap#possible-future-features)
 ## [Report a Bug](https://github.com/Boss-1s/key_multivalue_storage/issues)
-## [Scratchattach](https://github.com/TimMcCool/scratchattach/)
