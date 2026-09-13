@@ -30,7 +30,8 @@
         "REFACTOR",
         "WIP",
         "DEPRECATED",
-        "unfinished"
+        "unfinished",
+        "IMPORTANT"
     ],
     "python.analysis.completeFunctionParens": true,
     "python.analysis.typeCheckingMode": "standard",
