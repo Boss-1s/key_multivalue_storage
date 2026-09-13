@@ -78,5 +78,11 @@ jobs:
         - name: Backport latest commit (if possible)
           if: steps.prefix.outputs.value_variable
           run: |
-            npx backport -b ${{ steps.prefix.outputs.value_variable }} --non-interactive --sha ${{ github.event.after }}
-            
+            BACKPORT_ARGS=()
+
+            while IFS= read -r branch; do
+              [[ -z "${branch// }" ]] && continue
+              BACKPORT_ARGS+=("-b" "$branch")
+            done <<< "${{ steps.prefix.outputs.value_variable }}"
+
+            npx backport "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
