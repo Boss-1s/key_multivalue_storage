@@ -23,14 +23,15 @@ __________
 ### Status
 
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
-[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?branch=semver1.4.x&style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Boss-1s_key_multivalue_storage)](https://sonarcloud.io/summary/new_code?id=Boss-1s_key_multivalue_storage)
 
 ### Info & Docs
 
-[![Changelog](https://img.shields.io/badge/Changelog-Click%20Here-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG)
-[![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=gray&labelColor=purple)](https://github.com/Boss-1s/key_multivalue_storage/releases)
+[![Changelog](https://img.shields.io/badge/Changelog-Click-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG)
+[![Latest Version](https://img.shields.io/github/v/release/Boss-1s/key_multivalue_storage?include_prereleases&sort=semver&filter=v1.4.*&style=for-the-badge&label=Latest&labelColor=purple&color=gray
+)](https://github.com/Boss-1s/key_multivalue_storage/releases)
 [![Documentation](https://img.shields.io/badge/Documentation-Click-gray?style=for-the-badge&labelColor=blue)](https://boss-1s.github.io/key_multivalue_storage)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=gray&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
 [![Contributing](https://img.shields.io/badge/Contribution%20Guidelines-Click-gray?style=for-the-badge&labelColor=orange)](https://boss-1s.github.io/key_multivalue_storage/contribution-guidelines)
