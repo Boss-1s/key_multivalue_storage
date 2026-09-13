@@ -12,10 +12,13 @@ on:
 jobs:
     backport-pr:
       if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
+      permissions:
+        contents: read
+        pull-requests: write
       runs-on: ubuntu-latest
       steps:
         - name: Backport Action
-          uses: sorenlouv/backport-github-action@v12
+          uses: sorenlouv/backport-github-action@f98adcdb38c8a19480f3d6abefbbace9eecaf009
           with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
               auto_backport_label_prefix: backport-to-
