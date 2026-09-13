@@ -70,7 +70,7 @@ jobs:
           uses: somaz94/commit-info-extractor@v1
           with:
             commit_limit: 1
-            extract_pattern: "\\[(?i)backport(?-i)\\s+([^\\]]+)\\]"
+            extract_pattern: "(?i)\\[backport\\s+([^\\]]+)\\]"
             pretty: true
         - name: Setup node.js
           if: steps.prefix.outputs.value_variable
