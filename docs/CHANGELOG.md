@@ -7,7 +7,6 @@ title: Changelog
 
 <!--TOC-->
 
-- [Table Of Contents](#table-of-contents)
 - [📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*](#-v13220260826b2--kms-v132b220260826)
 - [📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*](#-v13220260826b1--kms-v132b120260826)
 - [📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*](#-v13220260826b0--kms-v132b020260826)
@@ -23,6 +22,7 @@ title: Changelog
 - [📦 v1.3.0.20260524a2 — *kms-v1.3.0a2/2026.05.24*](#-v13020260524a2--kms-v130a220260524)
 - [📦 v1.3.0.20260524a1 — *kms-v1.3.0-alpha1/2026.05.24*](#-v13020260524a1--kms-v130-alpha120260524)
 - [📦 v1.3.0.20260523a0 — *kms-v1.3.0-alpha0/2026.05.23*](#-v13020260523a0--kms-v130-alpha020260523)
+- [📦 v1.2.5.20260912 — *kms-v1.2.5/2026.09.12*](#-v12520260912--kms-v12520260912)
 - [📦 v1.2.5.20260724 — *kms-v1.2.5/2026.07.24*](#-v12520260724--kms-v12520260724)
 - [📦 v1.2.4.20260702 — *kms-v1.2.4/2026.07.03*](#-v12420260702--kms-v12420260703)
 - [📦 v1.2.4.20260610b0 — *kms-v1.2.4-beta0/2026.06.10*](#-v12420260610b0--kms-v124-beta020260610)
@@ -1021,6 +1021,24 @@ Looks like the next alpha will be released in a week, with the last alpha in two
 **Note that kms-semver1.3 will now be officially designated as built from [`v1.2.3.20260523.1`](https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.2.3.20260523.1).**
 
 **Full Changelog**: [`v1.2.2.20260517.3` vs `v1.3.0.20260522a0`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.2.20260517.3...v1.3.0.20260522a0)
+
+---
+
+## 📦 v1.2.5.20260912 — *kms-v1.2.5/2026.09.12*
+
+⚙ **Target Node Commit:** `62e63d93`
+
+📝 **Release Type:** Minor Patch
+
+> [!caution]
+> The version you are looking at is currently in LTS for stability. **If you are able, please update to the newest version.**
+>
+> **The `kms-semver1.2.x` series will officially reach its End-Of-Life on January 3rd, 2027.**
+
+- Fixed some stale references to main in workflows
+- README update
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.2.5.20260724...v1.2.5.20260912
 
 ---
 
