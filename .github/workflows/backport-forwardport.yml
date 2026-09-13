@@ -21,7 +21,7 @@ jobs:
       steps:
         - name: Check if backport label is present in PR
           run: |
-            if [[ contains(${{ github.event.pull_request.labels.*.name}}, 'backport-to-') ]]; then
+            if [[ ${{ contains(github.event.pull_request.labels.*.name, 'backport-to-') }} ]]; then
               echo "Backport label is present; commenting on the PR."
               echo "backport_label_present=true" >> $GITHUB_ENV
             else
