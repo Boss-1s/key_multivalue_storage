@@ -12,6 +12,30 @@ on:
       - "docs"
 
 jobs:
+    comment:
+      if: github.event.pull_request.labeled == true
+      permissions:
+        contents: read
+        pull-requests: write
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check if backport label is present in PR
+          run: |
+            if [[ "${{ github.event.pull_request.labels.*.name }}" == *"backport"* ]]; then
+              echo "Backport label is present; commenting on the PR."
+              echo "backport_label_present=true" >> $GITHUB_ENV
+            else
+              echo "Backport label is not present. Ending job."
+              echo "backport_label_present=false" >> $GITHUB_ENV
+            fi
+        - name: Comment
+          uses: peter-evans/create-or-update-comment@34c8c3685e6cc7ac706e04c83308164410d8976f
+          if: env.backport_label_present == 'true'
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            issue-number: ${{ github.event.pull_request.number }}
+            body: |
+              This PR has been labeled for backporting. The backport process will be executed once the PR is merged. Thank you for contributing to kms!
     backport-pr:
       if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
       permissions:
