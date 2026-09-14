@@ -139,13 +139,15 @@ jobs:
             # 2. Tell Git to use this wrapper as the executable program
             git config --global gpg.program "/home/runner/gpg-headless"
 
+            SHA="${{ github.event.after }}"
+
             npx backport \
               --source-branch ${{ github.ref }} \
               "${BACKPORT_ARGS[@]}" \
               --non-interactive \
-              --sha ${{ github.event.after }} \
+              --sha "$SHA" \
               --conflict-resolution commit \
-              --title "backport(\`{{targetBranch}}\`): commit \`${{ substring(github.event.after, 0, 7) }}\` from branch \`${{ github.ref_name }}\`"
+              --title "backport(\`{{targetBranch}}\`): commit \`${$SHA:0:7)}\` from branch \`${{ github.ref_name }}\`"
 
         - name: Info log
           if: ${{ steps.backport.outcome == 'success' }}
