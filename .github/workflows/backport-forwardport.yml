@@ -3,8 +3,6 @@ name: Backporter / Forward Porter
 on:
   pull_request:
     types: ["labeled", "closed"]
-  pull_request_target:
-    types: ["labeled", "closed"]
   push:
     branches-ignore:
       - "eol/**"
@@ -13,7 +11,7 @@ on:
 
 jobs:
     comment:
-      if: github.event.action == 'labeled'
+      if: github.event.action == 'labeled' && !startsWith(github.ref_name, 'backport/')
       permissions:
         contents: read
         pull-requests: write
@@ -37,51 +35,68 @@ jobs:
             body: |
               This PR has been labeled for backporting. The backport process will be executed once the PR is merged. Thank you for contributing to kms!
     backport-pr:
-      if: github.event.pull_request.merged == true
+      if: github.event.pull_request.merged == true && !startsWith(github.ref_name, 'backport/')
+      runs-on: ubuntu-latest
       permissions:
         contents: write
         pull-requests: write
         actions: write
-      runs-on: ubuntu-latest
       steps:
         - name: Checkout Repo
-          uses: actions/checkout@v7
+          uses: actions/checkout@v7.0.1
           with:
             token: ${{ secrets.BACKPORT_PAT }}
             fetch-depth: 0
-
-        - name: Fetch all refs
-          run: git fetch --all --prune --verbose
-      
-        - name: Import GPG key
-          uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
-          with:
-            gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-            passphrase: ${{ secrets.GPG_PASSPHRASE }}
-            git_user_signingkey: true
-            git_commit_gpgsign: true
-            trust_level: 5
-
-        - name: Configure Git
+        - parallel:
+            - name: Import GPG key
+              uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
+              with:
+                gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+                passphrase: ${{ secrets.GPG_PASSPHRASE }}
+                git_user_signingkey: true
+                git_commit_gpgsign: true
+                trust_level: 5
+            - name: Configure Git
+              run: |
+                git config --global user.name "Boss-1s"
+                git config --global user.email "95505913+Boss-1s@users.noreply.github.com"
+                git config --global commit.gpgsign true
+                git config --global user.signingkey "E16F4F2F84FBE39B"
+        - name: Setup node.js
+          uses: actions/setup-node@v6.5.0
+        - name: Backport Pull Request
+          id: backport
+          env:
+            token_json: |
+              {
+                  "githubToken": "${{ secrets.BACKPORT_PAT }}"
+              }
           run: |
-            git config --global user.name "Boss-1s"
-            git config --global user.email "95505913+Boss-1s@users.noreply.github.com"
-            git config --global commit.gpgsign true
-            git config --global user.signingkey "E16F4F2F84FBE39B"
+            mkdir -p ~/.backport
 
-        - name: Backport Action
-          uses: sorenlouv/backport-github-action@f98adcdb38c8a19480f3d6abefbbace9eecaf009
-          with:
-              github_token: ${{ secrets.BACKPORT_PAT }}
-              auto_backport_label_prefix: backport-to-
+            printf "$token_json" > ~/.backport/config.json
+
+            echo '#!/bin/bash' > /home/runner/gpg-headless
+            echo 'exec gpg --batch --pinentry-mode loopback --passphrase-file <(echo "${{ secrets.GPG_PASSPHRASE }}") "$@"' >> /home/runner/gpg-headless
+            chmod +x /home/runner/gpg-headless
+
+            git config --global gpg.program "/home/runner/gpg-headless"
+
+            npx backport \
+              --source-branch ${{ github.ref_name }} \
+              --non-interactive \
+              --pr ${{ github.event.number }} \
+              --conflict-resolution commit \
+              --title "backport(\`{{targetBranch}}\`): #${{ github.event.number }}"
 
         - name: Info log
-          if: ${{ success() }}
+          if: ${{ steps.backport.outcome == 'success' }}
           run: cat ~/.backport/backport.info.log
 
         - name: Debug log
-          if: ${{ failure() }}
+          if: ${{ steps.backport.outcome == 'failure' }}
           run: cat ~/.backport/backport.debug.log
+
     backport-commit:
       if: github.event_name == 'push' && !startsWith(github.ref_name, 'backport/')
       runs-on: ubuntu-latest
@@ -96,8 +111,6 @@ jobs:
             token: ${{ secrets.BACKPORT_PAT }}
             fetch-depth: 0
         - parallel:
-            - name: Fetch all refs
-              run: git fetch --all --prune --verbose
             - name: Import GPG key
               uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
               with:
