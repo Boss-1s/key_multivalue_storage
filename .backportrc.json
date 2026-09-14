@@ -5,5 +5,8 @@
   "targetBranchChoices": ["semver1.4.x", "semver1.3.x", "semver1.2.x"],
 
   "autoMerge": true,
-  "autoMergeMethod": "squash"
+  "autoMergeMethod": "squash",
+  "multipleCommits": true,
+  "signoff": true,
+  "fork": false
 }
