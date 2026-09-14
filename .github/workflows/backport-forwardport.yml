@@ -138,9 +138,9 @@ jobs:
             npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
 
         - name: Info log
-          if: ${{ steps.backport.outputs.success == 'true' }}
+          if: ${{ steps.backport.outcome == 'true' }}
           run: cat ~/.backport/backport.info.log
 
         - name: Debug log
-          if: ${{ steps.backport.outputs.success == 'false' }}
+          if: ${{ steps.backport.outcome == 'false' }}
           run: cat ~/.backport/backport.debug.log
