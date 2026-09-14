@@ -21,7 +21,7 @@ jobs:
       steps:
         - name: Check if backport label is present in PR
           run: |
-            if ${{ contains(github.event.pull_request.labels.*.name, 'backport-to-') }}; then
+            if ${{ contains(toJson(github.event.pull_request.labels.*.name), 'backport-to-') }}; then
               echo "Backport label is present; commenting on the PR."
               echo "backport_label_present=true" >> $GITHUB_ENV
             else
@@ -37,13 +37,18 @@ jobs:
             body: |
               This PR has been labeled for backporting. The backport process will be executed once the PR is merged. Thank you for contributing to kms!
     backport-pr:
-      if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
+      if: github.event.pull_request.merged == true
       permissions:
         contents: write
         pull-requests: write
         actions: write
       runs-on: ubuntu-latest
       steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v7
+          with:
+            token: ${{ secrets.BACKPORT_PAT }}
+      
         - name: Import GPG key
           uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
           with:
