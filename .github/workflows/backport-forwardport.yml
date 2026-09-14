@@ -145,7 +145,7 @@ jobs:
               --non-interactive \
               --sha ${{ github.event.after }} \
               --conflict-resolution commit \
-              --title "backport({{targetBranch}}): commit(s) '{{commitMessages}}' from branch `{{sourceBranch}}`"
+              --title "backport({{targetBranch}}): commit '${{ github.after }}' from branch `${{ github.ref_name }}`"
 
         - name: Info log
           if: ${{ steps.backport.outcome == 'success' }}
