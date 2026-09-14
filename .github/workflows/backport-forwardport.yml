@@ -1,0 +1,156 @@
+name: Backporter / Forward Porter
+
+on:
+  pull_request:
+    types: ["labeled", "closed"] # IMPORTANT: FOR TESTING ONLY
+  pull_request_target:
+    types: ["labeled", "closed"]
+  push:
+    branches-ignore:
+      - "eol/**"
+      - "release/**"
+      - "docs"
+
+jobs:
+    comment:
+      if: github.event.action == 'labeled'
+      permissions:
+        contents: read
+        pull-requests: write
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check if backport label is present in PR
+          run: |
+            if [[ ${{ contains(github.event.pull_request.labels.*.name, 'backport-to-') }} ]]; then
+              echo "Backport label is present; commenting on the PR."
+              echo "backport_label_present=true" >> $GITHUB_ENV
+            else
+              echo "Backport label is not present. Ending job."
+              echo "backport_label_present=false" >> $GITHUB_ENV
+            fi
+        - name: Comment
+          uses: peter-evans/create-or-update-comment@34c8c3685e6cc7ac706e04c83308164410d8976f
+          if: env.backport_label_present == 'true'
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            issue-number: ${{ github.event.pull_request.number }}
+            body: |
+              This PR has been labeled for backporting. The backport process will be executed once the PR is merged. Thank you for contributing to kms!
+    backport-pr:
+      if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
+      permissions:
+        contents: write
+        pull-requests: write
+        actions: write
+      runs-on: ubuntu-latest
+      steps:
+        - name: Import GPG key
+          uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
+          with:
+            gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+            passphrase: ${{ secrets.GPG_PASSPHRASE }}
+            git_user_signingkey: true
+            git_commit_gpgsign: true
+            trust_level: 5
+
+        - name: Configure Git
+          run: |
+            git config --global user.name "Boss-1s"
+            git config --global user.email "95505913+Boss-1s@users.noreply.github.com"
+            git config --global commit.gpgsign true
+            git config --global user.signingkey "E16F4F2F84FBE39B"
+
+        - name: Backport Action
+          uses: sorenlouv/backport-github-action@f98adcdb38c8a19480f3d6abefbbace9eecaf009
+          with:
+              github_token: ${{ secrets.BACKPORT_PAT }}
+              auto_backport_label_prefix: backport-to-
+
+        - name: Info log
+          if: ${{ success() }}
+          run: cat ~/.backport/backport.info.log
+
+        - name: Debug log
+          if: ${{ failure() }}
+          run: cat ~/.backport/backport.debug.log
+    backport-commit:
+      if: github.event_name == 'push' && !startsWith(github.ref_name, 'backport/')
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+        pull-requests: write
+        actions: write
+      steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v7.0.1
+          with:
+            token: ${{ secrets.BACKPORT_PAT }}
+        - parallel:
+            - name: Import GPG key
+              uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
+              with:
+                gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+                passphrase: ${{ secrets.GPG_PASSPHRASE }}
+                git_user_signingkey: true
+                git_commit_gpgsign: true
+                trust_level: 5
+            - name: Configure Git
+              run: |
+                git config --global user.name "Boss-1s"
+                git config --global user.email "95505913+Boss-1s@users.noreply.github.com"
+                git config --global commit.gpgsign true
+                git config --global user.signingkey "E16F4F2F84FBE39B"
+            - name: Extract Prefix from Commit
+              id: prefix
+              uses: somaz94/commit-info-extractor@v1
+              with:
+                commit_limit: 1
+                extract_pattern: "(?i)\\[backport\\s+([^\\]]+)\\]"
+                pretty: true
+        - name: Setup node.js
+          if: steps.prefix.outputs.value_variable
+          uses: actions/setup-node@v6.5.0
+        - name: Backport latest commit (if possible)
+          if: steps.prefix.outputs.value_variable
+          id: backport
+          env:
+            token_json: |
+              {
+                  "githubToken": "${{ secrets.BACKPORT_PAT }}"
+              }
+          run: |
+            BACKPORT_ARGS=()
+
+            while IFS= read -r branch; do
+              [[ -z "${branch// }" ]] && continue
+              BACKPORT_ARGS+=("-b" "$branch")
+            done <<< "${{ steps.prefix.outputs.value_variable }}"
+
+            echo "${BACKPORT_ARGS[@]}"
+
+            mkdir -p ~/.backport
+
+            printf "$token_json" > ~/.backport/config.json
+
+            echo '#!/bin/bash' > /home/runner/gpg-headless
+            echo 'exec gpg --batch --pinentry-mode loopback --passphrase-file <(echo "${{ secrets.GPG_PASSPHRASE }}") "$@"' >> /home/runner/gpg-headless
+            chmod +x /home/runner/gpg-headless
+
+            # 2. Tell Git to use this wrapper as the executable program
+            git config --global gpg.program "/home/runner/gpg-headless"
+
+            npx backport \
+              --source-branch ${{ github.ref }} \
+              "${BACKPORT_ARGS[@]}" \
+              --non-interactive \
+              --sha ${{ github.event.after }} \
+              --conflict-resolution commit \
+              --title "backport(\`{{targetBranch}}\`): commit \`${{ github.event.after }}\` from branch \`${{ github.ref_name }}\`"
+
+        - name: Info log
+          if: ${{ steps.backport.outcome == 'success' }}
+          run: cat ~/.backport/backport.info.log
+
+        - name: Debug log
+          if: ${{ steps.backport.outcome == 'failure' }}
+          run: cat ~/.backport/backport.debug.log
