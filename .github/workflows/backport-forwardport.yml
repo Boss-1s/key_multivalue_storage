@@ -43,6 +43,15 @@ jobs:
         pull-requests: write
       runs-on: ubuntu-latest
       steps:
+        - name: Import GPG key
+          uses: crazy-max/ghaction-import-gpg@v7
+          with:
+            gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            git_user_signingkey: true
+            git_commit_gpgsign: true
+            trust_level: 5
+
         - name: Backport Action
           uses: sorenlouv/backport-github-action@f98adcdb38c8a19480f3d6abefbbace9eecaf009
           with:
@@ -65,13 +74,22 @@ jobs:
       steps:
         - name: Checkout Repo
           uses: actions/checkout@v7.0.1
-        - name: Extract Prefix from Commit
-          id: prefix
-          uses: somaz94/commit-info-extractor@v1
-          with:
-            commit_limit: 1
-            extract_pattern: "(?i)\\[backport\\s+([^\\]]+)\\]"
-            pretty: true
+        - parallel:
+            - name: Import GPG key
+              uses: crazy-max/ghaction-import-gpg@v7
+              with:
+                gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+                passphrase: ${{ secrets.PASSPHRASE }}
+                git_user_signingkey: true
+                git_commit_gpgsign: true
+                trust_level: 5
+            - name: Extract Prefix from Commit
+              id: prefix
+              uses: somaz94/commit-info-extractor@v1
+              with:
+                commit_limit: 1
+                extract_pattern: "(?i)\\[backport\\s+([^\\]]+)\\]"
+                pretty: true
         - name: Setup node.js
           if: steps.prefix.outputs.value_variable
           uses: actions/setup-node@v6.5.0
