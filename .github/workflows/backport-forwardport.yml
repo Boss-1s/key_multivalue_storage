@@ -44,6 +44,11 @@ jobs:
         actions: write
       runs-on: ubuntu-latest
       steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v7
+          with:
+            token: ${{ secrets.BACKPORT_PAT }}
+      
         - name: Import GPG key
           uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
           with:
