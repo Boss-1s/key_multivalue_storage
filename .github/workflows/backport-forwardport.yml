@@ -47,7 +47,7 @@ jobs:
           uses: crazy-max/ghaction-import-gpg@v7
           with:
             gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-            passphrase: ${{ secrets.PASSPHRASE }}
+            passphrase: ${{ secrets.GPG_PASSPHRASE }}
             git_user_signingkey: true
             git_commit_gpgsign: true
             trust_level: 5
@@ -86,7 +86,7 @@ jobs:
               uses: crazy-max/ghaction-import-gpg@v7
               with:
                 gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-                passphrase: ${{ secrets.PASSPHRASE }}
+                passphrase: ${{ secrets.GPG_PASSPHRASE }}
                 git_user_signingkey: true
                 git_commit_gpgsign: true
                 trust_level: 5
@@ -129,7 +129,7 @@ jobs:
             printf "$token_json" > ~/.backport/config.json
 
             echo '#!/bin/bash' > /home/runner/gpg-headless
-            echo 'exec gpg --batch --pinentry-mode loopback --passphrase-file <(echo "$GPG_PASSPHRASE") "$@"' >> /home/runner/gpg-headless
+            echo 'exec gpg --batch --pinentry-mode loopback --passphrase-file <(echo "${{ secrets.GPG_PASSPHRASE }}") "$@"' >> /home/runner/gpg-headless
             chmod +x /home/runner/gpg-headless
 
             # 2. Tell Git to use this wrapper as the executable program
