@@ -135,5 +135,5 @@ jobs:
           run: cat ~/.backport/backport.info.log
 
         - name: Debug log
-          if: ${{ steps.backport.outputs.success != 'true' }}
+          if: ${{ steps.backport.outputs.success == 'false' }}
           run: cat ~/.backport/backport.debug.log
