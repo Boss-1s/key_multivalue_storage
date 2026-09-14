@@ -2,7 +2,7 @@ name: Backporter / Forward Porter
 
 on:
   pull_request:
-    types: ["labeled", "closed"] # IMPORTANT: FOR TESTING ONLY
+    types: ["labeled"]
   pull_request_target:
     types: ["labeled", "closed"]
   push:
