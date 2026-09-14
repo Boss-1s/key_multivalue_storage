@@ -74,7 +74,7 @@ jobs:
           if: ${{ failure() }}
           run: cat ~/.backport/backport.debug.log
     backport-commit:
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && !startsWith(github.ref_name, 'backport/')
       runs-on: ubuntu-latest
       permissions:
         contents: write
@@ -139,7 +139,13 @@ jobs:
             # 2. Tell Git to use this wrapper as the executable program
             git config --global gpg.program "/home/runner/gpg-headless"
 
-            npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }} --conflict-resolution commit
+            npx backport \
+              --source-branch ${{ github.ref }} \
+              "${BACKPORT_ARGS[@]}" \
+              --non-interactive \
+              --sha ${{ github.event.after }} \
+              --conflict-resolution commit \
+              --title "backport({{targetBranch}}): commit(s) '{{commitMessages}}' from branch `{{sourceBranch}}`"
 
         - name: Info log
           if: ${{ steps.backport.outcome == 'success' }}
