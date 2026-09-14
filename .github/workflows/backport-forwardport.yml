@@ -49,6 +49,9 @@ jobs:
           with:
             token: ${{ secrets.BACKPORT_PAT }}
             fetch-depth: 0
+
+        - name: Fetch all refs
+          run: git fetch --all --prune --verbose
       
         - name: Import GPG key
           uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
@@ -93,6 +96,8 @@ jobs:
             token: ${{ secrets.BACKPORT_PAT }}
             fetch-depth: 0
         - parallel:
+            - name: Fetch all refs
+              run: git fetch --all --prune --verbose
             - name: Import GPG key
               uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
               with:
