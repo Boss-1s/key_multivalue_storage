@@ -128,9 +128,12 @@ jobs:
 
             printf "$token_json" > ~/.backport/config.json
 
-            echo '#!/bin/bash' > gpg-wrapper.sh
-            echo 'gpg --batch --pinentry-mode loopback --passphrase-file <(echo "$GPG_PASSPHRASE") "$@"' >> gpg-wrapper.sh
-            chmod +x gpg-wrapper.sh
+            echo '#!/bin/bash' > /home/runner/gpg-headless
+            echo 'exec gpg --batch --pinentry-mode loopback --passphrase-file <(echo "$GPG_PASSPHRASE") "$@"' >> /home/runner/gpg-headless
+            chmod +x /home/runner/gpg-headless
+
+            # 2. Tell Git to use this wrapper as the executable program
+            git config --global gpg.program "/home/runner/gpg-headless"
 
             npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
 
