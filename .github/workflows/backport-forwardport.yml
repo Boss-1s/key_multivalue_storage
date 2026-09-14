@@ -128,6 +128,12 @@ jobs:
 
             printf "$token_json" > ~/.backport/config.json
 
+            export GPG_TTY=$(tty)
+            echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+            # Tell the agent to allow loopback
+            echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+            gpgconf --kill gpg-agent
+
             npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
 
         - name: Info log
