@@ -101,6 +101,7 @@ jobs:
           uses: actions/setup-node@v6.5.0
         - name: Backport latest commit (if possible)
           if: steps.prefix.outputs.value_variable
+          id: backport
           env:
             token_json: |
               {
@@ -123,9 +124,9 @@ jobs:
             npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
 
         - name: Info log
-          if: ${{ success() }}
+          if: ${{ steps.backport.outputs.success == 'true' }}
           run: cat ~/.backport/backport.info.log
 
         - name: Debug log
-          if: ${{ failure() }}
+          if: ${{ steps.backport.outputs.success != 'true' }}
           run: cat ~/.backport/backport.debug.log
