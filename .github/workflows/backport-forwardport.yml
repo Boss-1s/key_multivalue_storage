@@ -39,8 +39,9 @@ jobs:
     backport-pr:
       if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
       permissions:
-        contents: read
+        contents: write
         pull-requests: write
+        actions: write
       runs-on: ubuntu-latest
       steps:
         - name: Import GPG key
@@ -78,6 +79,7 @@ jobs:
       permissions:
         contents: write
         pull-requests: write
+        actions: write
       steps:
         - name: Checkout Repo
           uses: actions/checkout@v7.0.1
