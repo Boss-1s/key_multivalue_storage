@@ -48,6 +48,7 @@ jobs:
           uses: actions/checkout@v7
           with:
             token: ${{ secrets.BACKPORT_PAT }}
+            fetch-depth: 0
       
         - name: Import GPG key
           uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
@@ -90,6 +91,7 @@ jobs:
           uses: actions/checkout@v7.0.1
           with:
             token: ${{ secrets.BACKPORT_PAT }}
+            fetch-depth: 0
         - parallel:
             - name: Import GPG key
               uses: crazy-max/ghaction-import-gpg@377dc5d6faebf439805626394e6191cc4ce1b0ba
