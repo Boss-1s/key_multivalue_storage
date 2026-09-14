@@ -18,24 +18,20 @@ jobs:
           GITHUB_TOKEN: ${{github.token}}
           GH_REPO: ${{github.repository}}
           PR_NUMBER: ${{github.event.pull_request.number}}
-<<<<<<< HEAD
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' }}
-=======
-        if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
->>>>>>> 5037b3a ([backport semver1.4.x] chore(automations): final test of backport)
         shell: bash
-        run: |          
+        run: |
           # 1. Fetch closing issues strictly using the API target
           CLOSING_ISSUES=$(gh pr view "$PR_NUMBER" --repo "$GH_REPO" --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null)
-          
-          if [[ -z "$CLOSING_ISSUES" ]]; then 
+
+          if [[ -z "$CLOSING_ISSUES" ]]; then
               gh pr close "$PR_NUMBER" --repo "$GH_REPO" --comment "**WARNING** This PR was auto-closed because it does not reference any issues. Please reference an issue in the PR description and re-open the PR."
-              exit 1 
-          fi 
-          
+              exit 1
+          fi
+
           # 2. Proceed with standard triage actions if issues are present
-          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage" 
-          gh pr comment "$PR_NUMBER" --repo "$GH_REPO" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!" 
+          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage"
+          gh pr comment "$PR_NUMBER" --repo "$GH_REPO" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
           exit 0
       - env:
           GITHUB_TOKEN: ${{github.token}}
