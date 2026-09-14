@@ -1,0 +1,9 @@
+{
+  "repoOwner": "Boss-1s",
+  "repoName": "key-multivalue-storage",
+
+  "targetBranchChoices": ["semver1.4.x", "semver1.3.x", "semver1.2.x"],
+
+  "autoMerge": true,
+  "autoMergeMethod": "squash"
+}
