@@ -96,4 +96,12 @@ jobs:
 
             printf "$token_json" > ~/.backport/config.json
 
-            npx backport "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
+            npx backport --source-branch ${{ github.ref }} "${BACKPORT_ARGS[@]}" --non-interactive --sha ${{ github.event.after }}
+
+        - name: Info log
+          if: ${{ success() }}
+          run: cat ~/.backport/backport.info.log
+
+        - name: Debug log
+          if: ${{ failure() }}
+          run: cat ~/.backport/backport.debug.log
