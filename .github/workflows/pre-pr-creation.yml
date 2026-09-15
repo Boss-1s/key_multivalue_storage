@@ -7,7 +7,7 @@ on:
 
 jobs:
   comment:
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false  && !contains(github.ref_name, 'backport/')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -19,7 +19,7 @@ jobs:
           GITHUB_TOKEN: ${{github.token}}
           GH_REPO: ${{github.repository}}
           PR_NUMBER: ${{github.event.pull_request.number}}
-        if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && !contains(github.ref_name, 'backport/')}}
+        if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'}}
         shell: bash
         run: |
           # 1. Fetch closing issues strictly using the API target
