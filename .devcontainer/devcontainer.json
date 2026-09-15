@@ -6,7 +6,10 @@
             "version": "latest",
             "installJupyterlab": true
         },
-        "ghcr.io/devcontainers/features/github-cli:1": {
+        "ghcr.io/vitslipknot/devcontainer-features/asdf:1": {
+            "plugins": "python"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1.1.2": {
             "version": "latest"
         }
     },
@@ -48,5 +51,6 @@
                 }
             }
         }
-    }
+    },
+    "postCreateCommand": "asdf install python 3.12 && asdf install python 3.14 && asdf python install 3.15 && asdf global python 3.15 && pip install uv && uv sync --dev && source .venv/bin/activate && echo \"Setup complete! Thanks for contributing to kms!\""
 }
