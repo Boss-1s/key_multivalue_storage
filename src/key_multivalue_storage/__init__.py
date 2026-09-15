@@ -133,8 +133,10 @@ def help() -> None: #pylint: disable=redefined-builtin
                         annotation_str += f"={default}"
                 annotation_str += ", "
 
-        signature = f"def {method.__name__}{annotation_str}: ..,."
-        docstring = Markdown(str(method.__doc__)) if method.__doc__ else "[red]No docstring available.[/]"
+        signature = f"def {method.__name__}{annot}: ..."
+        docstring = Markdown(
+            str(method.__doc__)
+        ) if method.__doc__ else "[red]No docstring available.[/]"
 
         tree.add(
             Group(
