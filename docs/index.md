@@ -6,7 +6,7 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 
 My mission now: a *lightweight* storage wrapper library that can be used *anytime and anywhere*, regardless of memory limits, sandbox limits, or usage limits.
 
-![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
+![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14%20%7C%203.15-purple?style=for-the-badge)
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
