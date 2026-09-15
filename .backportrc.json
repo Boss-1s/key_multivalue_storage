@@ -8,5 +8,25 @@
   "autoMergeMethod": "squash",
   "multipleCommits": true,
   "signoff": true,
+<<<<<<< HEAD
   "fork": false
 }
+=======
+  "fork": false,
+
+  "conflictResolution": "commit",
+  "copySourcePRLabels": ["(?-i)^semver1\\.(?:[3456])\\.x$", "(?-i)^Priority: \\w+$"],
+  "targetPRLabels": ["backport"],
+
+  "targetBranchChoices": [
+    { "name": "semver1.2.x", "checked": false },
+    { "name": "semver1.3.x", "checked": true },
+    { "name": "semver1.4.x", "checked": false },
+    { "name": "backportdummy", "checked": false }
+  ],
+
+  "branchLabelMapping": {
+    "^backport-to-(.+)$": "$1"
+  }
+}
+>>>>>>> 7f22bbf (feat: explicitly set `branchLabelMapping` setting)
