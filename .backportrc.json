@@ -1,7 +1,7 @@
 {
   "repoOwner": "Boss-1s",
   "repoName": "key_multivalue_storage",
-  
+
   "autoMerge": true,
   "autoMergeMethod": "squash",
   "multipleCommits": true,
@@ -16,7 +16,6 @@
     { "name": "semver1.2.x", "checked": false },
     { "name": "semver1.3.x", "checked": true },
     { "name": "semver1.4.x", "checked": false },
-    { "name": "backportdummy", "checked": false }
   ],
 
   "branchLabelMapping": {
