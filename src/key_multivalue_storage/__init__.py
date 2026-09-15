@@ -109,29 +109,32 @@ install(show_locals=True)
 #              PendingDeprecationWarning
 #             )
 
-def help() -> None: #pylint: disable=redefined-builtin
-    """Beautiful help panel created with Rich."""
-    def _add_to_tree(tree: Tree, method: Callable[..., Any]) -> None:
-        """
-        Add a method to the tree with its signature and docstring.
 
-        ### Args
-            tree (Tree): The tree to which the method will be added.
-            method (Callable[..., Any]): The method to add to the tree.
-        """
-        annotation_str: str = '('
+def _add_to_tree(tree: Tree, *methods: Callable[..., Any]) -> None:
+    """
+    Add a method to the tree with its signature and docstring.
+
+    ### Args
+        tree (Tree): The tree to which the method will be added.
+        methods (Callable[..., Any]): The methods to add to the tree.
+    """
+    from types import SimpleNamespace
+
+    for method in methods:
+        annot: str = '('
         for arg, typ in method.__annotations__.items():
             if arg == 'return':
-                if annotation_str.endswith(", "):
-                    annotation_str = annotation_str[:-2]
-                annotation_str += f") -> {typ}"
-            else:
-                annotation_str = annotation_str + f"{arg}: {typ}"
-                if inspect.signature(method).parameters[arg]:
-                    default = inspect.signature(method).parameters[arg].default
-                    if default is not inspect.Parameter.empty:
-                        annotation_str += f"={default}"
-                annotation_str += ", "
+                annot = annot[:-2] if annot.endswith(", ") else annot
+                annot += f") -> {typ}"
+                continue
+            annot = annot + f"{arg}: {typ}"
+            params = inspect.signature(method).parameters.get(
+                arg,
+                SimpleNamespace(**{"default": inspect.Parameter.empty})
+            )
+            if params.default is not inspect.Parameter.empty:
+                annot += f"={params.default}"
+            annot += ", "
 
         signature = f"def {method.__name__}{annot}: ..."
         docstring = Markdown(
@@ -146,45 +149,55 @@ def help() -> None: #pylint: disable=redefined-builtin
             guide_style="red"
         )
 
-    import io, os
+class _RawConsole(): #pylint: disable=too-few-public-methods
+    @staticmethod
+    def print(*text: Any, sep: str = ' '): #pylint: disable=redefined-builtin
+        import os
+        full_text: str = ''
+        for i in text:
+            full_text += str(i)
+            full_text += sep
+        raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
+        os.write(1, raw_bytes)
 
-    class _RawConsole():
-        @staticmethod
-        def print(*text: Any, sep: str = ' '):
-            full_text: str = ''
-            for i in text:
-                full_text += str(i)
-                full_text += sep
-            raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
-            os.write(1, raw_bytes)
+def _make_safe_console() -> Console | _RawConsole:
+    """
+    Return a Console that will not raise UnicodeEncodeError when stdout uses a
+    legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
+    sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
+    construct the Console to write to that wrapper. Fall back to a no-color
+    console on unexpected failures.
 
-    def _make_safe_console() -> Console | _RawConsole:
-        """
-        Return a Console that will not raise UnicodeEncodeError when stdout uses a
-        legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
-        sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
-        construct the Console to write to that wrapper. Fall back to a no-color
-        console on unexpected failures.
-        """
-        try:
-            enc = (sys.stdout.encoding or "")
-            if "utf" in str(enc).lower():
-                return Console()
-        except Exception as e:
-            std_warnings.warn(str(e), RuntimeWarning)
-            # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
+    Does not run on CPython version greater than or equal to 3.15.0, as UTF-8
+    is defaulted then.
+    """
 
-        try:
-            # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
-            # encoding and replace errors to avoid raising.
-            safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-            return Console(file=safe_out, force_terminal=False)
-        except Exception as e:
-            std_warnings.warn(str(e), RuntimeWarning)
-            # Last-resort fallback: a console without color/advanced rendering so
-            # we avoid control characters that some terminals might mishandle.
-            return _RawConsole()
+    if sys.version_info >= (3, 15):
+        return Console()
 
+    import io
+
+    try:
+        enc = (sys.stdout.encoding or "")
+        if "utf" in str(enc).lower():
+            return Console()
+    except Exception as e:
+        std_warnings.warn(str(e), RuntimeWarning)
+        # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
+
+    try:
+        # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
+        # encoding and replace errors to avoid raising.
+        safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+        return Console(file=safe_out, force_terminal=False)
+    except Exception as e:
+        std_warnings.warn(str(e), RuntimeWarning)
+        # Last-resort fallback: a console without color/advanced rendering so
+        # we avoid control characters that some terminals might mishandle.
+        return _RawConsole()
+
+def help() -> None:
+    """Beautiful help panel created with Rich."""
     console = _make_safe_console()
 
     orange: str = "#ff5533"
