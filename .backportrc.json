@@ -17,5 +17,9 @@
     { "name": "semver1.3.x", "checked": true },
     { "name": "semver1.4.x", "checked": false },
     { "name": "backportdummy", "checked": false }
-  ]
+  ],
+
+  "branchLabelMapping": {
+    "^backport-to-(.+)$": "$1"
+  }
 }
