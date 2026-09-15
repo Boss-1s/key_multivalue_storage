@@ -3,10 +3,11 @@ run-name: pr-automation
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   comment:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -40,11 +41,11 @@ jobs:
         if: ${{ github.actor == 'renovate[bot]' || github.actor == 'dependabot[bot]' }}
         shell: bash
         run: |
-          MILESTONE_TITLE=$(gh api "repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc" --jq '[.[] | select(.due_on != null)][0].title')
+          MILESTONE_TITLE=$(gh api "repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc" --jq '[.[] | select(.due_on != null and (.title | startswith("kms-semver1.3."))))[0].title')
 
           if [ -n "$MILESTONE_TITLE" ] && [ "$MILESTONE_TITLE" != "null" ]; then
             gh pr edit $PR_NUMBER --repo $GH_REPO --milestone "$MILESTONE_TITLE"
           fi
 
-          gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Needs Triage" --add-label "dependencies"
+          gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Priority: Low" --add-label "dependencies"
           exit 0
