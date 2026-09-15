@@ -167,13 +167,7 @@ def _make_safe_console() -> Console | _RawConsole:
     sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
     construct the Console to write to that wrapper. Fall back to a no-color
     console on unexpected failures.
-
-    Does not run on CPython version greater than or equal to 3.15.0, as UTF-8
-    is defaulted then.
     """
-
-    if sys.version_info >= (3, 15):
-        return Console()
 
     import io
 
