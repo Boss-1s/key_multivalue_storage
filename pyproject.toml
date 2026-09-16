@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "key-multivalue-storage"
-version = "v1.4.0.20261012dev0"
+version = "v1.4.0.20260915a0.dev0"
 description = "A simple library that allows the JSON storage of one key to multiple values."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -15,7 +15,7 @@ license = "GPL-2.0-only"
 license-files = ["LICENSE"]
 authors = [{name = "Boss_1s"}]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",

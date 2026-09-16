@@ -418,7 +418,7 @@ wheels = [
 
 [[package]]
 name = "key-multivalue-storage"
-version = "1.4.0.20261012.dev0"
+version = "1.4.0.20260915a0.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "rich" },
