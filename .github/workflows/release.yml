@@ -15,6 +15,7 @@ jobs:
       contents: write
       artifact-metadata: write
       attestations: write
+      issues: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -116,3 +117,10 @@ jobs:
           files: |
             dist/*
             ${{steps.gh-attest.outputs.bundle-path}}
+
+      - name: Remind to Bump Past Version
+        run: |
+          gh issue create \
+            --title "release reminder: Bump Past Version" \
+            --body "Please remember to bump the version past this one. The tag should have \`dev\` in it. Use the script located at test/automation/post-release.py." \
+            --assignee @me
