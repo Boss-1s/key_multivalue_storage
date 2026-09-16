@@ -34,7 +34,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          allow-prereleases: true
+          python-version: "3.14"
 
       - name: Set up UV
         uses: astral-sh/setup-uv@v10.0.1
