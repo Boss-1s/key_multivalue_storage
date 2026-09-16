@@ -6,8 +6,9 @@
             "version": "latest",
             "installJupyterlab": true
         },
-        "ghcr.io/vitslipknot/devcontainer-features/asdf:1": {
-            "plugins": "python"
+        "quay.io/alegrowin/devcontainer-features/asdf:1": {
+            "version": "latest",
+            "autoInstall": true
         },
         "ghcr.io/devcontainers/features/github-cli:1.1.2": {
             "version": "latest"
