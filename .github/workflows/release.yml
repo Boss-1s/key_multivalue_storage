@@ -94,6 +94,13 @@ jobs:
 
           bash .github/workflows/src/push.sh
 
+      - name: Force tag to new commit
+        env:
+          REF: ${{ github.event.release.tag_name }}
+        run: |
+          git tag -f "$REF"
+          git push origin "$REF" --force
+
       - name: Rename files for GH release upload
         run: |
           cd dist || exit 1
