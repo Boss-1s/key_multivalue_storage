@@ -61,7 +61,7 @@ title: Changelog
 
 ## 📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*
 
-⚙ **Target Node Commit:** `0351d20f`
+⚙ **Target Node Commit:** `3fbeb2d4`
 
 📝 **Release Type:** Pre-release - Minor Update
 
