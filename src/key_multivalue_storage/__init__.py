@@ -30,8 +30,6 @@ from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
 
-
-
 # First-party
 # Modules
 from . import storage
@@ -52,15 +50,20 @@ from .utils import warnings as kms_warnings
 warnings = kms_warnings
 
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
-from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
+from .utils.warnings import (
+    DeleteWarning,
+    AdditionFailureWarning,
+    SubtractionFailureWarning,
+    CastWarning
+)
 
 __version__ = "v1.3.2.20260930dev0"
 __version_internal__ = "kms-v1.3.2b2/2026.08.26"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
-kms = storage
-key_multivalue_storage = storage
+kms = Storage
+key_multivalue_storage = Storage
 
 __all__ = [
     "Storage", # main class object Storage
