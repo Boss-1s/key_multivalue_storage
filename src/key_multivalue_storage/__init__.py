@@ -28,15 +28,20 @@ __lazy_modules__ = ["sys",
                     "rich.tree",
                     "rich.traceback",
                     "io",
-                    "os"]
+                    "os",
+                    "Storage",
+                    "Load",
+                    "Edit",
+                    "Delete"
+]
 
-# Built-ins
+## Built-ins
 import sys
 import warnings as std_warnings
 import inspect
 from typing import Any, Callable
 
-# Third-party
+## Third-party
 from rich.console import Console, Group
 from rich.syntax import Syntax
 from rich.panel import Panel
@@ -44,9 +49,7 @@ from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
 
-
-
-# First-party
+## First-party
 # Modules
 from . import storage
 from . import load
@@ -60,13 +63,19 @@ from .edit import Edit
 from .delete import Delete
 
 # Custom Warnings and Exceptions
+# TODO in v2.0: merge utils.warnings into utils.exceptions
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import warnings as kms_warnings
 warnings = kms_warnings
 
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
-from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
+from .utils.warnings import (
+    DeleteWarning,
+    AdditionFailureWarning,
+    SubtractionFailureWarning,
+    CastWarning
+)
 
 __version__ = "v1.4.0.20261012dev1"
 __version_internal__ = "kms-v1.4.0dev1/2026.10.12"
