@@ -35,6 +35,7 @@ keywords = [
     "wrapper-library"
 ]
 dependencies = [
+    "atpublic[install]",
     "rich==15.0.0",
     "typing-extensions~=4.16",
 ]
@@ -539,3 +540,4 @@ omit = [
 
 [tool.uv.sources]
 dill = { git = "https://github.com/uqfoundation/dill" }
+atpublic = { git = "https://gitlab.com/flufl/public" }
