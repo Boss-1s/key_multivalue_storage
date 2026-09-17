@@ -81,11 +81,20 @@ class CastWarning(SyntaxWarning):
 def _next[**P, R]() -> Callable[[Callable[P, R]], Callable[P, R]]:
     """
     Custom decorator decorating kms-semver2.0.0 features.
-    Any decoratorated object is not accesible until `kms.nextgen` is set to `True`.
+    Any decorated object is not accesible until `kms.nextgen` is set to `True`.
 
     ## Arguments
     None.
     """
+    def decorator(func: Callable[P, R]) -> Callable[P, R]:
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            if not getattr(sys.modules["key_multivalue_storage"], "nextgen", False):
+                raise TypeError(f"module `{func.__module__}` has no attribute `{func.__name__}`. "+
+                                "Did you forget to set `kms.nextgen` to `True`?")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def _deprecated_arg[**P, R](arg_name: str,
                             message: str | None = None

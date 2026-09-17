@@ -67,8 +67,6 @@ from .delete import Delete
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import warnings as kms_warnings
-warnings = kms_warnings
-
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import (
     DeleteWarning,
@@ -77,11 +75,14 @@ from .utils.warnings import (
     CastWarning
 )
 
+# Package Metadata
 __version__ = "v1.4.0.20261012dev1"
 __version_internal__ = "kms-v1.4.0dev1/2026.10.12"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
+# Aliases
+warnings = kms_warnings
 kms = storage
 key_multivalue_storage = storage
 
@@ -109,6 +110,8 @@ std_warnings.filterwarnings("always",
                         module="key_multivalue_storage")
 
 install(show_locals=True)
+
+nextgen: bool = False
 
 # NOTE: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
@@ -376,3 +379,22 @@ def help() -> None:
         library,
         sep="\n"
     )
+
+@warnings._next()
+def test_nextgen() -> bool:
+    """
+    Method to test the functionality of activating nextgen features.
+
+    If is seems like the attribute `nextgen` is not working, try running this method.
+
+    Be sure to wrap it in a try-except block to catch the TypeError that is raised when
+    `nextgen` is not set to `True`.
+    """
+    try:
+        print("Success! kms NextGen features are activated.")
+        return nextgen
+    except NameError as e:
+        raise RuntimeError("The attribute `nextgen` does not exist in the key_multivalue_storage " +
+                           "namespace. This is most likely a problem with the module's end, not "+
+                           "yours. Try uninstalling and reinstalling key_multivalue_storage."
+        ) from e

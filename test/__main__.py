@@ -2,14 +2,38 @@
 Run all kms tests.
 
 ### Usage
+
 In your terminal, run:
 ```sh
 git clone https://github.com/boss-1s/key_multivalue_storage kms
 cd kms
 uv sync --dev
-python test/
 ```
+
+**For coverage, run:**
+
+```sh
+coverage run test && coverage xml && coverage report
+```
+
+Make sure you have ryanluker.vscode-coverage-gutters installed in
+VSCode to view the coverage live while developing.
+
+**To just test, run:**
+
+```sh
+python test
+```
+
+This will automatically run all tests in the `test/` directory.
+*If the above command dosent work, try running with `a` or `all` as an argument.*
+***If that still dosent work, run `python test/__main__.py`.***
+
+**See
+[docs](https://boss-1s.github.io/key_multivalue_storage/Development#python-test-arg-kms-semver130b0)
+for more information.**
 """
+# TODO: Add nextgen tests to docs after release of a0
 #pylint: disable=exec-used,consider-using-with
 import os
 import sys
@@ -67,6 +91,7 @@ def main(c: Console) -> None:
             "test/test-delete.py",
             "test/test-meta.py",
             "test/test-exceptions.py",
+            "test/test-nextgen.py",
             "test/test-fix-26-and-27.py",
             "test/test-fix-14.py",
             "test/test-fix-67.py",
@@ -90,6 +115,16 @@ def main(c: Console) -> None:
                     ]
 
                     _run_tests(c, tests)
+                elif sys.argv[2].lower() == '1.4':
+                    tests = [
+                        "test/test-storage.py",
+                        "test/test-load.py",
+                        "test/test-edit.py",
+                        "test/test-delete.py",
+                        "test/test-nextgen.py"
+                    ]
+
+                    _run_tests(c, tests)
             except IndexError:
                 warnings.warn("You are using an OLD version of test-general, "+
                             "sepcifically the one targetd for kms-semver1.2.x.\n"+
@@ -107,6 +142,8 @@ def main(c: Console) -> None:
             _run_tests(c, ["test/test-meta.py"])
         case "exceptions" | "warnings":
             _run_tests(c, ["test/test-exceptions.py"])
+        case "nextgen":
+            _run_tests(c, ["test/test-nextgen.py"])
         case "diff":
             try:
                 os.environ["OLDTAG"] = sys.argv[2]
