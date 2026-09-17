@@ -24,24 +24,10 @@ jobs:
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'}}
         shell: bash
         run: |
-<<<<<<< HEAD
-          # 1. Fetch closing issues strictly using the API target
-          CLOSING_ISSUES=$(gh pr view "$PR_NUMBER" --repo "$GH_REPO" --json closingIssuesReferences --jq '.closingIssuesReferences[].number' 2>/dev/null)
-
-          if [[ -z "$CLOSING_ISSUES" ]]; then
-              gh pr close "$PR_NUMBER" --repo "$GH_REPO" --comment "**WARNING** This PR was auto-closed because it does not reference any issues. Please reference an issue in the PR description and re-open the PR."
-              exit 1
-          fi
-
-          # 2. Proceed with standard triage actions if issues are present
-          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage"
-          gh pr comment "$PR_NUMBER" --repo "$GH_REPO" --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms!"
-=======
           gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage" 
           gh pr comment "$PR_NUMBER" \
             --repo "$GH_REPO" \
             --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms! *Note: your PR may be closed if it does not comply to [the rules](https://boss-1s.github.io/key_multivalue_storage/Development#pr-rules). Double check and make sure your PR is compliant.*"
->>>>>>> 26975b9 ([backport semver1.3.x] chore(automations): more lenient pre-pr jobs)
           exit 0
       - env:
           GITHUB_TOKEN: ${{github.token}}
