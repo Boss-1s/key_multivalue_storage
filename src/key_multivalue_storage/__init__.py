@@ -30,7 +30,7 @@ from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
 
-# First-party
+## First-party
 # Modules
 from . import storage
 from . import load
@@ -62,8 +62,8 @@ __version_internal__ = "kms-v1.3.2b2/2026.08.26"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
-kms = Storage
-key_multivalue_storage = Storage
+kms = storage
+key_multivalue_storage = storage
 
 __all__ = [
     "Storage", # main class object Storage
