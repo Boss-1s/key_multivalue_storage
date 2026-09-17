@@ -211,6 +211,25 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * **Full switch to `logging.Logger` over `print()`**
 * Full switch to `rich`
 * **Adding `__iadd__` and related methods to `Storage`** -- allows saving memory by using only one object for binary operations that have a unary counterpart
+* Begin shift to 2.0
+  * This means that certain 2.0 features will be implemented in a non-breaking change way.
+  * You can test ALL these changes out through the following script:
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+    
+    Storage = storage.Storage
+  
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
 * None for now...
@@ -235,24 +254,9 @@ I have no idea. Sorry.
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* Begin shift to 2.0
+* Continue shift to 2.0
   * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * You can test ALL these changes out through the following script:
-    ```py
-    import key_multivalue_storage as kms
-    kms.nextgen = True
-    ```
-  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
-    ```py
-    from key_multivalue_storage import storage
-    storage.nextgen = True
-    
-    Storage = storage.Storage
-  
-    with Storage("tlk", sk='sv') as s:
-        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
-    ```
-  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * Remember that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
   * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
