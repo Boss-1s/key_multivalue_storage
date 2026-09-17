@@ -78,6 +78,14 @@ class CastWarning(SyntaxWarning):
     def __str__(self) -> str:
         return f"{self.method}: WARNING: CastWarning: {self.args[0]}"
 
+def _next[**P, R]() -> Callable[[Callable[P, R]], Callable[P, R]]:
+    """
+    Custom decorator decorating kms-semver2.0.0 features.
+    Any decoratorated object is not accesible until `kms.nextgen` is set to `True`.
+
+    ## Arguments
+    None.
+    """
 
 def _deprecated_arg[**P, R](arg_name: str,
                             message: str | None = None
