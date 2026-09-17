@@ -14,24 +14,7 @@ wheels = [
 [[package]]
 name = "atpublic"
 version = "8.0.0a1"
-source = { git = "https://gitlab.com/flufl/public#8ee9a4e517ccff20cce32f00f11e1f0a87e15daa" }
-
-[package.optional-dependencies]
-install = [
-    { name = "atpublic-install" },
-]
-
-[[package]]
-name = "atpublic-install"
-version = "0.1.0a1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "atpublic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/33/f3/6cde6b38fbfc35efbc647c8c9fc64181b23dc75056a601353a068375fb9d/atpublic_install-0.1.0a1.tar.gz", hash = "sha256:8324cb0108bf601acbb7decd5ecb7e341f9bea0faacc7d67d3148e6b62fc4a76", size = 2051, upload-time = "2026-08-21T19:02:26.184Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/1e/8539286aabc1ec29b2e67b3fc908eacfa6715944ba996d8e020ed6d1b8f5/atpublic_install-0.1.0a1-py3-none-any.whl", hash = "sha256:a3de7687c8aad96cbd47d5df580c074b388dd08fbef8128ce0bd3f857f961c50", size = 1258, upload-time = "2026-08-21T19:02:25.17Z" },
-]
+source = { git = "https://gitlab.com/flufl/public/#8ee9a4e517ccff20cce32f00f11e1f0a87e15daa" }
 
 [[package]]
 name = "certifi"
@@ -443,7 +426,7 @@ name = "key-multivalue-storage"
 version = "1.4.0.20261012.dev1"
 source = { editable = "." }
 dependencies = [
-    { name = "atpublic", extra = ["install"] },
+    { name = "atpublic" },
     { name = "rich" },
     { name = "typing-extensions" },
 ]
@@ -488,7 +471,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "atpublic", extras = ["install"], git = "https://gitlab.com/flufl/public" },
+    { name = "atpublic", git = "https://gitlab.com/flufl/public/" },
     { name = "griffe", marker = "extra == 'dev'", specifier = "==2.2.0" },
     { name = "pylint", marker = "extra == 'dev'", specifier = "==4.0.8" },
     { name = "pylint-per-file-ignores", marker = "extra == 'dev'", specifier = "==3.2.1" },

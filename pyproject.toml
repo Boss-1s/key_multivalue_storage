@@ -35,7 +35,7 @@ keywords = [
     "wrapper-library"
 ]
 dependencies = [
-    "atpublic[install]",
+    "atpublic",
     "rich==15.0.0",
     "typing-extensions~=4.16",
 ]
@@ -508,6 +508,9 @@ init-import = false
 # builtins.
 redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "io"]
 
+# List of additional builtin modules.
+additional-builtins = ["public", "private"]
+
 [dependency-groups]
 dev = [
     { include-group = "test" },
@@ -540,4 +543,4 @@ omit = [
 
 [tool.uv.sources]
 dill = { git = "https://github.com/uqfoundation/dill" }
-atpublic = { git = "https://gitlab.com/flufl/public" }
+atpublic = { git = "https://gitlab.com/flufl/public/" }
