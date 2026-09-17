@@ -85,8 +85,9 @@ TL;DR **an update is usually supported for about 9-10 months before EOS (startin
 When creating a pull request against a head branch in kms, there are a few rules that must be followed, or the PR may be rejected.
 
 - **All AI usage must be disclosed.** This is also stated clearly in the Contribution Guidelines - if your code smells of AI, and there is no disclosure about it, your PR will be *manually rejected and **closed**.*
-- **Always link to an issue.** It is important to always link your PRs to an issue. If you attempt to create a PR without linking to an issue, it will be automatically rejected and closed. *To ensure it stays open, create an issue first, then link your PR back to the newly created issue with development keywords.*
-- **Follow branch naming conventions.** To ensure formality in this repo's environment, I kindly ask that branches be named by the following convention: `[Conventional Commit Category]/[Head Branch]/[Issue Number]`. For example, `fix/semver1.3.x/80`. This way, anyone can know the type of PR, the HEAD, and the issue it links to - just by reading the branch name.
+- **Always link to an issue.** It is important to always link your PRs to an issue. If you attempt to create a PR without linking to an issue, it will be manually rejected and closed. *To ensure it complies with this rule, create an issue first, then link your PR back to the newly created issue with development keywords.*
+- **Follow branch naming conventions.** To ensure formality in this repo's environment, I kindly ask that branches be named by the following convention: `[Conventional Commit Category]/[Head Branch]/[Issue Number]`. For example, `fix/semver1.3.x/80`. This way, anyone can know the type of PR, the target branch, and the issue it links to - just by reading the branch name.
+- **Don't create duplicate PRs to backport changes.** Recently (September 2026), an automatic backport-via-tag automation was added, removing the need to create duplicate PRs for backports. Please don't do this, as it goes against the Contributor Guidelines.
 
 > [!caution]
 > If a PR is not assigned a priority or does not have a `Needs Triage` tag, **that PR has not been reviewed and/or was forced reopened.** Do *not* trust, download, install, or test these PRs; let the maintainers handle them.
@@ -96,6 +97,9 @@ When creating a pull request against a head branch in kms, there are a few rules
 [**Learn about supported versions**](security#supported-versions)
 
 ## Installing the development pre-commit hook (kms-semver>=1.3.0a4)
+
+> [!tip]
+> This feature is available on version `kms-semver1.3.0a4` and later.
 
 **Clone the repo:**
 ```sh
@@ -112,6 +116,9 @@ pre-commit install
 ```
 
 ## Running all tests at once (kms-semver>=1.3.0a4)
+
+> [!tip]
+> This feature is available on version `kms-semver1.3.0a4` and later.
 
 **Clone the repo**:
 ```sh
@@ -132,6 +139,9 @@ _This may change in the near future, perhaps with a new test library in the firs
 > If you forked the repo and opened a codespace instead of cloning, don't run the `cd` commands.
 
 ### `python test/ <arg>` (kms-semver>=1.3.0b0)
+
+> [!tip]
+> This feature is available on version `kms-semver1.3.0b0` and later.
 
 Aside from running all tests, you can also pass arguments to run a specific test. **This will be actively developed to be easier to use.**
 
@@ -157,14 +167,21 @@ Passing the argument `a` or `all` runs all main tests. It produces the exact sam
 
 #### `general`
 
-**Syntax: `python test/ general`**
+**Syntax: `python test/ general <version>`**
 
-Passing the argument `general` will **execute the test `test/test-general.py`**. No other tests will be run. This test is a general test that ensures that class `Storage` and its methods and other classes (`Load`, `Edit`, `Delete`) and their methods work properly. **It does not check smoothness, speed, or Pythonicity; it only ensures everything works.**
+Available options for `<version>`: (None), `1.3`<!--, `1.4`-->
+
+> [!tip]
+> **For general `kms-semver1.3.x` tests, append `1.3` to the end of the command. This will run the new, more robust tests.**
+
+> [!warning]
+> Passing the argument `general` without providing any other arguments will **execute the test `test/test-general.py`, the old `kms-semver1.2.x` test**. No other tests will be run.
+
+For all versions of this command, the test(s) run/ran is/are (a) general test(s) that ensures that class `Storage` and its methods and helper classes (`Load`, `Edit`, `Delete`) and their methods work properly. **It does not check smoothness, speed, or Pythonicity; it only ensures everything works.**
+
+
 
 #### `meta`
-
-> [!important]
-> This test is still being developed and finished. It is not robust yet, please try not to rely on it. 
 
 **Syntax: `python test/ meta`**
 
@@ -208,6 +225,9 @@ kms.help()
 No other tests will run. This test is a targeted test to ensure that the library's main `help()` method is visually correct by human determination.
 
 #### `reset_env`
+
+> [!tip]
+> This feature is available on version `kms-semver1.3.0rc1` and later.
 
 **Syntax: `python test/ reset_env <SSH_USER> <SSH_EMAIL> <SSH_PRIVATE_KEY> [reconfig_ssh_key_clearall=false]`**
 
