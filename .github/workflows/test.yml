@@ -48,7 +48,7 @@ jobs:
           run: |
             # AI-Generated
             git fetch --tags --prune
-            latest_tag=$(git describe --tags --abbrev=0 origin/semver1.3.x)
+            latest_tag=$(git describe --tags --abbrev=0 origin/semver1.4.x)
             echo "tag=$latest_tag" >> $GITHUB_OUTPUT
 
       - name: Install and Ensure Dependecies
