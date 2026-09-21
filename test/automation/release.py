@@ -3,6 +3,9 @@
 Module to dynamically change version and development status of package.
 """
 import os
+import sys
+
+test_mode = len(sys.argv) > 1 and sys.argv[1] == "--test"
 
 try:
     repo_root = os.environ.get("GITHUB_WORKSPACE",
@@ -17,7 +20,12 @@ newv = os.environ.get("NVERSION")
 newv_name = os.environ.get("RELEASENVERSION")
 
 if not newv or not newv_name:
-    raise ValueError("Environment variables NVERSION and RELEASENVERSION must be set.")
+    if test_mode:
+        print("env vars NVERSION and RELEASENVERSION are not set. Using test values.")
+        newv = "0.0.0-test.dev0"
+        newv_name = "0.0.0-test (dev0)"
+    else:
+        raise ValueError("Environment variables NVERSION and RELEASENVERSION must be set.")
 
 with open(pyproject_path, "r+", encoding="utf-8") as f:
     pyproject = f.readlines()
