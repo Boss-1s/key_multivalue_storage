@@ -134,6 +134,7 @@ jobs:
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
+            -Dsonar.branch.name=semver1.4.x
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
