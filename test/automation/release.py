@@ -16,6 +16,9 @@ nightly = os.environ.get("NIGHTLY")
 newv = os.environ.get("NVERSION")
 newv_name = os.environ.get("RELEASENVERSION")
 
+if not newv or not newv_name:
+    raise ValueError("Environment variables NVERSION and RELEASENVERSION must be set.")
+
 with open(pyproject_path, "r+", encoding="utf-8") as f:
     pyproject = f.readlines()
 
@@ -29,11 +32,11 @@ with open(pyproject_path, "r+", encoding="utf-8") as f:
             print(f"::notice:: release.py: line is now '{newline.replace('\n', '')}'")
         elif line.startswith('    "Development Status :: '):
             print(f"::notice:: release.py: replacing line '{line.replace('\n', '')}'")
-            if nightly:
+            if nightly or 'dev' in newv:
                 newline = '    "Development Status :: 2 - Pre-Alpha",\n'
-            elif 'a' in str(newv):
+            elif 'a' in newv:
                 newline = '    "Development Status :: 3 - Alpha",\n'
-            elif 'b' in str(newv):
+            elif 'b' in newv:
                 newline = '    "Development Status :: 4 - Beta",\n'
             else:
                 newline = '    "Development Status :: 5 - Production/Stable",\n'
