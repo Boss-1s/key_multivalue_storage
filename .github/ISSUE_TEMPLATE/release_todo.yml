@@ -1,0 +1,57 @@
+name: Release To-Do Template (Maintainers Only)
+description: Please do not use this issue template. Misuse of this template may result in a ban from contributing to kms.
+
+labels: "documentation"
+title: "📢✨ release(to-do): `kms-semverx.x.x` [alphas/betas]✨"
+
+body:
+- type: textarea
+  attributes:
+    label: "Edit the template below. Anywhere you see brackets is something that should be replaced,"
+    placeholder: "what are you doing..."
+    value: |
+      # Release To-Do
+
+      Working list of [`kms-semverx.x.x`] [alpha/beta] releases' to-dos. Closed when all [alpha/beta] releases are pushed.
+      
+      The releases in question are:
+      - [the releases]
+      
+      ## Statuses
+      
+      - _IP_: **Informally Proposed**. Item has been informally proposed somewhere (usually [the roadmap](https://boss-1s.github.io/key_multivalue_storage/Roadmap)); there is no formal reference to the item at this point in time.
+      - _P_: **Proposed** (Needs Triage). Item has been proposed formally in a GitHub issue but has no official development status.
+      - _A_: **Accepted**. Item has been accepted and will be in development.
+      - _I_: **In Progress**. Item is being worked on, either by an unpushed commit or a PR.
+      - _C_: **Completed**. Item has been completed sucessfully.
+      - _R_: **Rejected**. Item has been rejected, and will not be worked on.
+      - _NA_: **Non-applicable**. Item cannot be assigned a status at this time.
+      
+      ## Fixes
+      
+      ### Source
+      
+      - [All source code changes]
+      
+      ### Tests
+      
+      - [All test changes]
+      
+      ### Automations
+      
+      - [All changes to automations]
+      
+      ### Other
+            
+      ## In-Progress Pull Requests
+      
+      > [!tip]
+      > Click a PR below to see which issue it is linked to.
+      
+      - [All PRs connected to an TP issue from above]
+      
+      ## Deprecations
+      
+      - [Copy-paste the roadmap atp]
+      
+      ## Other notes
