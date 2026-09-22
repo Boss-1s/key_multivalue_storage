@@ -16,7 +16,24 @@ jobs:
       artifact-metadata: write
       attestations: write
       issues: write
+      actions: read
     steps:
+      - name: Check for sucessful test environment
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CURRENT_REF: ${{ github.ref_name }} 
+        run: |
+          # Fetch the conclusion of the latest run of 'env-a.yml' on the same branch
+          CONCLUSION=$(gh api "repos/${{ github.repository }}/actions/workflows/env-a.yml/runs?branch=$CURRENT_REF&per_page=1" \
+            --jq '.workflow_runs[0].conclusion')
+
+          echo "Env A conclusion for branch $CURRENT_REF: $CONCLUSION"
+
+          if [ "$CONCLUSION" != "success" ]; then
+            echo "Error: Env A did not succeed (status: $CONCLUSION). Failing Env B deployment."
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
