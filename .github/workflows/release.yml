@@ -119,6 +119,8 @@ jobs:
             ${{steps.gh-attest.outputs.bundle-path}}
 
       - name: Remind to Bump Past Version
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           gh issue create \
             --title "release reminder: Bump Past Version" \
