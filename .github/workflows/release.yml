@@ -18,44 +18,67 @@ jobs:
       issues: write
       actions: read
     steps:
-      - name: Check for sucessful test environment
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          REF: ${{ github.ref_name }} 
-          REPO: ${{ github.repository }}
-        run: |
-          TARGET_COMMITISH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
-
-          BRANCH="$TARGET_COMMITISH"
-          if [[ "$TARGET_COMMITISH" =~ ^[0-9a-f]{40}$ ]]; then
-            BRANCH=$(git for-each-ref --format='%(refname:short)' refs/remotes/origin --contains "$TARGET_COMMITISH" | grep -v '^origin/HEAD$' | sed 's|^origin/||' | head -n 1)
-          fi
-
-          if [ -z "$BRANCH" ]; then
-            echo "Could not resolve source branch for release ref: $REF"
-            exit 1
-          fi
-
-          export BRANCH
-
-          echo "$REF is sourced from branch: $BRANCH"
-          
-          CONCLUSION=$(gh api "repos/${{ github.repository }}/actions/workflows/test.yml/runs?branch=$BRANCH&per_page=1" \
-            --jq '.workflow_runs[0].conclusion')
-
-          echo "$CONCLUSION"
-
-          if [ "$CONCLUSION" != "success" ]; then
-            echo "::error:: The latest test deplyment was not sucessful. Please ensure tests pass before attempting a release."
-            git push origin --delete "$REF"
-            echo "::notice:: The release associated with this workflow run has been unpublished and re-drafted, and the tag deleted."
-            exit 1
-          fi
-
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Check for successful test environment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ github.event.release.tag_name || github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          TARGET_COMMITISH="$(
+            gh api "repos/$REPO/releases/tags/$REF" \
+              --jq '.target_commitish'
+          )"
+
+          if [ -z "$TARGET_COMMITISH" ] || [ "$TARGET_COMMITISH" = "null" ]; then
+            echo "::error::Could not determine target commit for release $REF"
+            exit 1
+          fi
+
+          BRANCH="$TARGET_COMMITISH"
+
+          # target_commitish may be a commit SHA rather than a branch name.
+          if [[ "$TARGET_COMMITISH" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            BRANCH="$(
+              git for-each-ref \
+                --format='%(refname:short)' \
+                refs/remotes/origin \
+                --contains "$TARGET_COMMITISH" |
+              sed 's|^origin/||' |
+              grep -v '^HEAD$' |
+              head -n 1
+            )"
+          fi
+
+          if [ -z "$BRANCH" ]; then
+            echo "::error::Could not resolve source branch for release ref: $REF"
+            exit 1
+          fi
+
+          echo "$REF is sourced from branch: $BRANCH"
+
+          CONCLUSION="$(
+            gh api \
+              --method GET \
+              "repos/$REPO/actions/workflows/test.yml/runs" \
+              -f "branch=$BRANCH" \
+              -f "per_page=1" \
+              --jq '.workflow_runs[0].conclusion // empty'
+          )"
+
+          echo "Latest test conclusion: ${CONCLUSION:-not found}"
+
+          if [ "$CONCLUSION" != "success" ]; then
+            echo "::error::The latest test deployment was not successful."
+            git push origin --delete "$REF" || true
+            exit 1
+          fi
 
       - name: Install SSH Key
         uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555
