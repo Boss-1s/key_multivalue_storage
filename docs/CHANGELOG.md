@@ -8,6 +8,7 @@ title: Changelog
 <!--TOC-->
 
 - [📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*](#-v14020260915a0dev0--kms-v140a0dev020260915)
+- [📦 v1.3.2.20260922b3 — *kms-v1.3.2/2026.09.22b3*](#-v13220260922b3--kms-v13220260922b3)
 - [📦 v1.3.2.20260826b2 — *kms-v1.3.2b2/2026.08.26*](#-v13220260826b2--kms-v132b220260826)
 - [📦 v1.3.2.20260826b1 — *kms-v1.3.2b1/2026.08.26*](#-v13220260826b1--kms-v132b120260826)
 - [📦 v1.3.2.20260826b0 — *kms-v1.3.2b0/2026.08.26*](#-v13220260826b0--kms-v132b020260826)
@@ -91,6 +92,18 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 
 
 **Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.4.0.20260915a0.dev0
+
+---
+
+## 📦 v1.3.2.20260922b3 — *kms-v1.3.2/2026.09.22b3*
+
+⚙ **Target Node Commit:** `3d11b5f6`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+testing release before merge
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.2.20260826b2...v1.3.2.20260922b3
 
 ---
 
