@@ -183,4 +183,4 @@ jobs:
           gh issue create \
             --title "release reminder: Bump Past Version" \
             --body "Please remember to bump the version past this one. The tag should have \`dev\` in it. Use the script located at test/automation/post-release.py." \
-            --assignee @me
+            --label documentation
