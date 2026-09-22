@@ -196,6 +196,11 @@ This update will not have a deprecation cycle.
 
 ***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
+#### Full To-Do Lists
+
+See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos.
+See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the beta releases' to-dos.
+
 #### Features
 * More encoding option
 *Stable Release tag: `v1.4.0.20260103`*
