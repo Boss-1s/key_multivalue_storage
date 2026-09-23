@@ -57,8 +57,8 @@ from .utils.warnings import (
     CastWarning
 )
 
-__version__ = "v1.3.2.20260930dev0"
-__version_internal__ = "kms-v1.3.2b2/2026.08.26"
+__version__ = "v1.3.2.20260930.dev0"
+__version_internal__ = "kms-v1.3.2.dev0/2026.09.30"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
