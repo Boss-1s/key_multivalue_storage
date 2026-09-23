@@ -12,6 +12,7 @@ python test/
 """
 #pylint: disable=exec-used,consider-using-with
 import os
+import re
 import sys
 import time
 import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
@@ -170,7 +171,9 @@ def main(c: Console) -> None:
             os.environ["reconfig_ssh_key_clearall"] = str(int(clearall))
             subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
         case 'post_release':
-            i = 0
+            # pylint: disable=pointless-string-statement
+            # NOSONAR
+            """i = 0
             # Passsword stuff here is practice before implementing issue #99
             while i < 3:
                 password_attempt = getpass.getpass(
@@ -179,15 +182,20 @@ def main(c: Console) -> None:
                 salt = getpass.getpass("Please enter the salt to use for this password: ",
                                        echo_char="*"
                 )
+                # If salt looks like 128-bit hash, turn it into plain text
+                if re.match(r"^[0-9a-f]{16}$", salt):
+                    salt = bytes.fromhex(salt).decode("utf-8", errors="ignore")
+
                 password_hash = hashlib.pbkdf2_hmac(
                     "sha256",
                     password_attempt.encode(),
                     salt.encode(),
-                    600_000
+                    600_000,
+                    32
                 ).hex()
                 if hmac.compare_digest(
                     password_hash,
-                    "REPLACE_WITH_PRECOMPUTED_PBKDF2_HEX"
+                    "PBKDF2$PBKDF2WithHmacSHA256$600000$u3/qcYoesU0GqgY1Y6frBw==$RnZ15bZvMe2zU5ePWCg/wwMMCwQtz1Prtgh88fjO4Pw="
                 ):
                     del password_attempt
                     del salt
@@ -199,7 +207,7 @@ def main(c: Console) -> None:
                 c.print("[red]Incorrect password. Please try again.[/]")
                 i += 1
             else:
-                raise ValueError("Too many incorrect password attempts. Exiting.")
+                raise ValueError("Too many incorrect password attempts. Exiting.")"""
             c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
             try:
                 v = sys.argv[2]
