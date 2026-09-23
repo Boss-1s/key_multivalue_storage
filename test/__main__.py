@@ -179,16 +179,23 @@ def main(c: Console) -> None:
                 salt = getpass.getpass("Please enter the salt to use for this password: ",
                                        echo_char="*"
                 )
-                password_attempt = salt + password_attempt
+                password_hash = hashlib.pbkdf2_hmac(
+                    "sha256",
+                    password_attempt.encode(),
+                    salt.encode(),
+                    600_000
+                ).hex()
                 if hmac.compare_digest(
-                    hashlib.sha256(password_attempt.encode()).hexdigest(),
-                    "86937752fb98a06c11ba6abc5b0c421d63661ebf3a28576dd0666779d67f63dd"
+                    password_hash,
+                    "REPLACE_WITH_PRECOMPUTED_PBKDF2_HEX"
                 ):
                     del password_attempt
                     del salt
+                    del password_hash
                     break
                 del password_attempt
                 del salt
+                del password_hash
                 c.print("[red]Incorrect password. Please try again.[/]")
                 i += 1
             else:
