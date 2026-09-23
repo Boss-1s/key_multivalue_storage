@@ -119,12 +119,17 @@ def main():
         subprocess.run(["git", "add", pyproject_path, init_py_path],
                        check=True,
                        capture_output=True)
-        subprocess.run(["git", "status", "--porcelain"], check=True, capture_output=True)
-        subprocess.run(["git", "commit", "-m", f"release: Post {og_v}",
-                        "--dry-run" if test_mode else ''],
+        subprocess.run(["git", "status"], check=True, capture_output=True)
+        subprocess.run(["git",
+                        "commit",
+                        "-S",
+                        "-s",
+                        "-m",
+                        f"release: post {og_v} [skip ci]",
+                        "--dry-run" if test_mode else '--no-dry-run'],
                     check=True,
                     capture_output=True)
-        subprocess.run(["git", "push", "--dry-run" if test_mode else ''],
+        subprocess.run(["git", "push", "--dry-run" if test_mode else '--no-dry-run'],
                     check=True,
                     capture_output=True)
     except Exception as e:
