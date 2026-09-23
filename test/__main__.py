@@ -18,6 +18,9 @@ import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
 import subprocess
 import warnings
 import traceback
+import getpass
+import hashlib
+import hmac
 from rich.console import Console
 from rich.traceback import install
 
@@ -166,6 +169,57 @@ def main(c: Console) -> None:
             os.environ["SSH_EMAIL"] = sys.argv[4]
             os.environ["reconfig_ssh_key_clearall"] = str(int(clearall))
             subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
+        case 'post_release':
+            i = 0
+            # Passsword stuff here is practice before implementing issue #99
+            while i < 3:
+                password_attempt = getpass.getpass(
+                    "Please enter the admin password to use this command: ", echo_char="*"
+                )
+                salt = getpass.getpass("Please enter the salt to use for this password: ",
+                                       echo_char="*"
+                )
+                password_attempt = salt + password_attempt
+                if hmac.compare_digest(
+                    hashlib.sha256(password_attempt.encode()).hexdigest(),
+                    "86937752fb98a06c11ba6abc5b0c421d63661ebf3a28576dd0666779d67f63dd"
+                ):
+                    del password_attempt
+                    del salt
+                    break
+                del password_attempt
+                del salt
+                c.print("[red]Incorrect password. Please try again.[/]")
+                i += 1
+            else:
+                raise ValueError("Too many incorrect password attempts. Exiting.")
+            c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
+            try:
+                v = sys.argv[2]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a version to use."
+                ) from e
+            try:
+                n = sys.argv[3]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a name to use."
+                ) from e
+            try:
+                d = sys.argv[4]
+            except IndexError as e:
+                c.print("[yellow]No directory depth provided. Defaulting to 4[/]")
+                d = "4"
+
+            subprocess.run(["python",
+                            "test/automation/post-release.py",
+                            "--version", v,
+                            "--name", n,
+                            "--dir_depth", d,
+                            "--verbose"],
+                            check=True,
+                            capture_output=True)
         case _:
             raise ValueError(
                 "Invalid argument. Available arguments: a, all, general, meta, diff, "+
