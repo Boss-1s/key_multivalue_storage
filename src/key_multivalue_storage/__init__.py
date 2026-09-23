@@ -75,9 +75,14 @@ from .utils.warnings import (
     CastWarning
 )
 
+<<<<<<< HEAD
 # Package Metadata
 __version__ = "v1.4.0.20261012dev1"
 __version_internal__ = "kms-v1.4.0dev1/2026.10.12"
+=======
+__version__ = "v1.3.2.20260930.dev0"
+__version_internal__ = "kms-v1.3.2.dev0/2026.09.30"
+>>>>>>> 3aaf823 (feat: release pipeline refactor (#153))
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 

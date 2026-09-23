@@ -36,12 +36,16 @@ for more information.**
 # TODO: Add nextgen tests to docs after release of a0
 #pylint: disable=exec-used,consider-using-with
 import os
+import re
 import sys
 import time
 import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
 import subprocess
 import warnings
 import traceback
+import getpass
+import hashlib
+import hmac
 from rich.console import Console
 from rich.traceback import install
 
@@ -203,6 +207,71 @@ def main(c: Console) -> None:
             os.environ["SSH_EMAIL"] = sys.argv[4]
             os.environ["reconfig_ssh_key_clearall"] = str(int(clearall))
             subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
+        case 'post_release':
+            # pylint: disable=pointless-string-statement
+            # NOSONAR
+            """i = 0
+            # Passsword stuff here is practice before implementing issue #99
+            while i < 3:
+                password_attempt = getpass.getpass(
+                    "Please enter the admin password to use this command: ", echo_char="*"
+                )
+                salt = getpass.getpass("Please enter the salt to use for this password: ",
+                                       echo_char="*"
+                )
+                # If salt looks like 128-bit hash, turn it into plain text
+                if re.match(r"^[0-9a-f]{16}$", salt):
+                    salt = bytes.fromhex(salt).decode("utf-8", errors="ignore")
+
+                password_hash = hashlib.pbkdf2_hmac(
+                    "sha256",
+                    password_attempt.encode(),
+                    salt.encode(),
+                    600_000,
+                    32
+                ).hex()
+                if hmac.compare_digest(
+                    password_hash,
+                    "PBKDF2$PBKDF2WithHmacSHA256$600000$u3/qcYoesU0GqgY1Y6frBw==$RnZ15bZvMe2zU5ePWCg/wwMMCwQtz1Prtgh88fjO4Pw="
+                ):
+                    del password_attempt
+                    del salt
+                    del password_hash
+                    break
+                del password_attempt
+                del salt
+                del password_hash
+                c.print("[red]Incorrect password. Please try again.[/]")
+                i += 1
+            else:
+                raise ValueError("Too many incorrect password attempts. Exiting.")"""
+            c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
+            try:
+                v = sys.argv[2]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a version to use."
+                ) from e
+            try:
+                n = sys.argv[3]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a name to use."
+                ) from e
+            try:
+                d = sys.argv[4]
+            except IndexError as e:
+                c.print("[yellow]No directory depth provided. Defaulting to 4[/]")
+                d = "4"
+
+            subprocess.run(["python",
+                            "test/automation/post-release.py",
+                            "--version", v,
+                            "--name", n,
+                            "--dir_depth", d,
+                            "--verbose"],
+                            check=True,
+                            capture_output=True)
         case _:
             raise ValueError(
                 "Invalid argument. Available arguments: a, all, general, meta, diff, "+
