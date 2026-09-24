@@ -96,7 +96,6 @@ class Storage(metaclass=meta._StorageMeta):
 
     - `indent` -> indent size of JSON files.
     - `encode` -> whether or not to encode entries.
-    - `auto_delete_self` -> whether or not an instance releases from memory automatically.
 
     #### Instance Attributes
     > Instance attributes cannot be set unless an instance is created and assigned to a variable.
