@@ -15,7 +15,6 @@ from typing import Any
 from rich.console import Console
 
 from key_multivalue_storage.storage import Storage
-from key_multivalue_storage.delete import Delete
 
 c = Console()
 print = c.print
@@ -143,11 +142,19 @@ assert bad_str_db.key in bad_str_db.keys()
 assert isinstance(normal_db.to_dict(), dict)
 assert isinstance(bad_str_db.to_dict(), dict)
 
+another_db = Storage("another_key", foo="bar")
+
+another_db.update({"baz": "qax"})
+
+assert isinstance(another_db, Storage)
+assert another_db.values == {'foo': 'bar', 'baz': 'qax'}
+
 print("Part 4 passed.")
 
 del normal_db
 del will_be_deleted_db
 del bad_str_db
+del another_db
 
 print("Part 5: Dunder Methods")
 

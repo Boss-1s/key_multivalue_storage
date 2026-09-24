@@ -38,7 +38,7 @@ import builtins
 from typing import Any, Generator
 from types import TracebackType
 from functools import total_ordering
-from collections.abc import Callable, KeysView
+from collections.abc import Callable, KeysView, Mapping
 
 from typing_extensions import deprecated
 from rich.console import Console
