@@ -5,6 +5,7 @@ Compatible versions for this test file: >=kms-v1.3.1/2026.08.12
 
 for semver1.2.x, use the original 'test-general.py' file instead.
 """
+# TODO: lazy
 from __future__ import annotations
 
 import json
@@ -14,7 +15,10 @@ from typing import Any
 
 from rich.console import Console
 
+import key_multivalue_storage as kms
 from key_multivalue_storage.storage import Storage
+
+_v = kms.__version__.split(".")
 
 c = Console()
 print = c.print
@@ -142,19 +146,45 @@ assert bad_str_db.key in bad_str_db.keys()
 assert isinstance(normal_db.to_dict(), dict)
 assert isinstance(bad_str_db.to_dict(), dict)
 
-another_db = Storage("another_key", foo="bar")
+#-- Storage.update() (New in kms-semver1.4.0a0) --#
 
-another_db.update({"baz": "qax"})
+if _v[0] == "1" and _v[1] >= 4:
+    another_db = Storage("another_key", foo="bar")
+    
+    another_db.update({"baz": "qax"})
+    
+    assert isinstance(another_db, Storage)
+    assert another_db.values == {'foo': 'bar', 'baz': 'qax'}
+    
+    # Test 2: Update with iterable of tuples
+    another_db = Storage("another_key", **{"a": 1, "b": 2})
+    another_db.update([("b", 99), ("another_db", 4)])
+    assert another_db.values == {"a": 1, "b": 99, "another_db": 4}, f"Expected {{'a': 1, 'b': 99, 'another_db': 4}}, got {another_db}"
+    
+    # Test 3: Update with kwargs only
+    another_db = Storage("another_key", **{"a": 1, "b": 2})
+    another_db.update(b=42, e=5)
+    assert another_db.values == {"a": 1, "b": 42, "e": 5}, f"Expected {{'a': 1, 'b': 42, 'e': 5}}, got {another_db}"
+    
+    # Test 4: Update with both dict and kwargs (kwargs override)
+    another_db = Storage("another_key", **{"a": 1, "b": 2})
+    another_db.update({"b": 10, "c": 3}, c=30, another_db=4)
+    assert another_db.values == {"a": 1, "b": 10, "c": 30, "another_db": 4}, f"Expected {{'a': 1, 'b': 10, 'c': 30, 'another_db': 4}}, got {another_db}"
+    
+    # Test 5: Update empty (no args passed)
+    another_db = Storage("another_key", **{"a": 1})
+    another_db.update()
+    assert another_db.values == {"a": 1}, f"Expected {{'a': 1}}, got {another_db}"
 
-assert isinstance(another_db, Storage)
-assert another_db.values == {'foo': 'bar', 'baz': 'qax'}
+    del another_db
+else:
+    print("[yellow]To maintain backwards compatibility, the new `update()` method's tests were skipped.[/]")
 
 print("Part 4 passed.")
 
 del normal_db
 del will_be_deleted_db
 del bad_str_db
-del another_db
 
 print("Part 5: Dunder Methods")
 
@@ -619,8 +649,8 @@ del db_values
 
 print(f"Format Specifier .dictf = {db:.dictf}")
 print(f"Format Specifier .dictt = {db:.dictt}")
-print(f"Format Specifier .tuplef = {db:.tuplef}") # DEPRECATED
-print(f"Format Specifier .tuplet = {db:.tuplet}") # DEPRECATED
+# print(f"Format Specifier .tuplef = {db:.tuplef}") # DEPRECATED
+# print(f"Format Specifier .tuplet = {db:.tuplet}") # DEPRECATED
 print(f"Format Specifier .key = {db:.key}")
 print(f"Format Specifier .keys = {db:.keys}")
 print(f"Format Specifier .values = {db:.values}")
