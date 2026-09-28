@@ -50,10 +50,19 @@ Roadmap format:
 - List 'partial' breaking changes and deprecations here.
 -->
 
+<details>
+
+<summary>Old Roadmaps</summary>
+
+> [!warning]
+> Please refer to the actual release notes for accurate information.
+
 ### kms-semver1.3.2
-- **Projected Release Date: 2026/09/30**
+- **Release Date: 2026/09/30**
 
 *Stable Release tag: `v1.3.2.20260930`*
+
+Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
 
 #### Features
 
@@ -64,11 +73,11 @@ No new features will be introduced in this update.
 - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
 - Prettified all Storage dunder methods
 
-#### Graceful Deprecation cycle 1.3.
+#### Graceful Deprecation cycle 1.3.2
 
-othin to deprecated in this version.
+Nothing to deprecated in this version.
 
----
+</details>
 
 ### kms-semver1.3.3
 - **Projected Release Date: 2026/11/07**
@@ -401,5 +410,5 @@ See all other new features in the [release notes](/Boss-1s/key_multivalue_storag
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjMwNjk4NTE5LC00NTg0NTk1NDNdfQ==
+eyJoaXN0b3J5IjpbMjYyNzU0MTI2LC00NTg0NTk1NDNdfQ==
 -->
