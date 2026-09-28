@@ -36,7 +36,9 @@ This section shares a summary of dependency updates. Include PR numbers for spec
 Backports
 </summary>
 This hidden section shares every single backport/forward-ported commit/PR via a PR. Nothing is excepted. Include full backport PR name, link to backport PR, backport PR number, and if applicable, the original PR/commit's information.
-</details>
+</details>This section shares all Dependency updates, along with the PR numbers and the bot that pushed it.
+
+## ⏰ Other Important Changes
 
 Other miscellaneous changes go here. This is basically the original release template's "Repo Updates" section.
 
@@ -52,4 +54,11 @@ This section disseminates all security updates, reasoning for yanking a previous
 
 All plans about the next update go here. **This section should NOT be edited by any AI generator; it must be done manually.**
 
+## 📢 Plans for next update
+
+All plans about the next update go here.
+
 **📑 Full Changelog**: [`oldversiontag` vs `newversiontag`](https://github.com/Boss-1s/key_multivalue_storage/compare/oldversiontag...newversiontag)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTAxOTI5Nzg4N119
+-->

@@ -50,23 +50,34 @@ Roadmap format:
 - List 'partial' breaking changes and deprecations here.
 -->
 
-### kms-semver1.3.2
-- **Projected Release Date: 2026/09/30**
+### Old Roadmaps
 
-*Stable Release tag: `v1.3.2.20260930`*
+> [!warning]
+> Please refer to the actual release notes for accurate information.
 
-#### Features
+<details>
+<summary>kms-semver1.3.2</summary>
+    
+  **Release Date: 2026/09/30**
 
-No new features will be introduced in this update.
+  *Stable Release tag: `v1.3.2.20260930`*
 
-#### Bug Fixes
+  Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
 
-- Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
-- Prettified all Storage dunder methods
+  #### Features
 
-#### Graceful Deprecation cycle 1.3.2
+  No new features will be introduced in this update.
 
-Nothing to be deprecated in this version.
+  #### Bug Fixes
+
+  - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
+  - Prettified all Storage dunder methods
+
+  #### Graceful Deprecation cycle 1.3.2
+
+  Nothing to be deprecated in this version.
+  
+</details>
 
 ---
 
@@ -227,9 +238,9 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
     ```py
     from key_multivalue_storage import storage
     storage.nextgen = True
-    
+
     Storage = storage.Storage
-  
+
     with Storage("tlk", sk='sv') as s:
         print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
     ```
@@ -399,6 +410,3 @@ These types of refactorizations - whether it's argument positioning, logic, or j
 See all other new features in the [release notes](/Boss-1s/key_multivalue_storage/releases).
 
 [***<< Back to home***](.)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ1ODQ1OTU0M119
--->
