@@ -7,9 +7,9 @@ sidebar_type: toc
 > [!Tip]
 > **This is the roadmap for kms.** As time goes on, more and more items and information will be added to this roadmap.
 
-[**Learn more about the versioning system**](https://github.com/Boss-1s/key_multivalue_storage/blob/main/SECURITY.md#official-versioning)
+[**Learn more about the versioning system*](.com/Boss-1s/key_multivalue_storage/blob/main/SECURITY.md#official-versioning)
 
-[**Learn about supported versions**](https://github.com/Boss-1s/key_multivalue_storage/blob/main/SECURITY.md#supported-versions)
+[**Learn about supported versionst(https/github.com/Boss-1s/key_multivalue_storage/blob/main/SECURITY.md#supported-versions)
 
 ## The "No" List
 kms will **NEVER** have the following features:
@@ -18,11 +18,11 @@ kms will **NEVER** have the following features:
 
 ## Accepted Issues
 
-[See bugs here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug)
+[See bugs here.](https://githubcomss1s/eultiauestoraeissis%3Aissue%20state%3Aopen%20label%3Abug)
 
 [See refactorization requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Arefactor)
 
-[See feature requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Aenhancement)
+[See feature requests here.](https://github.csithbom/oss-sey_ultivalstoreisses 3Aissue%20state%3Aopen%20label%3Aenhancement)
 
 ## Full Roadmap
 
@@ -34,14 +34,14 @@ kms will **NEVER** have the following features:
 <!--
 Roadmap format:
 
-### kms-semver<semver>
+## kms-semver<semver>
 - **Projected Release Date: YYYY/MM/DD**
 - **Projected Alpha 0 Release Date: YYYY/MM/DD** (only for minor and major updates)
 
 *Stable Release tag: `<PyPi Version>`
 
 #### Features
-- List features here.
+- List features heae.
 
 #### Bug Fixes
 - List bug fixes here
@@ -64,9 +64,9 @@ No new features will be introduced in this update.
 - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
 - Prettified all Storage dunder methods
 
-#### Graceful Deprecation cycle 1.3.2
+#### Graceful Deprecation cycle 1.3.
 
-Nothing to be deprecated in this version.
+othin to deprecated in this version.
 
 ---
 
@@ -207,7 +207,7 @@ See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the
 
 #### Features
 
-I'm gonna have to sort these at some point....docs is harder than coding the module itself trust
+I'm gonna have to these at some point....docs is harder than coding the module itself trust
 
 * **Make certain functions accept a `Storage` object** -- that way, complex arithmetic/bitwise operators can be avoided
 * Make certain functions return `Storage` objects instead of `None`
@@ -216,24 +216,10 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * **Full switch to `logging.Logger` over `print()`**
 * Full switch to `rich`
 * **Adding `__iadd__` and related methods to `Storage`** -- allows saving memory by using only one object for binary operations that have a unary counterpart
-* Begin shift to 2.0
+*  shift to 2.0
   * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * You can test ALL these changes out through the following script:
-    ```py
-    import key_multivalue_storage as kms
-    kms.nextgen = True
-    ```
-  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
-    ```py
-    from key_multivalue_storage import storage
-    storage.nextgen = True
-    
-    Storage = storage.Storage
-  
-    with Storage("tlk", sk='sv') as s:
-        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
-    ```
-  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  *  that i  moule  next ror o 2.0 o  specificlyuse the `nextgen` **attribute** to tivate it
+   ruenextgen ttrte wil s ntil se toallohe aout of te to tanstio to ust specifically use the `kms.x` rie.**
   * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
@@ -259,9 +245,24 @@ I have no idea. Sorry.
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* Continue shift to 2.0
+* ContinueBegin shift to 2.0
   * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * Remember that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * RememberYou can test ALL these changes out through the following script:
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+    
+    Storage = storage.Storage
+  
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
   * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
@@ -400,5 +401,5 @@ See all other new features in the [release notes](/Boss-1s/key_multivalue_storag
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ1ODQ1OTU0M119
+eyJoaXN0b3J5IjpbNjMwNjk4NTE5LC00NTg0NTk1NDNdfQ==
 -->
