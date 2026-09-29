@@ -12,6 +12,11 @@ wheels = [
 ]
 
 [[package]]
+name = "atpublic"
+version = "8.0.0a1"
+source = { git = "https://gitlab.com/flufl/public/#8ee9a4e517ccff20cce32f00f11e1f0a87e15daa" }
+
+[[package]]
 name = "certifi"
 version = "2026.7.22"
 source = { registry = "https://pypi.org/simple" }
@@ -421,6 +426,7 @@ name = "key-multivalue-storage"
 version = "1.4.0.20261012.dev1"
 source = { editable = "." }
 dependencies = [
+    { name = "atpublic" },
     { name = "rich" },
     { name = "typing-extensions" },
 ]
@@ -465,6 +471,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
+    { name = "atpublic", git = "https://gitlab.com/flufl/public/" },
     { name = "griffe", marker = "extra == 'dev'", specifier = "==2.2.0" },
     { name = "pylint", marker = "extra == 'dev'", specifier = "==4.0.8" },
     { name = "pylint-per-file-ignores", marker = "extra == 'dev'", specifier = "==3.2.1" },

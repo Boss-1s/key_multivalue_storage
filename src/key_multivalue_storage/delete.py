@@ -27,9 +27,11 @@ from typing import Any, Callable
 
 from rich.console import Console
 from rich.markdown import Markdown
+from public import public
 
 from .utils import warnings as w, exceptions, metadata as meta
 
+@public
 def help() -> None:
     Console().print(Markdown(str(__doc__)))
 
@@ -51,6 +53,7 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage/delete.py] ", *args, **kwargs)
 
+@public
 class Delete(metaclass=meta._DeleteMeta):
     # TODO in v1.4: methods should allow easy Storage manipulation
     # TODO in v2.0: methods should use 'subkey', 'subsubkey', etc. over 'propkey'
@@ -73,7 +76,7 @@ class Delete(metaclass=meta._DeleteMeta):
     ### Attributes
     **This class does not contain any attributes.**
     """
-
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """Help function for class Delete."""
@@ -92,6 +95,7 @@ class Delete(metaclass=meta._DeleteMeta):
                                         " passing the method, don't call it (adding parenthesis "+
                                         "after the method name)."))
 
+    @public
     @classmethod
     def by_propkey(cls,
                     file_path: str,
@@ -148,6 +152,7 @@ class Delete(metaclass=meta._DeleteMeta):
         print("Delete.by_propkey: INFO: Sucessfully deleted subkey",
                 f"{property_key} and its value.")
 
+    @public
     @classmethod
     def by_key(cls,
                 file_path: str,
@@ -201,6 +206,7 @@ class Delete(metaclass=meta._DeleteMeta):
                     f"after deletion: {e}")
 
 
+    @public
     @staticmethod
     def all(file_path: str,
             warn: bool=True) -> None:
