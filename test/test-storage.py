@@ -148,37 +148,34 @@ assert isinstance(bad_str_db.to_dict(), dict)
 
 #-- Storage.update() (New in kms-semver1.4.0a0) --#
 
-if _v[0] == "1" and _v[1] >= 4:
-    another_db = Storage("another_key", foo="bar")
-    
-    another_db.update({"baz": "qax"})
-    
-    assert isinstance(another_db, Storage)
-    assert another_db.values == {'foo': 'bar', 'baz': 'qax'}
-    
-    # Test 2: Update with iterable of tuples
-    another_db = Storage("another_key", **{"a": 1, "b": 2})
-    another_db.update([("b", 99), ("another_db", 4)])
-    assert another_db.values == {"a": 1, "b": 99, "another_db": 4}, f"Expected {{'a': 1, 'b': 99, 'another_db': 4}}, got {another_db}"
-    
-    # Test 3: Update with kwargs only
-    another_db = Storage("another_key", **{"a": 1, "b": 2})
-    another_db.update(b=42, e=5)
-    assert another_db.values == {"a": 1, "b": 42, "e": 5}, f"Expected {{'a': 1, 'b': 42, 'e': 5}}, got {another_db}"
-    
-    # Test 4: Update with both dict and kwargs (kwargs override)
-    another_db = Storage("another_key", **{"a": 1, "b": 2})
-    another_db.update({"b": 10, "c": 3}, c=30, another_db=4)
-    assert another_db.values == {"a": 1, "b": 10, "c": 30, "another_db": 4}, f"Expected {{'a': 1, 'b': 10, 'c': 30, 'another_db': 4}}, got {another_db}"
-    
-    # Test 5: Update empty (no args passed)
-    another_db = Storage("another_key", **{"a": 1})
-    another_db.update()
-    assert another_db.values == {"a": 1}, f"Expected {{'a': 1}}, got {another_db}"
+another_db = Storage("another_key", foo="bar")
 
-    del another_db
-else:
-    print("[yellow]To maintain backwards compatibility, the new `update()` method's tests were skipped.[/]")
+another_db.update({"baz": "qax"})
+
+assert isinstance(another_db, Storage)
+assert another_db.values == {'foo': 'bar', 'baz': 'qax'}
+
+# Test 2: Update with iterable of tuples
+another_db = Storage("another_key", **{"a": 1, "b": 2})
+another_db.update([("b", 99), ("another_db", 4)])
+assert another_db.values == {"a": 1, "b": 99, "another_db": 4}, f"Expected {{'a': 1, 'b': 99, 'another_db': 4}}, got {another_db}"
+
+# Test 3: Update with kwargs only
+another_db = Storage("another_key", **{"a": 1, "b": 2})
+another_db.update(b=42, e=5)
+assert another_db.values == {"a": 1, "b": 42, "e": 5}, f"Expected {{'a': 1, 'b': 42, 'e': 5}}, got {another_db}"
+
+# Test 4: Update with both dict and kwargs (kwargs override)
+another_db = Storage("another_key", **{"a": 1, "b": 2})
+another_db.update({"b": 10, "c": 3}, c=30, another_db=4)
+assert another_db.values == {"a": 1, "b": 10, "c": 30, "another_db": 4}, f"Expected {{'a': 1, 'b': 10, 'c': 30, 'another_db': 4}}, got {another_db}"
+
+# Test 5: Update empty (no args passed)
+another_db = Storage("another_key", **{"a": 1})
+another_db.update()
+assert another_db.values == {"a": 1}, f"Expected {{'a': 1}}, got {another_db}"
+
+del another_db
 
 print("Part 4 passed.")
 
