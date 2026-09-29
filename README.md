@@ -11,6 +11,12 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 
 This is, after all, the greatest piece of a CPython progam I have made. ;)
 
+---------
+
+## Changes in `kms-semver1.4.0`
+
+Huh. Looks like there are no big changes right now. Check back later.
+
 __________
 
 ## Badges
