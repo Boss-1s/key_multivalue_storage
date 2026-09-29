@@ -56,9 +56,7 @@ Roadmap format:
 > Please refer to the actual release notes for accurate information.
 
 <details markdown="block">
-    <summary markdown="span">
-        kms-semver1.3.2
-    </summary>
+    <summary markdown="span">kms-semver1.3.2</summary>
     
 > **Release Date: 2026/09/30**
 > 
