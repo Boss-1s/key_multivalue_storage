@@ -17,17 +17,25 @@ from . import Storage
 from .utils import metadata as meta
 from typing import Any, Callable
 
+from public import public
+
+@public
 def help() -> None: ...
 def print(*args, **kwargs) -> None: ...
 
 class Load(metaclass=meta._LoadMeta):
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None: ...
+    @public
     @classmethod
     def by_key(cls, file_path: str, key: Any, raw: bool = False) -> Storage | None: ...
+    @public
     @classmethod
     def by_index(cls, file_path: str, index: int, raw: bool = False) -> Storage | None: ...
+    @public
     @classmethod
     def keys(cls, file_path: str) -> list[str] | None: ...
+    @public
     @classmethod
     def values(cls, file_path: str, key: Any, keys: bool = False, raw: bool = True) -> list[str] | None: ...
