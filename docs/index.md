@@ -19,6 +19,10 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 > [!note]
 > Please do note that throughout this repository, the library `key-multivalue-storage` may also be referred to as its repo/package name (`key_multivalue_storage`) or its abbreviation (`kms`).
 
+
+[(skip to TOC)](#documentation)<br>
+[(skip to usage)](#installation)
+
 -------
 
 ## 🚀 What's New in `kms-semver1.3.2`
@@ -40,13 +44,16 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 * **Security & Actions:** Pinned third-party workflow actions (`webfactory/ssh-agent`, `astral-sh/setup-uv`, `softprops/action-gh-release`) to specific commits.
 
 ### 📢 Upcoming Roadmap
-* **v1.3.3 Patch:** Expected November 7, 2026 (focusing on upstream backports and refactors).
-* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+* **`kms-semver1.3.3`:** Expected November 7th, 2026 (focusing on upstream backports and refactors).
+* **`kms-semver1.3.4`:** Expected December 5th, 2026.
+* **`kms-semver1.3.5`:** Expected December 21st, 2026.
 
 > [!important]
 > All of these items have been backported to `semver1.4.x`.
 
 🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**
+
+---
 
 ## 🚀 What's New in `kms-semver1.4.0a0`
 
@@ -60,12 +67,14 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 * Oops, none yet here. Try checking somewhere else.
 
 ### 📢 Upcoming Roadmap
-* Oops, none yet here. Try checking somewhere else.
+* **`kms-semver1.4.0a0`:** Alpha scheduled for October 12, 2026.
+* **`kms-semver1.4.0`:** Stable release project for early January 2027.
 
 > [!important]
 > Backports from `semver1.3.x` are not listed here.
 
 <!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
+🔗 **[Working Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)**
 
 -------
 
@@ -126,7 +135,7 @@ Storage.auto_delete_self = True
 # Storage.store()
 ```
 - **Loading a stored object by a top level key and loading all the top level keys of a JSON file:**
-```py
+```pycon
 >>> Storage.Load.by_key("database.json", "my_top_level_key")
 Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "myothersk"="anotherval"])
 >>> Storage.Load.keys("database.json")
@@ -136,47 +145,47 @@ Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "m
 > [*See more about loading here.*](Documentation#storageload)
 
 - **Editing a subkey's name and value within the JSON file:**
-```py
+```pycon
 >>> Storage.Edit.propkey("database.json", # file_path
                          "my_top_level_key", # top_lv_key
                          "mysubkey", # oldpropkey
                          "newkey" # newpropkey
                          noexist_ok = True # Creates a new subkey with the new subkey name if the old subkey name did not exist
                         )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue", "myothersk: anotherval"]
 >>> Storage.Edit.propval("database.json", # file_path
                          "my_top_level_key", # top_lv_key
                          "myothersk", # propkey
                          "wow!" # newval
                         )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue", "myothersk: wow!"]
 ```
 > [!TIP]
 > [*See more about editing here.*](Documentation#storageedit)
 
 - **Deleting a subkey-value pair within the JSON file:**
-```py
+```pycon
 >>> Storage.Delete.by_propkey("database.json", # file_path
                               "my_top_level_key", # top_level_key
                               "myothersk" # property_key
                              )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue"]
 ```
 > [!TIP]
 > [*See more about deleting here.*](Documentation#storagedelete)
 
 - **Adding and subtracting two `Storage` instances:**
-```py
+```pycon
 >>> # Adding instances combines the two instances, as long as the top level key is the same.
->>> addStorage = Storage("combine", sk1="val1") + Storage("combine", sk2="val2")
->>> print(addStorage)
+... addStorage = Storage("combine", sk1="val1") + Storage("combine", sk2="val2")
+... print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1", "sk2"="val2"])
 >>> # Subtracting instances remove any exact same key-value pairs from the two instances, as long as the top level key is the same.
->>> subStorage = Storage("combine", sk1="val1", sk2="val2") - Storage("combine", sk2="val2")
->>> print(addStorage)
+... subStorage = Storage("combine", sk1="val1", sk2="val2") - Storage("combine", sk2="val2")
+... print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 ```
 > [!TIP]
