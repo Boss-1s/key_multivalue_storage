@@ -19,6 +19,56 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 > [!note]
 > Please do note that throughout this repository, the library `key-multivalue-storage` may also be referred to as its repo/package name (`key_multivalue_storage`) or its abbreviation (`kms`).
 
+-------
+
+## 🚀 What's New in `kms-semver1.3.2`
+
+### 💡 Features & Automation
+* **Version Bumping:** Added a post-release script and automatic reminders to bump development versions (#153).
+* **Release Verification:** Added automated checks to ensure the latest test deployment succeeds before completing a release (#153).
+* **Verbose Logging:** Expanded release automation output for easier debugging.
+
+### 🪲 Bug Fixes
+* **Workflow Tagging:** Forced release tags onto the specific commits that modify the version number.
+* **Release Categorization:** Corrected development builds to register as `pre-alpha` instead of `beta`.
+* **Fail-Safe Checks:** Blocked scripts from continuing silently if required version environment variables are missing.
+* **Formatting:** Fixed the layout format for release commit messages.
+
+### ⏰ Infrastructure & CI
+* **Backports:** Integrated multiple workflow stability fixes and commits backporting from the `semver1.4.x` branch.
+* **Permissions:** Expanded release script access to read Actions runs and automatically generate version-bump issues.
+* **Security & Actions:** Pinned third-party workflow actions (`webfactory/ssh-agent`, `astral-sh/setup-uv`, `softprops/action-gh-release`) to specific commits.
+
+### 📢 Upcoming Roadmap
+* **v1.3.3 Patch:** Expected November 7, 2026 (focusing on upstream backports and refactors).
+* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+
+> [!important]
+> All of these items have been backported to `semver1.4.x`.
+
+🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**
+
+## 🚀 What's New in `kms-semver1.4.0a0`
+
+### 💡 Features & Automation
+* Oops, none yet here. Try checking somewhere else.
+
+### 🪲 Bug Fixes
+* Oops, none yet here. Try checking somewhere else.
+
+### ⏰ Infrastructure & CI
+* Oops, none yet here. Try checking somewhere else.
+
+### 📢 Upcoming Roadmap
+* Oops, none yet here. Try checking somewhere else.
+
+> [!important]
+> Backports from `semver1.3.x` are not listed here.
+
+<!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
+
+-------
+
 ## Documentation
 - [**Documentation**](Documentation)
 - [`Storage`](Documentation/storage#storage)
