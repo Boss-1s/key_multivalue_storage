@@ -479,7 +479,7 @@ dev = [
     { name = "dill", git = "https://github.com/uqfoundation/dill" },
     { name = "gitpython", specifier = "==3.2.0" },
     { name = "griffe", specifier = "==2.3.0" },
-    { name = "md-toc", specifier = "==9.0.0" },
+    { name = "md-toc", specifier = "==9.0.1" },
     { name = "packaging", specifier = "==26.3" },
     { name = "pre-commit", specifier = "==4.6.2" },
     { name = "pylint", specifier = "==4.1.1" },
@@ -489,9 +489,9 @@ dev = [
     { name = "shellcheck-py", specifier = "==0.11.0.1" },
 ]
 release = [
+\    { name = "md-toc", specifier = "==9.0.1" },
     { name = "gitpython", specifier = "==3.2.0" },
-    { name = "md-toc", specifier = "==9.0.0" },
-    { name = "packaging", specifier = "==26.3" },
+\    { name = "packaging", specifier = "==26.3" },
     { name = "requests", specifier = "==2.34.2" },
 ]
 test = [
@@ -527,14 +527,14 @@ wheels = [
 
 [[package]]
 name = "md-toc"
-version = "9.0.0"
+version = "9.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fpyutils" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b5/45/3ad7b820f46daa3c0b95bb972d8962a136e452d19eea07125df958cf9055/md_toc-9.0.0.tar.gz", hash = "sha256:a4e73b59f71c20b94c8c16bc6ef3bc2e80d1d40c398050101f80c3567fda7271", size = 65352, upload-time = "2024-04-10T22:12:39.052Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/07/559b9db91a7ee12ebdd71858caf372c0dfd3913a5cb93a14a4514716170f/md_toc-9.0.1.tar.gz", hash = "sha256:d66b66228d4dcd58601b06e3a88a404623e9a0e90c1bece1e707cdf0e95aa28b", size = 93997, upload-time = "2026-09-26T21:48:39.784Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c1/0d/4b3202d4236da63d9b6b894ab7ecdbc6f6dad6e87a4970d7a22d2b315b97/md_toc-9.0.0-py3-none-any.whl", hash = "sha256:dfd57de2faf252be1d6faf9bed7eab506e1caa7c4486ab6d6d04556426d5a7a5", size = 78101, upload-time = "2024-04-10T22:12:36.754Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/13/67efcea9747ffa58c475dba427b974697dc557f92c898adb7679c6dfe32b/md_toc-9.0.1-py3-none-any.whl", hash = "sha256:8e23bb0fb4157e575d738fa38b1855d80318e59d426254b5810f5fa212c1cfcd", size = 71528, upload-time = "2026-09-26T21:48:38.144Z" },
 ]
 
 [[package]]

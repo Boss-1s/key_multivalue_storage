@@ -514,8 +514,8 @@ dev = [
     "pre-commit==4.6.2",
 ]
 release = [
+    "md-toc==9.0.1",
     "gitpython==3.2.0",
-    "md-toc==9.0.0",
     "packaging==26.3",
     "requests==2.34.2",
 ]
