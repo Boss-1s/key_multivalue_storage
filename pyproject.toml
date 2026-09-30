@@ -42,7 +42,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pylint==4.0.8",
-    "pylint-per-file-ignores==3.2.1",
+    "pylint-per-file-ignores==4.0.0",
     "griffe==2.2.0",
 ]
 
@@ -523,7 +523,7 @@ test = [
     "pylint==4.0.8",
     "griffe==2.2.0",
     "pyproject==1!0.2.1",
-    "pylint-per-file-ignores==3.2.1",
+    "pylint-per-file-ignores==4.0.0",
     "coverage==7.16.0",
     "shellcheck-py==0.11.0.1",
     "dill",
