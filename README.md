@@ -13,10 +13,22 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ---------
 
-## Changes in `kms-semver1.4.0`
+## 🚀 What's New in `kms-semver1.4.0a0`
 
-Huh. Looks like there are no big changes right now. Check back later.
+### 💡 Features & Automation
+* Oops, none yet here. Try checking somewhere else.
 
+### 🪲 Bug Fixes
+* Oops, none yet here. Try checking somewhere else.
+
+### ⏰ Infrastructure & CI
+* Oops, none yet here. Try checking somewhere else.
+
+> [!important]
+> Backports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
+
+<!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
+🔗 **[Working Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)**
 __________
 
 ## Badges
