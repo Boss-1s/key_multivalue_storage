@@ -10,10 +10,6 @@
     "prConcurrentLimit": 0,
     "prHourlyLimit": 0,
     "branchPrefix": "deps/",
-<<<<<<< HEAD
-    "additionalBranchPrefix": "semver1.3.x/",
-    "ignorePaths": []
-=======
     "branchName": "deps/{{{baseBranch}}}/{{{branchTopic}}}",
     "ignorePaths": [],
     "includePaths": ["**"],
@@ -21,5 +17,4 @@
     "labels": ["Priority: Medium"],
     "reviewersFromCodeOwners": true,
     "useBaseBranchConfig": "merge"
->>>>>>> 65810ea (chore(renovate): some more settings [backport semver1.3.x])
 }
