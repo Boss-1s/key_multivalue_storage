@@ -10,14 +10,9 @@
     "prConcurrentLimit": 0,
     "prHourlyLimit": 0,
     "branchPrefix": "deps/",
-<<<<<<< HEAD
-    "additionalBranchPrefix": "semver1.3.x/",
-    "ignorePaths": []
-=======
     "branchName": "deps/{{{baseBranch}}}/{{{branchTopic}}}",
     "ignorePaths": [],
     "includePaths": ["**"],
     "baseBranches": ["semver1.3.x", "semver1.4.x"],
     "useBaseBranchConfig": "merge"
->>>>>>> df147d9 (fix(renovate): weird branch naming [backport semver1.3.x])
 }
