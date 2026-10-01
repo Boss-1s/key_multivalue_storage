@@ -69,19 +69,21 @@ Roadmap format:
 > 
 > - [**#27**](https://github.com/Boss-1s/key_multivalue_storage/issues/27) - *Better ability to type-hint Storage* ✅
 > - **New method: `Storage.to_dict()`**
-> ```py
-> def to_dict(self) -> dict[str, dict[str, Any]]:
->     """
->     Converts a Storage instance into a dictionary.
->     ## Arguments
->     No arguments.
->     ## Returns
->     - `dict[str, dict[str, Any]]`: the original instance in dict form.
->     ## Notes
->     This method exists only as a backup to casting a `Storage` instance directly to a `dict`
->     with `dict(Storage)`.
->     """
-> ```
+> 
+>     ```py
+>     def to_dict(self) -> dict[str, dict[str, Any]]:
+>         """
+>         Converts a Storage instance into a dictionary.
+>         ## Arguments
+>         No arguments.
+>         ## Returns
+>         - `dict[str, dict[str, Any]]`: the original instance in dict form.
+>         ## Notes
+>         This method exists only as a backup to casting a `Storage` instance directly to a `dict`
+>         with `dict(Storage)`.
+>         """
+>     ```
+> 
 > - **New `__getitem__` branch:** By passing the top level key in bracket notation (`Storage("key", foo="bar")['key']`), `self.values` will be returned.
 > - [**#75**](https://github.com/Boss-1s/key_multivalue_storage/issues/75) - *`__iadd__` for `Storage`*
 > 
