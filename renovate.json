@@ -14,5 +14,7 @@
     "ignorePaths": [],
     "includePaths": ["**"],
     "baseBranches": ["semver1.3.x", "semver1.4.x"],
+    "labels": ["Priority: Medium"],
+    "reviewersFromCodeOwners": true,
     "useBaseBranchConfig": "merge"
 }
