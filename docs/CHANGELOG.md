@@ -102,7 +102,7 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 
 ## 📦 v1.3.2.20260930 — *kms-v1.3.2/2026.09.30*
 
-⚙ **Target Node Commit:** `6e0927b3`
+⚙ **Target Node Commit:** `1e1f151f`
 
 📝 **Release Type:** Minor Patch
 
