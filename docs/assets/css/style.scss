@@ -6,6 +6,7 @@
 /* Smooth scoll */
 html {
   scroll-behavior: smooth;
+  interpolate-size: allow-keywords;
 }
 
 /* Banner (AI-Generated)*/
@@ -150,4 +151,19 @@ html {
 // //
 #dynamic-toc a.active {
     color: #ff00ee;
+}
+
+// Better <details> //
+details {
+  display: block;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease-out;
+}
+
+details[open] {
+  height: auto;
+}
+summary {
+  cursor: pointer;
 }
