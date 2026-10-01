@@ -11,8 +11,6 @@
     "prHourlyLimit": 0,
     "branchPrefix": "deps/",
     "branchName": "deps/{{{baseBranch}}}/{{{branchTopic}}}",
-    "additionalBranchPrefix": "semver1.3.x/",
-    "ignorePaths": []
     "ignorePaths": [],
     "includePaths": ["**"],
     "baseBranches": ["semver1.3.x", "semver1.4.x"],
