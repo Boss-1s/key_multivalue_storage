@@ -10,14 +10,11 @@
     "prConcurrentLimit": 0,
     "prHourlyLimit": 0,
     "branchPrefix": "deps/",
-<<<<<<< HEAD
+    "branchName": "deps/{{{baseBranch}}}/{{{branchTopic}}}",
     "additionalBranchPrefix": "semver1.3.x/",
     "ignorePaths": []
-=======
-    "additionalBranchPrefix": "semver1.4.x/",
     "ignorePaths": [],
     "includePaths": ["**"],
     "baseBranches": ["semver1.3.x", "semver1.4.x"],
     "useBaseBranchConfig": "merge"
->>>>>>> 445c973 (im done with dependabot [backport semver1.3.x])
 }
