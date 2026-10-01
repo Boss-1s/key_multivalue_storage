@@ -57,6 +57,7 @@ Roadmap format:
 
 <details markdown="block">
 <summary markdown="span">kms-semver1.3.1</summary>
+<div markdown="block" class="content">
 
 > ### kms-semver1.3.1
 > - **Projected Release Date: **~~2026/08/10~~** 2026/08/12**
@@ -101,10 +102,13 @@ Roadmap format:
 > - **Deprecated format specifiers `.tuplef` and `.tuplet`.**
 > - Attribute `auto_delete_self` and argument `instant_delete` of `Storage.store()` has been deprecated.
 
+</div>
+
 </details>
 
 <details markdown="block">
 <summary markdown="span">kms-semver1.3.2</summary>
+<div markdown="block" class="content">
 
 > ### kms-semver1.3.2
 > **Release Date: 2026/09/30**
@@ -125,6 +129,8 @@ Roadmap format:
 > #### Graceful Deprecation cycle 1.3.2
 > 
 > Nothing to be deprecated in this version.
+
+</div>
 
 </details>
 
