@@ -63,7 +63,7 @@ jobs:
                 git config --global commit.gpgsign true
                 git config --global user.signingkey "E16F4F2F84FBE39B"
         - name: Setup node.js
-          uses: actions/setup-node@v6.5.0
+          uses: actions/setup-node@v7.0.0
         - name: Backport Pull Request
           id: backport
           env:
@@ -134,7 +134,7 @@ jobs:
                 pretty: true
         - name: Setup node.js
           if: steps.prefix.outputs.value_variable
-          uses: actions/setup-node@v6.5.0
+          uses: actions/setup-node@v7.0.0
         - name: Backport latest commit (if possible)
           if: steps.prefix.outputs.value_variable
           id: backport
