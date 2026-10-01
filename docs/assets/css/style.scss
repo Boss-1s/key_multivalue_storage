@@ -154,14 +154,14 @@ html {
 }
 
 // Better <details> //
-details {
+details .content {
   display: block;
   overflow: hidden;
   height: 5;
   transition: height 0.3s ease-out;
 }
 
-details[open] {
+details[open] .content {
   height: auto;
 }
 summary {
