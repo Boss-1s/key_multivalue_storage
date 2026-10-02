@@ -560,8 +560,6 @@ assert len(db) == 8
 assert 'i' not in db
 assert 'g' in db
 
-<<<<<<< HEAD
-=======
 #-- Fix in kms-semver1.3.3/kms-semver1.4.0a0 --#
 
 temp = Storage("key", foo="bar", baz="qax", delete="del", six_seven=41)
@@ -572,7 +570,6 @@ assert temp.values == {"foo": "bar", "baz": "qax"}
 
 #-- End Fix --#
 
->>>>>>> ada4164 (fatal(test): fix bad test [backport semver1.3.x])
 # __iter__ #
 
 iter_list: list[str|dict[str, int]] = []
