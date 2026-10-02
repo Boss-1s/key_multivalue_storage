@@ -554,7 +554,6 @@ assert db[9] == 123456789
 
 del db[9]
 del db['i']
-del db
 
 assert len(db) == 8
 
