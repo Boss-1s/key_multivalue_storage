@@ -1125,9 +1125,11 @@ class Storage(metaclass=meta._StorageMeta):
         match key:
             case str():
                 del self.values[key]
-            case int() | slice():
+            case int():
                 del self.values[str(list(self.values.keys())[key])]
-
+            case slice():
+                del [str(self.values[k]) for k in list(self.values.keys())[key]]
+            
     def __len__(self) -> int:
         """
         Returns the number of subkey-value pairs in the Storage object.
