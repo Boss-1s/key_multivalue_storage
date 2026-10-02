@@ -588,11 +588,22 @@ assert db[9] == 123456789
 
 del db[9]
 del db['i']
+del db
 
 assert len(db) == 8
 
 assert 'i' not in db
 assert 'g' in db
+
+#-- Fix in kms-semver1.3.3/kms-semver1.4.0a0 --#
+
+temp = Storage("key", foo="bar", baz="qax", delete="del", six_seven=41)
+
+del temp[2:]
+
+assert temp.values == {foo: "bar", baz: "qax"}
+
+#-- End Fix --#
 
 # __iter__ #
 
