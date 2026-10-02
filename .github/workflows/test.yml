@@ -10,7 +10,6 @@ on:
 
 jobs:
   main:
-    environment: test
     permissions:
       contents: read
       pull-requests: write
@@ -164,7 +163,6 @@ jobs:
           sarif_file: 'sonarqube.sarif'
 
       - wait-all:
-      - run: echo "Deploying to test environment..."
 
   # codeql:
   #   uses: ./.github/workflows/codeql.yml
@@ -179,3 +177,10 @@ jobs:
       contains(github.actor, 'renovate') ||
       contains(github.actor, 'dependabot') ||
       contains(github.actor, 'github-actions')
+
+  deploy:
+    environment: test
+    needs: [main]
+    runs-on: 'ubuntu-latest'
+    steps:
+      - run: echo "Deploying to test environment..."
