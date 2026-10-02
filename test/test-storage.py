@@ -588,7 +588,6 @@ assert db[9] == 123456789
 
 del db[9]
 del db['i']
-del db
 
 assert len(db) == 8
 
@@ -601,7 +600,7 @@ temp = Storage("key", foo="bar", baz="qax", delete="del", six_seven=41)
 
 del temp[2:]
 
-assert temp.values == {foo: "bar", baz: "qax"}
+assert temp.values == {"foo": "bar", "baz": "qax"}
 
 #-- End Fix --#
 
