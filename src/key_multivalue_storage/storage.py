@@ -1128,7 +1128,7 @@ class Storage(metaclass=meta._StorageMeta):
             case int():
                 del self.values[str(list(self.values.keys())[key])]
             case slice():
-                del [str(self.values[k]) for k in list(self.values.keys())[key]]
+                del self.values[k] for k in list(self.values.keys())[key]
             
     def __len__(self) -> int:
         """
