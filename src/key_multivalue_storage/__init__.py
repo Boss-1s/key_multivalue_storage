@@ -76,8 +76,8 @@ from .utils.warnings import (
 )
 
 # Package Metadata
-__version__ = "v1.4.0.20261012dev1"
-__version_internal__ = "kms-v1.4.0dev1/2026.10.12"
+__version__ = "v1.4.0.20261001a0.dev1"
+__version_internal__ = "kms-v1.4.0a0.dev1/2026.10.01"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
