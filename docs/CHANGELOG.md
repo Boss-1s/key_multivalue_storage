@@ -7,6 +7,7 @@ title: Changelog
 
 <!--TOC-->
 
+- [📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*](#-v14020261001a0dev1--kms-v140a0dev120261001)
 - [📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*](#-v14020260915a0dev0--kms-v140a0dev020260915)
 - [📦 v1.3.2.20260930 — *kms-v1.3.2/2026.09.30*](#-v13220260930--kms-v13220260930)
 - [📦 v1.3.2.20260922b4.post2 — *kms-v1.3.2/2026.09.22b4.post2*](#-v13220260922b4post2--kms-v13220260922b4post2)
@@ -64,6 +65,37 @@ title: Changelog
 - [📦 v1.0.0.20250817 — *kms-v1.0.0/2025.08.17*](#-v10020250817--kms-v10020250817)
 
 <!--TOC-->
+
+## 📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*
+
+⚙ **Target Node Commit:** `02a07685`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+> [!warning]
+> This is a development pre-release. It is an interim pre-release (pre-release of pre-release) designed to prepare for the true prerelease. **kms-semver1.4.0a0 releases officially on October 12th, 2026, 11 days after the release of CPython 3.15 on October 1st.**
+
+> [!tip]
+> See [`v1.3.2.20260930`](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG#-v13220260930--kms-v13220260930) release notes for more information.
+
+#### What's Changed
+* backport(`semver1.4.x`): #153 by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/202
+* fix(deps): update dependency pylint-per-file-ignores to v4 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/244
+* chore(deps): update github/codeql-action action to v4.38.2 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/263
+* fix(deps): update dependency griffe to v2.3.0 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/265
+* chore(deps): update actions/setup-node action to v7 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/267
+* fix(deps): update dependency pylint to v4.1.1 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/266
+* chore(deps): update dependency gitpython to v3.2.0 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/262
+* chore(deps): update astral-sh/setup-uv action to v10.2.0 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/261
+* chore(deps): update ghcr.io/devcontainers/features/github-cli docker tag to v1.1.3 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/260
+* chore(deps): update dependency coverage to v7.16.2 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/258
+* chore(deps): update dependency md-toc to v9.0.1 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/259
+* chore(deps): update dependency md-toc to v9.1.0 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/270
+
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.4.0.20260915a0.dev0...v1.4.0.20261001a0.dev1
+
+---
 
 ## 📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*
 
