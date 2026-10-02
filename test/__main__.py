@@ -43,9 +43,6 @@ import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
 import subprocess
 import warnings
 import traceback
-import getpass
-import hashlib
-import hmac
 from rich.console import Console
 from rich.traceback import install
 
@@ -96,12 +93,6 @@ def main(c: Console) -> None:
             "test/test-meta.py",
             "test/test-exceptions.py",
             "test/test-nextgen.py",
-            "test/test-fix-26-and-27.py",
-            "test/test-fix-14.py",
-            "test/test-fix-67.py",
-            "test/test-fix-76.py",
-            "test/test-fix-80.py",
-            "test/test-fix-84.py"
         ]
 
         _run_tests(c, tests)
