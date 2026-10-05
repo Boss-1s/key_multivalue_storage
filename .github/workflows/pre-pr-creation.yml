@@ -29,6 +29,7 @@ jobs:
             --repo "$GH_REPO" \
             --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms! *Note: your PR may be closed if it does not comply to [the rules](https://boss-1s.github.io/key_multivalue_storage/Development#pr-rules). Double check and make sure your PR is compliant.*"
           exit 0
+<<<<<<< HEAD
       - env:
           GITHUB_TOKEN: ${{github.token}}
           GH_REPO: ${{github.repository}}
@@ -37,10 +38,19 @@ jobs:
         shell: bash
         run: |
           MILESTONE_TITLE=$(gh api "repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc" --jq '[.[] | select(.due_on != null and (.title | startswith("kms-semver1.3."))))[0].title')
+=======
+      # - env:
+      #     GITHUB_TOKEN: ${{github.token}}
+      #     GH_REPO: ${{github.repository}}
+      #     PR_NUMBER: ${{github.event.pull_request.number}}
+      #   shell: bash
+      #   run: |
+      #     MILESTONE_TITLE=$(gh api repos/$GH_REPO/milestones?state=open&sort=due_on&direction=asc --jq '[.[] | select(.due_on != null and (.title | startswith("kms-semver1.4."))))[0].title')
+>>>>>>> df93c61 (fix(automations): force checkout of actual branch on pr deployment [backport semver1.3.x])
 
-          if [ -n "$MILESTONE_TITLE" ] && [ "$MILESTONE_TITLE" != "null" ]; then
-            gh pr edit $PR_NUMBER --repo $GH_REPO --milestone "$MILESTONE_TITLE"
-          fi
+      #     if [ -n "$MILESTONE_TITLE" ] && [ "$MILESTONE_TITLE" != "null" ]; then
+      #       gh pr edit $PR_NUMBER --repo $GH_REPO --milestone "$MILESTONE_TITLE"
+      #     fi
 
-          gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Priority: Low" --add-label "dependencies"
-          exit 0
+      #     gh pr edit $PR_NUMBER --repo $GH_REPO --add-label "Priority: Low" --add-label "dependencies"
+      #     exit 0

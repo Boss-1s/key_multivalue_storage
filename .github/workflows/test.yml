@@ -2,11 +2,10 @@ name: Tests
 
 on:
   push:
-    branches-ignore:
-      - releases/**
-      - eol/**
-      - docs
-      - '*/**'
+    branches:
+      - semver1.2.x
+      - semver1.3.x
+      - semver1.4.x
   pull_request:
     types: [opened, synchronize, ready_for_review]
   workflow_dispatch:
@@ -180,4 +179,11 @@ jobs:
     needs: [main]
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Checkout repo
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          fetch-depth: 0
       - run: echo "Deploying to test environment..."
