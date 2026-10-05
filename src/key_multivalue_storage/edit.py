@@ -23,14 +23,17 @@ import warnings
 import builtins
 # TODO in v1.4: import logger
 from typing import Any, Callable, TYPE_CHECKING
+
 from rich.console import Console
 from rich.markdown import Markdown
+from public import public, private
 
 from .utils import warnings as w, exceptions, metadata as meta
 
 if TYPE_CHECKING:
     from . import Storage
 
+@public
 def help() -> None:
     Console().print(Markdown(str(__doc__)))
 
@@ -52,6 +55,7 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage/edit.py] ", *args, **kwargs)
 
+@public
 class Edit(metaclass=meta._EditMeta):
     # TODO in v1.4: methods that allow easily `Storage` object manipulation
     # TODO in v2.0: methods should use 'subkey', 'subsubkey', etc. over 'propkey'
@@ -78,7 +82,7 @@ class Edit(metaclass=meta._EditMeta):
     ### Attributes
     **This class does not contain any attributes.**
     """
-
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """Help function for class Load."""
@@ -97,6 +101,7 @@ class Edit(metaclass=meta._EditMeta):
                                        "the method, don't call it (adding parenthesis after the "+
                                        "method name)."))
 
+    @public
     @classmethod
     @w._deprecated_arg("new",
                        "The 'new' argument has been deprecated since kms-semver1.2.0, and is no "+
@@ -169,6 +174,7 @@ class Edit(metaclass=meta._EditMeta):
         print("Edit.propkey: INFO: Sucessfully ",
                 f"renamed {oldpropkey} to {newpropkey}.")
 
+    @public
     @classmethod
     def propval(cls,
                 file_path: str,
@@ -231,6 +237,7 @@ class Edit(metaclass=meta._EditMeta):
         print(f"Edit.propval: INFO: Sucessfully changed value {oldval} "+
                 f"to {newval} under key {top_lv_key}.{propkey}.")
 
+    @public
     @classmethod
     def key(cls,
             file_path: str,
