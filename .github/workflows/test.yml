@@ -6,6 +6,9 @@ on:
       - releases/**
       - eol/**
       - docs
+      - */**
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
   workflow_dispatch:
 
 jobs:
@@ -168,15 +171,9 @@ jobs:
   #   uses: ./.github/workflows/codeql.yml
   #   if: always()
 
-
   nightly:
     needs: [main]
     uses: ./.github/workflows/release-nightly.yml
-    if: |
-      contains(github.ref_name, 'semver1.') ||
-      contains(github.actor, 'renovate') ||
-      contains(github.actor, 'dependabot') ||
-      contains(github.actor, 'github-actions')
 
   deploy:
     environment: test
