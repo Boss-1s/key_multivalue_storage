@@ -179,6 +179,28 @@ jobs:
     needs: [main]
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Validate Branch Against Deployment Rules
+        id: branch-check
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          echo "Evaluating branch name: $TARGET_BRANCH"
+
+          REGEX_PATTERN="^(.*semver1\..*\.x.*|(backport|chore|deps|feat|fix|next|refactor)/semver1\..*\.x/.*)$"
+
+          if [[ "$TARGET_BRANCH" =~ REGEX_PATTERN ]]; then
+            echo "Branch matches environment patterns. Allowing deployment."
+            echo "allowed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Branch '$TARGET_BRANCH' does not match environment patterns. Skipping."
+            echo "allowed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Guard Rails Check
+        if: steps.branch-check.outputs.allowed != 'true'
+        run: |
+          echo "::error::Deployment blocked. Branch does not comply with environment rules."
+          exit 1
+
       - name: Checkout repo
         if: github.event_name == 'pull_request'
         uses: actions/checkout@v7
