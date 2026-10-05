@@ -48,6 +48,7 @@ from rich.panel import Panel
 from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
+from public import public, private
 
 ## First-party
 # Modules
@@ -83,24 +84,25 @@ __license__ = "GPLv2"
 
 # Aliases
 warnings = kms_warnings
-kms = storage
-key_multivalue_storage = storage
+kms = storage # TODO: Pending Deprecation, prob v1.4.0a2
+key_multivalue_storage = storage # TODO: Pending Deprecation, prob v1.4.0a2
 
-__all__ = [
-    "Storage", # main class object Storage
-    "Load", # Load class
-    "Edit", # Edit class
-    "Delete", # Delete class
-    "exceptions", # custom exceptions
-    "kms_warnings", # custom warnings
-    "warnings",
-    "KeyNotFoundError",
-    "NoInstantiationError",
-    "DeleteWarning",
-    "AdditionFailureWarning",
-    "SubtractionFailureWarning",
-    "CastWarning",
-]
+public(
+    storage=storage,
+    load=load,
+    edit=edit,
+    delete=delete,
+    Storage=Storage,
+    Load=Load,
+    Edit=Edit,
+    Delete=Delete,
+    KeyNotFoundError=KeyNotFoundError,
+    NoInstantiationError=NoInstantiationError,
+    DeleteWarning=DeleteWarning,
+    AdditionFailureWarning=AdditionFailureWarning,
+    SubtractionFailureWarning=SubtractionFailureWarning,
+    CastWarning=CastWarning
+)
 
 std_warnings.filterwarnings("always",
                         category=PendingDeprecationWarning,
@@ -113,15 +115,15 @@ install(show_locals=True)
 
 nextgen: bool = False
 
-# NOTE: Warn in like v1.5 or smth
+# TODO: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
-#              "The last major content update will be kms-v1.6, most "+
+#              "The last minor update for this series will be kms-v1.6, most "+
 #              "likely around the time kms-v2.1 comes out. Please "+
-#              "stay tuned to avoid version compatibility conflicts.",
+#              "stay tuned and upgrade when possible to avoid missing out on the latest features.",
 #              PendingDeprecationWarning
 #             )
 
-
+@private
 def _add_to_tree(tree: Tree, *methods: Callable[..., Any]) -> None:
     """
     Add a method to the tree with its signature and docstring.
@@ -161,6 +163,7 @@ def _add_to_tree(tree: Tree, *methods: Callable[..., Any]) -> None:
             guide_style="red"
         )
 
+@private
 class _RawConsole(): #pylint: disable=too-few-public-methods
     @staticmethod
     def print(*text: Any, sep: str = ' '): #pylint: disable=redefined-builtin
@@ -172,6 +175,7 @@ class _RawConsole(): #pylint: disable=too-few-public-methods
         raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
         os.write(1, raw_bytes)
 
+@private
 def _make_safe_console() -> Console | _RawConsole:
     """
     Return a Console that will not raise UnicodeEncodeError when stdout uses a
@@ -202,6 +206,7 @@ def _make_safe_console() -> Console | _RawConsole:
         # we avoid control characters that some terminals might mishandle.
         return _RawConsole()
 
+@public
 def help() -> None:
     """Beautiful help panel created with Rich."""
     console = _make_safe_console()
@@ -380,6 +385,7 @@ def help() -> None:
         sep="\n"
     )
 
+@public
 @warnings._next()
 def test_nextgen() -> bool:
     """
@@ -387,7 +393,7 @@ def test_nextgen() -> bool:
 
     If is seems like the attribute `nextgen` is not working, try running this method.
 
-    Be sure to wrap it in a try-except block to catch the TypeError that is raised when
+    Be sure to wrap this test in a try-except block to catch the TypeError that is raised when
     `nextgen` is not set to `True`.
     """
     try:
