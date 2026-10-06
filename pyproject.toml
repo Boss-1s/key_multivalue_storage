@@ -35,6 +35,7 @@ keywords = [
     "wrapper-library"
 ]
 dependencies = [
+    "atpublic~=8.0",
     "rich==15.0.0",
     "typing-extensions~=4.16",
 ]
@@ -506,6 +507,9 @@ init-import = false
 # List of qualified module names which can have objects that can redefine
 # builtins.
 redefining-builtins-modules = ["past.builtins", "future.builtins", "builtins", "io"]
+
+# List of additional builtin modules.
+additional-builtins = ["public", "private"]
 
 [dependency-groups]
 dev = [

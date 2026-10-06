@@ -9,11 +9,14 @@ inheirit from Exception/BaseException.
 from __future__ import annotations
 from typing import Any
 
+from public import public
+
 #pylint: disable=too-many-ancestors
+@public
 class KeyNotFoundError(KeyError):
     """
     Custom exception raised when a key is not found.
-    
+
     Example: if attempting to search for a nonexistent key with
     `Storage.Load.by_key`, this would be raised.
     """
@@ -26,6 +29,7 @@ class KeyNotFoundError(KeyError):
             self.message = message
         super().__init__(self.message)
 
+@public
 class NoInstantiationError(TypeError):
     """
     Custom exception raised when attempting to instantiate a
@@ -33,4 +37,7 @@ class NoInstantiationError(TypeError):
 
     Example: if attempting to instantiate a helper class like `Load`,
     this would be raised.
+
+    **On the `kms-semver1.x` series, this functionality is currently *broken*.** To see it fixed,
+    set the `kms.nextgen` attribute to `True`.
     """

@@ -43,8 +43,14 @@ from collections.abc import Callable, KeysView, Mapping
 from typing_extensions import deprecated
 from rich.console import Console
 from rich.markdown import Markdown
+from public import public, private
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import NoInstantiationError, metadata as meta
+from .utils.warnings import (CastWarning,
+                             AdditionFailureWarning,
+                             SubtractionFailureWarning,
+                             _deprecated_arg
+)
 
 # TODO in v1.4: logger
 #logger: logging.Logger | None = None
@@ -66,6 +72,7 @@ from .utils import warnings as w, exceptions, metadata as meta
 #    if logger.level == logging.CRITICAL + 100:logger.setLevel(logging.INFO)
 #    else:logger.setLevel(logging.CRITICAL + 100)
 
+@public
 def help() -> None:
     Console().print(Markdown(str(__doc__)))
 
@@ -87,6 +94,7 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage/storage.py] ", *args, **kwargs)
 
+@public
 @total_ordering
 class Storage(metaclass=meta._StorageMeta):
     """
@@ -122,6 +130,7 @@ class Storage(metaclass=meta._StorageMeta):
     encode: bool = True
     auto_delete_self: bool = False # DEPRECATED
 
+    @public
     def __init__(self,
                  key: Any,
                  **kwargs: Any
@@ -141,7 +150,7 @@ class Storage(metaclass=meta._StorageMeta):
         # ...then attempt to set values
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                          w.CastWarning)
+                          CastWarning)
         self.key = str(key)
         self.values = kwargs
 
@@ -154,10 +163,11 @@ class Storage(metaclass=meta._StorageMeta):
         super().__init_subclass__(**kwargs)
 
         def raise_error():
-            raise exceptions.NoInstantiationError(f"Cannot instantiate class {cls.__name__}")
+            raise NoInstantiationError(f"Cannot instantiate class {cls.__name__}")
 
         cls.__new__ = raise_error()
 
+    @private
     @staticmethod
     def _encode(string: Any) -> int:
         """
@@ -193,6 +203,7 @@ class Storage(metaclass=meta._StorageMeta):
             i += 1
         return int(output)
 
+    @private
     @staticmethod
     def _decode(string: str | int) -> str:
         """
@@ -231,6 +242,7 @@ class Storage(metaclass=meta._StorageMeta):
             i += 1+totalchars
         return output
 
+    @private
     def _to_dict(self, encode: bool = False) -> dict[str, dict[str, Any]]:
         """
         Prepares a key-multivalue pair (`Storage` object) for JSON dumping.
@@ -256,6 +268,7 @@ class Storage(metaclass=meta._StorageMeta):
         }
 
     @classmethod
+    @private
     @deprecated("This private method will be removed soon.")
     def _from_dict(cls,
                    data_dict: dict[str, dict[str, Any]],
@@ -293,6 +306,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return cls(top_lv_key, **og_nested_values)
 
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """
@@ -313,7 +327,8 @@ class Storage(metaclass=meta._StorageMeta):
                                        "method, don't call it (adding parenthesis after the "+
                                        "method name)."))
 
-    @w._deprecated_arg("instant_delete",
+    @public
+    @_deprecated_arg("instant_delete",
                        "The attribute `auto_delete_self` has been deprecated as of "+
                        "kms-semver1.3.1. Please using the `with` keyword instead.\n"+
                        "with Storage('temp_storage', foo='bar') as s: pass"
@@ -374,6 +389,7 @@ class Storage(metaclass=meta._StorageMeta):
         if instant_delete: # DEPRECATED
             del self
 
+    @public
     def to_dict(self) -> dict[str, dict[str, Any]]:
         """
         Converts a Storage instance into a dictionary.
@@ -390,6 +406,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return {self.key: self.values}
 
+    @public
     def keys(self) -> KeysView[Any]:
         """
         Returns the top level key.
@@ -432,6 +449,7 @@ class Storage(metaclass=meta._StorageMeta):
 
     _default_valueerror_msg: str = "Both instances must have the same top level key"
 
+    @public
     def __str__(self) -> str:
         """
         Defines how the object should be represented in a easy-to-read, user-friendly form.
@@ -453,6 +471,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return json.dumps(dict(self), indent=4, default=repr)
 
+    @public
     def __repr__(self) -> str:
         """
         Defines how the object should be represented in an unambiguous, dev-friendly form.
@@ -468,6 +487,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return f"Storage(top_lv_key={self.key}, key_value_pairs={self.values})"
 
+    @public
     def __eq__(self, other: Any) -> bool:
         """
         Defines equality between Storage objects and other Storage objects/dicts.
@@ -502,6 +522,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return False
 
+    @public
     def __lt__(self, other: Any) -> bool:
         """
         Defines less than comparison between Storage objects and other Storage objects.
@@ -537,6 +558,7 @@ class Storage(metaclass=meta._StorageMeta):
             return True
         return False
 
+    @public
     def __le__(self, other: Any) -> bool:
         """
         Defines less than or equal comparison between Storage objects and other Storage objects.
@@ -567,6 +589,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return False
 
+    @public
     def __add__(self,
                 other: Storage | dict[str, Any] | list[Any]) -> Storage:
         """
@@ -611,17 +634,18 @@ class Storage(metaclass=meta._StorageMeta):
             if any(isinstance(value, dict) for value in other.values()):
                 warnings.warn("Passing a nested dictionary may break the addition process.",
                               RuntimeWarning)
-            warnings.warn(w.AdditionFailureWarning(method="__add__"))
+            warnings.warn(AdditionFailureWarning(method="__add__"))
             _temp_values = other
 
         if isinstance(other, list):
-            warnings.warn(w.AdditionFailureWarning(method="__add__"))
+            warnings.warn(AdditionFailureWarning(method="__add__"))
             _temp_values = {"undefined": other}
 
         _temp_dict: dict[str, Any] = dict(self.values)
         _temp_dict.update(_temp_values)
         return Storage(self.key, **_temp_dict)
 
+    @public
     def __radd__(self,
                  other: Storage | dict[str, Any]) -> Storage:
         """
@@ -629,6 +653,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return self.__add__(other)
 
+    @public
     def __sub__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage:
@@ -667,7 +692,7 @@ class Storage(metaclass=meta._StorageMeta):
             _other_dict = other.values
 
         elif isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(method="__sub__"))
+            warnings.warn(SubtractionFailureWarning(method="__sub__"))
             _skeys: set[str] = set(self.values.keys()) & set(other)
             _other_dict = other
 
@@ -681,6 +706,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return Storage(self.key, **_temp_dict)
 
+    @public
     def __rsub__(self,
                  other: Storage | dict[str, Any]
                 ) -> Storage:
@@ -692,6 +718,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return self.__sub__(other)
 
+    @public
     def __truediv__(self,
                     other: Storage | dict[str, Any] | int
                    ) -> list[Storage] | Storage:
@@ -786,6 +813,7 @@ class Storage(metaclass=meta._StorageMeta):
 
             return returnlist
 
+    @public
     def __rtruediv__(self,
                      other: Storage | dict[str, Any]
                     ) -> Storage:
@@ -800,6 +828,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return NotImplemented
 
+    @public
     def __and__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
@@ -850,6 +879,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return Storage(self.key, **_return_dict)
 
+    @public
     def __or__(self,
                other: Storage | dict[str, Any]
               ) -> Storage | int:
@@ -899,6 +929,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return Storage(self.key, **_return_dict)
 
+    @public
     def __xor__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
@@ -949,6 +980,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         return Storage(self.key, **_return_dict)
 
+    @public
     def __lshift__(self,
                    other: int
                   ) -> Storage | int:
@@ -1000,7 +1032,7 @@ class Storage(metaclass=meta._StorageMeta):
         except IndexError:
             return 0
 
-
+    @public
     def __rshift__(self,
                    other: int
                   ) -> Storage | int:
@@ -1052,6 +1084,7 @@ class Storage(metaclass=meta._StorageMeta):
         except IndexError:
             return 0
 
+    @public
     def __getitem__(self,
                     key: str | int | slice
                    ) -> Any:
@@ -1082,6 +1115,7 @@ class Storage(metaclass=meta._StorageMeta):
             case _:
                 return NotImplemented
 
+    @public
     def __setitem__(self,
                     key: str | int,
                     value: Any
@@ -1106,6 +1140,7 @@ class Storage(metaclass=meta._StorageMeta):
             case int():
                 self.values[list(self.values.keys())[key]] = value
 
+    @public
     def __delitem__(self,
                     key: str | int | slice
                    ) -> None:
@@ -1131,7 +1166,7 @@ class Storage(metaclass=meta._StorageMeta):
                 _slice_to_del = list(self.values.keys())[key]
                 for k in _slice_to_del:
                     del self.values[k]
-            
+
     def __len__(self) -> int:
         """
         Returns the number of subkey-value pairs in the Storage object.
@@ -1164,6 +1199,7 @@ class Storage(metaclass=meta._StorageMeta):
         """
         return item in self.values
 
+    @public
     def __iter__(self) -> Generator[
             str | uuid.UUID | dict[str,Any],
             None,
@@ -1185,6 +1221,7 @@ class Storage(metaclass=meta._StorageMeta):
         for k, v in self.values.items():
             yield {k: v}
 
+    @public
     def __getattr__(self, name: Any) -> None:
         """
         Fallback method when a attempt to access a nonexistent
@@ -1204,6 +1241,7 @@ class Storage(metaclass=meta._StorageMeta):
         raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'" +
                             (f". Did you mean '{cm[0]}'?" if cm else ""))
 
+    @public
     def __setattr__(self,
                     name: str,
                     value: Any
@@ -1223,6 +1261,7 @@ class Storage(metaclass=meta._StorageMeta):
                           "This attribute will be officially removed in kms-semver2.0.0.",
                           DeprecationWarning)
 
+    @public
     def __call__(self, **kwargs) -> None:
         """
         Defines the behavior of Storage objects when it is called as a function.
@@ -1242,6 +1281,7 @@ class Storage(metaclass=meta._StorageMeta):
         # print(f"__call__: INFO: updating Storage object {self.instance_id} with {kwargs}")
         self.values.update(kwargs)
 
+    @public
     def __enter__(self) -> dict:
         """
         Defines beginning interaction with the 'with' keyword.
@@ -1265,6 +1305,7 @@ class Storage(metaclass=meta._StorageMeta):
         # print("__enter__: INFO: Acquring storage from object")
         return dict(self.values)
 
+    @public
     def __exit__(self,
                  exc_type: type[BaseException] | None,
                  exc_val: BaseException | None,
@@ -1281,6 +1322,7 @@ class Storage(metaclass=meta._StorageMeta):
             return False
         return True
 
+    @public
     def __format__(self, format_spec: str) -> str:
         """
         Defines the string representation of the Storage object when used in f-strings or with

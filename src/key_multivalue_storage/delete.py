@@ -27,9 +27,11 @@ from typing import Any, Callable
 
 from rich.console import Console
 from rich.markdown import Markdown
+from public import public
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import metadata as meta, DeleteWarning, CastWarning, KeyNotFoundError
 
+@public
 def help() -> None:
     Console().print(Markdown(str(__doc__)))
 
@@ -51,6 +53,7 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage/delete.py] ", *args, **kwargs)
 
+@public
 class Delete(metaclass=meta._DeleteMeta):
     # TODO in v1.4: methods should allow easy Storage manipulation
     # TODO in v2.0: methods should use 'subkey', 'subsubkey', etc. over 'propkey'
@@ -73,7 +76,7 @@ class Delete(metaclass=meta._DeleteMeta):
     ### Attributes
     **This class does not contain any attributes.**
     """
-
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """Help function for class Delete."""
@@ -92,6 +95,7 @@ class Delete(metaclass=meta._DeleteMeta):
                                         " passing the method, don't call it (adding parenthesis "+
                                         "after the method name)."))
 
+    @public
     @classmethod
     def by_propkey(cls,
                     file_path: str,
@@ -127,17 +131,17 @@ class Delete(metaclass=meta._DeleteMeta):
 
         if not isinstance(top_lv_key, str):
             warnings.warn("It is recommended that the 'top_lv_key' value be passed as a string."
-                          ,w.CastWarning)
+                          ,CastWarning)
             top_lv_key=str(top_lv_key)
 
         if top_lv_key not in loaded_data:
             print("Delete.by_propkey: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, top_lv_key)
+            raise KeyNotFoundError(file_path, top_lv_key)
 
         try:
             del loaded_data[top_lv_key][property_key]
         except KeyError as e:
-            raise exceptions.KeyNotFoundError(file_path, e)
+            raise KeyNotFoundError(file_path, e)
 
         try:
             with open(file_path, "w", encoding='utf-8') as f:
@@ -148,6 +152,7 @@ class Delete(metaclass=meta._DeleteMeta):
         print("Delete.by_propkey: INFO: Sucessfully deleted subkey",
                 f"{property_key} and its value.")
 
+    @public
     @classmethod
     def by_key(cls,
                 file_path: str,
@@ -179,7 +184,7 @@ class Delete(metaclass=meta._DeleteMeta):
 
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value be passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
             key = str(key)
 
         print(f"Delete.by_key: DEBUG: loaded_data.keys()={loaded_data.keys()}")
@@ -188,7 +193,7 @@ class Delete(metaclass=meta._DeleteMeta):
 
         if key not in loaded_data:
             print("Delete.by_key: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, key)
+            raise KeyNotFoundError(file_path, key)
 
         del loaded_data[key]
         try:
@@ -201,6 +206,7 @@ class Delete(metaclass=meta._DeleteMeta):
                     f"after deletion: {e}")
 
 
+    @public
     @staticmethod
     def all(file_path: str,
             warn: bool=True) -> None:
@@ -222,7 +228,7 @@ class Delete(metaclass=meta._DeleteMeta):
                 _warn = False
 
         if not (_warn or warn):
-            warnings.warn(w.DeleteWarning(
+            warnings.warn(DeleteWarning(
                 f"You are about to delete ALL of the data inside the file {file_path}. This "+
                 "is an irreversible action! If you are COMPLETELY CERTAIN about deleting all "+
                 "the data, add Storage.Delete.all(file_path, warn=False) to your script. If "+
