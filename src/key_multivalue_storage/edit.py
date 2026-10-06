@@ -28,7 +28,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import metadata as meta, KeyNotFoundError
+from .utils.warnings import CastWarning, _deprecated_arg
 
 if TYPE_CHECKING:
     from . import Storage
@@ -103,7 +104,7 @@ class Edit(metaclass=meta._EditMeta):
 
     @public
     @classmethod
-    @w._deprecated_arg("new",
+    @_deprecated_arg("new",
                        "The 'new' argument has been deprecated since kms-semver1.2.0, and is no "+
                        "longer used. Please use 'noexist_ok' instead."
     )
@@ -141,7 +142,7 @@ class Edit(metaclass=meta._EditMeta):
         if not isinstance(top_lv_key, str):
             warnings.warn("It is recommended that the 'top_lv_key' value be passed as a "+
                           "string.",
-                          w.CastWarning)
+                          CastWarning)
             top_lv_key=str(top_lv_key)
 
         loaded_data: Storage | None = Storage.Load.by_key(
@@ -167,7 +168,7 @@ class Edit(metaclass=meta._EditMeta):
             })
         else:
             print("Edit.propkey: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, oldpropkey)
+            raise KeyNotFoundError(file_path, oldpropkey)
 
         loaded_data.store(file_path)
         del loaded_data
@@ -207,7 +208,7 @@ class Edit(metaclass=meta._EditMeta):
         if not isinstance(top_lv_key, str):
             warnings.warn("It is recommended that the 'top_lv_key' "+
                             "value be passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
 
         top_lv_key=str(top_lv_key)
 
@@ -270,11 +271,11 @@ class Edit(metaclass=meta._EditMeta):
 
         if not isinstance(oldkey, str):
             warnings.warn("It is recommended that the 'oldkey' value be passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
 
         if not isinstance(newkey, str):
             warnings.warn("It is recommended that the 'newkey' value be passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
 
         oldkey=str(oldkey)
         newkey=str(newkey)
@@ -293,7 +294,7 @@ class Edit(metaclass=meta._EditMeta):
                 print(f"Error writing to file '{file_path}' after deletion: {e}")
         else:
             print("Edit.key: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, oldkey)
+            raise KeyNotFoundError(file_path, oldkey)
 
     # @classmethod # NOSONAR
     # def storage_key(cls, sojadhjklashdfjkadshkjfhasdjkhfjklasdlhfjkadshlkjfhjkladshfjklashdkjfhlaskjd
@@ -319,7 +320,7 @@ class Edit(metaclass=meta._EditMeta):
 
     #     if not isinstance(key, str):
     #         warnings.warn("It is recommended that the 'newkey' value be passed as a string.",
-    #                         w.CastWarning) sojadhjklashdfjkadshkjfhasdjkhfjklasdlhfjkadshlkjfhjkladshfjklashdkjfhlaskjd
+    #                         CastWarning) sojadhjklashdfjkadshkjfhasdjkhfjklasdlhfjkadshlkjfhjkladshfjklashdkjfhlaskjd
 
     #     key = str(key) sojadhjklashdfjkadshkjfhasdjkhfjklasdlhfjkadshlkjfhjkladshfjklashdkjfhlaskjd
 

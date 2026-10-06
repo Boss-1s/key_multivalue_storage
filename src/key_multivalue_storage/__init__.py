@@ -67,7 +67,7 @@ from .delete import Delete
 # TODO in v2.0: merge utils.warnings into utils.exceptions
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
-from .utils import warnings as kms_warnings
+from .utils import kms_warnings
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import (
     DeleteWarning,

@@ -65,7 +65,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.09.04"
+        return "2026.10.06"
 
     @public
     @property
@@ -77,7 +77,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/09/04"
+        return "2026/10/06"
 
     @public
     @property
@@ -181,7 +181,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.10.06"
 
     @public
     @property
@@ -193,7 +193,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/10/06"
 
     def __repr__(cls) -> str:
         """
@@ -223,7 +223,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.10.06"
 
     @public
     @property
@@ -235,7 +235,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/10/06"
 
     def __repr__(cls) -> str:
         """
@@ -265,7 +265,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.08.03"
+        return "2026.10.06"
 
     @public
     @property
@@ -277,7 +277,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/08/03"
+        return "2026/10/06"
 
     def __repr__(cls) -> str:
         """

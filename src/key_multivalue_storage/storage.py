@@ -45,7 +45,12 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import NoInstantiationError, metadata as meta
+from .utils.warnings import (CastWarning,
+                             AdditionFailureWarning,
+                             SubtractionFailureWarning,
+                             _deprecated_arg
+)
 
 # TODO in v1.4: logger
 #logger: logging.Logger | None = None
@@ -145,7 +150,7 @@ class Storage(metaclass=meta._StorageMeta):
         # ...then attempt to set values
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                          w.CastWarning)
+                          CastWarning)
         self.key = str(key)
         self.values = kwargs
 
@@ -158,7 +163,7 @@ class Storage(metaclass=meta._StorageMeta):
         super().__init_subclass__(**kwargs)
 
         def raise_error():
-            raise exceptions.NoInstantiationError(f"Cannot instantiate class {cls.__name__}")
+            raise NoInstantiationError(f"Cannot instantiate class {cls.__name__}")
 
         cls.__new__ = raise_error()
 
@@ -323,7 +328,7 @@ class Storage(metaclass=meta._StorageMeta):
                                        "method name)."))
 
     @public
-    @w._deprecated_arg("instant_delete",
+    @_deprecated_arg("instant_delete",
                        "The attribute `auto_delete_self` has been deprecated as of "+
                        "kms-semver1.3.1. Please using the `with` keyword instead.\n"+
                        "with Storage('temp_storage', foo='bar') as s: pass"
@@ -629,11 +634,11 @@ class Storage(metaclass=meta._StorageMeta):
             if any(isinstance(value, dict) for value in other.values()):
                 warnings.warn("Passing a nested dictionary may break the addition process.",
                               RuntimeWarning)
-            warnings.warn(w.AdditionFailureWarning(method="__add__"))
+            warnings.warn(AdditionFailureWarning(method="__add__"))
             _temp_values = other
 
         if isinstance(other, list):
-            warnings.warn(w.AdditionFailureWarning(method="__add__"))
+            warnings.warn(AdditionFailureWarning(method="__add__"))
             _temp_values = {"undefined": other}
 
         _temp_dict: dict[str, Any] = dict(self.values)
@@ -687,7 +692,7 @@ class Storage(metaclass=meta._StorageMeta):
             _other_dict = other.values
 
         elif isinstance(other, dict):
-            warnings.warn(w.SubtractionFailureWarning(method="__sub__"))
+            warnings.warn(SubtractionFailureWarning(method="__sub__"))
             _skeys: set[str] = set(self.values.keys()) & set(other)
             _other_dict = other
 
@@ -1161,7 +1166,7 @@ class Storage(metaclass=meta._StorageMeta):
                 _slice_to_del = list(self.values.keys())[key]
                 for k in _slice_to_del:
                     del self.values[k]
-            
+
     def __len__(self) -> int:
         """
         Returns the number of subkey-value pairs in the Storage object.

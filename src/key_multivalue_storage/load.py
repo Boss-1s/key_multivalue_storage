@@ -29,7 +29,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import CastWarning, KeyNotFoundError, metadata as meta
 
 if TYPE_CHECKING:
     from . import Storage
@@ -133,7 +133,7 @@ class Load(metaclass=meta._LoadMeta):
 
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
         key=str(key)
 
         #Debug
@@ -163,7 +163,7 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.by_key: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, key)
+            raise KeyNotFoundError(file_path, key)
 
     @public
     @classmethod
@@ -220,7 +220,7 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.by_index: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path,
+            raise KeyNotFoundError(file_path,
                                     target_key,
                                     f"Key '{target_key}' unexpectedly not found"+
                                     f" in loaded data for index '{index}'.")
@@ -301,7 +301,7 @@ class Load(metaclass=meta._LoadMeta):
 
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
 
         key=str(key)
 
@@ -314,7 +314,7 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.values: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, key)
+            raise KeyNotFoundError(file_path, key)
 
         items: list[str] = []
         for k, val in subsection.values.items():
