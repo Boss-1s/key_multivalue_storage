@@ -136,7 +136,11 @@ jobs:
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
+<<<<<<< HEAD
             -Dsonar.branch.name=semver1.3.x
+=======
+            -Dsonar.branch.name=${{ github.event.pull_request.head.ref || github.ref_name }}
+>>>>>>> 4c8cd09 (fix: PRs can pretend to be long-lived branches [backport semver1.3.x])
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
