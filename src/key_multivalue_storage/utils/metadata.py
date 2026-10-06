@@ -55,49 +55,41 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     """
     Metaclass for Storage module
     """
-    @public
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
         return "v1.4.0"
 
-    @public
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
         return "2026.10.06"
 
-    @public
     @property
     def version(cls) -> str:
         """Current full version of this module."""
         return "kms-"+cls.semver+"/"+cls.calver
 
-    @public
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
         return "2026/10/06"
 
-    @public
     @property
     def Load(cls):
         from key_multivalue_storage import load
         return load.Load
 
-    @public
     @property
     def Edit(cls):
         from key_multivalue_storage import edit
         return edit.Edit
 
-    @public
     @property
     def Delete(cls):
         from key_multivalue_storage import delete
         return delete.Delete
 
-    @public
     @property
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
                 "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
@@ -105,7 +97,6 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.CastWarning
 
-    @public
     @property
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
                 "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
@@ -113,7 +104,6 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.SubtractionFailureWarning
 
-    @public
     @property
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
                     "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
@@ -121,7 +111,6 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.AdditionFailureWarning
 
-    @public
     @property
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
                     "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
@@ -169,27 +158,37 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     def LAST_UPDATE(cls) -> str:
         return cls.last_update
 
+    public(
+        semver=semver,
+        calver=calver,
+        version=version,
+        last_update=last_update,
+        Load=Load,
+        Edit=Edit,
+        Delete=Delete,
+        CastWarning=CastWarning,
+        SubtractionFailureWarning=SubtractionFailureWarning,
+        AdditionFailureWarning=AdditionFailureWarning,
+        DeleteWarning=DeleteWarning
+    )
+
 @private
 class _LoadMeta(type, metaclass=_KmsMeta):
-    @public
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
         return "v1.1.0"
 
-    @public
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
         return "2026.10.06"
 
-    @public
     @property
     def version(cls) -> str:
         """Current full version of this module."""
         return "kms-"+cls.semver+"/"+cls.calver
 
-    @public
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
@@ -211,27 +210,30 @@ class _LoadMeta(type, metaclass=_KmsMeta):
 
         return string
 
+    public(
+        semver=semver,
+        calver=calver,
+        version=version,
+        last_update=last_update
+    )
+
 @private
 class _EditMeta(type, metaclass=_KmsMeta):
-    @public
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
         return "v1.1.0"
 
-    @public
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
         return "2026.10.06"
 
-    @public
     @property
     def version(cls) -> str:
         """Current full version of this module."""
         return "kms-"+cls.semver+"/"+cls.calver
 
-    @public
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
@@ -253,27 +255,30 @@ class _EditMeta(type, metaclass=_KmsMeta):
 
         return string
 
+    public(
+        semver=semver,
+        calver=calver,
+        version=version,
+        last_update=last_update
+    )
+
 @private
 class _DeleteMeta(type, metaclass=_KmsMeta):
-    @public
     @property
     def semver(cls) -> str:
         """Current semnatic version of this module."""
         return "v1.1.0"
 
-    @public
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
         return "2026.10.06"
 
-    @public
     @property
     def version(cls) -> str:
         """Current full version of this module."""
         return "kms-"+cls.semver+"/"+cls.calver
 
-    @public
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
@@ -294,3 +299,10 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
                           "[bold]`Storage.Delete.help()`\n\n"))
 
         return string
+
+    public(
+        semver=semver,
+        calver=calver,
+        version=version,
+        last_update=last_update
+    )
