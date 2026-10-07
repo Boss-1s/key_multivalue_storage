@@ -67,7 +67,7 @@ Currently, the only **released** package versions _(not necessarially supported)
 | :------: | :-------: | ------------------ | :-: | :-: |
 | 1.0.x | Inactive(7) | _EOL_ (since 2025/10/07, 1.1.0) | 1.1 | 1.0.1.20251005 |
 | 1.1.x | Inactive(7) | _EOL_ (since 2026/01/04, 1.2.0) | 1.2 | 1.1.1.20251205 |
-| 1.2.x | Production/Stable (5)| _LTS_ (since 2026/07/24, 1.3.0) | 1.5 | 1.2.5.10160912 |
+| 1.2.x | Production/Stable (5)| _LTS_ (since 2026/07/24, 1.3.0) | 1.5 | 1.2.5.20160912 |
 | 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 | 1.3.2.20260930 |
 | 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0 | 1.4.0.20261001a0.dev1 |
 | 1.5.x | Planning(1) | Unreleased | 2.1 | None |
