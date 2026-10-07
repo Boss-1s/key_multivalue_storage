@@ -21,7 +21,7 @@ from collections.abc import KeysView
 import uuid
 from functools import total_ordering
 from types import TracebackType
-from typing import Any, Callable, Generator, overload
+from typing import Any, Callable, Generator, overload, Self
 from typing_extensions import deprecated
 
 from .utils import metadata as meta
@@ -90,6 +90,8 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
 
     @public
     def __add__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal] | list[Any]) -> Storage[TopKey, SubKey, SubVal]: ...
+    @public
+    def __iadd__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal] | list[Any]) -> Self: ...
     @public
     def __radd__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal]: ...
     @public
