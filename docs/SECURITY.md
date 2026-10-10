@@ -48,9 +48,9 @@ or
 >
 > i.e. `1.2.2.20260515.1`
 
-- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable changes to the module or minor changes to the repository like updating the README.
-- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, minor feature additions, dependancy updates, or major updates to repository resources like documentation.
-- An update is a **minor update** when the ***minor version number*** changes in the version string, resetting the **patch number** to zero, and changes the **date**. This is usually used to denote major additions, minor breaking changes in *some* features, etc. It is possible for a minor update to skip increments in the patch number.
+- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable and unimportant changes to the module or minor changes to the repository like updating the README.
+- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, dependancy updates, or minor deprecations.
+- An update is a **minor update** when the ***minor version number*** changes in the version string, resetting the **patch number** to zero, and changes the **date**. This is usually used to denote major additions, major deprecations, etc. It is possible for a minor update to skip increments in the patch number.
 - An update is a **major update** when the ***major version number***  changes in the version string, resetting both the **minor version number** and **patch number** to zero, and changes the **date**. This type of update denotes **widespread breaking changes** within the library. **All versions with different major version numbers will *NEVER* be backwards compatible**.
 
 [**See more about sematic versioning (SemVer) here**](https://semver.org/)
