@@ -21,7 +21,7 @@ To conform with [PEP 440](https://peps.python.org/pep-0440/), I use a secondary 
 
 Basically, this:
 
-> `kms-v1.2/2026.01.04`
+> `kms-v1.2.0/2026.01.04`
 
 becomes this as a tag:
 
@@ -40,7 +40,7 @@ The version string would look like either one of the following:
 
 > `kms-v(major).(minor).(patch)/(year YYYY).(month MM).(day DD)(letter suffix)`
 >
-> i.e. `kms-v1.2/2026.01.04`
+> i.e. `kms-v1.2.0/2026.01.04`
 
 or
 
@@ -58,8 +58,6 @@ or
 [**See more about calendar versioning (CalVer) here**](https://calver.org/)
 
 ## Supported Versions
-
-Currently, the only **released** package versions _(not necessarially supported)_ are `kms-v1.2/2026.01.04` and later. However, I may port all `kms-semver1.x.x` to PyPI if I have the time.
 
 [See more about the upcoming kms-semver2.0 update.](Roadmap#kms-semver200)
 
