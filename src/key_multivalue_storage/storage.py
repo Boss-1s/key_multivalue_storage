@@ -35,7 +35,7 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.4: import logger
-from typing import Any, Generator
+from typing import Any, Generator, Self
 from types import TracebackType
 from functools import total_ordering
 from collections.abc import Callable, KeysView, Mapping
@@ -644,6 +644,52 @@ class Storage(metaclass=meta._StorageMeta):
         _temp_dict: dict[str, Any] = dict(self.values)
         _temp_dict.update(_temp_values)
         return Storage(self.key, **_temp_dict)
+
+    @public
+    def __iadd__(self,
+                other: Storage | dict[str, Any] | list[Any]) -> Self:
+        """
+        Defines augmented addition of Storage objects by Storage/dict objects.
+
+        Use the symbol `+=` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any] | list[Any]`: The object on the right hand-side of the
+        operand, from which self will be added with.
+
+        ## Output
+        - `None`: This method modifies the object in place and does not return a new object.
+
+        ## Logic
+        See `__add__` docstring for logic. The only difference is that this method modifies
+        the object in place instead of returning a new object.
+
+        Note that this method is functionally identical to
+        augmented set union/augmented bitwise AND (`&=`).
+        """
+
+        if not isinstance(other, (Storage, dict, list)):
+            return NotImplemented
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            self.values.update(other.values)
+            return self
+
+        if isinstance(other, dict):
+            if any(isinstance(value, dict) for value in other.values()):
+                warnings.warn("Passing a nested dictionary may break the addition process.",
+                                RuntimeWarning)
+            warnings.warn(AdditionFailureWarning(method="__add__"))
+            self.values.update(other)
+            return self
+
+        if isinstance(other, list):
+            warnings.warn(AdditionFailureWarning(method="__add__"))
+            self.values.update({"undefined": other})
+            return self
 
     @public
     def __radd__(self,
