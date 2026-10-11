@@ -94,7 +94,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.14"
+          python-version: "3.15"
 
       - name: Set up UV
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7
