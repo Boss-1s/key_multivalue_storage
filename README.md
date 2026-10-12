@@ -15,23 +15,12 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ----------
 
-## 🚀 What's New in `kms-semver1.3.2`
+## 🚀 What's New in `kms-calver2026.10.12` (`kms-semver1.3.2`)
 
-### 💡 Features & Automation
-* **Version Bumping:** Added a post-release script and automatic reminders to bump development versions (#153).
-* **Release Verification:** Added automated checks to ensure the latest test deployment succeeds before completing a release (#153).
-* **Verbose Logging:** Expanded release automation output for easier debugging.
+> [!warning]
+> ***URGENT!*** THIS PATCH ADDRESSES A HIDDEN BREAKING CHANGE FROM `kms-semver1.4.0a0` THAT HAD NOT BEEN MITIGATED. PLEASE UPDATE TO THE NEWEST VERSION TO FIX ANY CONFLICTS.
 
-### 🪲 Bug Fixes
-* **Workflow Tagging:** Forced release tags onto the specific commits that modify the version number.
-* **Release Categorization:** Corrected development builds to register as `pre-alpha` instead of `beta`.
-* **Fail-Safe Checks:** Blocked scripts from continuing silently if required version environment variables are missing.
-* **Formatting:** Fixed the layout format for release commit messages.
-
-### ⏰ Infrastructure & CI
-* **Backports:** Integrated multiple workflow stability fixes and commits backporting from the `semver1.4.x` branch.
-* **Permissions:** Expanded release script access to read Actions runs and automatically generate version-bump issues.
-* **Security & Actions:** Pinned third-party workflow actions (`webfactory/ssh-agent`, `astral-sh/setup-uv`, `softprops/action-gh-release`) to specific commits.
+- **Patched breaking change of name change in `Delete.propkey` — specifically the argument name change from `top_level_key` to `top_lv_key`**
 
 ### 📢 Upcoming Roadmap
 * **v1.3.3 Patch:** Expected November 7, 2026 (focusing on upstream backports and refactors).
