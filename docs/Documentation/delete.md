@@ -49,8 +49,9 @@ Delete a subkey inside a top-level key.
 | Symbol | Type Hint | Default | Description |
 |----|----|----|----|
 |`file_path`|`str`|Required|Path to JSON file.|
-|`top_lv_key`|`Any`|Required|Top-level key (recommended `str`).|
+|`top_level_key`|`Any`|Required|Deprecated; use `top_lv_key` instead (positional keyword)|
 |`property_key`|`str`|Required|Subkey to delete.|
+|`top_lv_key`|`Any`|None|Top-level key (recommended `str`).|
 
 ##### Outputs
 - `None`. Raises `KeyNotFoundError` if key or property missing.
