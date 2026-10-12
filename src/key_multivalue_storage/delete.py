@@ -97,10 +97,14 @@ class Delete(metaclass=meta._DeleteMeta):
 
     @public
     @classmethod
+    @w._deprecated_arg("top_level_key",
+                      "The 'top_level_key' argument is no longer used. Please use 'top_lv_key' instead."
+                      )
     def by_propkey(cls,
                     file_path: str,
-                    top_lv_key: Any,
-                    property_key: str #TODO in v2.0: `subkey: str``
+                    top_level_key: Any, # DEPRECATED 
+                    property_key: str #TODO in v2.0: `subkey: str`
+                    top_lv_key: Any = None
         ) -> None:
         """
         Deletes a property within a top-level key in the JSON file. Does NOT create a new instance
@@ -108,14 +112,18 @@ class Delete(metaclass=meta._DeleteMeta):
 
         ## Arguments
         - `file_path: str`: The path to the JSON file.
-        - `top_lv_key: Any`: The top-level key in the JSON file.
+        - `top_level_key: Any`: Deprecated. Use `top_lv_key` instead.
         - `property_key: str`: The property key to delete within the top-level key.
+        - `top_lv_key: Any = None`: The top-level key in the JSON file.
 
         ## Returns
         `None`
         """
 
         from . import Storage
+
+        if top_level_key:
+            top_lv_key = top_level_key
 
         try:
             with open(file_path, "r", encoding="utf-8") as f:
