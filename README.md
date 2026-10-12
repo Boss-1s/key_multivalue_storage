@@ -15,12 +15,19 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ----------
 
-## 🚀 What's New in `kms-calver2026.10.12` (`kms-semver1.3.2`)
+## 🚀 What's New in `kms-semver1.3.3`
 
-> [!warning]
-> ***URGENT!*** THIS PATCH ADDRESSES A HIDDEN BREAKING CHANGE FROM `kms-semver1.4.0a0` THAT HAD NOT BEEN MITIGATED. PLEASE UPDATE TO THE NEWEST VERSION TO FIX ANY CONFLICTS.
+### 💡 Features & Automation
 
-- **Patched breaking change of name change in `Delete.propkey` — specifically the argument name change from `top_level_key` to `top_lv_key`**
+*
+
+### 🪲 Bug Fixes
+
+*
+
+### ⏰ Infrastructure & CI
+
+*
 
 ### 📢 Upcoming Roadmap
 * **v1.3.3 Patch:** Expected November 7, 2026 (focusing on upstream backports and refactors).
