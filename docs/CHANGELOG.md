@@ -7,6 +7,7 @@ title: Changelog
 
 <!--TOC-->
 
+- [📦 v1.4.0.20261012a0 — *kms-v1.4.0a0/2026.10.12*](#-v14020261012a0--kms-v140a020261012)
 - [📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*](#-v14020261001a0dev1--kms-v140a0dev120261001)
 - [📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*](#-v14020260915a0dev0--kms-v140a0dev020260915)
 - [📦 v1.3.2.20261012 — *kms-v1.3.2/2026.10.12*](#-v13220261012--kms-v13220261012)
@@ -66,6 +67,134 @@ title: Changelog
 - [📦 v1.0.0.20250817 — *kms-v1.0.0/2025.08.17*](#-v10020250817--kms-v10020250817)
 
 <!--TOC-->
+
+## 📦 v1.4.0.20261012a0 — *kms-v1.4.0a0/2026.10.12*
+
+⚙ **Target Node Commit:** `da4a0a8c`
+
+📝 **Release Type:** Pre-release - Minor Patch
+
+### 📝 Release Notes
+
+> [!warning]
+> These release notes are built off of an AI-generated version.
+
+#### Table of Contents
+
+- [💡 Features](#-features)
+- [🪲 Bug Fixes](#-bug-fixes)
+- [🤖 Dependency Updates](#-dependency-updates)
+- [⏰ Other Important Changes](#-other-important-changes)
+- [🪫 Graceful Deprecation cycle 1.4.0](#-graceful-deprecation-cycle-140)
+- [🗒 Notes](#-notes)
+- [📢 Plans for next update](#-plans-for-next-update)
+
+> [!important]
+> `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
+
+> [!tip]
+> Items listed below that start with _(dev)_ are updates that do not contribute to end users; rather, they are more important if you are a contributor or developer of `kms`.
+
+#### 💡 Features
+
+This is the first proper `kms-semver1.4.0a0` release. The main features here focus on explicit declaration of `kms`'s public API, and improving `Storage`.
+
+- Added `Storage.update()` for updating stored values more easily. ([commit `8a2cc06`](https://github.com/Boss-1s/key_multivalue_storage/commit/8a2cc06cbd700727e4b9da2015a4256c24e695c7))
+- Added support for deleting slices of values with `del storage[start:stop]`.
+- Added `atpublic` to mark public and private functions, classes, and methods throughout the package. ([PR #194](https://github.com/Boss-1s/key_multivalue_storage/pull/194))
+- Added matching public/private annotations to the type stubs.
+- Added `utils/__init__.py` with public exports for warnings, exceptions, and utility objects.
+- _(dev)_ Merged the old standalone issue tests into the main test suite. Tests for issues #14, #26/#27, #67, #76, #80, and #84 were either merged into existing coverage or removed because they were already covered elsewhere. ([commit `d6fb903`](https://github.com/Boss-1s/key_multivalue_storage/commit/d6fb903796483e1fa1c83a2697abaa0830388cdd))
+- _(dev)_ Nightly releases now use the version created during post-release updates instead of making up a random version string. ([commit `89a9cf5`](https://github.com/Boss-1s/key_multivalue_storage/commit/89a9cf5b179a63cdee12393420b81a7e26f854d4))
+
+#### 🪲 Bug Fixes
+
+- Fixed slice deletion in `Storage.__delitem__`. Integer deletion and slice deletion now use separate logic, instead of trying to make one branch handle both. ([commit `6d02885`](https://github.com/Boss-1s/key_multivalue_storage/commit/6d028851aef31454814c2e466d20ab8571847783), [commit `2d482b2`](https://github.com/Boss-1s/key_multivalue_storage/commit/2d482b20a619146ed20b5ff6021a9a9c0e5094f8))
+- Fixed the test workflow so it runs on the supported `semver1.x.x` branches and on pull requests.
+- _(dev)_ Fixed SonarQube branch detection so pull requests use their actual head branch instead of always pretending to be `semver1.4.x`.
+- _(dev)_ Fixed deployment jobs so they validate the branch before deploying.
+- _(dev)_ Fixed pull request deployments so they check out the actual pull request head repository and branch.
+
+#### 🤖 Dependency Updates
+
+<details markdown="block">
+<summary markdown="span">Automated Updates</summary>
+
+- `pylint-per-file-ignores` → v4.0.0 by @renovate[bot] in [PR #244](https://github.com/Boss-1s/key_multivalue_storage/pull/244)
+- `github/codeql-action` → v4.38.2 by @renovate[bot] in [PR #263](https://github.com/Boss-1s/key_multivalue_storage/pull/263)
+- `griffe` → v2.3.0 by @renovate[bot] in [PR #265](https://github.com/Boss-1s/key_multivalue_storage/pull/265)
+- `actions/setup-node` → v7 by @renovate[bot] in [PR #267](https://github.com/Boss-1s/key_multivalue_storage/pull/267)
+- `pylint` → v4.1.1 by @renovate[bot] in [PR #266](https://github.com/Boss-1s/key_multivalue_storage/pull/266)
+- `gitpython` → v3.2.0 by @renovate[bot] in [PR #262](https://github.com/Boss-1s/key_multivalue_storage/pull/262)
+- `astral-sh/setup-uv` → v10.2.0 by @renovate[bot] in [PR #261](https://github.com/Boss-1s/key_multivalue_storage/pull/261)
+- `ghcr.io/devcontainers/features/github-cli` → v1.1.3 by @renovate[bot] in [PR #260](https://github.com/Boss-1s/key_multivalue_storage/pull/260)
+- `coverage` → v7.16.2 by @renovate[bot] in [PR #258](https://github.com/Boss-1s/key_multivalue_storage/pull/258)
+- `md-toc` → v9.0.1 by @renovate[bot] in [PR #259](https://github.com/Boss-1s/key_multivalue_storage/pull/259)
+- `md-toc` → v9.1.0 by @renovate[bot] in [PR #270](https://github.com/Boss-1s/key_multivalue_storage/pull/270)
+- `pylint` → v4.1.2 by @renovate[bot] in [PR #323](https://github.com/Boss-1s/key_multivalue_storage/pull/323)
+- `griffe` → v2.3.2 by @renovate[bot] in [PR #332](https://github.com/Boss-1s/key_multivalue_storage/pull/332)
+- Python test container → `3.15.0rc3` by @renovate[bot] in [PR #329](https://github.com/Boss-1s/key_multivalue_storage/pull/329)
+- `actions/setup-node` → v7.1.0 by @renovate[bot] in [PR #336](https://github.com/Boss-1s/key_multivalue_storage/pull/336)
+- `github/codeql-action` → v4.38.3 by @renovate[bot] in [PR #338](https://github.com/Boss-1s/key_multivalue_storage/pull/338)
+- `astral/setup-uv` → v10.3.0 by @renovate[bot] in [PR #340](https://github.com/Boss-1s/key_multivalue_storage/pull/340)
+- `pylint` → v4.1.3 by @renovate[bot] in [PR #345](https://github.com/Boss-1s/key_multivalue_storage/pull/340)
+
+</details>
+
+---
+
+- The main package now depends on `atpublic~=8.0`, which is used for the public/private API markers.
+- _(dev)_ The test lockfiles also received a larger round of updates:
+  - `coverage` → `7.16.2`
+  - `filelock` → `4.0.9`
+  - `gitpython` → `3.2.0`
+  - `identify` → `2.6.20`
+  - `md-toc` → `9.1.0`
+  - `nodeenv` → `1.11.0`
+  - `platformdirs` → `4.12.2`
+  - `python-discovery` → `1.6.1`
+  - `virtualenv` → `21.14.3`
+- _(dev)_ The development tooling was also bumped to `pylint==4.1.3` and `griffe==2.3.2`.
+
+#### ⏰ Other Important Changes
+
+<details markdown="block">
+<summary markdown="span">Forward-ports</summary>
+
+- **Forward-port:** [PR #202](https://github.com/Boss-1s/key_multivalue_storage/pull/202) brought the release pipeline refactor from `semver1.3.x`'s [PR #153](https://github.com/Boss-1s/key_multivalue_storage/pull/153) into `semver1.4.x`. [See `kms-semver1.3.2`.](https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930)
+
+</details>
+
+---
+
+- The security policy was updated with current lifecycle information for the `1.0.x`, `1.1.x`, `1.2.x`, `1.3.x`, and `1.4.x` series.
+- _(dev)_ The test suite was cleaned up so old one-off issue tests do not stick around after the relevant fixes are already covered elsewhere.
+- **Python was updated from `3.15.0rc2` to `3.15.0` (finally).**
+
+#### 🪫 Graceful Deprecation cycle 1.4.0
+
+> [!warning]
+> This list is incomplete.
+
+No deprecations currently.
+
+#### 🗒 Notes
+
+This update delivers updates to `gitpython` and `urllib3`, both of which had high-severity vulnerabilities before the version bump.
+
+Other than that, we're all good.
+
+#### 📢 Plans for next update
+
+**Regarding `kms-semver1.3.3`,** the projected release date is not until _November 7th, 2026_, giving us 6 weeks until the next release. ([You can see the new release cycles here.](https://boss-1s.github.io/key_multivalue_storage/Development#release-cycles)) Like this patch, the next patch will mostly be **refactors** and **backports** from patches upstream on `semver1.4.x`. _`kms-semver1.3.3` coincides with `kms-semver1.4.0a2`._
+
+**Regarding `kms-semver1.4.0`,** the next alpha (`a1`) will come out on *2026/10/24*, with the `kms-semver1.4.0` *stable* release date still planned to be around **_2027/01/03_**. Currently planned features are listed in the [roadmap](https://boss-1s.github.io/key_multivalue_storage/Roadmap#kms-semver140) and the [milestone](https://github.com/Boss-1s/key_multivalue_storage/milestone/7). The to-do is located at #197. Alpha 1 will definitely be the first big feature-filled update, with planned features including #99 (more ways to encode), #148 (make Rich optional), and so much more. *Important: NextGen Preview features will start being implemented in `a1` as well.*
+
+**📑 Full Changelog**: [`v1.4.0.20261001a0.dev1` vs `v1.4.0.20261012a0`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.4.0.20261001a0.dev1...v1.4.0.20261012a0)
+
+_**📑 Working Changelog**_: [`v1.3.1.20260812` vs `semver1.4.x`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)
+
+---
 
 ## 📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*
 
@@ -135,7 +264,7 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 
 ## 📦 v1.3.2.20261012 — *kms-v1.3.2/2026.10.12*
 
-⚙ **Target Node Commit:** `356f5a26`
+⚙ **Target Node Commit:** `a8673935`
 
 📝 **Release Type:** Minor Patch
 
