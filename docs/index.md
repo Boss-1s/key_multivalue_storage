@@ -33,6 +33,7 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 * **Verbose Logging:** Expanded release automation output for easier debugging.
 
 ### 🪲 Bug Fixes
+* **PATCHED UNMITIGATED BREAKING CHANGE.** See [`kms-v1.3.2/2026.10.12`](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG#-v13220261012--kms-v13220261012).
 * **Workflow Tagging:** Forced release tags onto the specific commits that modify the version number.
 * **Release Categorization:** Corrected development builds to register as `pre-alpha` instead of `beta`.
 * **Fail-Safe Checks:** Blocked scripts from continuing silently if required version environment variables are missing.
@@ -48,30 +49,33 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 * **`kms-semver1.3.4`:** Expected December 5th, 2026.
 * **`kms-semver1.3.5`:** Expected December 21st, 2026.
 
-> [!important]
-> All of these items have been backported to `semver1.4.x`.
-
 🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**
 
 ---
 
 ## 🚀 What's New in `kms-semver1.4.0a0`
 
+> [!important]
+> `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
+
 ### 💡 Features & Automation
-* Oops, none yet here. Try checking somewhere else.
+* **Public API Cleanup:** Added `atpublic`-based visibility markers across the package and type stubs for a cleaner public/private API surface.
+* **Storage Improvements:** Added `Storage.update()` and support for slice deletion with `del storage[start:stop]`.
+* **Testing Improvements:** Expanded `kms.help()` coverage and folded older issue-related tests into the main suite.
+* **Release Automation:** Improved nightly and release workflows so version generation and branch validation are more reliable.
 
 ### 🪲 Bug Fixes
-* Oops, none yet here. Try checking somewhere else.
+* **Slice Deletion Fix:** Corrected `Storage.__delitem__` so integer and slice deletion follow the correct logic.
+* **Workflow Fixes:** Resolved branch detection, deployment checks, and syntax issues in the automation workflows.
+* **Compatibility Fixes:** Fixed `atpublic` metadata/type errors and cleaned up stale storage tests.
 
 ### ⏰ Infrastructure & CI
-* Oops, none yet here. Try checking somewhere else.
-
-### 📢 Upcoming Roadmap
-* **`kms-semver1.4.0a0`:** Alpha scheduled for October 12, 2026.
-* **`kms-semver1.4.0`:** Stable release project for early January 2027.
+* **Branch & Deployment Stability:** Improved validation for supported `semver1.x` branches and pull request deployment checks.
+* **Python Test Environment:** Updated the test runner to CPython `3.15.0`.
+* **Dependency Refresh:** Updated linting, docs, and test tooling across the `semver1.4.x` branch.
 
 > [!important]
-> Backports from `semver1.3.x` are not listed here.
+> Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
 
 <!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
 🔗 **[Working Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)**
