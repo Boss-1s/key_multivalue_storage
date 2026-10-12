@@ -13,26 +13,22 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ---------
 
-## 🚀 What's New in `kms-semver1.4.0a0`
+## 🚀 What's New in `kms-semver1.4.0a1`
 
 > [!important]
 > `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
 
 ### 💡 Features & Automation
-* **Public API Cleanup:** Added `atpublic`-based visibility markers across the package and type stubs for a cleaner public/private API surface.
-* **Storage Improvements:** Added `Storage.update()` and support for slice deletion with `del storage[start:stop]`.
-* **Testing Improvements:** Expanded `kms.help()` coverage and folded older issue-related tests into the main suite.
-* **Release Automation:** Improved nightly and release workflows so version generation and branch validation are more reliable.
+
+*
 
 ### 🪲 Bug Fixes
-* **Slice Deletion Fix:** Corrected `Storage.__delitem__` so integer and slice deletion follow the correct logic.
-* **Workflow Fixes:** Resolved branch detection, deployment checks, and syntax issues in the automation workflows.
-* **Compatibility Fixes:** Fixed `atpublic` metadata/type errors and cleaned up stale storage tests.
+
+*
 
 ### ⏰ Infrastructure & CI
-* **Branch & Deployment Stability:** Improved validation for supported `semver1.x` branches and pull request deployment checks.
-* **Python Test Environment:** Updated the test runner to CPython `3.15.0`.
-* **Dependency Refresh:** Updated linting, docs, and test tooling across the `semver1.4.x` branch.
+
+*
 
 > [!important]
 > Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
