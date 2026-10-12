@@ -30,6 +30,7 @@ from rich.markdown import Markdown
 from public import public
 
 from .utils import metadata as meta, DeleteWarning, CastWarning, KeyNotFoundError
+from .utils.warnings import _deprecated_arg
 
 @public
 def help() -> None:
@@ -97,7 +98,7 @@ class Delete(metaclass=meta._DeleteMeta):
 
     @public
     @classmethod
-    @w._deprecated_arg("top_level_key",
+    @_deprecated_arg("top_level_key",
                       "The 'top_level_key' argument is no longer used. Please use 'top_lv_key' instead."
                       )
     def by_propkey(cls,
