@@ -68,7 +68,7 @@ title: Changelog
 
 ## 📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*
 
-⚙ **Target Node Commit:** `02a07685`
+⚙ **Target Node Commit:** `50803031`
 
 📝 **Release Type:** Pre-release - Minor Patch
 
@@ -169,9 +169,8 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 
 #### 🤖 Dependency Updates
 
-<details>
-
-<summary>Automated Updates</summary>
+<details markdown="block">
+<summary markdown="span">Automated Updates</summary>
 
 * chore(deps-dev): Update setuptools requirement from >=83.0.0 to >=84.0.0 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/88
 * chore(deps): update astral-sh/setup-uv action to v10 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/89
@@ -194,6 +193,7 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 * chore(deps-dev): Bump griffe from 2.2.0 to 2.3.0 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/149
 * chore(deps-dev): Bump gitpython from 3.1.61 to 3.1.62 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/151
 * chore(deps-dev): bump coverage from 7.16.0 to 7.16.1 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/193
+
 </details>
 
 **The release workflow received a few action updates and pinning changes:**
@@ -202,8 +202,8 @@ This is a development pre-release. It is an interim pre-release (pre-release of 
 
 #### ⏰ Other Important Changes
 
-<details>
-<summary>Backports</summary>
+<details markdown="block">
+<summary markdown="span">Backports</summary>
 
 * fix(ci): backport semver1.4 workflow stability fixes to semver1.3.x by @Boss-1s with @Copilot in https://github.com/Boss-1s/key_multivalue_storage/pull/152
 * backport(`semver1.3.x`): #155 by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/179
