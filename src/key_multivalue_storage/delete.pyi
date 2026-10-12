@@ -22,7 +22,7 @@ class Delete(metaclass=meta._DeleteMeta):
 
     @public
     @classmethod
-    def by_propkey(cls, file_path: str, top_lv_key: Any, property_key: str) -> None: ...
+    def by_propkey(cls, file_path: str, top_level_key: Any, property_key: str, top_lv_key: Any = None) -> None: ...
 
     @public
     @classmethod
