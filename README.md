@@ -30,6 +30,10 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 *
 
+### 📢 Upcoming Roadmap
+* **v1.4.0a1:** Expected October 24th, 2026.
+* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+
 > [!important]
 > Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
 
