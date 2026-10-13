@@ -271,7 +271,7 @@ wheels = [
 [[package]]
 name = "dill"
 version = "0.4.2.dev0"
-source = { git = "https://github.com/uqfoundation/dill?rev=285643eb3cf4a27128a1f2d7a9eb337c4724e2f4#285643eb3cf4a27128a1f2d7a9eb337c4724e2f4" }
+source = { git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4#192bcc197e5d8ac62c95e2ec2c381811dd137fc4" }
 
 [[package]]
 name = "distlib"
@@ -476,7 +476,7 @@ provides-extras = ["dev"]
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage", specifier = "==7.16.2" },
-    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=285643eb3cf4a27128a1f2d7a9eb337c4724e2f4" },
+    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4" },
     { name = "gitpython", specifier = "==3.2.0" },
     { name = "griffe", specifier = "==2.3.2" },
     { name = "md-toc", specifier = "==9.1.0" },
@@ -496,7 +496,7 @@ release = [
 ]
 test = [
     { name = "coverage", specifier = "==7.16.2" },
-    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=285643eb3cf4a27128a1f2d7a9eb337c4724e2f4" },
+    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4" },
     { name = "griffe", specifier = "==2.3.2" },
     { name = "pylint", specifier = "==4.1.3" },
     { name = "pylint-per-file-ignores", specifier = "==4.0.0" },
