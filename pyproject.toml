@@ -515,7 +515,7 @@ additional-builtins = ["public", "private"]
 dev = [
     { include-group = "test" },
     { include-group = "release" },
-    "pre-commit==4.6.2",
+    "pre-commit==4.7.0",
 ]
 release = [
     "md-toc==9.1.0",
