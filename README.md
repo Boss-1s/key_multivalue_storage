@@ -11,6 +11,35 @@ Once upon a time, this was just a small project to solve a problem: the over-ste
 
 This is, after all, the greatest piece of a CPython progam I have made. ;)
 
+---------
+
+## 🚀 What's New in `kms-semver1.4.0a1`
+
+> [!important]
+> `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
+
+### 💡 Features & Automation
+
+*
+
+### 🪲 Bug Fixes
+
+*
+
+### ⏰ Infrastructure & CI
+
+*
+
+### 📢 Upcoming Roadmap
+* **v1.4.0a1:** Expected October 24th, 2026.
+* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+
+> [!important]
+> Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
+
+<!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
+🔗 **[Working Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)**
+
 __________
 
 ## Badges

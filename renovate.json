@@ -4,15 +4,17 @@
         "config:recommended"
     ],
     "vulnerabilityAlerts": {
-        "enabled": false
+        "enabled": true
     },
     "dependencyDashboard": false,
     "prConcurrentLimit": 0,
     "prHourlyLimit": 0,
     "branchPrefix": "deps/",
-    "additionalBranchPrefix": "semver1.4.x/",
+    "branchName": "deps/{{{baseBranch}}}/{{{branchTopic}}}",
     "ignorePaths": [],
-    "includePaths": ["test/**"],
+    "includePaths": ["**"],
     "baseBranches": ["semver1.3.x", "semver1.4.x"],
+    "labels": ["Priority: Medium"],
+    "reviewersFromCodeOwners": true,
     "useBaseBranchConfig": "merge"
 }

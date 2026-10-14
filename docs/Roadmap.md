@@ -50,23 +50,89 @@ Roadmap format:
 - List 'partial' breaking changes and deprecations here.
 -->
 
-### kms-semver1.3.2
-- **Projected Release Date: 2026/09/30**
+### Old Roadmaps
 
-*Stable Release tag: `v1.3.2.20260930`*
+> [!warning]
+> Please refer to the actual release notes for accurate information.
 
-#### Features
+<details markdown="block">
+<summary markdown="span">kms-semver1.3.1</summary>
+<div markdown="block" class="content">
 
-No new features will be introduced in this update.
+> ### kms-semver1.3.1
+> - **Projected Release Date: **~~2026/08/10~~** 2026/08/12**
+> 
+> *Stable Release tag: *~~`v1.3.1.20260810`~~* `v1.3.1.20260812`*
+>
+> Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.1.20260812
+> 
+> #### Features
+> 
+> - [**#27**](https://github.com/Boss-1s/key_multivalue_storage/issues/27) - *Better ability to type-hint Storage* ✅
+> - **New method: `Storage.to_dict()`**
+> 
+>     ```py
+>     def to_dict(self) -> dict[str, dict[str, Any]]:
+>         """
+>         Converts a Storage instance into a dictionary.
+>         ## Arguments
+>         No arguments.
+>         ## Returns
+>         - `dict[str, dict[str, Any]]`: the original instance in dict form.
+>         ## Notes
+>         This method exists only as a backup to casting a `Storage` instance directly to a `dict`
+>         with `dict(Storage)`.
+>         """
+>     ```
+> 
+> - **New `__getitem__` branch:** By passing the top level key in bracket notation (`Storage("key", foo="bar")['key']`), `self.values` will be returned.
+> - [**#75**](https://github.com/Boss-1s/key_multivalue_storage/issues/75) - *`__iadd__` for `Storage`*
+> 
+> #### Bug Fixes
+> 
+> * [**#14**](https://github.com/Boss-1s/key_multivalue_storage/issues/14) - _tests failing due to legacy Windows shell refusing `utf-8` encoding_ ✅
+> * [**#26**](https://github.com/Boss-1s/key_multivalue_storage/issues/26) - _Storage not assignable to type `dict[str, dict[str, Any]]`_ ✅
+> * [**#58**](https://github.com/Boss-1s/key_multivalue_storage/issues/58) - _Not enough test coverage_
+> * [**#67**](https://github.com/Boss-1s/key_multivalue_storage/issues/67) - _cannot cast `Storage` to `dict`_ ✅
+> * [**#68**](https://github.com/Boss-1s/key_multivalue_storage/issues/68) - _bug: `del self` does not work_ ✅
+> * [**#76**](https://github.com/Boss-1s/key_multivalue_storage/issues/76) - _bug: `__add__` updates self_
+> 
+> #### Graceful Deprecation cycle 1.3.1
+> 
+> - **Deprecated format specifiers `.tuplef` and `.tuplet`.**
+> - Attribute `auto_delete_self` and argument `instant_delete` of `Storage.store()` has been deprecated.
 
-#### Bug Fixes
+</div>
 
-- Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
-- Prettified all Storage dunder methods
+</details>
 
-#### Graceful Deprecation cycle 1.3.2
+<details markdown="block">
+<summary markdown="span">kms-semver1.3.2</summary>
+<div markdown="block" class="content">
 
-Nothing to be deprecated in this version.
+> ### kms-semver1.3.2
+> **Release Date: 2026/09/30**
+> 
+> *Stable Release tag: `v1.3.2.20260930`*
+>
+> Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
+>
+> #### Features
+> 
+> No new features will be introduced in this update.
+> 
+> #### Bug Fixes
+> 
+> - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
+> - Prettified all Storage dunder methods
+> 
+> #### Graceful Deprecation cycle 1.3.2
+> 
+> Nothing to be deprecated in this version.
+
+</div>
+
+</details>
 
 ---
 
@@ -196,6 +262,11 @@ This update will not have a deprecation cycle.
 
 ***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
+#### Full To-Do Lists
+
+See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos. This inclusively includes all updates between `a0` and `a3`.
+See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the beta releases' to-dos. This inclusively includes all updates between `b0` and `b2`.
+
 #### Features
 * More encoding option
 *Stable Release tag: `v1.4.0.20260103`*
@@ -211,6 +282,25 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * **Full switch to `logging.Logger` over `print()`**
 * Full switch to `rich`
 * **Adding `__iadd__` and related methods to `Storage`** -- allows saving memory by using only one object for binary operations that have a unary counterpart
+* Begin shift to 2.0
+  * This means that certain 2.0 features will be implemented in a non-breaking change way.
+  * You can test ALL these changes out through the following script:
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+
+    Storage = storage.Storage
+
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
 * None for now...
@@ -235,24 +325,9 @@ I have no idea. Sorry.
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* Begin shift to 2.0
+* Continue shift to 2.0
   * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * You can test ALL these changes out through the following script:
-    ```py
-    import key_multivalue_storage as kms
-    kms.nextgen = True
-    ```
-  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
-    ```py
-    from key_multivalue_storage import storage
-    storage.nextgen = True
-    
-    Storage = storage.Storage
-  
-    with Storage("tlk", sk='sv') as s:
-        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
-    ```
-  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * Remember that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
   * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
@@ -390,6 +465,3 @@ These types of refactorizations - whether it's argument positioning, logic, or j
 See all other new features in the [release notes](/Boss-1s/key_multivalue_storage/releases).
 
 [***<< Back to home***](.)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ1ODQ1OTU0M119
--->

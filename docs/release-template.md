@@ -20,7 +20,23 @@ This section focuses on bugs fixed throughout the release.
 
 ## 🤖 Dependency Updates
 
-This section shares all Dependency updates, along with the PR numbers and the bot that pushed it.
+<details>
+<summary>
+Automated Updates
+</summary>
+This hidden section shares every single dependency-related PR. Nothing is excepted. Include full PR name, link to PR, and PR number.
+</details>
+
+This section shares a summary of dependency updates. Include PR numbers for specific items.
+
+## ⏰ Other Important Changes
+
+<details>
+<summary>
+Backports
+</summary>
+This hidden section shares every single backport/forward-ported commit/PR via a PR. Nothing is excepted. Include full backport PR name, link to backport PR, backport PR number, and if applicable, the original PR/commit's information.
+</details>This section shares all Dependency updates, along with the PR numbers and the bot that pushed it.
 
 ## ⏰ Other Important Changes
 
@@ -32,10 +48,17 @@ All features that are deprecated from this version on are listed here. This sect
 
 ## 🗒 Notes
 
-This section disseminates all security updates, reasoning for yanking a previous version linked to this one, fatal bugs that were fixed, etc.
+This section disseminates all security updates, reasoning for yanking a previous version linked to this one, fatal bugs that were fixed, etc. **This section should NOT be edited by any AI generator; it must be done manually.**
+
+## 📢 Plans for next update
+
+All plans about the next update go here. **This section should NOT be edited by any AI generator; it must be done manually.**
 
 ## 📢 Plans for next update
 
 All plans about the next update go here.
 
 **📑 Full Changelog**: [`oldversiontag` vs `newversiontag`](https://github.com/Boss-1s/key_multivalue_storage/compare/oldversiontag...newversiontag)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTAxOTI5Nzg4N119
+-->

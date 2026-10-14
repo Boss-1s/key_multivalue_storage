@@ -27,12 +27,14 @@ from typing import Any, TYPE_CHECKING, Callable
 
 from rich.console import Console
 from rich.markdown import Markdown
+from public import public
 
-from .utils import warnings as w, exceptions, metadata as meta
+from .utils import CastWarning, KeyNotFoundError, metadata as meta
 
 if TYPE_CHECKING:
     from . import Storage
 
+@public
 def help() -> None:
     Console().print(Markdown(str(__doc__)))
 
@@ -54,6 +56,7 @@ def print(*args, **kwargs) -> None:
     """
     builtins.print("[key_multivalue_storage/load.py] ", *args, **kwargs)
 
+@public
 class Load(metaclass=meta._LoadMeta):
     """
     Class containg methods related to loading JSON data into Storage objects.
@@ -74,6 +77,7 @@ class Load(metaclass=meta._LoadMeta):
     ### Attributes
     **There are no attributes in this class.**
     """
+    @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
         """Help function for class Load."""
@@ -92,6 +96,7 @@ class Load(metaclass=meta._LoadMeta):
                                        "passing the method, don't call it (adding parenthesis "+
                                        "after the method name)."))
 
+    @public
     @classmethod
     def by_key(cls,
                 file_path: str,
@@ -128,7 +133,7 @@ class Load(metaclass=meta._LoadMeta):
 
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
         key=str(key)
 
         #Debug
@@ -158,8 +163,9 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.by_key: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, key)
+            raise KeyNotFoundError(file_path, key)
 
+    @public
     @classmethod
     def by_index(cls,
                     file_path: str,
@@ -214,11 +220,12 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.by_index: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path,
+            raise KeyNotFoundError(file_path,
                                     target_key,
                                     f"Key '{target_key}' unexpectedly not found"+
                                     f" in loaded data for index '{index}'.")
 
+    @public
     @classmethod
     def keys(cls, file_path: str) -> list[str] | None:
         """
@@ -244,6 +251,7 @@ class Load(metaclass=meta._LoadMeta):
 
         return list(loaded_data.keys())
 
+    @public
     @classmethod
     def values(cls,
                 file_path: str,
@@ -293,7 +301,7 @@ class Load(metaclass=meta._LoadMeta):
 
         if not isinstance(key, str):
             warnings.warn("It is recommended that the 'key' value is passed as a string.",
-                            w.CastWarning)
+                            CastWarning)
 
         key=str(key)
 
@@ -306,7 +314,7 @@ class Load(metaclass=meta._LoadMeta):
                 return None
         else:
             print("Load.values: ERROR: Encountered _KeyNotFoundError")
-            raise exceptions.KeyNotFoundError(file_path, key)
+            raise KeyNotFoundError(file_path, key)
 
         items: list[str] = []
         for k, val in subsection.values.items():

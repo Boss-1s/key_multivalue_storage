@@ -21,7 +21,7 @@ To conform with [PEP 440](https://peps.python.org/pep-0440/), I use a secondary 
 
 Basically, this:
 
-> `kms-v1.2/2026.01.04`
+> `kms-v1.2.0/2026.01.04`
 
 becomes this as a tag:
 
@@ -40,7 +40,7 @@ The version string would look like either one of the following:
 
 > `kms-v(major).(minor).(patch)/(year YYYY).(month MM).(day DD)(letter suffix)`
 >
-> i.e. `kms-v1.2/2026.01.04`
+> i.e. `kms-v1.2.0/2026.01.04`
 
 or
 
@@ -48,9 +48,9 @@ or
 >
 > i.e. `1.2.2.20260515.1`
 
-- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable changes to the module or minor changes to the repository like updating the README.
-- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, minor feature additions, dependancy updates, or major updates to repository resources like documentation.
-- An update is a **minor update** when the ***minor version number*** changes in the version string, resetting the **patch number** to zero, and changes the **date**. This is usually used to denote major additions, minor breaking changes in *some* features, etc. It is possible for a minor update to skip increments in the patch number.
+- An update is a **minor patch** when only the ***date*** changes in the version string, or a ***suffix*** is added to the string. This is usually used to denote small, unoticiable and unimportant changes to the module or minor changes to the repository like updating the README.
+- An update is a **major patch** when the ***patch number*** changes in the version string, along with the **date**. This is usually used to denote bug fixes, dependancy updates, or minor deprecations.
+- An update is a **minor update** when the ***minor version number*** changes in the version string, resetting the **patch number** to zero, and changes the **date**. This is usually used to denote major additions, major deprecations, etc. It is possible for a minor update to skip increments in the patch number.
 - An update is a **major update** when the ***major version number***  changes in the version string, resetting both the **minor version number** and **patch number** to zero, and changes the **date**. This type of update denotes **widespread breaking changes** within the library. **All versions with different major version numbers will *NEVER* be backwards compatible**.
 
 [**See more about sematic versioning (SemVer) here**](https://semver.org/)
@@ -59,19 +59,17 @@ or
 
 ## Supported Versions
 
-Currently, the only **released** package versions _(not necessarially supported)_ are `kms-v1.2/2026.01.04` and later. However, I may port all `kms-semver1.x.x` to PyPI if I have the time.
-
 [See more about the upcoming kms-semver2.0 update.](Roadmap#kms-semver200)
 
 | Version | Production Stage | Current Status | Expected EOL | Latest |
 | :------: | :-------: | ------------------ | :-: | :-: |
-| 1.0.x | Inactive(7) | Unsupported | Already reached EOL | Unknown |
-| 1.1.x | Inactive(7) | Unsupported | Already reached EOL | Unknown|
-| 1.2.x | Production/Stable (5)| LTS | 1.5 | 1.2.5.20260724 |
-| 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 | 1.3.1.20260812 |
-| 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0 | Unreleased |
+| 1.0.x | Inactive(7) | _EOL_ (since 2025/10/07, 1.1.0) | 1.1 | 1.0.1.20251005 |
+| 1.1.x | Inactive(7) | _EOL_ (since 2026/01/04, 1.2.0) | 1.2 | 1.1.1.20251205 |
+| 1.2.x | Production/Stable (5)| _LTS_ (since 2026/07/24, 1.3.0) | 1.5 | 1.2.5.20160912 |
+| 1.3.x | Production/Stable (5) | Stable - **Latest** | 1.6 | 1.3.2.20260930 |
+| 1.4.x | Pre-Alpha(2) | Development - **Main** | 2.0 | 1.4.0.20261001a0.dev1 |
 | 1.5.x | Planning(1) | Unreleased | 2.1 | None |
-| 1.6.x | Planning(1None(0) | Unreleased | 2.2 | None |
+| 1.6.x | Planning(1) | Unreleased | 2.2 | None |
 | 2.0.x | Planning(1) | Unreleased | 2.3 | None |
 
 ## Reporting a Vulnerability

@@ -46,6 +46,7 @@ color-scheme: auto # Options: auto, light, dark
 markdown: kramdown
 kramdown:
   input: GFM
+  parse_block_html: true
 
 # Sass configuration
 sass:

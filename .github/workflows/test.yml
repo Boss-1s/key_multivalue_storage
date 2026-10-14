@@ -2,10 +2,12 @@ name: Tests
 
 on:
   push:
-    branches-ignore:
-      - releases/**
-      - eol/**
-      - docs
+    branches:
+      - semver1.2.x
+      - semver1.3.x
+      - semver1.4.x
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
   workflow_dispatch:
 
 jobs:
@@ -38,7 +40,7 @@ jobs:
             allow-prereleases: true
 
         - name: Set up uv
-          uses: astral-sh/setup-uv@v10.0.1
+          uses: astral-sh/setup-uv@v10.3.0
           with:
            enable-cache: true
 
@@ -48,7 +50,7 @@ jobs:
           run: |
             # AI-Generated
             git fetch --tags --prune
-            latest_tag=$(git describe --tags --abbrev=0 origin/semver1.3.x)
+            latest_tag=$(git describe --tags --abbrev=0 origin/semver1.4.x)
             echo "tag=$latest_tag" >> $GITHUB_OUTPUT
 
       - name: Install and Ensure Dependecies
@@ -134,6 +136,7 @@ jobs:
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
+            -Dsonar.branch.name=${{ github.event.pull_request.head.ref || github.ref_name }}
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
@@ -167,19 +170,42 @@ jobs:
   #   uses: ./.github/workflows/codeql.yml
   #   if: always()
 
-
   nightly:
     needs: [main]
     uses: ./.github/workflows/release-nightly.yml
-    if: |
-      contains(github.ref_name, 'semver1.') ||
-      contains(github.actor, 'renovate') ||
-      contains(github.actor, 'dependabot') ||
-      contains(github.actor, 'github-actions')
 
   deploy:
     environment: test
     needs: [main]
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Validate Branch Against Deployment Rules
+        id: branch-check
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          echo "Evaluating branch name: $TARGET_BRANCH"
+
+          REGEX_PATTERN="^(.*semver1\..*\.x.*|(backport|chore|deps|feat|fix|next|refactor)/semver1\..*\.x/.*)$"
+
+          if [[ "$TARGET_BRANCH" =~ $REGEX_PATTERN ]]; then
+            echo "Branch matches environment patterns. Allowing deployment."
+            echo "allowed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Branch '$TARGET_BRANCH' does not match environment patterns. Skipping."
+            echo "allowed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Guard Rails Check
+        if: steps.branch-check.outputs.allowed != 'true'
+        run: |
+          echo "::error::Deployment blocked. Branch does not comply with environment rules."
+          exit 1
+
+      - name: Checkout repo
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          fetch-depth: 0
       - run: echo "Deploying to test environment..."

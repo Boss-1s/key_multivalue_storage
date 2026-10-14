@@ -17,8 +17,11 @@ import inspect
 import sys
 from collections.abc import Callable
 
+from public import public, private
+
 warnings = sys.modules.get("warnings")
 
+@public
 class DeleteWarning(UserWarning):
     """
     Warns you about deleting all contents of a database file.
@@ -48,6 +51,7 @@ class AdditionFailureWarning(RuntimeWarning):
     def __str__(self) -> str:
         return f"{self.method}: WARNING: AdditionFailureWarning: {self.args[0]}"
 
+@public
 class SubtractionFailureWarning(RuntimeWarning):
     """
     Warns you about attempting to subtract a Storage instance by a dictionary, and vice versa.
@@ -67,6 +71,7 @@ class SubtractionFailureWarning(RuntimeWarning):
     def __str__(self) -> str:
         return f"{self.method}: WARNING: SubtractionFailureWarning: {self.args[0]}"
 
+@public
 class CastWarning(SyntaxWarning):
     """
     Warns you about attempting to pass a key argument as something other than a string.
@@ -78,7 +83,26 @@ class CastWarning(SyntaxWarning):
     def __str__(self) -> str:
         return f"{self.method}: WARNING: CastWarning: {self.args[0]}"
 
+@private
+def _next[**P, R]() -> Callable[[Callable[P, R]], Callable[P, R]]:
+    """
+    Custom decorator decorating kms-semver2.0.0 features.
+    Any decorated object is not accesible until `kms.nextgen` is set to `True`.
 
+    ## Arguments
+    None.
+    """
+    def decorator(func: Callable[P, R]) -> Callable[P, R]:
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            if not getattr(sys.modules["key_multivalue_storage"], "nextgen", False):
+                raise TypeError(f"module `{func.__module__}` has no attribute `{func.__name__}`. "+
+                                "Did you forget to set `kms.nextgen` to `True`?")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@private
 def _deprecated_arg[**P, R](arg_name: str,
                             message: str | None = None
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:

@@ -28,25 +28,29 @@ __lazy_modules__ = ["sys",
                     "rich.tree",
                     "rich.traceback",
                     "io",
-                    "os"]
+                    "os",
+                    "Storage",
+                    "Load",
+                    "Edit",
+                    "Delete"
+]
 
-# Built-ins
+## Built-ins
 import sys
 import warnings as std_warnings
 import inspect
 from typing import Any, Callable
 
-# Third-party
+## Third-party
 from rich.console import Console, Group
 from rich.syntax import Syntax
 from rich.panel import Panel
 from rich.markdown import Markdown
 from rich.tree import Tree
 from rich.traceback import install
+from public import public, private
 
-
-
-# First-party
+## First-party
 # Modules
 from . import storage
 from . import load
@@ -59,42 +63,50 @@ from .load import Load
 from .edit import Edit
 from .delete import Delete
 
-# Utilities
+# Custom Warnings and Exceptions
+# TODO in v2.0: merge utils.warnings into utils.exceptions
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
-from .utils import warnings as kms_warnings
+from .utils import kms_warnings
 from .utils import enums
-
-warnings = kms_warnings
-
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
-from .utils.warnings import DeleteWarning, AdditionFailureWarning, SubtractionFailureWarning, CastWarning
+from .utils.warnings import (
+    DeleteWarning,
+    AdditionFailureWarning,
+    SubtractionFailureWarning,
+    CastWarning
+)
 from .utils.enums import Encoding
 
-__version__ = "v1.3.1.20260812"
-__version_internal__ = "kms-v1.3.1/2026.08.12"
+# Package Metadata
+__version__ = "v1.4.0.20261024a1.dev0"
+__version_internal__ = "kms-v1.4.0a0.dev0/2026.10.24"
 __author__ = "Boss_1s"
 __license__ = "GPLv2"
 
-kms = storage
-key_multivalue_storage = storage
+# Aliases
+warnings = kms_warnings
+kms = storage # TODO: Pending Deprecation, prob v1.4.0a2
+key_multivalue_storage = storage # TODO: Pending Deprecation, prob v1.4.0a2
 
-__all__ = [
-    "Storage", # main class object Storage
-    "Load", # Load class
-    "Edit", # Edit class
-    "Delete", # Delete class
-    "exceptions", # custom exceptions
-    "kms_warnings", # custom warnings
-    "warnings",
-    "KeyNotFoundError",
-    "NoInstantiationError",
-    "DeleteWarning",
-    "AdditionFailureWarning",
-    "SubtractionFailureWarning",
-    "CastWarning",
-    "Encoding"
-]
+public(
+    storage=storage,
+    load=load,
+    edit=edit,
+    delete=delete,
+    Storage=Storage,
+    Load=Load,
+    Edit=Edit,
+    Delete=Delete,
+    enums=enums,
+    Encoding=Encoding,
+    KeyNotFoundError=KeyNotFoundError,
+    NoInstantiationError=NoInstantiationError,
+    DeleteWarning=DeleteWarning,
+    AdditionFailureWarning=AdditionFailureWarning,
+    SubtractionFailureWarning=SubtractionFailureWarning,
+    CastWarning=CastWarning
+)
 
 std_warnings.filterwarnings("always",
                         category=PendingDeprecationWarning,
@@ -105,40 +117,47 @@ std_warnings.filterwarnings("always",
 
 install(show_locals=True)
 
-# NOTE: Warn in like v1.5 or smth
+nextgen: bool = False
+
+# TODO: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
-#              "The last major content update will be kms-v1.6, most "+
+#              "The last minor update for this series will be kms-v1.6, most "+
 #              "likely around the time kms-v2.1 comes out. Please "+
-#              "stay tuned to avoid version compatibility conflicts.",
+#              "stay tuned and upgrade when possible to avoid missing out on the latest features.",
 #              PendingDeprecationWarning
 #             )
 
-def help() -> None: #pylint: disable=redefined-builtin
-    """Beautiful help panel created with Rich."""
-    def _add_to_tree(tree: Tree, method: Callable[..., Any]) -> None:
-        """
-        Add a method to the tree with its signature and docstring.
+@private
+def _add_to_tree(tree: Tree, *methods: Callable[..., Any]) -> None:
+    """
+    Add a method to the tree with its signature and docstring.
 
-        ### Args
-            tree (Tree): The tree to which the method will be added.
-            method (Callable[..., Any]): The method to add to the tree.
-        """
-        annotation_str: str = '('
+    ### Args
+        tree (Tree): The tree to which the method will be added.
+        methods (Callable[..., Any]): The methods to add to the tree.
+    """
+    from types import SimpleNamespace
+
+    for method in methods:
+        annot: str = '('
         for arg, typ in method.__annotations__.items():
             if arg == 'return':
-                if annotation_str.endswith(", "):
-                    annotation_str = annotation_str[:-2]
-                annotation_str += f") -> {typ}"
-            else:
-                annotation_str = annotation_str + f"{arg}: {typ}"
-                if inspect.signature(method).parameters[arg]:
-                    default = inspect.signature(method).parameters[arg].default
-                    if default is not inspect.Parameter.empty:
-                        annotation_str += f"={default}"
-                annotation_str += ", "
+                annot = annot[:-2] if annot.endswith(", ") else annot
+                annot += f") -> {typ}"
+                continue
+            annot = annot + f"{arg}: {typ}"
+            params = inspect.signature(method).parameters.get(
+                arg,
+                SimpleNamespace(**{"default": inspect.Parameter.empty})
+            )
+            if params.default is not inspect.Parameter.empty:
+                annot += f"={params.default}"
+            annot += ", "
 
-        signature = f"def {method.__name__}{annotation_str}: ..,."
-        docstring = Markdown(str(method.__doc__)) if method.__doc__ else "[red]No docstring available.[/]"
+        signature = f"def {method.__name__}{annot}: ..."
+        docstring = Markdown(
+            str(method.__doc__)
+        ) if method.__doc__ else "[red]No docstring available.[/]"
 
         tree.add(
             Group(
@@ -148,45 +167,52 @@ def help() -> None: #pylint: disable=redefined-builtin
             guide_style="red"
         )
 
-    import io, os
+@private
+class _RawConsole(): #pylint: disable=too-few-public-methods
+    @staticmethod
+    def print(*text: Any, sep: str = ' '): #pylint: disable=redefined-builtin
+        import os
+        full_text: str = ''
+        for i in text:
+            full_text += str(i)
+            full_text += sep
+        raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
+        os.write(1, raw_bytes)
 
-    class _RawConsole():
-        @staticmethod
-        def print(*text: Any, sep: str = ' '):
-            full_text: str = ''
-            for i in text:
-                full_text += str(i)
-                full_text += sep
-            raw_bytes = full_text.encode('utf-8', errors='surrogateescape')
-            os.write(1, raw_bytes)
+@private
+def _make_safe_console() -> Console | _RawConsole:
+    """
+    Return a Console that will not raise UnicodeEncodeError when stdout uses a
+    legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
+    sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
+    construct the Console to write to that wrapper. Fall back to a no-color
+    console on unexpected failures.
+    """
 
-    def _make_safe_console() -> Console | _RawConsole:
-        """
-        Return a Console that will not raise UnicodeEncodeError when stdout uses a
-        legacy encoding (e.g. cp1252). If stdout.encoding is non-UTF-8, wrap
-        sys.stdout.buffer with a UTF-8 TextIOWrapper(errors='replace') and
-        construct the Console to write to that wrapper. Fall back to a no-color
-        console on unexpected failures.
-        """
-        try:
-            enc = (sys.stdout.encoding or "")
-            if "utf" in str(enc).lower():
-                return Console()
-        except Exception as e:
-            std_warnings.warn(str(e), RuntimeWarning)
-            # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
+    import io
 
-        try:
-            # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
-            # encoding and replace errors to avoid raising.
-            safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-            return Console(file=safe_out, force_terminal=False)
-        except Exception as e:
-            std_warnings.warn(str(e), RuntimeWarning)
-            # Last-resort fallback: a console without color/advanced rendering so
-            # we avoid control characters that some terminals might mishandle.
-            return _RawConsole()
+    try:
+        enc = (sys.stdout.encoding or "")
+        if "utf" in str(enc).lower():
+            return Console()
+    except Exception as e:
+        std_warnings.warn(str(e), RuntimeWarning)
+        # If sys.stdout.encoding access fails for any reason, fall through to safe wrapper.
 
+    try:
+        # sys.stdout.buffer must be a binary buffer. Wrap it with utf-8
+        # encoding and replace errors to avoid raising.
+        safe_out = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+        return Console(file=safe_out, force_terminal=False)
+    except Exception as e:
+        std_warnings.warn(str(e), RuntimeWarning)
+        # Last-resort fallback: a console without color/advanced rendering so
+        # we avoid control characters that some terminals might mishandle.
+        return _RawConsole()
+
+@public
+def help() -> None:
+    """Beautiful help panel created with Rich."""
     console = _make_safe_console()
 
     orange: str = "#ff5533"
@@ -362,3 +388,23 @@ def help() -> None: #pylint: disable=redefined-builtin
         library,
         sep="\n"
     )
+
+@public
+@warnings._next()
+def test_nextgen() -> bool:
+    """
+    Method to test the functionality of activating nextgen features.
+
+    If is seems like the attribute `nextgen` is not working, try running this method.
+
+    Be sure to wrap this test in a try-except block to catch the TypeError that is raised when
+    `nextgen` is not set to `True`.
+    """
+    try:
+        print("Success! kms NextGen features are activated.")
+        return nextgen
+    except NameError as e:
+        raise RuntimeError("The attribute `nextgen` does not exist in the key_multivalue_storage " +
+                           "namespace. This is most likely a problem with the module's end, not "+
+                           "yours. Try uninstalling and reinstalling key_multivalue_storage."
+        ) from e

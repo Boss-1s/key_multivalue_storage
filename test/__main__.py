@@ -2,16 +2,41 @@
 Run all kms tests.
 
 ### Usage
+
 In your terminal, run:
 ```sh
 git clone https://github.com/boss-1s/key_multivalue_storage kms
 cd kms
 uv sync --dev
-python test/
 ```
+
+**For coverage, run:**
+
+```sh
+coverage run test && coverage xml && coverage report
+```
+
+Make sure you have ryanluker.vscode-coverage-gutters installed in
+VSCode to view the coverage live while developing.
+
+**To just test, run:**
+
+```sh
+python test
+```
+
+This will automatically run all tests in the `test/` directory.
+*If the above command dosent work, try running with `a` or `all` as an argument.*
+***If that still dosent work, run `python test/__main__.py`.***
+
+**See
+[docs](https://boss-1s.github.io/key_multivalue_storage/Development#python-test-arg-kms-semver130b0)
+for more information.**
 """
+# TODO: Add nextgen tests to docs after release of a0
 #pylint: disable=exec-used,consider-using-with
 import os
+import re
 import sys
 import time
 import argparse # TODO in kms-tester-semver0.1.0: better argument parsing
@@ -68,12 +93,7 @@ def main(c: Console) -> None:
             "test/test-meta.py",
             "test/test-exceptions.py",
             "test/test-enums.py",
-            "test/test-fix-26-and-27.py",
-            "test/test-fix-14.py",
-            "test/test-fix-67.py",
-            "test/test-fix-76.py",
-            "test/test-fix-80.py",
-            "test/test-fix-84.py"
+            "test/test-nextgen.py",
         ]
 
         _run_tests(c, tests)
@@ -88,6 +108,16 @@ def main(c: Console) -> None:
                         "test/test-load.py",
                         "test/test-edit.py",
                         "test/test-delete.py"
+                    ]
+
+                    _run_tests(c, tests)
+                elif sys.argv[2].lower() == '1.4':
+                    tests = [
+                        "test/test-storage.py",
+                        "test/test-load.py",
+                        "test/test-edit.py",
+                        "test/test-delete.py",
+                        "test/test-nextgen.py"
                     ]
 
                     _run_tests(c, tests)
@@ -110,6 +140,8 @@ def main(c: Console) -> None:
             _run_tests(c, ["test/test-exceptions.py"])
         case "enums":
             _run_tests(c, ["test/test-enums.py"])
+        case "nextgen":
+            _run_tests(c, ["test/test-nextgen.py"])
         case "diff":
             try:
                 os.environ["OLDTAG"] = sys.argv[2]
@@ -169,6 +201,71 @@ def main(c: Console) -> None:
             os.environ["SSH_EMAIL"] = sys.argv[4]
             os.environ["reconfig_ssh_key_clearall"] = str(int(clearall))
             subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
+        case 'post_release':
+            # pylint: disable=pointless-string-statement
+            # NOSONAR
+            """i = 0
+            # Passsword stuff here is practice before implementing issue #99
+            while i < 3:
+                password_attempt = getpass.getpass(
+                    "Please enter the admin password to use this command: ", echo_char="*"
+                )
+                salt = getpass.getpass("Please enter the salt to use for this password: ",
+                                       echo_char="*"
+                )
+                # If salt looks like 128-bit hash, turn it into plain text
+                if re.match(r"^[0-9a-f]{16}$", salt):
+                    salt = bytes.fromhex(salt).decode("utf-8", errors="ignore")
+
+                password_hash = hashlib.pbkdf2_hmac(
+                    "sha256",
+                    password_attempt.encode(),
+                    salt.encode(),
+                    600_000,
+                    32
+                ).hex()
+                if hmac.compare_digest(
+                    password_hash,
+                    "PBKDF2$PBKDF2WithHmacSHA256$600000$u3/qcYoesU0GqgY1Y6frBw==$RnZ15bZvMe2zU5ePWCg/wwMMCwQtz1Prtgh88fjO4Pw="
+                ):
+                    del password_attempt
+                    del salt
+                    del password_hash
+                    break
+                del password_attempt
+                del salt
+                del password_hash
+                c.print("[red]Incorrect password. Please try again.[/]")
+                i += 1
+            else:
+                raise ValueError("Too many incorrect password attempts. Exiting.")"""
+            c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
+            try:
+                v = sys.argv[2]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a version to use."
+                ) from e
+            try:
+                n = sys.argv[3]
+            except IndexError as e:
+                raise ValueError(
+                    "Please provide a name to use."
+                ) from e
+            try:
+                d = sys.argv[4]
+            except IndexError as e:
+                c.print("[yellow]No directory depth provided. Defaulting to 4[/]")
+                d = "4"
+
+            subprocess.run(["python",
+                            "test/automation/post-release.py",
+                            "--version", v,
+                            "--name", n,
+                            "--dir_depth", d,
+                            "--verbose"],
+                            check=True,
+                            capture_output=True)
         case _:
             raise ValueError(
                 "Invalid argument. Available arguments: a, all, general, meta, diff, "+

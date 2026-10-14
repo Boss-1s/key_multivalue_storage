@@ -2,20 +2,85 @@
 
 **JSON storage wrapper and editor.** Created with love by Boss_1s.
 
+<img width="100" height="100" alt="kms logo" src="https://github.com/user-attachments/assets/aff8b51a-8dde-4485-8f8f-9c4e14490f01" />
+
 Once upon a time, this was just a small project to solve a problem: the over-steep learning curve for [scratchattach](https://github.com/TimMcCool/scratchattach)'s database functionality. Now, I have decided to make it a library, something with humble beginnings with big hopes in its future.
 
 My mission now: a *lightweight* storage wrapper library that can be used *anytime and anywhere*, regardless of memory limits, sandbox limits, or usage limits.
 
-![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14-purple?style=for-the-badge)
-[![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)
-[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)
-[![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)
-[![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://pypi.org/project/key-multivalue-storage/#history)
+![CPython](https://img.shields.io/badge/CPython-3.12%20%7C%203.13%20%7C%203.14%20%7C%203.15-purple?style=for-the-badge)<br><br>
+[![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)<br>
+[![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)<br>
+[![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)<br><br>
+[![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://pypi.org/project/key-multivalue-storage/#history)<br>
 
 ### It is __strongly__ recommended to learn Python before using kms. The best environment to learn in is CPython 3.12 for this library.
 
 > [!note]
 > Please do note that throughout this repository, the library `key-multivalue-storage` may also be referred to as its repo/package name (`key_multivalue_storage`) or its abbreviation (`kms`).
+
+
+[(skip to TOC)](#documentation)<br>
+[(skip to usage)](#installation)
+
+-------
+
+## 🚀 What's New in `kms-semver1.3.2`
+
+### 💡 Features & Automation
+* **Version Bumping:** Added a post-release script and automatic reminders to bump development versions (#153).
+* **Release Verification:** Added automated checks to ensure the latest test deployment succeeds before completing a release (#153).
+* **Verbose Logging:** Expanded release automation output for easier debugging.
+
+### 🪲 Bug Fixes
+* **PATCHED UNMITIGATED BREAKING CHANGE.** See [`kms-v1.3.2/2026.10.12`](https://boss-1s.github.io/key_multivalue_storage/CHANGELOG#-v13220261012--kms-v13220261012).
+* **Workflow Tagging:** Forced release tags onto the specific commits that modify the version number.
+* **Release Categorization:** Corrected development builds to register as `pre-alpha` instead of `beta`.
+* **Fail-Safe Checks:** Blocked scripts from continuing silently if required version environment variables are missing.
+* **Formatting:** Fixed the layout format for release commit messages.
+
+### ⏰ Infrastructure & CI
+* **Backports:** Integrated multiple workflow stability fixes and commits backporting from the `semver1.4.x` branch.
+* **Permissions:** Expanded release script access to read Actions runs and automatically generate version-bump issues.
+* **Security & Actions:** Pinned third-party workflow actions (`webfactory/ssh-agent`, `astral-sh/setup-uv`, `softprops/action-gh-release`) to specific commits.
+
+### 📢 Upcoming Roadmap
+* **`kms-semver1.3.3`:** Expected November 7th, 2026 (focusing on upstream backports and refactors).
+* **`kms-semver1.3.4`:** Expected December 5th, 2026.
+* **`kms-semver1.3.5`:** Expected December 21st, 2026.
+
+🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**
+
+---
+
+## 🚀 What's New in `kms-semver1.4.0a0`
+
+> [!important]
+> `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
+
+### 💡 Features & Automation
+* **Public API Cleanup:** Added `atpublic`-based visibility markers across the package and type stubs for a cleaner public/private API surface.
+* **Storage Improvements:** Added `Storage.update()` and support for slice deletion with `del storage[start:stop]`.
+* **Testing Improvements:** Expanded `kms.help()` coverage and folded older issue-related tests into the main suite.
+* **Release Automation:** Improved nightly and release workflows so version generation and branch validation are more reliable.
+
+### 🪲 Bug Fixes
+* **Slice Deletion Fix:** Corrected `Storage.__delitem__` so integer and slice deletion follow the correct logic.
+* **Workflow Fixes:** Resolved branch detection, deployment checks, and syntax issues in the automation workflows.
+* **Compatibility Fixes:** Fixed `atpublic` metadata/type errors and cleaned up stale storage tests.
+
+### ⏰ Infrastructure & CI
+* **Branch & Deployment Stability:** Improved validation for supported `semver1.x` branches and pull request deployment checks.
+* **Python Test Environment:** Updated the test runner to CPython `3.15.0`.
+* **Dependency Refresh:** Updated linting, docs, and test tooling across the `semver1.4.x` branch.
+
+> [!important]
+> Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
+
+<!--🔗 **[Full Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)**-->
+🔗 **[Working Changelog](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...semver1.4.x)**
+
+-------
 
 ## Documentation
 - [**Documentation**](Documentation)
@@ -74,7 +139,7 @@ Storage.auto_delete_self = True
 # Storage.store()
 ```
 - **Loading a stored object by a top level key and loading all the top level keys of a JSON file:**
-```py
+```pycon
 >>> Storage.Load.by_key("database.json", "my_top_level_key")
 Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "myothersk"="anotherval"])
 >>> Storage.Load.keys("database.json")
@@ -84,47 +149,47 @@ Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "m
 > [*See more about loading here.*](Documentation#storageload)
 
 - **Editing a subkey's name and value within the JSON file:**
-```py
+```pycon
 >>> Storage.Edit.propkey("database.json", # file_path
                          "my_top_level_key", # top_lv_key
                          "mysubkey", # oldpropkey
                          "newkey" # newpropkey
                          noexist_ok = True # Creates a new subkey with the new subkey name if the old subkey name did not exist
                         )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue", "myothersk: anotherval"]
 >>> Storage.Edit.propval("database.json", # file_path
                          "my_top_level_key", # top_lv_key
                          "myothersk", # propkey
                          "wow!" # newval
                         )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue", "myothersk: wow!"]
 ```
 > [!TIP]
 > [*See more about editing here.*](Documentation#storageedit)
 
 - **Deleting a subkey-value pair within the JSON file:**
-```py
+```pycon
 >>> Storage.Delete.by_propkey("database.json", # file_path
                               "my_top_level_key", # top_level_key
                               "myothersk" # property_key
                              )
->>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue"]
 ```
 > [!TIP]
 > [*See more about deleting here.*](Documentation#storagedelete)
 
 - **Adding and subtracting two `Storage` instances:**
-```py
+```pycon
 >>> # Adding instances combines the two instances, as long as the top level key is the same.
->>> addStorage = Storage("combine", sk1="val1") + Storage("combine", sk2="val2")
->>> print(addStorage)
+... addStorage = Storage("combine", sk1="val1") + Storage("combine", sk2="val2")
+... print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1", "sk2"="val2"])
 >>> # Subtracting instances remove any exact same key-value pairs from the two instances, as long as the top level key is the same.
->>> subStorage = Storage("combine", sk1="val1", sk2="val2") - Storage("combine", sk2="val2")
->>> print(addStorage)
+... subStorage = Storage("combine", sk1="val1", sk2="val2") - Storage("combine", sk2="val2")
+... print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 ```
 > [!TIP]
