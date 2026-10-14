@@ -538,4 +538,4 @@ omit = [
 ]
 
 [tool.uv.sources]
-dill = { git = "https://github.com/uqfoundation/dill", rev = "192bcc197e5d8ac62c95e2ec2c381811dd137fc4" }
+dill = { git = "https://github.com/uqfoundation/dill", rev = "9a71f8e79b5a386632d8a08d894c157ad2c94787" }
