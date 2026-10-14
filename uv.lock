@@ -271,7 +271,7 @@ wheels = [
 [[package]]
 name = "dill"
 version = "0.4.2.dev0"
-source = { git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4#192bcc197e5d8ac62c95e2ec2c381811dd137fc4" }
+source = { git = "https://github.com/uqfoundation/dill#9a71f8e79b5a386632d8a08d894c157ad2c94787" }
 
 [[package]]
 name = "distlib"
@@ -284,11 +284,11 @@ wheels = [
 
 [[package]]
 name = "filelock"
-version = "4.0.9"
+version = "4.1.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/70/51/2bc9e529f154fad99b6cd0073e609291eb32fd23581b32362d33d164d316/filelock-4.0.9.tar.gz", hash = "sha256:635e7d67fa92654eed444e75e9ca18426d34e77ad9c469bf4373f75a932f7b22", size = 251200, upload-time = "2026-10-01T23:09:14.029Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/35/c8/1d457d9150ff948f2ce6ada7715e0eeebbe5d3b58a45271a1e222474bcd3/filelock-4.1.1.tar.gz", hash = "sha256:7ba0927482c5a814b0a7f391d029ccdb8010f576f0a74c0dcde1811e8bc4c1b6", size = 563430, upload-time = "2026-10-11T16:11:54.373Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/4f/83454fafd628e1e7e1726d74e44fb2332be5969d04c6182ca1fecb6c580e/filelock-4.0.9-py3-none-any.whl", hash = "sha256:9287fd61b99a806e5202be29a83034c0808a1b9830e820537c2f5773981f7eeb", size = 110368, upload-time = "2026-10-01T23:09:12.391Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/8b/f837f52905395ba4510fe61f753c24833fb0a9c76e21267bb9f828b664a9/filelock-4.1.1-py3-none-any.whl", hash = "sha256:3f4a557945a7b0f95efeb1f432267affe5d45ac8ddde2aed1b97ebb62382c089", size = 132460, upload-time = "2026-10-11T16:11:52.753Z" },
 ]
 
 [[package]]
@@ -418,7 +418,7 @@ wheels = [
 
 [[package]]
 name = "key-multivalue-storage"
-version = "1.3.2.20261012"
+version = "1.3.3.20261107.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "rich" },
@@ -476,7 +476,7 @@ provides-extras = ["dev"]
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage", specifier = "==7.16.2" },
-    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4" },
+    { name = "dill", git = "https://github.com/uqfoundation/dill" },
     { name = "gitpython", specifier = "==3.2.0" },
     { name = "griffe", specifier = "==2.3.2" },
     { name = "md-toc", specifier = "==9.1.0" },
@@ -496,7 +496,7 @@ release = [
 ]
 test = [
     { name = "coverage", specifier = "==7.16.2" },
-    { name = "dill", git = "https://github.com/uqfoundation/dill?rev=192bcc197e5d8ac62c95e2ec2c381811dd137fc4" },
+    { name = "dill", git = "https://github.com/uqfoundation/dill" },
     { name = "griffe", specifier = "==2.3.2" },
     { name = "pylint", specifier = "==4.1.3" },
     { name = "pylint-per-file-ignores", specifier = "==4.0.0" },
@@ -575,11 +575,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.12.2"
+version = "4.13.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/17/c8/721b3855fe457da514fe249247d404b9b39c5d16532278f70ebaa6acf18b/platformdirs-4.12.2.tar.gz", hash = "sha256:eab5f70271a490ef74618bb314fbb86e3c7e82fa3b9c922c2ea0e0a1a155d329", size = 59353, upload-time = "2026-09-29T18:27:56.009Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/80/a8/66d45abadff219e36e2a824181b8f6a67e7ed4572934d6252c71c29d5731/platformdirs-4.13.0.tar.gz", hash = "sha256:1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0", size = 61094, upload-time = "2026-10-11T02:05:24.109Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d0/89/446044f33aba0348d35e433f56d12206d010a5281a1df54054d4cfb82388/platformdirs-4.12.2-py3-none-any.whl", hash = "sha256:29dbf06d96c500bc6bdbce75fb0a14d63279c93b1842f97e72a135b33e856983", size = 32457, upload-time = "2026-09-29T18:27:54.43Z" },
+    { url = "https://files.pythonhosted.org/packages/8d/15/1633010b26e88e872c93b67c0b6c5e174fb74cb6fb5c1472b4d51d4a8f22/platformdirs-4.13.0-py3-none-any.whl", hash = "sha256:3dbcf4cd708f21cf876c4eaa90e58412bc4f033d87143f41b1493ff77c25b7e1", size = 32724, upload-time = "2026-10-11T02:05:22.776Z" },
 ]
 
 [[package]]
@@ -651,14 +651,14 @@ wheels = [
 
 [[package]]
 name = "python-discovery"
-version = "1.6.1"
+version = "1.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0c/57/250bd238b966cece44328235eb85290045d059265fdaf7527a3a958123db/python_discovery-1.6.1.tar.gz", hash = "sha256:cf87d3627dfb4412437fdd5b13eae402607722998d21567993aedbc59b23c15e", size = 84338, upload-time = "2026-09-18T01:31:53.971Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b0/73/54993df8fc57e906dc9b7e01d1d9b0b2d3eb0ce3190639e33dccb12853f7/python_discovery-1.6.2.tar.gz", hash = "sha256:cd1738ca1d37c86ef9d0b654dd46fcee1e41c97c6add12575e8501ced39afdb4", size = 86921, upload-time = "2026-10-10T01:24:27.912Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/16/7d/e9ffbadfbf89c93848412d04594135c4ae8c1d37d9e053b9c3ed718fabc4/python_discovery-1.6.1-py3-none-any.whl", hash = "sha256:d43fcdef879fe795352bd13ccf8d185ba5a9f86f36cfcd00529f596e737442b3", size = 38664, upload-time = "2026-09-18T01:31:52.448Z" },
+    { url = "https://files.pythonhosted.org/packages/61/3b/50ed32583bfffa737df67d33b9c15d7b25df232c55ab606d059f610ef6ca/python_discovery-1.6.2-py3-none-any.whl", hash = "sha256:f0c697f95a3aaec4174a6e5e58f5885e25768684bafc76f1afde384709ebdcf2", size = 38912, upload-time = "2026-10-10T01:24:26.721Z" },
 ]
 
 [[package]]
@@ -785,7 +785,7 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "21.14.3"
+version = "21.14.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
@@ -794,7 +794,7 @@ dependencies = [
     { name = "platformdirs" },
     { name = "python-discovery" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/59/5ebdaa984350ae7ef1dc14b4d0bd618f6e0d3fb13e7b336939433eebf37b/virtualenv-21.14.3.tar.gz", hash = "sha256:cb5cd3a87f12a6cfdc0cef6bc8bead6138221767f7718e0c00fee5fb907f9858", size = 5464634, upload-time = "2026-10-01T22:55:31.895Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/dc/3f/935cf1757643381fb7f7cc98197b4bc119223d9c2cf37dc3b03ad2a4455f/virtualenv-21.14.7.tar.gz", hash = "sha256:5f427d56f39eb7e7447d641dd4b7ab1e9c92793f498f35f26da2e4972c5546ae", size = 5471741, upload-time = "2026-10-12T01:27:31.842Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/dc/33782ebe90eb4e582295642c5c13e874b5a8c9c75d482988c54f1c21a5d4/virtualenv-21.14.3-py3-none-any.whl", hash = "sha256:4acc848a57a3bdb2ae0873d0689664bccad2230784de3753f57128eb126d3934", size = 5487108, upload-time = "2026-10-01T22:55:29.913Z" },
+    { url = "https://files.pythonhosted.org/packages/52/5b/799c3e5b8e04d5fa1c9b61a4c1f5079603e747205c7311b92abd30283df5/virtualenv-21.14.7-py3-none-any.whl", hash = "sha256:3769219a308c5d2f093e7729621ad12a6346b5767a7ec4338414e2a0fb0c526b", size = 5487587, upload-time = "2026-10-12T01:27:29.37Z" },
 ]
