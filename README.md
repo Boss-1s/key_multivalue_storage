@@ -20,7 +20,8 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 💡 Features & Automation
 
-*
+* **Augmented Operators** -- `Storage` now officially supports usage of `+=`, `-=`, `&=`, `|=`, `>>=`, and `<<=` ([#333](https://GitHub.com/boss-1s/key_multivalue_storage/pull/333)).
+* 
 
 ### 🪲 Bug Fixes
 
