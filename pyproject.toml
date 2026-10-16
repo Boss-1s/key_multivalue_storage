@@ -519,7 +519,7 @@ dev = [
 ]
 release = [
     "md-toc==9.1.0",
-    "gitpython==3.2.0",
+    "gitpython==3.2.1",
     "packaging==26.3",
     "requests==2.34.2",
 ]
