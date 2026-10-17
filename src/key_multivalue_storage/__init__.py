@@ -68,6 +68,7 @@ from .delete import Delete
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import kms_warnings
+from .utils import enums
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
 from .utils.warnings import (
     DeleteWarning,
@@ -75,6 +76,7 @@ from .utils.warnings import (
     SubtractionFailureWarning,
     CastWarning
 )
+from .utils.enums import Encoding
 
 # Package Metadata
 __version__ = "v1.4.0.20261024a1.dev0"
@@ -96,6 +98,8 @@ public(
     Load=Load,
     Edit=Edit,
     Delete=Delete,
+    enums=enums,
+    Encoding=Encoding,
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
     DeleteWarning=DeleteWarning,

@@ -92,6 +92,7 @@ def main(c: Console) -> None:
             "test/test-delete.py",
             "test/test-meta.py",
             "test/test-exceptions.py",
+            "test/test-enums.py",
             "test/test-nextgen.py",
         ]
 
@@ -137,6 +138,8 @@ def main(c: Console) -> None:
             _run_tests(c, ["test/test-meta.py"])
         case "exceptions" | "warnings":
             _run_tests(c, ["test/test-exceptions.py"])
+        case "enums":
+            _run_tests(c, ["test/test-enums.py"])
         case "nextgen":
             _run_tests(c, ["test/test-nextgen.py"])
         case "diff":
@@ -266,7 +269,7 @@ def main(c: Console) -> None:
         case _:
             raise ValueError(
                 "Invalid argument. Available arguments: a, all, general, meta, diff, "+
-                "exceptions, warnings, help_shortcut, reset_env"
+                "exceptions, warnings, help_shortcut, reset_env, enums"
             )
 
 if __name__ == "__main__":
