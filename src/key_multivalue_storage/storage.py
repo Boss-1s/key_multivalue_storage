@@ -7,6 +7,16 @@ You can create instances of this class using the format
 `Storage(key, subkey=subvalue...)` and storing it in a
 JSON file with `.store(file_path)`.
 
+## Methods
+
+- `Storage(key: str, **kwargs: Any)` -> Create an instance of the Storage class to store.
+See `Storage` docstring for more specific information about it.
+- `create_storage(key: str, **kwargs: Any) -> Storage` -> Create an instance of the Storage class.
+(New in kms-semver1.4.0a1!)
+- `create_storage_from_dict(data_dict: dict[str, dict[str, Any]], raw: bool=False) -> Storage` -> Create
+instance(s) of `Storage` directly from a dictionary. Useful if usage of unpacking is not desired. (
+New in kms-semver1.4.0a1!)
+
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
 """
@@ -45,7 +55,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
-from .utils import NoInstantiationError, metadata as meta
+from .utils import NoInstantiationError, metadata as meta, _encode
 from .utils.warnings import (CastWarning,
                              AdditionFailureWarning,
                              SubtractionFailureWarning,
@@ -166,145 +176,6 @@ class Storage(metaclass=meta._StorageMeta):
 
         cls.__new__ = raise_error()
 
-    @private
-    @staticmethod
-    def _encode(string: Any) -> int:
-        """
-        Encodes a value using a simple character-matching system.
-
-        ### Arguments
-        - `string: Any` - The object to be encoded.
-
-        ### Output
-        - `int` - The encoded object.
-        """
-
-        if not isinstance(string, str):
-            string = str(string)
-
-        char: str = """
-        `1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxz
-        awq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><
-        """
-
-        i = 0
-        output = ''
-        while i < len(string):
-            currentchar = string[i]
-            i2: int = 0
-            i3 = ''
-            while i3 != currentchar:
-                i3 = char[i2]
-                i2 += 1
-                if i3 == currentchar:
-                    break
-            output = f"{output}{len(str(i2))}{str(i2)}"
-            i += 1
-        return int(output)
-
-    @private
-    @staticmethod
-    def _decode(string: str | int) -> str:
-        """
-        Decodes a value encoded with `Storage._encode`.
-
-        ### Arguments
-        - `string: str | int`: The encoded object.
-
-        ### Output
-        - `str`: The decoded object.
-        """
-
-        if not isinstance(string, (str, int)):
-            raise TypeError("Expected encoded string or integer for decoding.")
-
-        to_decode = str(string)
-
-        char: str = """
-        `1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edx
-        zawq~+_)(*&^T$%@!#REDFGSWAQZXVCBNHYUJMKI<>LOP:{}|"?><
-        """
-
-        i = 0
-        output: str = ""
-        while i < len(to_decode):
-            totalchars = int(to_decode[i])
-            print(f"_decode: DEBUG: totalchars {totalchars}")
-            currentchar = int(to_decode[i + 1 : i + 1 + totalchars])
-            print(f"_decode: DEBUG: currentchar={currentchar}")
-            # Bounds Check
-            if not 0 <= currentchar-1 < len(char):
-                raise ValueError(
-                    f"Decoding error: Index {currentchar - 1} out of range of characters."
-                )
-            output = f"{output}{char[currentchar-1]}"
-            i += 1+totalchars
-        return output
-
-    @private
-    def _to_dict(self, encode: bool = False) -> dict[str, dict[str, Any]]:
-        """
-        Prepares a key-multivalue pair (`Storage` object) for JSON dumping.
-
-        ## Arguements
-        `encode: bool = False`: Whether to encode the values.
-
-        ## Output
-        `dict[str, dict[str, Any]]` - The `Storage` object in a `dict` representation.
-        """
-
-        if encode:
-            encoded_values: dict[str, Any] = {}
-            for prop_key, prop_value in self.values.items():
-                encoded_values[prop_key] = self._encode(prop_value)
-
-            return {
-                self.key: encoded_values
-            }
-
-        return {
-            self.key: self.values
-        }
-
-    @classmethod
-    @private
-    @deprecated("This private method will be removed soon.")
-    def _from_dict(cls,
-                   data_dict: dict[str, dict[str, Any]],
-                   raw: bool=False
-                  ) -> Storage:
-        """
-        Extracts data from a dict into seperate key-multivalue pairs,
-        decoding values in the process.
-        """
-
-        print(f"_from_dict: DEBUG: data_dict={data_dict}")
-        print(f"_from_dict: DEBUG: raw={raw}")
-
-        if not isinstance(data_dict, dict) or len(data_dict) != 1:
-            raise ValueError("Expected a dictionary with a single top-level key.")
-
-        top_lv_key: str = next(iter(data_dict.keys()))
-        og_nested_values: dict[str, Any] = data_dict[top_lv_key]
-
-        print(f"_from_dict: DEBUG: top_lv_key={top_lv_key}")
-        print(f"_from_dict: DEBUG: og_nested_values={og_nested_values}")
-
-        if not isinstance(og_nested_values, dict):
-            raise ValueError("Expected nested values to be a dictionary.")
-
-        if not raw:
-            for prop_key, encoded_value in og_nested_values.items():
-                if isinstance(encoded_value, int):
-                    try:
-                        og_nested_values[prop_key] = cls._decode(string=encoded_value)
-                    except ValueError:
-                        continue
-                else:
-                    continue
-
-        return cls(top_lv_key, **og_nested_values)
-
     @public
     @classmethod
     def help(cls, method: Callable[..., Any] | None = None) -> None:
@@ -372,11 +243,17 @@ class Storage(metaclass=meta._StorageMeta):
                           "invalid JSON. Overwriting.", SyntaxWarning)
             all_data = {}
 
+        # FIXME: block should be moved to before load
         if not file_path.endswith(".json"):
             warnings.warn(f"'{file_path}' does not end in '.json'. Appending '.json'...")
             file_path = str(file_path) + ".json"
 
-        all_data.update(self._to_dict(encode))
+        if encode:
+            all_data.update({
+                self.key: _encode(self.values)
+            })
+        else:
+            all_data.update(dict(self))
 
         try:
             with open(file_path, "w", encoding="utf-8") as f:
@@ -1366,3 +1243,40 @@ class Storage(metaclass=meta._StorageMeta):
             case '.values':
                 rtn = str(list(self.values.values()))
         return rtn
+
+@public
+def create_storage(key: Any, **kwargs: Any) -> Storage:
+    """
+    Creates a `Storage` object with the given key and values.
+
+    ## Arguments
+    - `key: Any`: The top-level key for the `Storage` object.
+    - `**kwargs: Any`: The key-value pairs to be stored in the `Storage` object.
+
+    ## Output
+    - `Storage`: A new `Storage` object with the specified key and values.
+    """
+    return Storage(key, **kwargs)
+
+@public
+def create_storage_from_dict(data_dict: dict[Any, dict[Any, Any]]) -> list[Storage]:
+    """
+    Creates a `Storage` object from a dictionary.
+
+    ## Arguments
+    - `data_dict: dict[Any, dict[Any, Any]]`: Dictionary containing the top-level key and its
+    associated key-value pairs (a monokey-multivalue dict structure).
+
+    ## Output
+    - `list[Storage]`: A list of `Storage` objects created from the provided dictionary.
+    - Raises `ValueError` if the input dictionary is not in the expected format.
+    """
+    if not isinstance(data_dict, dict) or len(data_dict) == 0:
+        raise ValueError("Expected a dictionary.")
+
+    _return_list = []
+    for k, v in data_dict.items():
+        if not isinstance(v, dict):
+            raise ValueError("Expected nested values to be a dictionary.")
+        _return_list.append(Storage(k, **v))
+    return _return_list
