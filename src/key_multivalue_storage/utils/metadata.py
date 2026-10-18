@@ -63,7 +63,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.18"
 
     @property
     def version(cls) -> str:
@@ -73,7 +73,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/18"
 
     @property
     def Load(cls):
@@ -182,7 +182,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.18"
 
     @property
     def version(cls) -> str:
@@ -192,7 +192,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/18"
 
     def __repr__(cls) -> str:
         """
@@ -227,7 +227,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.18"
 
     @property
     def version(cls) -> str:
@@ -237,7 +237,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/18"
 
     def __repr__(cls) -> str:
         """
@@ -272,7 +272,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.14"
 
     @property
     def version(cls) -> str:
@@ -282,7 +282,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/14"
 
     def __repr__(cls) -> str:
         """
