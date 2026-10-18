@@ -65,7 +65,7 @@ from .delete import Delete
 
 # Custom Warnings and Exceptions
 # TODO in v2.0: merge utils.warnings into utils.exceptions
-from .utils import exceptions as exceptions
+from .utils import exceptions as exceptions, nextgen
 # NOTE: Deprecate in 1.5
 from .utils import kms_warnings
 from .utils.exceptions import KeyNotFoundError, NoInstantiationError
@@ -101,7 +101,8 @@ public(
     DeleteWarning=DeleteWarning,
     AdditionFailureWarning=AdditionFailureWarning,
     SubtractionFailureWarning=SubtractionFailureWarning,
-    CastWarning=CastWarning
+    CastWarning=CastWarning,
+    nextgen=nextgen,
 )
 
 std_warnings.filterwarnings("always",
@@ -112,8 +113,6 @@ std_warnings.filterwarnings("always",
                         module="key_multivalue_storage")
 
 install(show_locals=True)
-
-nextgen: bool = False
 
 # TODO: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
