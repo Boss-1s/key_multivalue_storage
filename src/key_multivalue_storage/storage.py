@@ -35,7 +35,7 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.4: import logger
-from typing import Any, Generator
+from typing import Any, Generator, Self
 from types import TracebackType
 from functools import total_ordering
 from collections.abc import Callable, KeysView, Mapping
@@ -45,6 +45,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
+from .utils.config import _nextgen as nextgen
 from .utils import NoInstantiationError, metadata as meta
 from .utils.warnings import (CastWarning,
                              AdditionFailureWarning,
@@ -1282,7 +1283,7 @@ class Storage(metaclass=meta._StorageMeta):
         self.values.update(kwargs)
 
     @public
-    def __enter__(self) -> dict:
+    def __enter__(self) -> dict | Self:
         """
         Defines beginning interaction with the 'with' keyword.
 
@@ -1303,6 +1304,27 @@ class Storage(metaclass=meta._StorageMeta):
         kms-semver2.0.0 to match convention.
         """
         # print("__enter__: INFO: Acquring storage from object")
+        if nextgen:
+            __doc__ = """WARNING! You are using a NextGen feature. Things are subject to change
+                      and are not guarenteed to be backwards compatible or work in the first place.
+                      Use at your own risk.
+
+                      Defines beginning interaction with the 'with' keyword.
+
+                      Use `with Storage(...) as s:` in operations instead of explicitly calling
+                      `Storage.__enter__()`.
+
+                      ## Arguments
+                      None.
+
+                      ## Outputs
+                      - `Self`: The Storage object itself.
+
+                      ## Notes
+                      - This method officially replaces the deprecated `auto_delete_self`
+                      attribute, which will be removed in kms-semver2.0.0.
+                      """
+            return self
         return dict(self.values)
 
     @public
