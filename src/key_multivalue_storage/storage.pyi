@@ -21,7 +21,7 @@ from collections.abc import KeysView
 import uuid
 from functools import total_ordering
 from types import TracebackType
-from typing import Any, Callable, Generator, overload
+from typing import Any, Callable, Generator, overload, Self
 from typing_extensions import deprecated
 
 from .utils import metadata as meta
@@ -154,7 +154,7 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
     @public
     def __call__(self, **kwargs: SubVal) -> None: ...
     @public
-    def __enter__(self) -> dict[SubKey, SubVal]: ...
+    def __enter__(self) -> dict[SubKey, SubVal] | Self: ...
     @public
     def __exit__(self, exc_type: type[BaseException] | None, exc_val: BaseException | None, exc_tb: TracebackType | None) -> bool: ...
     @public
