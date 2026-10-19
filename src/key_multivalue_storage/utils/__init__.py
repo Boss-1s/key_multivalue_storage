@@ -14,9 +14,6 @@ from .exceptions import (
     NoInstantiationError
 )
 
-nextgen: bool = False
-"Boolean controlling whether NextGen features should be activated or not."
-
 public(
     kms_warnings=kms_warnings,
     exceptions=exceptions,
@@ -26,5 +23,4 @@ public(
     CastWarning=CastWarning,
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
-    nextgen=nextgen,
 )

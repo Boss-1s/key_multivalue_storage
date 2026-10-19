@@ -6,6 +6,8 @@ import key_multivalue_storage as kms
 
 install(show_locals=True)
 
+print(f"NextGen is currently {kms.nextgen}")
+
 try:
     kms.test_nextgen()
 except TypeError as e:
@@ -16,3 +18,5 @@ except Exception as e:
 kms.nextgen = True
 
 kms.test_nextgen()
+
+print(f"NextGen is now {kms.nextgen}")
