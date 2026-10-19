@@ -250,7 +250,7 @@ This update will not have a deprecation cycle.
 - **`alpha0`: 2026/10/12**
 - `alpha1`: 2026/10/24
 - `alpha2`: 2026/11/07
-- `alpha3`: 2026/11/28
+- `alpha3`: ~~2026/11/28~~ **2026/11/21** _(changed on 2026/10/18)_
 - **`beta0`: 2026/12/05** *(No features allowed past this point)*
 - `beta1`: 2026/12/13
 - `beta2`: 2026/12/21
