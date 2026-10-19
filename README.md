@@ -22,6 +22,11 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 *
 
+#### NextGen Preview Cycle A1
+
+* Implemented feature [#74](https://github.com/Boss-1s/key_multivalue_storage/issues/74) -- `__enter__` now returns `self` (specifically `Self@Storage`) instead of `self.values`
+* Implemented refactor [#97](https://github.com/Boss-1s/key_multivalue_storage/issues/97) -- `__iter__` functions exactly as `dict.__iter__()` - iterating over the subkeys of the `Storage` object exclusively. Use `Storage.values.items()` for the pairs or `Storage.values.values()` for the values. **Iterations will NOT return the top level key anymore.**
+
 ### 🪲 Bug Fixes
 
 *
@@ -80,7 +85,7 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
-The development package includes Pylint for testing and Griffe for finding breaking changes. You can see every test script in the repo's [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/test/). 
+The development package includes Pylint for testing and Griffe for finding breaking changes. You can see every test script in the repo's [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/test/).
 
 [*See more about tests here.*](https://boss-1s.github.io/key_multivalue_storage/Development)
 
