@@ -13,6 +13,7 @@ __lazy_modules__ = ["sys",
                     "builtins",]
 
 import functools
+import difflib
 import inspect
 import sys
 from collections.abc import Callable
@@ -84,20 +85,25 @@ class CastWarning(SyntaxWarning):
         return f"{self.method}: WARNING: CastWarning: {self.args[0]}"
 
 @private
-def _next[**P, R]() -> Callable[[Callable[P, R]], Callable[P, R]]:
+def _next[**P, R](
+    disabled: bool = False
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """
     Custom decorator decorating kms-semver2.0.0 features.
     Any decorated object is not accesible until `kms.nextgen` is set to `True`.
 
-    ## Arguments
-    None.
+    Setting `disabled` to `True` will do the opposite -- the decorated object will be
+    accessible only when `kms.nextgen` is set to `False`.
     """
+
     def decorator(func: Callable[P, R]) -> Callable[P, R]:
         @functools.wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            if not getattr(sys.modules["key_multivalue_storage"], "nextgen", False):
+            enable = not getattr(sys.modules["key_multivalue_storage"], "nextgen", False)
+            disable = not enable
+            if (disabled and disable) or (not disabled and enable):
                 raise TypeError(f"module `{func.__module__}` has no attribute `{func.__name__}`. "+
-                                "Did you forget to set `kms.nextgen` to `True`?")
+                                f"Did you forget to set `kms.nextgen` to `{not disabled}`?")
             return func(*args, **kwargs)
         return wrapper
     return decorator
@@ -123,8 +129,17 @@ def _deprecated_arg[**P, R](arg_name: str,
 
             # Check if the deprecated argument name is present in the passed arguments
             if arg_name in bound_args.arguments:
-                msg = message or f"Argument '{arg_name}' in '{func.__name__}' is deprecated."
-                warnings.warn(msg, DeprecationWarning, stacklevel=2) #type: ignore
+                if not getattr(sys.modules["key_multivalue_storage"], "nextgen", False):
+                    msg = message or f"Argument '{arg_name}' in '{func.__name__}' is deprecated."
+                    warnings.warn(msg, DeprecationWarning, stacklevel=2) #type: ignore
+                else:
+                    cm = difflib.get_close_matches(arg_name,
+                                    sig.parameters.keys(),
+                                    n=1,
+                                    cutoff=0.5)
+                    raise TypeError(f"{func.__name__}() got an unexpected keyword argument '{arg_name}'"+
+                                    (f". Did you mean '{cm[0]}'? " if cm else " ")+
+                                    "Did you accidently turn on `kms.nextgen`?")
 
             return func(*args, **kwargs)
         return wrapper

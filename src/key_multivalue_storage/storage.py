@@ -129,7 +129,8 @@ class Storage(metaclass=meta._StorageMeta):
     # Define global variables: indent, encode option, and automatic object release from memory
     indent: int = 4
     encode: bool = True
-    auto_delete_self: bool = False # DEPRECATED
+    if not nextgen:
+        auto_delete_self: bool = False # DEPRECATED
 
     @public
     def __init__(self,
@@ -346,8 +347,8 @@ class Storage(metaclass=meta._StorageMeta):
         ## Arguments
         - `file_path: str`: The path to the JSON file. If there is no file extension provided,
         ".json" will automatically be appended.
-        - `instant_delete: bool | None = None`: Whether or not to delete the object from memory
-        after storing. Useful in memory-limited applications.
+        - `instant_delete: bool | None = None`: Deprecated; use `with Storage(...) as ...: pass`
+        instead.
         - `indent: int | None = None`: An integer representing the JSON file's indent.
         - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in
         applications requiring privacy.
@@ -387,8 +388,8 @@ class Storage(metaclass=meta._StorageMeta):
         except IOError as e:
             print(f"store: ERROR: Error writing to file '{file_path}': {e}")
 
-        if instant_delete: # DEPRECATED
-            del self
+        if not nextgen and instant_delete: # DEPRECATED
+                del self
 
     @public
     def to_dict(self) -> dict[str, dict[str, Any]]:
@@ -1372,12 +1373,12 @@ class Storage(metaclass=meta._StorageMeta):
                 rtn = str({self.key: {**self.values}}) # full storage
             case '.dictt':
                 rtn = str(self.values) #truncated top level key
-            case '.tuplef':
+            case '.tuplef' if not nextgen:
                 # DEPRECATED: remove in 2.0
                 warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
                               "removed in v2.0.", DeprecationWarning)
                 rtn = str(tuple({self.key: self.values})) # NOSONAR
-            case '.tuplet':
+            case '.tuplet' if not nextgen:
                 # DEPRECATED: remove in 2.0
                 warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
                               "removed in v2.0.", DeprecationWarning)
