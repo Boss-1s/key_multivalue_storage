@@ -1203,25 +1203,51 @@ class Storage(metaclass=meta._StorageMeta):
 
     @public
     def __iter__(self) -> Generator[
-            str | uuid.UUID | dict[str,Any],
+            Any | dict[str, Any],
             None,
             None
-        ]:
+        ] | Generator[Any, None, None]:
         """
         Defines how Storage objects are iterated over.
 
         Use the `for` keyword for operations instead of explicily calling
         `Storage.__iter__()`, i.e.
         ```
-        for item in Storage: pass
+        for item in db: pass
         ```
 
         ## Arguments
         None.
+
+        ## Logic
+
+        First, the top level key is yielded. Then, each key-value pair in self.values is yielded
+        as a dict.
         """
-        yield self.key
-        for k, v in self.values.items():
-            yield {k: v}
+        if nextgen:
+            __doc__ = """
+            Defines how Storage objects are iterated over.
+
+            Use the `for` keyword for operations instead of explicily calling
+            `Storage.__iter__()`, i.e.
+            ```
+            for item in db: pass
+            ```
+
+            ## Arguments
+            None.
+
+            ## Logic
+
+            You are currently using the NextGen logic of `__iter__` for Storage
+            objects. Each key of self.values is returned. The top level key
+            will never be yielded in the iteration.
+            """
+            yield from self.values
+        else:
+            yield self.key
+            for k, v in self.values.items():
+                yield {k: v}
 
     @public
     def __getattr__(self, name: Any) -> None:
