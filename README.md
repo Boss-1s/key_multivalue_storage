@@ -27,6 +27,21 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 * Implemented feature [#74](https://github.com/Boss-1s/key_multivalue_storage/issues/74) -- `__enter__` now returns `self` (specifically `Self@Storage`) instead of `self.values`
 * Implemented refactor [#97](https://github.com/Boss-1s/key_multivalue_storage/issues/97) -- `__iter__` functions exactly as `dict.__iter__()` - iterating over the subkeys of the `Storage` object exclusively. Use `Storage.values.items()` for the pairs or `Storage.values.values()` for the values. **Iterations will NOT return the top level key anymore.**
 
+##### How to access NextGen preview mode
+
+* Using the following snippet, this will activate NextGen preview mode.
+
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+
+* Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+
+* The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+
+* See more here: https://boss-1s.github.io/key_multivalue_storage/Roadmap#nextgen-preview
+
 ### 🪲 Bug Fixes
 
 *
