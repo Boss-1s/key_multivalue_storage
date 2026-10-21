@@ -37,6 +37,8 @@ from rich.console import Console
 from rich.text import Text
 from public import public, private
 
+from .warnings import _next
+
 @private
 class _KmsMeta(type):
     """
@@ -56,64 +58,88 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     Metaclass for Storage module
     """
     @property
+    # @_next(True) -- Maybe in b0, still need time to think about it
     def semver(cls) -> str:
         """Current semnatic version of this module."""
         return "v1.4.0"
 
     @property
+    # @_next(True) -- Maybe in b0, still need time to think about it
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.19"
+        return "2026.10.21"
 
     @property
+    # @_next(True) -- Maybe in b0, still need time to think about it
     def version(cls) -> str:
         """Current full version of this module."""
         return "kms-"+cls.semver+"/"+cls.calver
 
     @property
+    # @_next(True) -- Maybe in b0, still need time to think about it
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/19"
+        return "2026/10/21"
 
     @property
+    @_next(True)
+    @deprecated("Secondary classes no longer belong to the `Storage` namespace. "+
+                "Consider importing them directly instead. This path of accessibility "+
+                "will be removed in 2.0.")
     def Load(cls):
         from key_multivalue_storage import load
         return load.Load
 
     @property
+    @_next(True)
+    @deprecated("Secondary classes no longer belong to the `Storage` namespace. "+
+                "Consider importing them directly instead. This path of accessibility "+
+                "will be removed in 2.0.")
     def Edit(cls):
         from key_multivalue_storage import edit
         return edit.Edit
 
     @property
+    @_next(True)
+    @deprecated("Secondary classes no longer belong to the `Storage` namespace. "+
+                "Consider importing them directly instead. This path of accessibility "+
+                "will be removed in 2.0.")
     def Delete(cls):
         from key_multivalue_storage import delete
         return delete.Delete
 
     @property
+    @_next(True)
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
-                "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+                "Consider using `kms.<WarningName>` instead. This path of accessibility "+
+                "will be removed in 2.0.")
     def CastWarning(cls):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.CastWarning
 
     @property
+    @_next(True)
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
-                "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+                "Consider using `kms.<WarningName>` instead. This path of accessibility "+
+                "will be removed in 2.0.")
     def SubtractionFailureWarning(cls):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.SubtractionFailureWarning
 
     @property
+    @_next(True)
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
-                    "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+                    "Consider using `kms.<WarningName>` instead. This path of accessibility "+
+                    "will be removed in 2.0.")
     def AdditionFailureWarning(cls):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.AdditionFailureWarning
 
     @property
+    @_next(True)
     @deprecated("Warnings no longer belong to the `Storage` namespace. "+
-                    "Consider using `kms.<WarningName>` instead. This will be removed in 2.0.")
+                    "Consider using `kms.<WarningName>` instead. This path of accessibility "+
+                    "will be removed in 2.0.")
     def DeleteWarning(cls):
         from key_multivalue_storage import kms_warnings
         return kms_warnings.DeleteWarning
@@ -138,6 +164,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         return string
 
     @property
+    @_next(True)
     @deprecated("The metadata var name 'VERSION' has been changed "+
                 "to 'semver' since kms-semver1.3. Consider using that instead."+
                 "This will be removed in 2.0.")
@@ -145,6 +172,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         return cls.semver
 
     @property
+    @_next(True)
     @deprecated("The metadata var name 'DATE_VERSION' has been changed "+
                 "to 'calver' since kms-semver1.3. Consider using that instead."+
                 "This will be removed in 2.0.")
@@ -152,6 +180,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
         return cls.calver
 
     @property
+    @_next(True)
     @deprecated("The metadata var name 'LAST_UPDATE' has been changed "+
                 "to 'last_update' since kms-semver1.3. Consider using that instead."+
                 "This will be removed in 2.0.")
