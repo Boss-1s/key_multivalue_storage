@@ -32,6 +32,15 @@ with Storage("my_key", foo="bar") as storage:
     assert dict(storage) == {"my_key": {"foo": "bar"}}
 
 print("`__enter__` test passed.")
+print("Testing `__iter__`")
+
+for item in (db := Storage("my_key", foo="bar", baz="baq", qux="quux", quuz="corge")):
+    assert item != db.key
+    assert item in db.values
+    assert item not in list(db.values.values())
+
+print("`__iter__` test passed.")
+del db
 print("Testing deprecations")
 
 assert kms.nextgen, "NextGen should be enabled for this test."
