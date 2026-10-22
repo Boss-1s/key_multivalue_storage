@@ -53,5 +53,5 @@
             }
         }
     },
-    "postCreateCommand": "asdf plugin add python && asdf install python 3.12.5 && asdf install python 3.14.9 && asdf install python 3.15.1 && asdf global python 3.15 && pip install uv && uv sync --dev && source .venv/bin/activate && echo \"Setup complete! Thanks for contributing to kms!\""
+    "postCreateCommand": "asdf plugin add python && asdf install python 3.12.5 && asdf install python 3.14.9 && asdf install python 3.15.1 && pip install uv && uv sync --dev && source .venv/bin/activate && echo \"Setup complete! Thanks for contributing to kms!\""
 }
