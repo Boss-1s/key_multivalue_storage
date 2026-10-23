@@ -184,3 +184,9 @@ otest.json
 **/.bundle/**
 **/vendor/bundle/**
 **/_site/**
+
+# VSCode Tunnel stuff
+vscode_cli.tar.gz
+.gitignore
+.tool-versions
+code
