@@ -7,6 +7,7 @@ inheirit from Exception/BaseException.
 """
 
 from __future__ import annotations
+import sys
 from typing import Any
 
 from public import public
@@ -41,3 +42,27 @@ class NoInstantiationError(TypeError):
     **On the `kms-semver1.x` series, this functionality is currently *broken*.** To see it fixed,
     set the `kms.nextgen` attribute to `True`.
     """
+
+class BadBitwiseOperation(TypeError):
+    """
+    Custom exception raised on invalid or internal errors within bitwise operations.
+
+    Example: if attempting to perform AND (&) and an empty set is resulted, this would be raised.
+
+    Warning: This exception is exclusive to NextGen Preview; keeping `kms.nextgen` off will
+    treat this exception as nonexistent.
+    """
+    def __init__(self, message="") -> None:
+        if not getattr(sys.modules["key_multivalue_storage"], "nextgen", False):
+            raise TypeError(f"module `{self.__module__}` has no attribute `{ \
+                                self.__class__.__name__ \
+                            }`. Did you forget to set `kms.nextgen` to `{ \
+                                not getattr(sys.modules['key_multivalue_storage'],
+                                            'nextgen',
+                                            False) \
+                            }`?")
+        if message == "":
+            self.message = "Invalid or internal error occurred within bitwise operation."
+        else:
+            self.message = message
+        super().__init__(self.message)

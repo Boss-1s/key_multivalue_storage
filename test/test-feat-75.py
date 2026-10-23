@@ -35,3 +35,60 @@ assert db.values == {"a": {"nested": "value"}, "b": 2, "c": 3, "d": 4, "e": 5, "
                      "undefined": [10, 11, 12]}
 assert isinstance(db, Storage)
 assert db5 == {"a": {"nested": "value"}, "b": 2}
+
+# __isub__ #
+db = Storage("test", a=1, b=2, c=3)
+db2 = Storage("test", b=2, c=3, d=4)
+db3 = {"c": 3, "d": 4, "e": 5}
+
+db -= db2
+
+assert db.values == {"a": 1}
+assert isinstance(db, Storage)
+assert db2.values == {"b": 2, "c": 3, "d": 4}
+
+db -= db3
+
+assert db.values == {"a": 1}
+assert isinstance(db, Storage)
+assert db3 == {"c": 3, "d": 4, "e": 5}
+
+# __itruediv__ #
+db = Storage("test", a=1, b=2, c=3)
+db2 = Storage("test", b=2, c=3, d=4)
+db3 = {"c": 3, "d": 4, "e": 5}
+
+db /= db2
+
+assert db.values == {"a": 1}
+assert isinstance(db, Storage)
+assert db2.values == {"b": 2, "c": 3, "d": 4}
+
+db /= db3
+
+assert db.values == {"a": 1}
+assert isinstance(db, Storage)
+assert db3 == {"c": 3, "d": 4, "e": 5}
+
+# __iand__ #
+
+db = Storage("test", a=1, b=2, c=3)
+db2 = Storage("test", b=2, c=3, d=4)
+db3 = {"c": 3, "d": 4, "e": 5}
+
+db &= db2
+
+assert isinstance(db, Storage)
+assert db.values == {"b": 2, "c": 3}
+assert isinstance(db, Storage)
+assert db2.values == {"b": 2, "c": 3, "d": 4}
+
+db &= db3
+
+assert isinstance(db, Storage)
+assert db.values == {"c": 3}
+assert isinstance(db, Storage)
+assert db3 == {"c": 3, "d": 4, "e": 5}
+
+assert isinstance(db, Storage)
+assert db3 == {"c": 3, "d": 4, "e": 5}

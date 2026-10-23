@@ -1,11 +1,12 @@
 import warnings
 from rich.markdown import Markdown
-from rich.traceback import install, Traceback
+from rich.traceback import install
 from rich import print
 import key_multivalue_storage as kms
 from key_multivalue_storage.edit import Edit
 from key_multivalue_storage.storage import Storage
 from key_multivalue_storage.delete import Delete
+from key_multivalue_storage.utils.exceptions import BadBitwiseOperation
 
 install(show_locals=True)
 
@@ -41,9 +42,27 @@ for item in (db := Storage("my_key", foo="bar", baz="baq", qux="quux", quuz="cor
 
 print("`__iter__` test passed.")
 del db
+print("Testing BadBitwiseOperation exception")
+try:
+    raise BadBitwiseOperation("This is a test for BadBitwiseOperation.")
+except BadBitwiseOperation as e:
+    print(f"Caught expected BadBitwiseOperation: {e}")
+except Exception as e:
+    assert False, e
+
+kms.nextgen = False
+
+try:
+    raise BadBitwiseOperation("This is a test for BadBitwiseOperation.")
+except TypeError as e:
+    print(f"Caught expected TypeError: {e}")
+except Exception as e:
+    assert False, e
+
 print("Testing deprecations")
 
-assert kms.nextgen, "NextGen should be enabled for this test."
+if not kms.nextgen:
+    kms.nextgen = True
 
 db = Storage("my_key", foo="bar")
 
@@ -132,7 +151,7 @@ except Exception as e:
     raise AssertionError(f"An unexpected exception occurred: {e}") from e
 
 try:
-    # access path deprecated since 1.4.0a2
+    # access path deprecated since 1.3.0
     Storage.DeleteWarning
 except TypeError as e:
     pass
@@ -140,7 +159,7 @@ except Exception as e:
     raise AssertionError(f"An unexpected exception occurred: {e}") from e
 
 try:
-    # access path deprecated since 1.4.0a2
+    # access path deprecated since 1.3.0
     Storage.AdditionFailureWarning
 except TypeError as e:
     pass
@@ -148,7 +167,7 @@ except Exception as e:
     raise AssertionError(f"An unexpected exception occurred: {e}") from e
 
 try:
-    # access path deprecated since 1.4.0a2
+    # access path deprecated since 1.3.0
     Storage.SubtractionFailureWarning
 except TypeError as e:
     pass
@@ -156,7 +175,7 @@ except Exception as e:
     raise AssertionError(f"An unexpected exception occurred: {e}") from e
 
 try:
-    # access path deprecated since 1.4.0a2
+    # access path deprecated since 1.3.0
     Storage.CastWarning
 except TypeError as e:
     pass
