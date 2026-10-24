@@ -21,6 +21,8 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 > [!important]
 > `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
 
+*Release Date:* 2026/10/26
+
 ### 💡 Features & Automation
 
 *
@@ -54,8 +56,10 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 *
 
 ### 📢 Upcoming Roadmap
-* **v1.4.0a1:** Expected October 24th, 2026.
-* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+* **v1.4.0a2:** Expected November 7th, 2026.
+* **v1.4.0b0:** December 5th, 2026 is the target date for the first beta, and the beginning of feature-freeze.
+* **v1.4.0rc0:** The first, and most likely only, release candidate is expected on December 27th, 2026.
+* **v1.4.0 Final:** January 3rd, 2027 is currently planned to be the stable release date.
 
 > [!important]
 > Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
