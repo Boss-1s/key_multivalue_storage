@@ -25,7 +25,8 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 💡 Features & Automation
 
-*
+* **Augmented Operators** -- `Storage` now officially supports usage of `+=`, `-=`, `&=`, `|=`, `>>=`, and `<<=` ([#333](https://GitHub.com/boss-1s/key_multivalue_storage/pull/333)).
+* 
 
 #### NextGen Preview Cycle A1
 
@@ -53,7 +54,8 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### ⏰ Infrastructure & CI
 
-*
+* _Introduced in `kms-semver1.4.0a1`_ -- Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been **deprecated** in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way **will be completely removed in `kms-semver2.0.0`.**
+* 
 
 ### 📢 Upcoming Roadmap
 * **v1.4.0a2:** Expected November 7th, 2026.

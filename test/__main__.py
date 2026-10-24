@@ -93,6 +93,7 @@ def main(c: Console) -> None:
             "test/test-meta.py",
             "test/test-exceptions.py",
             "test/test-nextgen.py",
+            "test/test-feat-75.py",
         ]
 
         _run_tests(c, tests)

@@ -69,7 +69,11 @@ from .delete import Delete
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import kms_warnings
-from .utils.exceptions import KeyNotFoundError, NoInstantiationError
+from .utils.exceptions import (
+    KeyNotFoundError,
+    NoInstantiationError,
+    BadBitwiseOperation
+)
 from .utils.warnings import (
     DeleteWarning,
     AdditionFailureWarning,
@@ -405,6 +409,7 @@ public(
     AdditionFailureWarning=AdditionFailureWarning,
     SubtractionFailureWarning=SubtractionFailureWarning,
     CastWarning=CastWarning,
+    BadBitwiseOperation=BadBitwiseOperation,
 )
 
 class _Module(ModuleType): #pylint: disable=too-few-public-methods
