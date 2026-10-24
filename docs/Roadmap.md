@@ -150,7 +150,7 @@ No new features will be introduced in this update.
 
 #### Bug Fixes
 
-- No bugs to fixed...._yet_...
+- Fix discrepancy between `kms.storage`'s type stub and implementation
 
 #### Graceful Deprecation cycle 1.3.3
 
@@ -248,7 +248,7 @@ This update will not have a deprecation cycle.
 > The dates below are subject to change.
 
 - **`alpha0`: 2026/10/12**
-- `alpha1`: 2026/10/24
+- `alpha1`: ~~2026/10/24~~ **2026/10/26** _(changed on 2026/10/23)_
 - `alpha2`: 2026/11/07
 - `alpha3`: ~~2026/11/28~~ **2026/11/21** _(changed on 2026/10/18)_
 - **`beta0`: 2026/12/05** *(No features allowed past this point)*
@@ -287,7 +287,7 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * None for now...
 
 #### Graceful Deprecation cycle 1.4.0
-* None for now...
+* _(a1)_ Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`.
 
 ---
 
