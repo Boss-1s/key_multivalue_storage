@@ -23,6 +23,7 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 🪲 Bug Fixes
 
+* _(dev)_ Fixed bug where SonarCloud scans were mapped to the head branch instead of the base branch (see `kms-semver1.4.0a1`)
 *
 
 ### ⏰ Infrastructure & CI
@@ -79,7 +80,7 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
-The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.3.x/test/). 
+The development package includes Pylint and Griffe for testing and finding breaking changes. You can see the tests in the [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.3.x/test/).
 
 [*See more about tests here.*](https://boss-1s.github.io/key_multivalue_storage/Development)
 
