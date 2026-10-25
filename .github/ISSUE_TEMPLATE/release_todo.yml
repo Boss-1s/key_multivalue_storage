@@ -13,12 +13,12 @@ body:
       # Release To-Do
 
       Working list of [`kms-semverx.x.x`] [alpha/beta] releases' to-dos. Closed when all [alpha/beta] releases are pushed.
-      
+
       The releases in question are:
       - [the releases]
-      
+
       ## Statuses
-      
+
       - _IP_: **Informally Proposed**. Item has been informally proposed somewhere (usually [the roadmap](https://boss-1s.github.io/key_multivalue_storage/Roadmap)); there is no formal reference to the item at this point in time.
       - _P_: **Proposed** (Needs Triage). Item has been proposed formally in a GitHub issue but has no official development status.
       - _A_: **Accepted**. Item has been accepted and will be in development.
@@ -26,32 +26,32 @@ body:
       - _C_: **Completed**. Item has been completed sucessfully.
       - _R_: **Rejected**. Item has been rejected, and will not be worked on.
       - _NA_: **Non-applicable**. Item cannot be assigned a status at this time.
-      
+
       ## Fixes
-      
+
       ### Source
-      
+
       - [All source code changes]
-      
+
       ### Tests
-      
+
       - [All test changes]
-      
+
       ### Automations
-      
+
       - [All changes to automations]
-      
+
       ### Other
-            
+
       ## In-Progress Pull Requests
-      
+
       > [!tip]
       > Click a PR below to see which issue it is linked to.
-      
+
       - [All PRs connected to an TP issue from above]
-      
+
       ## Deprecations
-      
+
       - [Copy-paste the roadmap atp]
-      
+
       ## Other notes

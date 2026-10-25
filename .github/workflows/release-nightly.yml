@@ -4,8 +4,8 @@ description: >
   is generated to be released as a nightly link.
 
 on:
-  workflow_dispatch: 
-  workflow_call: 
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
@@ -24,13 +24,13 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: 3.14
-          
+
       - name: Get Date and Time
         uses: kaven-universe/github-action-current-date-time@v1.5.0
         id: time
         with:
           format: "YYYYMMDDHHmm"
-          
+
       - name: Download Build Tools & Build Package
         run: |
           python -m pip install --upgrade pip
@@ -88,5 +88,4 @@ jobs:
       - name: deploy to env
         run: |
           echo Build sucessful.
-          echo Deploying to env 'nightly'.          
-
+          echo Deploying to env 'nightly'.
