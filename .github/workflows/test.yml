@@ -136,7 +136,7 @@ jobs:
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
-            -Dsonar.coverage.exclusions=./src/key_multivalue_storage/_storage_op_logic.py
+            -Dsonar.coverage.exclusions=**/src/key_multivalue_storage/_storage_op_logic.py
           projectBaseDir: .
 
       - name: SonarQube Quality Gate check
