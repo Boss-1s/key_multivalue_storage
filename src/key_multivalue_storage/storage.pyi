@@ -120,7 +120,11 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
     @public
     def __or__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal] | int: ... # pyright: ignore[reportIncompatibleMethodOverride]
     @public
+    def __ior__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Self | int: ... # pyright: ignore[reportIncompatibleMethodOverride]
+    @public
     def __xor__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Storage[TopKey, SubKey, SubVal] | int: ...
+    @public
+    def __ixor__(self, other: Storage[TopKey, SubKey, SubVal] | dict[SubKey, SubVal]) -> Self | int: ...
     @public
     def __lshift__(self, other: int) -> Storage[TopKey, SubKey, SubVal] | int: ...
     @public
