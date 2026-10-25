@@ -11,7 +11,8 @@ from .warnings import (
 
 from .exceptions import (
     KeyNotFoundError,
-    NoInstantiationError
+    NoInstantiationError,
+    BadBitwiseOperation
 )
 
 public(
@@ -23,4 +24,5 @@ public(
     CastWarning=CastWarning,
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
+    BadBitwiseOperation=BadBitwiseOperation,
 )
