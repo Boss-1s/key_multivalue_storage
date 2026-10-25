@@ -45,7 +45,7 @@ import warnings
 import difflib
 import builtins
 # TODO in v1.4: import logger
-from typing import Any, Generator
+from typing import Any, Generator, Self
 from types import TracebackType
 from functools import total_ordering
 from collections.abc import Callable, KeysView, Mapping
@@ -55,7 +55,13 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
-from .utils import NoInstantiationError, metadata as meta, _encode
+from .utils.config import _nextgen as nextgen
+from .utils import (
+    NoInstantiationError,
+    BadBitwiseOperation,
+    metadata as meta,
+    _encode
+)
 from .utils.warnings import (CastWarning,
                              AdditionFailureWarning,
                              SubtractionFailureWarning,
@@ -138,7 +144,8 @@ class Storage(metaclass=meta._StorageMeta):
     # Define global variables: indent, encode option, and automatic object release from memory
     indent: int = 4
     encode: bool = True
-    auto_delete_self: bool = False # DEPRECATED
+    if not nextgen:
+        auto_delete_self: bool = False # DEPRECATED
 
     @public
     def __init__(self,
@@ -215,8 +222,8 @@ class Storage(metaclass=meta._StorageMeta):
         ## Arguments
         - `file_path: str`: The path to the JSON file. If there is no file extension provided,
         ".json" will automatically be appended.
-        - `instant_delete: bool | None = None`: Whether or not to delete the object from memory
-        after storing. Useful in memory-limited applications.
+        - `instant_delete: bool | None = None`: Deprecated; use `with Storage(...) as ...: pass`
+        instead.
         - `indent: int | None = None`: An integer representing the JSON file's indent.
         - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in
         applications requiring privacy.
@@ -262,8 +269,8 @@ class Storage(metaclass=meta._StorageMeta):
         except IOError as e:
             print(f"store: ERROR: Error writing to file '{file_path}': {e}")
 
-        if instant_delete: # DEPRECATED
-            del self
+        if not nextgen and instant_delete: # DEPRECATED
+                del self
 
     @public
     def to_dict(self) -> dict[str, dict[str, Any]]:
@@ -324,6 +331,7 @@ class Storage(metaclass=meta._StorageMeta):
     # --- #
 
     _default_valueerror_msg: str = "Both instances must have the same top level key"
+    _default_badbitwiseoperation_msg: str = "No common keys found for intersection."
 
     @public
     def __str__(self) -> str:
@@ -522,6 +530,51 @@ class Storage(metaclass=meta._StorageMeta):
         return Storage(self.key, **_temp_dict)
 
     @public
+    def __iadd__(self,
+                other: Storage | dict[str, Any] | list[Any]) -> Self:
+        """
+        Defines augmented addition of Storage objects by Storage/dict objects.
+
+        Use the symbol `+=` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any] | list[Any]`: The object on the right hand-side of the
+        operand, from which self will be added with.
+
+        ## Output
+        - `None`: This method modifies the object in place and does not return a new object.
+
+        ## Logic
+        See `__add__` docstring for logic. The only difference is that this method modifies
+        the object in place instead of returning a new object.
+
+        Note that this method is functionally identical to
+        augmented set union/augmented bitwise AND (`&=`).
+        """
+
+        if not isinstance(other, (Storage, dict, list)):
+            return NotImplemented
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            self.values.update(other.values)
+
+        if isinstance(other, dict):
+            if any(isinstance(value, dict) for value in other.values()):
+                warnings.warn("Passing a nested dictionary may break the addition process.",
+                                RuntimeWarning)
+            warnings.warn(AdditionFailureWarning(method="__add__"))
+            self.values.update(other)
+
+        if isinstance(other, list):
+            warnings.warn(AdditionFailureWarning(method="__add__"))
+            self.values.update({"undefined": other})
+
+        return self
+
+    @public
     def __radd__(self,
                  other: Storage | dict[str, Any]) -> Storage:
         """
@@ -553,7 +606,7 @@ class Storage(metaclass=meta._StorageMeta):
         Storage constructor as **kwargs.
 
         Any values stored in `other` that are not in `self` will be lost. If you want to keep those
-        values, use `XOR` instead.
+        values, use `XOR` (^) instead.
         """
         if not isinstance(other, (dict, Storage)):
             return NotImplemented
@@ -581,6 +634,60 @@ class Storage(metaclass=meta._StorageMeta):
                 _temp_dict[akey] = _other_dict[akey]
 
         return Storage(self.key, **_temp_dict)
+
+    @public
+    def __isub__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self:
+        """
+        Defines augmented subtraction of Storage objects by Storage/dict objects.
+
+        Use the symbol `-=` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be subtracted by.
+
+        ## Output
+        - `Self`: A mutated `self` object containing the result of the subtraction.
+
+        ## Logic
+        How subtraction works here is first, we take the bitwise `AND` for both objects. After
+        that, we cycle through the set produced by the AND operation and inject the keys in that
+        set (and thier matching values) back into a temporary dict, which is then passed to the
+        Storage constructor as **kwargs.
+
+        Any values stored in `other` that are not in `self` will be lost. If you want to keep those
+        values, use `XOR` (^) instead.
+        """
+        if not isinstance(other, (dict, Storage)):
+            return NotImplemented
+
+        _skeys = set()
+        _other_dict = {}
+
+        if isinstance(other, Storage):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+            _skeys: set[str] = set(self.values.keys()) & set(other.values.keys())
+            _other_dict = other.values
+
+        elif isinstance(other, dict):
+            warnings.warn(SubtractionFailureWarning(method="__sub__"))
+            _skeys: set[str] = set(self.values.keys()) & set(other)
+            _other_dict = other
+
+        _temp_dict = dict(self.values)
+
+        for akey in _skeys:
+            if akey in _temp_dict:
+                del _temp_dict[akey]
+            else:
+                _temp_dict[akey] = _other_dict[akey]
+
+        self.values = _temp_dict
+        return self
 
     @public
     def __rsub__(self,
@@ -690,6 +797,36 @@ class Storage(metaclass=meta._StorageMeta):
             return returnlist
 
     @public
+    def __itruediv__(self,
+                    other: Storage | dict[str, Any]
+                   ) -> Self:
+        """
+        Defines **augmented true division** of Storage objects with other Storage objects/dicts.
+
+        Use the operand `/=` for operations.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be divided by.
+
+        ## Outputs
+        - `Self`: The mutated Storage object passed as `self` returned after division.
+
+        ## Logic
+        When you pass a Storage or a dict to the right-hand side
+        of the operand symbol, the values simply get subtracted.
+
+        The reason integer division is excluded in `/=` is because it is impractical - it
+        doesn't make sense for a Storage object to mutate into a list. Thus, it is not included
+        the logic here.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        return self.__isub__(other)
+
+    @public
     def __rtruediv__(self,
                      other: Storage | dict[str, Any]
                     ) -> Storage:
@@ -721,8 +858,12 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, `__and__` will not return `0` on empty intersections; rather,
+        it will raise a `kms.BadBitwiseOperation` instead.
         """
         if not isinstance(other, (Storage, dict)):
             return NotImplemented
@@ -733,17 +874,17 @@ class Storage(metaclass=meta._StorageMeta):
         if isinstance(other, type(self)):
             if self.key != other.key:
                 raise ValueError(self._default_valueerror_msg)
-
             _set_keys = set(self.values.keys()) & set(other.values.keys())
-            if not _set_keys:
-                return 0
             _values = other.values
 
         if isinstance(other, dict):
             _set_keys = set(self.values.keys()) & set(other)
-            if not _set_keys:
-                return 0
             _values = other
+
+            if not _set_keys:
+                if nextgen:
+                    raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
+                return 0
 
         _return_dict: dict = {}
         for k in _set_keys:
@@ -756,6 +897,36 @@ class Storage(metaclass=meta._StorageMeta):
         return Storage(self.key, **_return_dict)
 
     @public
+    def __iand__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self | int:
+        """
+        Defines using the AND (&) operator for set intersections between Storage objects and
+        other Storage objects or dictionaries.
+
+        Use the symbol `&=` for actual operations as opposed to `Storage.__iand__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the
+        operand, from which self will be intersected with.
+
+        ## Outputs
+        - `Self` - The `Storage` instance passed as `self` mutated with the intersected data.
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, `__iand__` will not return `0` on empty intersections; rather,
+        it will raise a `kms.BadBitwiseOperation` instead.
+        """
+        result = self.__and__(other)
+        if isinstance(result, Storage):
+            self.values = result.values
+            return self
+        return result
+
+    @public
     def __or__(self,
                other: Storage | dict[str, Any]
               ) -> Storage | int:
@@ -763,7 +934,7 @@ class Storage(metaclass=meta._StorageMeta):
         Defines using the OR (|) operator for set unions between Storage objects and other Storage
         objects or dictionaries.
 
-        Use the symbol `|` for actual operations as opposed to `Storage.__or__`.
+        Use the symbol `|` for actual operations as opposed to `Storage.__or__()`.
 
         ## Arguments
         - `self`: The object on the left-hand side of the operand.
@@ -772,8 +943,12 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, `__or__` will not return `0` on empty unions; rather,
+        it will raise a `kms.BadBitwiseOperation` instead.
         """
         if not isinstance(other, (Storage, dict)):
             return NotImplemented
@@ -793,6 +968,8 @@ class Storage(metaclass=meta._StorageMeta):
             _values = other
 
         if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         _return_dict: dict = {}
@@ -804,6 +981,35 @@ class Storage(metaclass=meta._StorageMeta):
                 _return_dict[_key] = _values[_key]
 
         return Storage(self.key, **_return_dict)
+
+    @public
+    def __ior__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self | int:
+        """
+        Defines the in-place OR (|) operator for bitwise operations with Storage instances.
+
+        Use `|=` in operations instead of explicitly calling `Storage.__ior__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the operand, from
+        which self will be unionized with.
+
+        ## Outputs
+        - `Self` - In most cases, the modified `Storage` instance will be returned.
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an OR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
+        """
+        result = self.__or__(other)
+        if isinstance(result, Storage):
+            self.values = result.values
+            return self
+        return result
 
     @public
     def __xor__(self,
@@ -822,8 +1028,12 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an XOR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
         """
         if not isinstance(other, (Storage, dict)):
             return NotImplemented
@@ -836,15 +1046,16 @@ class Storage(metaclass=meta._StorageMeta):
                 raise ValueError(self._default_valueerror_msg)
 
             _set_keys = set(self.values.keys()) ^ set(other.values.keys())
-            if not _set_keys:
-                return 0
             _values = other.values
 
         if isinstance(other, dict):
             _set_keys = set(self.values.keys()) ^ set(other)
-            if not _set_keys:
-                return 0
             _values = other
+
+        if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
+            return 0
 
         _return_dict: dict = {}
         for k in _set_keys:
@@ -855,6 +1066,65 @@ class Storage(metaclass=meta._StorageMeta):
                 _return_dict[k] = _values[k]
 
         return Storage(self.key, **_return_dict)
+
+    @public
+    def __ixor__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self | int:
+        """
+        Defines the in-place XOR (^) operator for bitwise operations with Storage instances.
+
+        Use `^=` in operations instead of explicitly calling `Storage.__ixor__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the operand, from
+        which self will be symmetrically differentiated by.
+
+        ## Outputs
+        - `Self` - In most cases, the modified `Storage` instance will be returned.
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an XOR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        _set_keys: set[Any] = set(self.values.keys())
+        _values: dict[Any, Any] = {}
+
+        if isinstance(other, type(self)):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+
+            _set_keys ^= set(other.values.keys())
+            _values = other.values
+
+        if isinstance(other, dict):
+            print(_set_keys, set(other))
+            _set_keys ^= set(other)
+            _values = other
+
+        if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
+            return 0
+
+        print(_set_keys)
+
+        _return_dict: dict = {}
+        for k in _set_keys:
+            k: str
+            if k in self.values:
+                _return_dict[k] = self.values[k]
+            if k in _values:
+                _return_dict[k] = _values[k]
+
+        self.values = _return_dict
+        return self
 
     @public
     def __lshift__(self,
@@ -873,7 +1143,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
 
         ## Logic
@@ -884,17 +1154,25 @@ class Storage(metaclass=meta._StorageMeta):
         the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
         edge of that cliff will be lost forever. Thankfully, your original reference will
         (hopefully) still be there in case anything goes very, very wrong...
+
+        ## Notes
+        - With NextGen Preview, attempting to left-shift beyond the available keys will raise a
+        `BadBitwiseOperation` exception, rather than returning 0.
         """
         if not isinstance(other, int):
             return NotImplemented
 
         if other > len(self.values.keys()):
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         try:
             _keys: list = list(self.values.keys())[other:]
 
             if not _keys:
+                if nextgen:
+                    raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
                 return 0
 
             _return_dict: dict = {}
@@ -905,7 +1183,9 @@ class Storage(metaclass=meta._StorageMeta):
 
             return Storage(self.key, **_return_dict)
 
-        except IndexError:
+        except IndexError as e:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg) from e
             return 0
 
     @public
@@ -925,7 +1205,7 @@ class Storage(metaclass=meta._StorageMeta):
 
     ## Outputs
     - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-    - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+    - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
     returning `False` or `None`.
 
     ## Logic
@@ -936,17 +1216,25 @@ class Storage(metaclass=meta._StorageMeta):
     the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
     edge of that cliff will be lost forever. Thankfully, your original reference will
     (hopefully) still be there in case anything goes very, very wrong...
+
+    ## Notes
+    - With NextGen Preview, attempting to right-shift beyond the available keys will raise a
+    `BadBitwiseOperation` exception, rather than returning 0
         """
         if not isinstance(other, int):
             return NotImplemented
 
         if other > len(self.values.keys()):
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         try:
             _keys: list = list(self.values.keys())[:-other]
 
             if not _keys:
+                if nextgen:
+                    raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
                 return 0
 
             _return_dict: dict = {}
@@ -957,7 +1245,9 @@ class Storage(metaclass=meta._StorageMeta):
 
             return Storage(self.key, **_return_dict)
 
-        except IndexError:
+        except IndexError as e:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg) from e
             return 0
 
     @public
@@ -1077,25 +1367,51 @@ class Storage(metaclass=meta._StorageMeta):
 
     @public
     def __iter__(self) -> Generator[
-            str | uuid.UUID | dict[str,Any],
+            Any | dict[str, Any],
             None,
             None
-        ]:
+        ] | Generator[Any, None, None]:
         """
         Defines how Storage objects are iterated over.
 
         Use the `for` keyword for operations instead of explicily calling
         `Storage.__iter__()`, i.e.
         ```
-        for item in Storage: pass
+        for item in db: pass
         ```
 
         ## Arguments
         None.
+
+        ## Logic
+
+        First, the top level key is yielded. Then, each key-value pair in self.values is yielded
+        as a dict.
         """
-        yield self.key
-        for k, v in self.values.items():
-            yield {k: v}
+        if nextgen:
+            __doc__ = """
+            Defines how Storage objects are iterated over.
+
+            Use the `for` keyword for operations instead of explicily calling
+            `Storage.__iter__()`, i.e.
+            ```
+            for item in db: pass
+            ```
+
+            ## Arguments
+            None.
+
+            ## Logic
+
+            You are currently using the NextGen logic of `__iter__` for Storage
+            objects. Each key of self.values is returned. The top level key
+            will never be yielded in the iteration.
+            """
+            yield from self.values
+        else:
+            yield self.key
+            for k, v in self.values.items():
+                yield {k: v}
 
     @public
     def __getattr__(self, name: Any) -> None:
@@ -1158,7 +1474,7 @@ class Storage(metaclass=meta._StorageMeta):
         self.values.update(kwargs)
 
     @public
-    def __enter__(self) -> dict:
+    def __enter__(self) -> dict | Self:
         """
         Defines beginning interaction with the 'with' keyword.
 
@@ -1179,6 +1495,27 @@ class Storage(metaclass=meta._StorageMeta):
         kms-semver2.0.0 to match convention.
         """
         # print("__enter__: INFO: Acquring storage from object")
+        if nextgen:
+            __doc__ = """WARNING! You are using a NextGen feature. Things are subject to change
+                      and are not guarenteed to be backwards compatible or work in the first place.
+                      Use at your own risk.
+
+                      Defines beginning interaction with the 'with' keyword.
+
+                      Use `with Storage(...) as s:` in operations instead of explicitly calling
+                      `Storage.__enter__()`.
+
+                      ## Arguments
+                      None.
+
+                      ## Outputs
+                      - `Self`: The Storage object itself.
+
+                      ## Notes
+                      - This method officially replaces the deprecated `auto_delete_self`
+                      attribute, which will be removed in kms-semver2.0.0.
+                      """
+            return self
         return dict(self.values)
 
     @public
@@ -1226,12 +1563,12 @@ class Storage(metaclass=meta._StorageMeta):
                 rtn = str({self.key: {**self.values}}) # full storage
             case '.dictt':
                 rtn = str(self.values) #truncated top level key
-            case '.tuplef':
+            case '.tuplef' if not nextgen:
                 # DEPRECATED: remove in 2.0
                 warnings.warn("The '.tuplef' format specifier has been deprecated and will be "+
                               "removed in v2.0.", DeprecationWarning)
                 rtn = str(tuple({self.key: self.values})) # NOSONAR
-            case '.tuplet':
+            case '.tuplet' if not nextgen:
                 # DEPRECATED: remove in 2.0
                 warnings.warn("The '.tuplet' format specifier has been deprecated and will be "+
                               "removed in v2.0.", DeprecationWarning)

@@ -40,7 +40,7 @@ class Load(metaclass=meta._LoadMeta):
     @public
     @classmethod
     def keys(cls, file_path: str) -> list[str] | None: ...
-    
+
     @public
     @classmethod
     def values(cls, file_path: str, key: Any, keys: bool = False, raw: bool = True) -> list[str] | None: ...

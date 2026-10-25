@@ -15,8 +15,13 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ## 🚀 What's New in `kms-semver1.4.0a1`
 
+> [!warning]
+> `kms-semver1.4.0a1` has been pushed by two days. Originally to be released on 2026/10/24, it will now be released on**2026/10/26.**
+
 > [!important]
 > `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.
+
+*Release Date:* 2026/10/26
 
 ### 💡 Features & Automation
 
@@ -47,7 +52,7 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 * New functions `kms.storage.create_storage()` and `kms.storage.create_storage_from_dict()`
 
     > Note that these functions are **module level functions.** They are not methods residing in `Storage`.
-    
+
     * `kms.storage.create_storage()` does the exact same as instantiating with `Storage(key, kwargs)`; it is used internally to avoid circular imports.
       ```py
       def create_storage(key: Any, **kwargs: Any) -> Storage: ...
@@ -56,20 +61,46 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
       ```py
       def create_storage_from_dict(data_dict: dict[Any, dict[Any, Any]]) -> Storage: ...
       ```
-* 
-    
+* **Augmented Operators** ([#75](https://github.com/Boss-1s/key_multivalue_storage/issues/75)) -- `Storage` now officially supports usage of `+=`, `-=`, `/=`, `&=`, `|=`, and `^=` via ([#333](https://github.com/boss-1s/key_multivalue_storage/pull/333)).
+    * Note that with `/=`, `int` is not supported as an operand due to the fact that mutating a `Storage` into a `list[Storage]` is impractical, useless, and confusing to users.
+*
+
+#### NextGen Preview Cycle A1
+
+* Implemented feature [#74](https://github.com/Boss-1s/key_multivalue_storage/issues/74) -- `__enter__` now returns `self` (specifically `Self@Storage`) instead of `self.values`
+* Implemented refactor [#97](https://github.com/Boss-1s/key_multivalue_storage/issues/97) -- `__iter__` functions exactly as `dict.__iter__()` - iterating over the subkeys of the `Storage` object exclusively. Use `Storage.values.items()` for the pairs or `Storage.values.values()` for the values. **Iterations will NOT return the top level key anymore.**
+* Via [#333](https://github.com/Boss-1s/key_multivalue_storage/pull/333), a new exception `kms.BadBitwiseOperation` has been added. It replaces the confusing return of `0` when a bitwise operation yields what would be an empty set. This implementation also matches with the fact that `Storage` cannot be empty.
+
+##### How to access NextGen preview mode
+
+* Using the following snippet, this will activate NextGen preview mode.
+
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+
+* Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+
+* The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+
+* See more here: https://boss-1s.github.io/key_multivalue_storage/Roadmap#nextgen-preview
 
 ### 🪲 Bug Fixes
 
+* _(dev)_ Fixed bug where SonarCloud scans were mapped to the head branch instead of the base branch in PRs [(#333)](https://github.com/Boss-1s/key_multivalue_storage/pull/333)
 *
 
 ### ⏰ Infrastructure & CI
 
+* Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been **deprecated** in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way **will be completely removed in `kms-semver2.0.0`.**
 *
 
 ### 📢 Upcoming Roadmap
-* **v1.4.0a1:** Expected October 24th, 2026.
-* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+* **v1.4.0a2:** Expected November 7th, 2026.
+* **v1.4.0b0:** December 5th, 2026 is the target date for the first beta, and the beginning of feature-freeze.
+* **v1.4.0rc0:** The first, and most likely only, release candidate is expected on December 27th, 2026.
+* **v1.4.0 Final:** January 3rd, 2027 is currently planned to be the stable release date.
 
 > [!important]
 > Forward-ports from `semver1.3.x` are not included here. Check the `semver1.3.x` branch's README for specific changes there.
@@ -117,7 +148,7 @@ You can also choose to download the development environment alongside the packag
 ```sh
 pip install -U key-multivalue-storage[dev]
 ```
-The development package includes Pylint for testing and Griffe for finding breaking changes. You can see every test script in the repo's [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/test/). 
+The development package includes Pylint for testing and Griffe for finding breaking changes. You can see every test script in the repo's [test folder](https://github.com/Boss-1s/key_multivalue_storage/blob/semver1.4.x/test/).
 
 [*See more about tests here.*](https://boss-1s.github.io/key_multivalue_storage/Development)
 

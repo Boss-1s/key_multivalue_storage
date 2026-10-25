@@ -150,7 +150,7 @@ No new features will be introduced in this update.
 
 #### Bug Fixes
 
-- No bugs to fixed...._yet_...
+- Fix discrepancy between `kms.storage`'s type stub and implementation
 
 #### Graceful Deprecation cycle 1.3.3
 
@@ -248,9 +248,9 @@ This update will not have a deprecation cycle.
 > The dates below are subject to change.
 
 - **`alpha0`: 2026/10/12**
-- `alpha1`: 2026/10/24
+- `alpha1`: ~~2026/10/24~~ **2026/10/26** _(changed on 2026/10/23)_
 - `alpha2`: 2026/11/07
-- `alpha3`: 2026/11/28
+- `alpha3`: ~~2026/11/28~~ **2026/11/21** _(changed on 2026/10/18)_
 - **`beta0`: 2026/12/05** *(No features allowed past this point)*
 - `beta1`: 2026/12/13
 - `beta2`: 2026/12/21
@@ -262,19 +262,18 @@ This update will not have a deprecation cycle.
 
 ***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
+*Stable Release tag: `v1.4.0.20260103`*
+
 #### Full To-Do Lists
 
 See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos. This inclusively includes all updates between `a0` and `a3`.
 See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the beta releases' to-dos. This inclusively includes all updates between `b0` and `b2`.
 
 #### Features
-* More encoding option
-*Stable Release tag: `v1.4.0.20260103`*
-
-#### Features
 
 I'm gonna have to sort these at some point....docs is harder than coding the module itself trust
 
+* **More encoding options**
 * **Make certain functions accept a `Storage` object** -- that way, complex arithmetic/bitwise operators can be avoided
 * Make certain functions return `Storage` objects instead of `None`
 * New methods allowing for easy modification of `Storage` objects in `Edit` class instead of using operators
@@ -282,31 +281,13 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * **Full switch to `logging.Logger` over `print()`**
 * Full switch to `rich`
 * **Adding `__iadd__` and related methods to `Storage`** -- allows saving memory by using only one object for binary operations that have a unary counterpart
-* Begin shift to 2.0
-  * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * You can test ALL these changes out through the following script:
-    ```py
-    import key_multivalue_storage as kms
-    kms.nextgen = True
-    ```
-  * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
-    ```py
-    from key_multivalue_storage import storage
-    storage.nextgen = True
-
-    Storage = storage.Storage
-
-    with Storage("tlk", sk='sv') as s:
-        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
-    ```
-  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
-  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+* [NextGen Preview](#nextgen-preview) - Cycle A
 
 #### Bug Fixes
 * None for now...
 
 #### Graceful Deprecation cycle 1.4.0
-* None for now...
+* _(a1)_ Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`.
 
 ---
 
@@ -325,10 +306,7 @@ I have no idea. Sorry.
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* Continue shift to 2.0
-  * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  * Remember that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
-  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+* [NextGen Preview](#nextgen-preview) - Cycles B and C
 
 #### Bug Fixes
 
@@ -351,6 +329,7 @@ I have no idea. Sorry.
 
 #### Features
 * Begin deprecation and LTS/EOS of kms-semver1.x series
+* [NextGen Preview](#nextgen-preview) - Cycle D
 
 #### Bug Fixes
 * None for now...
@@ -376,6 +355,38 @@ This update will bring many changes and features, including the ability to store
 
 > [!warning]
 > These are all planned features and projected (breaking) changes; they are not guaranteed to make it into the final release.
+
+#### NextGen Preview
+
+With NextGen Preview, you can try some of the below features for yourself by setting the `kms.nextgen` attribute to `True`.
+
+* Certain 2.0.0 features will be implemented in a non-breaking change way.
+  * You can test ALL these changes out through the following script:
+    ```py
+    import key_multivalue_storage as kms
+    kms.nextgen = True
+    ```
+  * To turn on NextGen preview in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+
+    Storage = storage.Storage
+
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+
+Here are the preview cycles for NextGen Preview.
+
+| cycle letter | minor updates | planned amount of cycles | focus |
+| :---: | :---: | :---: | :--: |
+| `A` | `1.4.0a1` to `1.4.0a3` | 3 | **Features at critical priority** |
+| `B` | `1.5.0a0` to `1.5.0a1` | 2 | Above + **Refactors and overhauls** |
+| `C` | `1.5.0a2` to `1.5.0a4` | 3 | Above + **Breaking non-critical bugfixes** |
+| `D` | `1.6.0a0` to `1.6.0a3` | 4 | Above + **Final Touches for smooth transition** |
 
 #### Breaking Changes
 

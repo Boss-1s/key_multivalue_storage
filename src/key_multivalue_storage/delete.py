@@ -103,7 +103,7 @@ class Delete(metaclass=meta._DeleteMeta):
                       )
     def by_propkey(cls,
                     file_path: str,
-                    top_level_key: Any, # DEPRECATED 
+                    top_level_key: Any, # DEPRECATED
                     property_key: str, #TODO in v2.0: `subkey: str`
                     top_lv_key: Any = None
         ) -> None:

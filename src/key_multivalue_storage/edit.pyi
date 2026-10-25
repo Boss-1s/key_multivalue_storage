@@ -26,7 +26,7 @@ class Edit(metaclass=meta._EditMeta):
     @public
     @classmethod
     def propval(cls, file_path: str, top_lv_key: Any, propkey: str, newval: str) -> None: ...
-    
+
     @public
     @classmethod
     def key(cls, file_path: str, oldkey: Any, newkey: Any) -> None: ...

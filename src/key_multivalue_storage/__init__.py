@@ -39,7 +39,8 @@ __lazy_modules__ = ["sys",
 import sys
 import warnings as std_warnings
 import inspect
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
+from types import ModuleType
 
 ## Third-party
 from rich.console import Console, Group
@@ -69,7 +70,11 @@ from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import kms_warnings
 from .utils import enums
-from .utils.exceptions import KeyNotFoundError, NoInstantiationError
+from .utils.exceptions import (
+    KeyNotFoundError,
+    NoInstantiationError,
+    BadBitwiseOperation
+)
 from .utils.warnings import (
     DeleteWarning,
     AdditionFailureWarning,
@@ -77,6 +82,7 @@ from .utils.warnings import (
     CastWarning
 )
 from .utils.enums import Encoding
+from .utils.config import _nextgen
 
 # Package Metadata
 __version__ = "v1.4.0.20261024a1.dev0"
@@ -89,24 +95,7 @@ warnings = kms_warnings
 kms = storage # TODO: Pending Deprecation, prob v1.4.0a2
 key_multivalue_storage = storage # TODO: Pending Deprecation, prob v1.4.0a2
 
-public(
-    storage=storage,
-    load=load,
-    edit=edit,
-    delete=delete,
-    Storage=Storage,
-    Load=Load,
-    Edit=Edit,
-    Delete=Delete,
-    enums=enums,
-    Encoding=Encoding,
-    KeyNotFoundError=KeyNotFoundError,
-    NoInstantiationError=NoInstantiationError,
-    DeleteWarning=DeleteWarning,
-    AdditionFailureWarning=AdditionFailureWarning,
-    SubtractionFailureWarning=SubtractionFailureWarning,
-    CastWarning=CastWarning
-)
+# -- #
 
 std_warnings.filterwarnings("always",
                         category=PendingDeprecationWarning,
@@ -116,8 +105,6 @@ std_warnings.filterwarnings("always",
                         module="key_multivalue_storage")
 
 install(show_locals=True)
-
-nextgen: bool = False
 
 # TODO: Warn in like v1.5 or smth
 #warnings.warn("kms-v1.x will be officially discontinued soon."+
@@ -397,14 +384,52 @@ def test_nextgen() -> bool:
 
     If is seems like the attribute `nextgen` is not working, try running this method.
 
-    Be sure to wrap this test in a try-except block to catch the TypeError that is raised when
+    Be sure to wrap this test in a try-except block to catch the RuntimeError that is raised when
     `nextgen` is not set to `True`.
     """
     try:
         print("Success! kms NextGen features are activated.")
-        return nextgen
+        return _nextgen.value
     except NameError as e:
         raise RuntimeError("The attribute `nextgen` does not exist in the key_multivalue_storage " +
                            "namespace. This is most likely a problem with the module's end, not "+
                            "yours. Try uninstalling and reinstalling key_multivalue_storage."
         ) from e
+
+public(
+    storage=storage,
+    load=load,
+    edit=edit,
+    delete=delete,
+    Storage=Storage,
+    Load=Load,
+    Edit=Edit,
+    Delete=Delete,
+    enums=enums,
+    Encoding=Encoding,
+    KeyNotFoundError=KeyNotFoundError,
+    NoInstantiationError=NoInstantiationError,
+    DeleteWarning=DeleteWarning,
+    AdditionFailureWarning=AdditionFailureWarning,
+    SubtractionFailureWarning=SubtractionFailureWarning,
+    CastWarning=CastWarning,
+    BadBitwiseOperation=BadBitwiseOperation,
+)
+
+class _Module(ModuleType): #pylint: disable=too-few-public-methods
+    @property
+    def nextgen(self) -> bool:
+        return _nextgen.value
+
+    @nextgen.setter
+    def nextgen(self, value: bool):
+        _nextgen.value = bool(value)
+
+if TYPE_CHECKING:
+    nextgen: bool = _Module.nextgen.fget.__get__( # type: ignore[reportOptionalMemberAccess]
+        None,
+        _Module
+    )()
+
+# Overwrite the top-level module class
+sys.modules[__name__].__class__ = _Module
