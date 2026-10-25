@@ -9,7 +9,7 @@ from typing import Any, overload
 from typing_extensions import deprecated
 from public import public, private
 
-from . import warnings as kms_warnings, exceptions
+from . import warnings as kms_warnings, exceptions, enums
 
 from .warnings import (
     DeleteWarning,
@@ -24,9 +24,12 @@ from .exceptions import (
     BadBitwiseOperation
 )
 
+from .enums import Encoding, CharSet
+
 public(
     kms_warnings=kms_warnings,
     exceptions=exceptions,
+    enums=enums,
     DeleteWarning=DeleteWarning,
     AdditionFailureWarning=AdditionFailureWarning,
     SubtractionFailureWarning=SubtractionFailureWarning,
@@ -34,6 +37,8 @@ public(
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
     BadBitwiseOperation=BadBitwiseOperation,
+    Encoding=Encoding,
+    CharSet=CharSet,
 )
 
 @private

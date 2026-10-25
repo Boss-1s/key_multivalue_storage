@@ -81,7 +81,7 @@ from .utils.warnings import (
     SubtractionFailureWarning,
     CastWarning
 )
-from .utils.enums import Encoding
+from .utils.enums import Encoding, CharSet
 from .utils.config import _nextgen
 
 # Package Metadata
@@ -407,6 +407,7 @@ public(
     Delete=Delete,
     enums=enums,
     Encoding=Encoding,
+    CharSet=CharSet,
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
     DeleteWarning=DeleteWarning,

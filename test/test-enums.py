@@ -1,10 +1,7 @@
 import key_multivalue_storage as kms
 
 assert kms.Encoding
-assert kms.Encoding.UTF8 == "utf-8"
-assert kms.Encoding.UTF16 == "utf-16"
-assert kms.Encoding.UTF32 == "utf-32"
-assert kms.Encoding.ASCII == "ascii"
+
 assert kms.Encoding.BASE64 == "base64"
 assert kms.Encoding.KMS == "kms_default"
 assert kms.Encoding.SHA256 == "sha256"
@@ -17,3 +14,9 @@ assert kms.Encoding.PIGPEN == "pigpen"
 assert kms.Encoding.MORSE == "morse_code"
 assert kms.Encoding.NONE == ""
 assert kms.Encoding("NONEXISTENT") == kms.Encoding.KMS
+
+assert kms.CharSet
+assert kms.CharSet.UTF8 == "utf-8"
+assert kms.CharSet.UTF16 == "utf-16"
+assert kms.CharSet.UTF32 == "utf-32"
+assert kms.CharSet.ASCII == "ascii"
