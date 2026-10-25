@@ -25,13 +25,15 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 💡 Features & Automation
 
-* **Augmented Operators** -- `Storage` now officially supports usage of `+=`, `-=`, `&=`, `|=`, `>>=`, and `<<=` ([#333](https://GitHub.com/boss-1s/key_multivalue_storage/pull/333)).
-* 
+* **Augmented Operators** -- `Storage` now officially supports usage of `+=`, `-=`, `/=`, `&=`, `|=`, and `^=` via ([#333](https://GitHub.com/boss-1s/key_multivalue_storage/pull/333)).
+    * Note that with `/=`, `int` is not supported as an operand due to the fact that mutating a `Storage` into a `list[Storage]` is impractical, useless, and confusion to users.
+*
 
 #### NextGen Preview Cycle A1
 
 * Implemented feature [#74](https://github.com/Boss-1s/key_multivalue_storage/issues/74) -- `__enter__` now returns `self` (specifically `Self@Storage`) instead of `self.values`
 * Implemented refactor [#97](https://github.com/Boss-1s/key_multivalue_storage/issues/97) -- `__iter__` functions exactly as `dict.__iter__()` - iterating over the subkeys of the `Storage` object exclusively. Use `Storage.values.items()` for the pairs or `Storage.values.values()` for the values. **Iterations will NOT return the top level key anymore.**
+* Via [#333](https://github.com/Boss-1s/key_multivalue_storage/pull/333), a new exception `kms.BadBitwiseOperation` has been added. It replaces the confusing return of `0` when a bitwise operation yields what would be an empty set. This implementation also matches with the fact that `Storage` cannot be empty.
 
 ##### How to access NextGen preview mode
 
@@ -55,7 +57,7 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 ### ⏰ Infrastructure & CI
 
 * _Introduced in `kms-semver1.4.0a1`_ -- Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been **deprecated** in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way **will be completely removed in `kms-semver2.0.0`.**
-* 
+*
 
 ### 📢 Upcoming Roadmap
 * **v1.4.0a2:** Expected November 7th, 2026.
