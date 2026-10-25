@@ -26,7 +26,7 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 ### 💡 Features & Automation
 
 * **Augmented Operators** ([#75](https://github.com/Boss-1s/key_multivalue_storage/issues/75)) -- `Storage` now officially supports usage of `+=`, `-=`, `/=`, `&=`, `|=`, and `^=` via ([#333](https://github.com/boss-1s/key_multivalue_storage/pull/333)).
-    * Note that with `/=`, `int` is not supported as an operand due to the fact that mutating a `Storage` into a `list[Storage]` is impractical, useless, and confusion to users.
+    * Note that with `/=`, `int` is not supported as an operand due to the fact that mutating a `Storage` into a `list[Storage]` is impractical, useless, and confusing to users.
 *
 
 #### NextGen Preview Cycle A1
