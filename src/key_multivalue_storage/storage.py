@@ -1102,6 +1102,35 @@ class Storage(metaclass=meta._StorageMeta):
         return Storage(self.key, **_return_dict)
 
     @public
+    def __ior__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self | int:
+        """
+        Defines the in-place OR (|) operator for bitwise operations with Storage instances.
+
+        Use `|=` in operations instead of explicitly calling `Storage.__ior__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the operand, from
+        which self will be unionized with.
+
+        ## Outputs
+        - `Self` - In most cases, the modified `Storage` instance will be returned.
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an OR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
+        """
+        result = self.__or__(other)
+        if isinstance(result, Storage):
+            self.values = result.values
+            return self
+        return result
+
+    @public
     def __xor__(self,
                 other: Storage | dict[str, Any]
                ) -> Storage | int:
@@ -1156,6 +1185,65 @@ class Storage(metaclass=meta._StorageMeta):
                 _return_dict[k] = _values[k]
 
         return Storage(self.key, **_return_dict)
+
+    @public
+    def __ixor__(self,
+                other: Storage | dict[str, Any]
+               ) -> Self | int:
+        """
+        Defines the in-place XOR (^) operator for bitwise operations with Storage instances.
+
+        Use `^=` in operations instead of explicitly calling `Storage.__ixor__()`.
+
+        ## Arguments
+        - `self`: The object on the left-hand side of the operand.
+        - `other: Storage | dict[str, Any]`: The object on the right hand-side of the operand, from
+        which self will be symmetrically differentiated by.
+
+        ## Outputs
+        - `Self` - In most cases, the modified `Storage` instance will be returned.
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
+        returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an XOR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
+        """
+        if not isinstance(other, (Storage, dict)):
+            return NotImplemented
+
+        _set_keys: set[Any] = set(self.values.keys())
+        _values: dict[Any, Any] = {}
+
+        if isinstance(other, type(self)):
+            if self.key != other.key:
+                raise ValueError(self._default_valueerror_msg)
+
+            _set_keys ^= set(other.values.keys())
+            _values = other.values
+
+        if isinstance(other, dict):
+            print(_set_keys, set(other))
+            _set_keys ^= set(other)
+            _values = other
+
+        if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
+            return 0
+
+        print(_set_keys)
+
+        _return_dict: dict = {}
+        for k in _set_keys:
+            k: str
+            if k in self.values:
+                _return_dict[k] = self.values[k]
+            if k in _values:
+                _return_dict[k] = _values[k]
+
+        self.values = _return_dict
+        return self
 
     @public
     def __lshift__(self,
