@@ -4,8 +4,8 @@ description: >
   is generated to be released as a nightly link.
 
 on:
-  workflow_dispatch: 
-  workflow_call: 
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
@@ -100,5 +100,4 @@ jobs:
       - name: deploy to env
         run: |
           echo Build sucessful.
-          echo Deploying to env 'nightly'.          
-
+          echo Deploying to env 'nightly'.

@@ -2,7 +2,7 @@ name: Dummy Release
 description: Workflow to test release.yml
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   deploy-main:
@@ -15,17 +15,17 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          
+
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      
+
       - name: Setup SSH and signing
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: bash .github/workflows/src/ssh.sh
-        
+
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
@@ -60,12 +60,12 @@ jobs:
           BRANCH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
 
           export BRANCH
-          
+
           echo "$REF is sourced from branch: $BRANCH"
-          
-          # 2. Realign HEAD onto the tracking stream 
+
+          # 2. Realign HEAD onto the tracking stream
           git checkout -B "$BRANCH" "origin/$BRANCH"
-          
+
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
@@ -93,17 +93,17 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          
+
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      
+
       - name: Setup SSH and signing
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: bash .github/workflows/src/ssh.sh
-        
+
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
@@ -138,12 +138,12 @@ jobs:
           BRANCH=$(curl -s "https://api.github.com/repos/$REPO/releases/tags/$REF" | grep "target_commitish" | head -n 1 | cut -d '"' -f 4)
 
           export BRANCH
-          
+
           echo "$REF is sourced from branch: $BRANCH"
-          
-          # 2. Realign HEAD onto the tracking stream 
+
+          # 2. Realign HEAD onto the tracking stream
           git checkout -B "$BRANCH" "origin/$BRANCH"
-          
+
           bash .github/workflows/src/push.sh
 
       - name: Rename files for GH release upload
