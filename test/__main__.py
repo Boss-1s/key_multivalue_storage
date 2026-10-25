@@ -198,7 +198,14 @@ def main(c: Console) -> None:
             os.environ["SSH_USER"] = sys.argv[3]
             os.environ["SSH_EMAIL"] = sys.argv[4]
             os.environ["reconfig_ssh_key_clearall"] = str(int(clearall))
-            subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
+            try:
+                subprocess.run(["python", "test/automation/.vscode_rebuild"], check=True)
+            except KeyboardInterrupt:
+                pass
+            except subprocess.CalledProcessError as e:
+                raise RuntimeError("Failed to rebuild VSCode environment.") from e
+            except Exception as e:
+                raise RuntimeError("An unexpected error occurred while rebuilding VSCode environment.") from e
         case 'post_release':
             # pylint: disable=pointless-string-statement
             # NOSONAR
@@ -237,7 +244,7 @@ def main(c: Console) -> None:
                 i += 1
             else:
                 raise ValueError("Too many incorrect password attempts. Exiting.")"""
-            c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
+            # c.print("[green]Password verified. Proceeding with post-release tasks.[/]")
             try:
                 v = sys.argv[2]
             except IndexError as e:
