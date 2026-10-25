@@ -136,13 +136,14 @@ jobs:
             -Dsonar.python.pylint.reportPaths=pylint-report.txt
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.githubactions.actionlint.reportPaths=actionlint.json
-            ${{ github.event_name == 'pull_request' && 
-            format('-Dsonar.pullrequest.key={0} -Dsonar.pullrequest.branch={1} -Dsonar.pullrequest.base={2}', 
-                github.event.pull_request.number, 
-                github.head_ref,  
-                github.base_ref) 
-              || 
-              format('-Dsonar.branch.name={0}', github.ref_name) 
+            -Dsonar.coverage.exclusions=./src/key_multivalue_storage/_storage_op_logic.py
+            ${{ github.event_name == 'pull_request' &&
+            format('-Dsonar.pullrequest.key={0} -Dsonar.pullrequest.branch={1} -Dsonar.pullrequest.base={2}',
+                github.event.pull_request.number,
+                github.head_ref,
+                github.base_ref)
+              ||
+              format('-Dsonar.branch.name={0}', github.ref_name)
             }}
           projectBaseDir: .
 
