@@ -977,7 +977,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
 
         ## Notes
@@ -1053,7 +1053,7 @@ class Storage(metaclass=meta._StorageMeta):
         Defines using the OR (|) operator for set unions between Storage objects and other Storage
         objects or dictionaries.
 
-        Use the symbol `|` for actual operations as opposed to `Storage.__or__`.
+        Use the symbol `|` for actual operations as opposed to `Storage.__or__()`.
 
         ## Arguments
         - `self`: The object on the left-hand side of the operand.
@@ -1062,8 +1062,12 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the combined data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, `__or__` will not return `0` on empty unions; rather,
+        it will raise a `kms.BadBitwiseOperation` instead.
         """
         if not isinstance(other, (Storage, dict)):
             return NotImplemented
@@ -1083,6 +1087,8 @@ class Storage(metaclass=meta._StorageMeta):
             _values = other
 
         if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         _return_dict: dict = {}
@@ -1112,8 +1118,12 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
+
+        ## Notes
+        - With NextGen Preview, attempting an XOR that results in no changes will raise a
+        `BadBitwiseOperation` exception instead of returning `0`.
         """
         if not isinstance(other, (Storage, dict)):
             return NotImplemented
@@ -1126,15 +1136,16 @@ class Storage(metaclass=meta._StorageMeta):
                 raise ValueError(self._default_valueerror_msg)
 
             _set_keys = set(self.values.keys()) ^ set(other.values.keys())
-            if not _set_keys:
-                return 0
             _values = other.values
 
         if isinstance(other, dict):
             _set_keys = set(self.values.keys()) ^ set(other)
-            if not _set_keys:
-                return 0
             _values = other
+
+        if not _set_keys:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
+            return 0
 
         _return_dict: dict = {}
         for k in _set_keys:
@@ -1163,7 +1174,7 @@ class Storage(metaclass=meta._StorageMeta):
 
         ## Outputs
         - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-        - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+        - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
         returning `False` or `None`.
 
         ## Logic
@@ -1174,17 +1185,25 @@ class Storage(metaclass=meta._StorageMeta):
         the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
         edge of that cliff will be lost forever. Thankfully, your original reference will
         (hopefully) still be there in case anything goes very, very wrong...
+
+        ## Notes
+        - With NextGen Preview, attempting to left-shift beyond the available keys will raise a
+        `BadBitwiseOperation` exception, rather than returning 0.
         """
         if not isinstance(other, int):
             return NotImplemented
 
         if other > len(self.values.keys()):
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         try:
             _keys: list = list(self.values.keys())[other:]
 
             if not _keys:
+                if nextgen:
+                    raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
                 return 0
 
             _return_dict: dict = {}
@@ -1195,7 +1214,9 @@ class Storage(metaclass=meta._StorageMeta):
 
             return Storage(self.key, **_return_dict)
 
-        except IndexError:
+        except IndexError as e:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg) from e
             return 0
 
     @public
@@ -1215,7 +1236,7 @@ class Storage(metaclass=meta._StorageMeta):
 
     ## Outputs
     - `Storage` - In most cases, a `Storage` instance with the final data will be returned.
-    - `int` - On error, the interger `0` will be returned. This is fundamentally the same as
+    - `int` - On error, the integer `0` will be returned. This is fundamentally the same as
     returning `False` or `None`.
 
     ## Logic
@@ -1226,17 +1247,25 @@ class Storage(metaclass=meta._StorageMeta):
     the subkey-value pairs of the `Storage` object by *x*.** Again, any pairs that fall off the
     edge of that cliff will be lost forever. Thankfully, your original reference will
     (hopefully) still be there in case anything goes very, very wrong...
+
+    ## Notes
+    - With NextGen Preview, attempting to right-shift beyond the available keys will raise a
+    `BadBitwiseOperation` exception, rather than returning 0
         """
         if not isinstance(other, int):
             return NotImplemented
 
         if other > len(self.values.keys()):
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
             return 0
 
         try:
             _keys: list = list(self.values.keys())[:-other]
 
             if not _keys:
+                if nextgen:
+                    raise BadBitwiseOperation(self._default_badbitwiseoperation_msg)
                 return 0
 
             _return_dict: dict = {}
@@ -1247,7 +1276,9 @@ class Storage(metaclass=meta._StorageMeta):
 
             return Storage(self.key, **_return_dict)
 
-        except IndexError:
+        except IndexError as e:
+            if nextgen:
+                raise BadBitwiseOperation(self._default_badbitwiseoperation_msg) from e
             return 0
 
     @public

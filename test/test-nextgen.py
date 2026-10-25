@@ -46,7 +46,52 @@ print("Testing BadBitwiseOperation exception")
 try:
     raise BadBitwiseOperation("This is a test for BadBitwiseOperation.")
 except BadBitwiseOperation as e:
-    print(f"Caught expected BadBitwiseOperation: {e}")
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
+except Exception as e:
+    assert False, e
+
+try:
+    # For __and__
+    with Storage("my_key", foo="bar") as storage:
+        storage & {"baz": "bar"} # type: ignore
+except BadBitwiseOperation as e:
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
+except Exception as e:
+    assert False, e
+
+try:
+    # For __or__
+    with Storage("my_key", foo="bar") as storage:
+        storage | {"baz": "bar"} # type: ignore
+except BadBitwiseOperation as e:
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
+except Exception as e:
+    assert False, e
+
+try:
+    # For __xor__
+    with Storage("my_key", foo="bar") as storage:
+        storage ^ {"foo": "bar"} # type: ignore
+except BadBitwiseOperation as e:
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
+except Exception as e:
+    assert False, e
+
+try:
+    # For __lshift__
+    with Storage("my_key", foo="bar") as storage:
+        storage << 2 # type: ignore
+except BadBitwiseOperation as e:
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
+except Exception as e:
+    assert False, e
+
+try:
+    # For __rshift__
+    with Storage("my_key", foo="bar") as storage:
+        storage >> 2 # type: ignore
+except BadBitwiseOperation as e:
+    print(f"[green]Caught expected BadBitwiseOperation: {e}[/green]")
 except Exception as e:
     assert False, e
 
@@ -55,7 +100,7 @@ kms.nextgen = False
 try:
     raise BadBitwiseOperation("This is a test for BadBitwiseOperation.")
 except TypeError as e:
-    print(f"Caught expected TypeError: {e}")
+    print(f"[green]Caught expected TypeError: {e}[/green]")
 except Exception as e:
     assert False, e
 
