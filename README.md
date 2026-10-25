@@ -52,11 +52,12 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 🪲 Bug Fixes
 
+* _(dev)_ Fixed bug where SonarCloud scans were mapped to the head branch instead of the base branch in PRs [(#333)](https://github.com/Boss-1s/key_multivalue_storage/pull/333)
 *
 
 ### ⏰ Infrastructure & CI
 
-* _Introduced in `kms-semver1.4.0a1`_ -- Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been **deprecated** in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way **will be completely removed in `kms-semver2.0.0`.**
+* Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been **deprecated** in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way **will be completely removed in `kms-semver2.0.0`.**
 *
 
 ### 📢 Upcoming Roadmap
