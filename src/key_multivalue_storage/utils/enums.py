@@ -22,13 +22,12 @@ class Encoding(StrEnum):
     KMS = "kms_default"
     SHA256 = "sha256"
     SHA512 = "sha512"
-    SHA1 = "sha1"
-    MD5 = "md5"
     RSA = "rsa"
     HMAC = "hmac"
     AES = "aes"
     PIGPEN = "pigpen"
     MORSE = "morse_code"
+    HEX = "hex"
     NONE = ""
 
     @classmethod

@@ -71,6 +71,7 @@ from .utils import exceptions as exceptions
 from .utils import kms_warnings
 from .utils import enums
 from .utils.exceptions import (
+    EncodingError,
     KeyNotFoundError,
     NoInstantiationError,
     BadBitwiseOperation
@@ -415,6 +416,7 @@ public(
     SubtractionFailureWarning=SubtractionFailureWarning,
     CastWarning=CastWarning,
     BadBitwiseOperation=BadBitwiseOperation,
+    EncodingError=EncodingError,
 )
 
 class _Module(ModuleType): #pylint: disable=too-few-public-methods

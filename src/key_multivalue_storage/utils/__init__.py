@@ -39,9 +39,10 @@ from .warnings import (
 )
 
 from .exceptions import (
+    EncodingError,
     KeyNotFoundError,
     NoInstantiationError,
-    BadBitwiseOperation
+    BadBitwiseOperation,
 )
 
 from .enums import Encoding, CharSet
@@ -59,6 +60,7 @@ public(
     BadBitwiseOperation=BadBitwiseOperation,
     Encoding=Encoding,
     CharSet=CharSet,
+    EncodingError=EncodingError,
 )
 
 @private
@@ -73,6 +75,13 @@ def _legacy_encode(string: str) -> int:
     ### Output
     - `dict[Any, int]` - The encoded dictionary.
     """
+
+    std_warnings.warn(
+        "The _legacy_encode function uses a simple character-matching system " \
+        "which may not truly be secure.",
+        EncodingWarning,
+        stacklevel=13
+    )
 
     char: str = """
     `1234657809=-\\][p';/.,lokimnjuyhbtfcvgrs edxz
@@ -96,10 +105,8 @@ def _legacy_encode(string: str) -> int:
 _ENCODE_SHORTCUT: dict[Encoding, Callable[..., Any]] = {
     Encoding.BASE64: lambda x: base64.b64encode(x.encode()).decode(),
     Encoding.KMS: lambda x: _legacy_encode(x),
-    Encoding.SHA1: lambda x: hashlib.sha1(x.encode()).hexdigest(),
     Encoding.SHA256: lambda x: hashlib.sha256(x.encode()).hexdigest(),
     Encoding.SHA512: lambda x: hashlib.sha512(x.encode()).hexdigest(),
-    Encoding.MD5: lambda x: hashlib.md5(x.encode()).hexdigest(),
     Encoding.RSA: lambda x: rsa.generate_private_key(
         public_exponent=65537,
         key_size=2048
@@ -123,13 +130,15 @@ _ENCODE_SHORTCUT: dict[Encoding, Callable[..., Any]] = {
             )
         ).decode()
     )(os.urandom(16)),
-    Encoding.MORSE: lambda x: translate_to_morse(x),
+    Encoding.MORSE: lambda x: translate_to_morse(x),#FIXME:Morse does not support non-alphanumeric
+    Encoding.HEX: lambda x, y: x.encode(y).hex(),
     Encoding.NONE: lambda x: x,
 }
 
 def _encode_item(item,
                  *,
-                 encoding: Encoding | str) -> bytes | str:
+                 encoding: Encoding | str,
+                 secondary_arg: Any = None) -> bytes | str:
     """
     Helper function to look up and apply a specific encoding strategy.
 
@@ -143,20 +152,37 @@ def _encode_item(item,
 
     ## Keyword Arguments
     - `encoding: Encoding | str`: The encoding strategy to use.
+    - `secondary_arg: Any`: An optional secondary argument for certain encoding strategies. \
+    See more below.
 
     ## Output
     - `bytes | str`: The encoded item.
+
+    ## The Secondary Argument
+
+    The `secondary_arg` is used for encoding strategies that require an additional parameter.
+    For example, HMAC and AES encoding strategies use this argument to pass the key.
+    The following is a list of each encoding strategy and its corresponding use of the
+    `secondary_arg`:
+    - `Encoding.HMAC`: Uses `secondary_arg` as the key for HMAC.
+    - `Encoding.AES`: Uses `secondary_arg` as the key for AES encryption.
+    - `Encoding.HEX`: Uses `secondary_arg` as the character set for encoding to hex.
     """
-    if isinstance(encoding, Encoding):
-        encoding = str(encoding)
-    encoder = _ENCODE_SHORTCUT.get(Encoding(encoding.lower()), _ENCODE_SHORTCUT[Encoding.KMS])
+    if isinstance(encoding, str):
+        encoding = Encoding(encoding.lower())
+    encoder = _ENCODE_SHORTCUT.get(encoding, _ENCODE_SHORTCUT[Encoding.KMS])
+    if encoding in [Encoding.HMAC, Encoding.AES, Encoding.HEX]:
+        if secondary_arg is None:
+            raise EncodingError(f"Encoding strategy {encoding} requires a secondary argument")
+        return encoder(str(item), secondary_arg)
     return encoder(str(item))
 
 def _encode(data: Any,
             *,
             encoding: Encoding | str = Encoding.KMS,
             charset: CharSet | str = CharSet.UTF8,
-            encode_keys: bool = False) -> Any:
+            encode_keys: bool = False,
+            secondary_arg: Any = None) -> Any:
     """
     Encodes keys and values in dicts, lists, or primitive types recursively.
 
@@ -171,25 +197,54 @@ def _encode(data: Any,
     ## Keyword Arguments
     - `encoding: Encoding | str`: The encoding strategy to use.
     - `charset: CharSet | str`: The character set to use.
+    - `secondary_arg: Any`: An optional secondary argument for certain encoding strategies. \
+    See more below.
 
     ## Output
     - `Any`: The encoded data. Probably either bytes or string *values*
     depending on the encoding strategy.
+
+    ## The Secondary Argument
+
+    The `secondary_arg` is used for encoding strategies that require an additional parameter.
+    For example, HMAC and AES encoding strategies use this argument to pass the key.
+    HEX encoding uses this argument to specify the character set for encoding to hex.
+    The following is a list of each encoding strategy and its corresponding use of the
+    `secondary_arg`:
+
+    - `Encoding.HMAC`: Uses `secondary_arg` as the key for HMAC.
+    - `Encoding.AES`: Uses `secondary_arg` as the key for AES encryption.
+    - `Encoding.HEX`: Uses `secondary_arg` as the character set for encoding to hex.
     """
     if isinstance(data, dict):
         if encode_keys:
             return {
-                _encode_item(k, encoding=encoding): _encode(v, encoding=encoding, charset=charset, encode_keys=encode_keys)
+                _encode_item(k,
+                             encoding=encoding,
+                             secondary_arg=secondary_arg
+                ): _encode(v,
+                           encoding=encoding,
+                           charset=charset,
+                            encode_keys=encode_keys,
+                            secondary_arg=secondary_arg)
                 for k, v in data.items()
             }
         return {
-            k: _encode(v, encoding=encoding, charset=charset, encode_keys=encode_keys)
+            k: _encode(v,
+                       encoding=encoding,
+                       charset=charset,
+                       encode_keys=encode_keys,
+                       secondary_arg=secondary_arg)
             for k, v in data.items()
         }
     if isinstance(data, list):
-        return [_encode(item, encoding=encoding, charset=charset) for item in data]
+        return [_encode(item,
+                       encoding=encoding,
+                       charset=charset,
+                       secondary_arg=secondary_arg
+                       ) for item in data]
 
-    return _encode_item(data, encoding=encoding)
+    return _encode_item(data, encoding=encoding, secondary_arg=secondary_arg)
 
 @private
 @staticmethod

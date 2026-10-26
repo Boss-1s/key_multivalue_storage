@@ -6,12 +6,12 @@ assert kms.Encoding.BASE64 == "base64"
 assert kms.Encoding.KMS == "kms_default"
 assert kms.Encoding.SHA256 == "sha256"
 assert kms.Encoding.SHA512 == "sha512"
-assert kms.Encoding.SHA1 == "sha1"
 assert kms.Encoding.RSA == "rsa"
 assert kms.Encoding.AES == "aes"
 assert kms.Encoding.HMAC == "hmac"
 assert kms.Encoding.PIGPEN == "pigpen"
 assert kms.Encoding.MORSE == "morse_code"
+assert kms.Encoding.HEX == "hex"
 assert kms.Encoding.NONE == ""
 assert kms.Encoding("NONEXISTENT") == kms.Encoding.KMS
 
