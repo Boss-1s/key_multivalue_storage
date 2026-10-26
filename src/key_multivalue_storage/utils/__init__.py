@@ -3,11 +3,29 @@ kms Utilities.
 
 Includes public warnings and exceptions, and private methods and metaclasses for internal use.
 """
+from __future__ import annotations
 
+__lazy_modules__ = ['morse_code_translator.translator',
+                    'base64',
+                    'hashlib',
+                    'hmac',
+                    'cryptography.hazmat.primitives.asymmetric',
+                    'cryptography.hazmat.primitives.ciphers',
+                    'collections.abc'
+]
+
+from collections.abc import Callable
 from typing import Any, overload
+import warnings as std_warnings
+import base64
+import hashlib
+import hmac
 
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from typing_extensions import deprecated
 from public import public, private
+from morse_code_translator.translator import translate_to_morse # pyright: ignore[reportMissingTypeStubs]
 
 from . import warnings as kms_warnings, exceptions, enums
 
@@ -43,7 +61,7 @@ public(
 
 @private
 @staticmethod
-def _encode(to_encode: dict[Any, Any]) -> dict[Any, int]:
+def _legacy_encode(string: str) -> int:
     """
     Encodes a dictionary's values using a simple character-matching system.
 
@@ -61,29 +79,108 @@ def _encode(to_encode: dict[Any, Any]) -> dict[Any, int]:
 
     encoded = {}
 
-    for k, v in to_encode.items():
-        if not isinstance(k, str):
-            k = str(k)
+    encoded_value: str = ""
+    for char_to_encode in string:
+        if char_to_encode not in char:
+            raise ValueError(f"Character '{char_to_encode}' not in encoding set.")
+        index = char.index(char_to_encode) + 1
+        encoded_value += f"{len(str(index))}{index}"
 
-        if not isinstance(v, str):
-            try:
-                v = str(v)
-            except Exception as e:
-                raise TypeError(f"Expected string for encoding, got {type(v)}.") from e
+    if encoded_value == '':
+        encoded_value = f"{len(str(len(char)))}{len(char)}"
 
-        encoded_value: str = ""
-        for char_to_encode in v:
-            if char_to_encode not in char:
-                raise ValueError(f"Character '{char_to_encode}' not in encoding set.")
-            index = char.index(char_to_encode) + 1
-            encoded_value += f"{len(str(index))}{index}"
+    return int(encoded_value)
 
-        if encoded_value == '':
-            encoded_value = f"{len(str(len(char)))}{len(char)}"
+_ENCODE_SHORTCUT: dict[Encoding, Callable[..., Any]] = {
+    Encoding.BASE64: lambda x: base64.b64encode(x.encode()).decode(),
+    Encoding.KMS: lambda x: _legacy_encode(x),
+    Encoding.SHA1: lambda x: hashlib.sha1(x.encode()).hexdigest(),
+    Encoding.SHA256: lambda x: hashlib.sha256(x.encode()).hexdigest(),
+    Encoding.SHA512: lambda x: hashlib.sha512(x.encode()).hexdigest(),
+    Encoding.MD5: lambda x: hashlib.md5(x.encode()).hexdigest(),
+    Encoding.RSA: lambda x: rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    ).public_key().encrypt(
+        x.encode(),
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashlib.sha256()),
+            algorithm=hashlib.sha256(),
+            label=None
+        )
+    ),
+    Encoding.HMAC: lambda x, y: hmac.new(y, x.encode(), hashlib.sha256).hexdigest(),
+    Encoding.AES: lambda x, y: Cipher(
+        algorithms.AES(y),
+        modes.ECB()
+    ).encryptor().update(x.encode()),
+    Encoding.MORSE: lambda x: translate_to_morse(x),
+    Encoding.NONE: lambda x: x,
+}
 
-        encoded[k] = int(encoded_value)
+def _encode_item(item,
+                 *,
+                 encoding: Encoding | str) -> bytes | str:
+    """
+    Helper function to look up and apply a specific encoding strategy.
 
-    return encoded
+    This is part of the completely overhauled version of the original encoding
+    system. To preserve backwards compatibility within this update (`kms-semver1.4.0`),
+    defaults have been set to `Encoding.KMS` (the original legacy character mapping system)
+    and `utf-8` for the default encoding and default character set, respectively.
+
+    ## Arguments
+    - `item: Any`: The item to encode.
+
+    ## Keyword Arguments
+    - `encoding: Encoding | str`: The encoding strategy to use.
+
+    ## Output
+    - `bytes | str`: The encoded item.
+    """
+    if isinstance(encoding, Encoding):
+        encoding = str(encoding)
+    encoder = _ENCODE_SHORTCUT.get(Encoding(encoding.lower()), _ENCODE_SHORTCUT[Encoding.KMS])
+    return encoder(str(item))
+
+def _encode(data: Any,
+            *,
+            encoding: Encoding | str = Encoding.KMS,
+            charset: CharSet | str = CharSet.UTF8,
+            encode_keys: bool = False) -> Any:
+    """
+    Encodes keys and values in dicts, lists, or primitive types recursively.
+
+    This is part of the completely overhauled version of the original encoding
+    system. To preserve backwards compatibility within this update (`kms-semver1.4.0`),
+    defaults have been set to `Encoding.KMS` (the original legacy character mapping system)
+    and `utf-8` for the default encoding and default character set, respectively.
+
+    ## Arguments
+    - `data: Any`: The data to encode.
+
+    ## Keyword Arguments
+    - `encoding: Encoding | str`: The encoding strategy to use.
+    - `charset: CharSet | str`: The character set to use.
+
+    ## Output
+    - `Any`: The encoded data. Probably either bytes or string *values*
+    depending on the encoding strategy.
+    """
+    if isinstance(data, dict):
+        if encode_keys:
+            return {
+                _encode_item(k, encoding=encoding): _encode(v, encoding=encoding, charset=charset, encode_keys=encode_keys)
+                for k, v in data.items()
+            }
+        return {
+            k: _encode(v, encoding=encoding, charset=charset, encode_keys=encode_keys)
+            for k, v in data.items()
+        }
+    if isinstance(data, list):
+        return [_encode(item, encoding=encoding, charset=charset) for item in data]
+
+    return _encode_item(data, encoding=encoding)
 
 @private
 @staticmethod
