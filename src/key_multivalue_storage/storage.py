@@ -239,6 +239,10 @@ class Storage(metaclass=meta._StorageMeta):
         if encode is None:
             encode = self.encode
 
+        if not file_path.endswith(".json"):
+            warnings.warn(f"'{file_path}' does not end in '.json'. Appending '.json'...")
+            file_path = str(file_path) + ".json"
+
         all_data: dict[str, dict[str, Any]] = {}
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -249,11 +253,6 @@ class Storage(metaclass=meta._StorageMeta):
             warnings.warn(f"store: WARNING: Warning: File '{file_path}' contains "+
                           "invalid JSON. Overwriting.", SyntaxWarning)
             all_data = {}
-
-        # FIXME: block should be moved to before load
-        if not file_path.endswith(".json"):
-            warnings.warn(f"'{file_path}' does not end in '.json'. Appending '.json'...")
-            file_path = str(file_path) + ".json"
 
         if encode:
             all_data.update({

@@ -67,7 +67,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     # @_next(True) -- Maybe in b0, still need time to think about it
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.25"
+        return "2026.10.26"
 
     @property
     # @_next(True) -- Maybe in b0, still need time to think about it
@@ -79,7 +79,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     # @_next(True) -- Maybe in b0, still need time to think about it
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/25"
+        return "2026/10/26"
 
     @property
     @_next(True)
