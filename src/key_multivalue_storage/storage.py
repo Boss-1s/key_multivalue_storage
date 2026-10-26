@@ -60,7 +60,8 @@ from .utils import (
     NoInstantiationError,
     BadBitwiseOperation,
     metadata as meta,
-    _encode
+    _encode,
+    Encoding, CharSet,
 )
 from .utils.warnings import (CastWarning,
                              AdditionFailureWarning,
@@ -212,21 +213,31 @@ class Storage(metaclass=meta._StorageMeta):
                       )
     def store(self,
               file_path: str,
+              encoding: Encoding | str | None = Encoding.NONE,
               instant_delete: bool | None = None, # DEPRECATED
               indent: int | None = None,
-              encode: bool | None = None
+              encode: bool | None = None,
+              *,
+              load_charset: CharSet | str = CharSet.UTF8,
              ) -> None:
         """
         Stores a key-multivalue pair into a json file.
 
         ## Arguments
-        - `file_path: str`: The path to the JSON file. If there is no file extension provided,
+        - `file_path: str`: The path to the JSON file. If there is no file extension provided, \
         ".json" will automatically be appended.
-        - `instant_delete: bool | None = None`: Deprecated; use `with Storage(...) as ...: pass`
+        - `encoding: Encoding | str | None = Encoding.NONE`: The encoding to use when storing the \
+        JSON file.
+        - `instant_delete: bool | None = None`: Deprecated; use `with Storage(...) as ...: pass` \
         instead.
         - `indent: int | None = None`: An integer representing the JSON file's indent.
-        - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in
+        - `encode: bool | None = None`: Whether or not to encode the data stored. Useful in \
         applications requiring privacy.
+
+        ### Keyword Arguments
+
+        - `load_charset: CharSet | str = CharSet.UTF8`: The charset to use when loading the JSON
+        file.
 
         ## Outputs
         This method does not return anything.
@@ -239,16 +250,23 @@ class Storage(metaclass=meta._StorageMeta):
         if encode is None:
             encode = self.encode
 
+        match type(encoding):
+            case str():
+                encoding = Encoding(encoding)
+            case None:
+                encoding = Encoding.NONE
+
         if not file_path.endswith(".json"):
             warnings.warn(f"'{file_path}' does not end in '.json'. Appending '.json'...")
             file_path = str(file_path) + ".json"
 
         all_data: dict[str, dict[str, Any]] = {}
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, "r", encoding=str(load_charset)) as f:
                 all_data = json.load(f)
         except FileNotFoundError:
-            warnings.warn(f"store: WARNING: File '{file_path}' not found. Creating a new one.")
+            warnings.warn(f"store: WARNING: File '{file_path}' not found. Creating a new one."+
+                          f" Using text encoding '{str(load_charset)}'.")
         except json.JSONDecodeError:
             warnings.warn(f"store: WARNING: Warning: File '{file_path}' contains "+
                           "invalid JSON. Overwriting.", SyntaxWarning)
@@ -262,14 +280,14 @@ class Storage(metaclass=meta._StorageMeta):
             all_data.update(dict(self))
 
         try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(all_data, f, indent=indent)
+            with open(file_path, "w", encoding=str(load_charset)) as f:
+                json.dump(all_data, f, indent=indent, ensure_ascii=False)
             print(f"store: INFO: Data for key '{self.key}' stored successfully in '{file_path}'.")
         except IOError as e:
             print(f"store: ERROR: Error writing to file '{file_path}': {e}")
 
         if not nextgen and instant_delete: # DEPRECATED
-                del self
+            del self
 
     @public
     def to_dict(self) -> dict[str, dict[str, Any]]:
