@@ -20,8 +20,10 @@ import warnings as std_warnings
 import base64
 import hashlib
 import hmac
+import os
 
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import padding as sym_padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from typing_extensions import deprecated
 from public import public, private
@@ -110,10 +112,17 @@ _ENCODE_SHORTCUT: dict[Encoding, Callable[..., Any]] = {
         )
     ),
     Encoding.HMAC: lambda x, y: hmac.new(y, x.encode(), hashlib.sha256).hexdigest(),
-    Encoding.AES: lambda x, y: Cipher(
-        algorithms.AES(y),
-        modes.ECB()
-    ).encryptor().update(x.encode()),
+    Encoding.AES: lambda x, y: (
+        lambda iv: base64.b64encode(
+            iv + Cipher(
+                algorithms.AES(y),
+                modes.CBC(iv)
+            ).encryptor().update(
+                sym_padding.PKCS7(128).padder().update(x.encode()) +
+                sym_padding.PKCS7(128).padder().finalize()
+            )
+        ).decode()
+    )(os.urandom(16)),
     Encoding.MORSE: lambda x: translate_to_morse(x),
     Encoding.NONE: lambda x: x,
 }
