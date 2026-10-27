@@ -28,13 +28,38 @@ jobs:
     - uses: devcontainers/ci@v0.3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # 1. Enforce your static shared token so the browser can reconnect
+        VSCODE_SERVER_TOKEN: ${{ secrets.vs_token }}
       with:
         imageName: ghcr.io/boss-1s/key_multivalue_storage/devcontainer
         cacheFrom: ghcr.io/boss-1s/key_multivalue_storage/devcontainer:latest
         eventFilterForPush:
         runCmd: |
+          echo "=== Downloading VS Code CLI ==="
           curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
           tar -xf vscode_cli.tar.gz
-          timeout ${{inputs.time}}m ./code tunnel --accept-server-license-terms --name runnervmvrwv9 || true
-          echo Terminating server gracefully
+
+          echo "=== Cleaning up zombie locks from previous runs ==="
+          rm -rf /root/.vscode/cli/servers/Stable-*/pid.txt
+          rm -rf /root/.vscode/cli/servers/Stable-*/log.txt
+
+          echo "=== Provisioning environment auto-refresh settings ==="
+          mkdir -p /root/.vscode/cli/
+          cat << 'EOF' > /root/.vscode/cli/settings.json
+          {
+            "terminal.integrated.environmentChangesRelaunch": true,
+            "remote.tunnels.actions.onTunnelClose": "none",
+            "workbench.startupEditor": "none"
+          }
+          EOF
+
+          echo "=== Launching Tunnel ==="
+          # We pass the token via --connection-token and keep it in the foreground for timeout
+          timeout ${{inputs.time}}m ./code tunnel \
+            --accept-server-license-terms \
+            --name runnervmvrwv9 \
+            --connection-token "$VSCODE_SERVER_TOKEN" || true
+          
+          echo "Terminating server gracefully"
+
 
