@@ -142,7 +142,7 @@ Roadmap format:
 *Stable Release tag: `v1.3.3.20261107`*
 
 > [!important]
-> This major patch coincides with the 3rd alpha release of `kms-semver1.4`, `kms-v1.4.0a2/2026.11.07`.
+> This major patch coincides with the 2nd alpha release of `kms-semver1.4`, `kms-v1.4.0a1/2026.11.07`.
 
 #### Features
 
@@ -248,9 +248,9 @@ This update will not have a deprecation cycle.
 > The dates below are subject to change.
 
 - **`alpha0`: 2026/10/12**
-- `alpha1`: ~~2026/10/24~~ **2026/10/26** _(changed on 2026/10/23)_
-- `alpha2`: 2026/11/07
-- `alpha3`: ~~2026/11/28~~ **2026/11/21** _(changed on 2026/10/18)_
+- `alpha1`: ~~2026/10/24~~ ~~2026/10/26~~ **2026/11/07** _(changed on 2026/10/24)_
+- `alpha2`: ~~2026/11/07~~ **2026/11/21**  _(changed on 2026/10/24)_
+- ~~`alpha3`: 2026/11/28 2026/11/21 _(changed on 2026/10/18)_~~  _(removed on 2026/10/24)_
 - **`beta0`: 2026/12/05** *(No features allowed past this point)*
 - `beta1`: 2026/12/13
 - `beta2`: 2026/12/21
@@ -260,7 +260,7 @@ This update will not have a deprecation cycle.
 
 - **`final`: 2027/01/03**
 
-***TL;DR 4 Alphas, 3 Betas, and 1 Release Candidate are planned.***
+***TL;DR ~~4~~ 3 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
 *Stable Release tag: `v1.4.0.20260103`*
 
@@ -299,7 +299,7 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 
 #### Release Plan
 
-I have no idea. Sorry.
+Most likely? No release plan! Keeping up with schoolwork and pre-releases just seems very unlikely to be possible right now.....
 
 #### Features
 * Multiple file format support (`.json`, `.yaml`, `.yml`)
