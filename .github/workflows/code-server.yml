@@ -28,7 +28,7 @@ jobs:
     - uses: devcontainers/ci@v0.3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # 1. Enforce your static shared token so the browser can reconnect
+        # Pass the token here; the binary reads it automatically from the env
         VSCODE_SERVER_TOKEN: ${{ secrets.vs_token }}
       with:
         imageName: ghcr.io/boss-1s/key_multivalue_storage/devcontainer
@@ -39,13 +39,17 @@ jobs:
           curl -Lk 'https://update.code.visualstudio.com/latest/cli-alpine-x64/stable' --output vscode_cli.tar.gz
           tar -xf vscode_cli.tar.gz
 
-          echo "=== Cleaning up zombie locks from previous runs ==="
-          rm -rf /root/.vscode/cli/servers/Stable-*/pid.txt
-          rm -rf /root/.vscode/cli/servers/Stable-*/log.txt
+          # Dynamically locate the current user's home directory (resolves permission denied)
+          USER_HOME=$(eval echo "~$(whoami)")
+          CLI_DIR="$USER_HOME/.vscode/cli"
+
+          echo "=== Cleaning up zombie locks from previous runs inside $USER_HOME ==="
+          rm -f $CLI_DIR/servers/Stable-*/pid.txt
+          rm -f $CLI_DIR/servers/Stable-*/log.txt
 
           echo "=== Provisioning environment auto-refresh settings ==="
-          mkdir -p /root/.vscode/cli/
-          cat << 'EOF' > /root/.vscode/cli/settings.json
+          mkdir -p $CLI_DIR
+          cat << 'EOF' > $CLI_DIR/settings.json
           {
             "terminal.integrated.environmentChangesRelaunch": true,
             "remote.tunnels.actions.onTunnelClose": "none",
@@ -54,12 +58,9 @@ jobs:
           EOF
 
           echo "=== Launching Tunnel ==="
-          # We pass the token via --connection-token and keep it in the foreground for timeout
+          # Flag removed. The binary handles $VSCODE_SERVER_TOKEN behind the scenes
           timeout ${{inputs.time}}m ./code tunnel \
             --accept-server-license-terms \
-            --name runnervmvrwv9 \
-            --connection-token "$VSCODE_SERVER_TOKEN" || true
+            --name runnervmvrwv9 || true
           
           echo "Terminating server gracefully"
-
-
