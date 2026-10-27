@@ -31,8 +31,9 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 *
 
 ### 📢 Upcoming Roadmap
-* **v1.3.3 Patch:** Expected November 7, 2026 (focusing on upstream backports and refactors).
-* **v1.4.0 Major:** Alpha scheduled for October 12, 2026, with a stable target of early January 2027.
+* **v1.3.4 Patch:** Expected on **December 5th, 2026** (focusing on stability improvements).
+* **v1.4.0b0:** Most likely on **December 5th, 2026**
+* **v1.4.0 final:** Planned to be on **January 4th, 2027.**
 
 > [!important]
 > All of these items have been backported to `semver1.4.x`.
