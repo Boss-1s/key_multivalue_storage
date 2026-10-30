@@ -7,6 +7,16 @@ You can create instances of this class using the format
 `Storage(key, subkey=subvalue...)` and storing it in a
 JSON file with `.store(file_path)`.
 
+## Methods
+
+- `Storage(key: str, **kwargs: Any)` -> Create an instance of the Storage class to store.
+See `Storage` docstring for more specific information about it.
+- `create_storage(key: str, **kwargs: Any) -> Storage` -> Create an instance of the Storage class.
+(New in kms-semver1.4.0a1!)
+- `create_storage_from_dict(data_dict: dict[str, dict[str, Any]], raw: bool=False) -> Storage` -> Create
+instance(s) of `Storage` directly from a dictionary. Useful if usage of unpacking is not desired. (
+New in kms-semver1.4.0a1!)
+
 Made with love by Boss_1s.
 (c)2025, 2026. This work is released under the GPL General License v2.0.
 """
@@ -49,21 +59,6 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
     @public
     def __init__(self, key: TopKey, **kwargs: SubVal) -> None: ...
     def __init_subclass__(cls, **kwargs: Any) -> None: ...
-
-    @private
-    @staticmethod
-    def _encode(string: Any) -> int: ...
-    @private
-    @staticmethod
-    def _decode(string: str | int) -> str: ...
-
-    @private
-    def _to_dict(self, encode: bool = False) -> dict[TopKey, dict[SubKey, SubVal]]: ...
-
-    @private
-    @classmethod
-    @deprecated("This private method will be removed soon.")
-    def _from_dict(cls, data_dict: dict[TopKey, dict[SubKey, SubVal]], raw: bool = False) -> Storage[TopKey, SubKey, SubVal]: ...
 
     @public
     @classmethod
@@ -170,3 +165,8 @@ class Storage[TopKey = str, SubKey = str, SubVal = Any](dict[Any, Any],metaclass
     def __exit__(self, exc_type: type[BaseException] | None, exc_val: BaseException | None, exc_tb: TracebackType | None) -> bool: ...
     @public
     def __format__(self, format_spec: str) -> str: ...
+
+@private
+def create_storage(key: str, **kwargs: Any) -> Storage: ...
+@private
+def create_storage_from_dict(data_dict: dict[str, dict[str, Any]]) -> list[Storage]: ...

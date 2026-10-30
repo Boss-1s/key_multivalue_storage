@@ -27,6 +27,42 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ### 💡 Features & Automation
 
+* **More Encoding Options!**
+    * Instead of being forced to use a very childish, insecure character mapping encoding system, you can now choose from a variety of different encodings, including popular ones like Base64 or binary.
+    * Different character sets aside from the default UTF-8 are also added, allowing for a wider range of support.
+    * Plus, you can now also encode subkeys, top level keys, both in the JSON file AND the object!
+    ```py
+    from key_multivalue_storage import Storage, Encoding, CharSet # New enums containing all allowed encodings and charsets
+
+    db = Storage("top_level_key", foo="bar", baz="bax")
+    db.encoding = Encoding.Base64
+    db.encode_object(top_lv_key=True,
+                     subkeys=False,
+                     subvals=True) # Object's values will now be encoded
+    print(repr(db)) # Storage(top_lv_key=dG9wX2xldmVsX2tleQ==, key_value_pairs={'foo':'YmFy','baz:'YmF4'})
+
+    print(db.charset) # CharSet.UTF8
+
+    db.store(
+        'my_database_storage.json',
+        encoding=Encoding.Base2, # binary
+        charset=CharSet.ASCII # American Standard Code for Information Interchange
+    ) # Stores the original Storage object (before encoding into Base64) as Binary after conversion to ASCII
+
+    # The Storage object does NOT get mutated by `.store`, as it should.
+    ```
+* New functions `kms.storage.create_storage()` and `kms.storage.create_storage_from_dict()`
+
+    > Note that these functions are **module level functions.** They are not methods residing in `Storage`.
+
+    * `kms.storage.create_storage()` does the exact same as instantiating with `Storage(key, kwargs)`; it is used internally to avoid circular imports.
+      ```py
+      def create_storage(key: Any, **kwargs: Any) -> Storage: ...
+      ```
+    * `kms.storage.create_storage_from_dict()` takes a dictionary in the format `dict[Any, dict[Any, Any]]` (monokey-multivalue structure) and converts it into a `Storage` object. This function is especially useful if unpacking is not your favorite thing. This function is also used internally solely to avoid circular imports.
+      ```py
+      def create_storage_from_dict(data_dict: dict[Any, dict[Any, Any]]) -> Storage: ...
+      ```
 * **Augmented Operators** ([#75](https://github.com/Boss-1s/key_multivalue_storage/issues/75)) -- `Storage` now officially supports usage of `+=`, `-=`, `/=`, `&=`, `|=`, and `^=` via ([#333](https://github.com/boss-1s/key_multivalue_storage/pull/333)).
     * Note that with `/=`, `int` is not supported as an operand due to the fact that mutating a `Storage` into a `list[Storage]` is impractical, useless, and confusing to users.
 *
