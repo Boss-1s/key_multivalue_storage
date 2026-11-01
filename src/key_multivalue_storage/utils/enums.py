@@ -1,0 +1,52 @@
+"""
+kms enumerations.
+
+Enums are for Pythonic purposes only, escpecially in a case where one specific logic has many
+different values that can be passed, and these values also affect the library as a whole.
+"""
+from __future__ import annotations
+from typing import Literal
+
+__lazy_modules__ = ["sys"]
+
+from enum import StrEnum
+import sys
+
+warnings = sys.modules.get("warnings")
+
+class Encoding(StrEnum):
+    """
+    Enum class for encoding types, new in kms-semver1.4.0.
+    """
+    BASE64 = "base64"
+    KMS = "kms_default"
+    SHA256 = "sha256"
+    SHA512 = "sha512"
+    RSA = "rsa"
+    HMAC = "hmac"
+    AES = "aes"
+    PIGPEN = "pigpen"
+    MORSE = "morse_code"
+    HEX = "hex"
+    NONE = ""
+
+    @classmethod
+    def _missing_(cls, value):
+        """
+        Handle missing values by returning the DEFAULT encoding.
+        """
+        warnings.warn(f"{value} is not a valid Encoding; defaulting to '{cls.KMS}'",#type: ignore
+                      UserWarning)
+        return cls.KMS
+
+class CharSet(StrEnum):
+    """
+    Enum class for character sets, new in kms-semver1.4.0.
+
+    A character set for encoding operations is REQUIRED, meaning you cannot pass
+    `None` or try to access a `kms.CharSet.NONE` attribute to pass when encoding values.
+    """
+    UTF8 = "utf-8"
+    UTF16 = "utf-16"
+    UTF32 = "utf-32"
+    ASCII = "ascii"

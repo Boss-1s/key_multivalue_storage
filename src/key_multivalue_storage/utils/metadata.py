@@ -67,7 +67,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     # @_next(True) -- Maybe in b0, still need time to think about it
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.21"
+        return "2026.10.26"
 
     @property
     # @_next(True) -- Maybe in b0, still need time to think about it
@@ -79,7 +79,7 @@ class _StorageMeta(type, metaclass=_KmsMeta):
     # @_next(True) -- Maybe in b0, still need time to think about it
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/21"
+        return "2026/10/26"
 
     @property
     @_next(True)
@@ -211,7 +211,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.18"
 
     @property
     def version(cls) -> str:
@@ -221,7 +221,7 @@ class _LoadMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/18"
 
     def __repr__(cls) -> str:
         """
@@ -256,7 +256,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.18"
 
     @property
     def version(cls) -> str:
@@ -266,7 +266,7 @@ class _EditMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/18"
 
     def __repr__(cls) -> str:
         """
@@ -301,7 +301,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def calver(cls) -> str:
         """Current calendar version of this module."""
-        return "2026.10.06"
+        return "2026.10.25"
 
     @property
     def version(cls) -> str:
@@ -311,7 +311,7 @@ class _DeleteMeta(type, metaclass=_KmsMeta):
     @property
     def last_update(cls) -> str:
         """Date this module was last updated."""
-        return "2026/10/06"
+        return "2026/10/25"
 
     def __repr__(cls) -> str:
         """
