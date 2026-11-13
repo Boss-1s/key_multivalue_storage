@@ -36,6 +36,8 @@ keywords = [
 ]
 dependencies = [
     "atpublic~=9.0",
+    "cryptography>=50.0.2",
+    "morse-code-translator2>=1.0.0",
     "rich==15.0.0",
     "typing-extensions~=4.16",
 ]

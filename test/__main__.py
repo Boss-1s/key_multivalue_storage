@@ -55,7 +55,7 @@ def _run_tests(c: Console, tests: list[str]) -> None:
             c.print(f"[blue]Running: {test_file}[/]")
             with open(test_file, "r", encoding='utf-8') as f:
                 compiled_code = compile(f.read(), os.path.abspath(test_file), "exec")
-                exec(compiled_code, globals())
+                exec(compiled_code, {"__builtins__": __builtins__})
             tracebacks.append(None)
         except Exception as e:
             print(f"❌ [red b]Error in {test_file}: {e}[/]")
@@ -66,6 +66,10 @@ def _run_tests(c: Console, tests: list[str]) -> None:
                 "[b][blue]Hint:[/b] hit Ctrl+Z/Ctrl+C to examine the issue more carefully[/]"
             )
             time.sleep(1.9)
+
+        modules_to_clear = [mod for mod in sys.modules if mod.startswith("key_multivalue_storage")]
+        for mod in modules_to_clear:
+            del sys.modules[mod]
 
         c.print("-" * 30)
         time.sleep(0.1)
@@ -92,6 +96,7 @@ def main(c: Console) -> None:
             "test/test-delete.py",
             "test/test-meta.py",
             "test/test-exceptions.py",
+            "test/test-enums.py",
             "test/test-nextgen.py",
             "test/test-feat-75.py",
         ]
@@ -138,6 +143,8 @@ def main(c: Console) -> None:
             _run_tests(c, ["test/test-meta.py"])
         case "exceptions" | "warnings":
             _run_tests(c, ["test/test-exceptions.py"])
+        case "enums":
+            _run_tests(c, ["test/test-enums.py"])
         case "nextgen":
             _run_tests(c, ["test/test-nextgen.py"])
         case "diff":
@@ -274,7 +281,7 @@ def main(c: Console) -> None:
         case _:
             raise ValueError(
                 "Invalid argument. Available arguments: a, all, general, meta, diff, "+
-                "exceptions, warnings, help_shortcut, reset_env"
+                "exceptions, warnings, help_shortcut, reset_env, enums"
             )
 
 if __name__ == "__main__":

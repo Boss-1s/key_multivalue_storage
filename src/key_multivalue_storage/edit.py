@@ -28,6 +28,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public, private
 
+from .storage import create_storage
+from .load import Load
 from .utils import metadata as meta, KeyNotFoundError
 from .utils.warnings import CastWarning, _deprecated_arg
 
@@ -134,8 +136,6 @@ class Edit(metaclass=meta._EditMeta):
         - `None`
         """
 
-        from . import Storage
-
         if new:
             noexist_ok = new
 
@@ -145,7 +145,7 @@ class Edit(metaclass=meta._EditMeta):
                           CastWarning)
             top_lv_key=str(top_lv_key)
 
-        loaded_data: Storage | None = Storage.Load.by_key(
+        loaded_data: Storage | None = Load.by_key(
             file_path,
             top_lv_key,
         )
@@ -198,8 +198,6 @@ class Edit(metaclass=meta._EditMeta):
         - `None`
         """
 
-        from . import Storage
-
         print(f"Edit.propval: DEBUG: file_path={file_path}")
         print(f"Edit.propval: DEBUG: top_lv_key={top_lv_key}")
         print(f"Edit.propval: DEBUG: propkey={propkey}")
@@ -212,10 +210,10 @@ class Edit(metaclass=meta._EditMeta):
 
         top_lv_key=str(top_lv_key)
 
-        loaded_data: Storage | None = Storage.Load.by_key(
+        loaded_data: Storage | None = Load.by_key(
             file_path,
             top_lv_key,
-            )
+        )
 
         print(f"Edit.propval: DEBUG: loaded_data={loaded_data}")
         print(f"Edit.propval: DEBUG: not loaded_data? {not loaded_data}")
@@ -234,7 +232,7 @@ class Edit(metaclass=meta._EditMeta):
                 break
 
 
-        Storage(top_lv_key, **loaded_data.values).store(file_path)
+        create_storage(top_lv_key, **loaded_data.values).store(file_path)
         print(f"Edit.propval: INFO: Sucessfully changed value {oldval} "+
                 f"to {newval} under key {top_lv_key}.{propkey}.")
 
