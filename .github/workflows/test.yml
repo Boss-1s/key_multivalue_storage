@@ -95,7 +95,7 @@ jobs:
         id: yml
         background: true
         if: ${{ runner.os == 'Linux' }}
-        uses: reviewdog/action-actionlint@a499b807aed4af40b8f2f7b885b9e38c469a945c
+        uses: reviewdog/action-actionlint@6c5efc3e507f3a0678fe69e82423dfe41edc86b8
         with:
           actionlint_flags: |
             -color -oneline -format "{{json .}}" | tee /dev/tty | jq -s '{"issues": map(.[] | {engineId: "actionlint", ruleId: (.kind // "workflow-error"), severity: "MAJOR", type: "CODE_SMELL", primaryLocation: {message: .message, filePath: .filepath, textRange: {startLine: .line, startColumn: .column, endLine: .line}}})}' > actionlint-sonar.json
