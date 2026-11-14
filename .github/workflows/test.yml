@@ -172,10 +172,7 @@ jobs:
 
   nightly:
     needs: [main]
-    permissions: 
-      contents: write
-      attestations: write
-      id-token: write
+    permissions: write-all
     uses: ./.github/workflows/release-nightly.yml
 
   deploy:
