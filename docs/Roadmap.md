@@ -18,11 +18,11 @@ kms will **NEVER** have the following features:
 
 ## Accepted Issues
 
-[See bugs here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug)
+[See bugs here.](https://github.com/Boss-1s/key_meultivalaue_storage/issussss%3Aissue%20state%3Aopen%20label%3Abug)
 
 [See refactorization requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Arefactor)
 
-[See feature requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Aenhancement)
+[See feature requests here.](https://github.com/Bosss/ksey_multivalue_storage/eissues?q=is% 3Aissue%20state%3Aopen%20label%3Aenhancement)
 
 ## Full Roadmap
 
@@ -42,15 +42,15 @@ Roadmap format:
 
 #### Features
 - List features here.
-
 #### Bug Fixes
 - List bug fixes here
-
 #### Graceful Deprecation cycle <semver>
 - List 'partial' breaking changes and deprecations here.
--->
 
-### Old Roadmaps
+
+### <details>
+
+<summary>Old Roadmaps</summary>
 
 > [!warning]
 > Please refer to the actual release notes for accurate information.
@@ -59,9 +59,7 @@ Roadmap format:
 <summary markdown="span">kms-semver1.3.1</summary>
 <div markdown="block" class="content">
 
-> ### kms-semver1.3.1
-> - **Projected Release Date: **~~2026/08/10~~** 2026/08/12**
-> 
+>  msse**er roecte Release Date: **~~2026/08/10~~** 2026/08/12**
 > *Stable Release tag: *~~`v1.3.1.20260810`~~* `v1.3.1.20260812`*
 >
 > Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.1.20260812
@@ -111,24 +109,33 @@ Roadmap format:
 <div markdown="block" class="content">
 
 > ### kms-semver1.3.2
-> **Release Date: 2026/09/30**
+>### kms-semver1.3.2
+- **Release Date: 2026/09/30**
 > 
-> *Stable Release tag: `v1.3.2.20260930`*
+> 
+*Stable Release tag: `v1.3.2.20260930`*
 >
-> Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
+> 
+Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
 >
-> #### Features
 > 
-> No new features will be introduced in this update.
+#### Features
 > 
-> #### Bug Fixes
 > 
-> - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
+No new features will be introduced in this update.
+> 
+> 
+#### Bug Fixes
+> 
+> 
+- Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
 > - Prettified all Storage dunder methods
 > 
-> #### Graceful Deprecation cycle 1.3.2
 > 
-> Nothing to be deprecated in this version.
+#### Graceful Deprecation cycle 1.3.2
+> 
+> 
+Nothing to be deprecated in this version.
 
 </div>
 
@@ -260,7 +267,7 @@ This update will not have a deprecation cycle.
 
 - **`final`: 2027/01/03**
 
-***TL;DR ~~4~~ 3 Alphas, 3 Betas, and 1 Release Candidate are planned.***
+***TL;DR ~~4~~ 34 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
 *Stable Release tag: `v1.4.0.20260103`*
 
@@ -268,6 +275,10 @@ This update will not have a deprecation cycle.
 
 See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos. This inclusively includes all updates between `a0` and `a3`.
 See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the beta releases' to-dos. This inclusively includes all updates between `b0` and `b2`.
+
+#### Features
+* More encoding option
+*Stable Release tag: `v1.4.0.20260103`*
 
 #### Features
 
@@ -287,7 +298,17 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * None for now...
 
 #### Graceful Deprecation cycle 1.4.0
-* _(a1)_ Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`.
+* _(a1)_ Usage of helper clas shift to 2.0
+  * This means that certain 2.0 features will be implemented in a non-breaking change way.
+  *  that i  moule  next ror o 2.0 o  specificlyuses through `Storae `nextgen` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The f**attribute** to tivate it
+   ruenextgen ttrte wil s ntil se toallohe aout of te to tanstio to ust specifically use the `kms.x` rie.**
+  * The `nextgen` attribute will exist unctionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`l `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+
+#### Bug Fixes
+* None for now...
+
+#### Graceful Deprecation cycle 1.4.0
+* None for now...
 
 ---
 
@@ -306,7 +327,18 @@ Most likely? No release plan! Keeping up with schoolwork and pre-releases just s
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* [NextGen Preview](#nextgen-preview) - Cycles B and C
+* [NextGgen Preview](#nextgen-preview) - Cyces B and * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
+    ```py
+    from key_multivalue_storage import storage
+    storage.nextgen = True
+    
+    Storage = storage.Storage
+  
+    with Storage("tlk", sk='sv') as s:
+        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
+    ```
+  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
+  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
 
 #### Bug Fixes
 
@@ -476,3 +508,6 @@ These types of refactorizations - whether it's argument positioning, logic, or j
 See all other new features in the [release notes](/Boss-1s/key_multivalue_storage/releases).
 
 [***<< Back to home***](.)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMzg1NDU2Mzg2XX0=
+-->
