@@ -12,7 +12,7 @@ My mission now: a *lightweight* storage wrapper library that can be used *anytim
 [![Release](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Frelease.yml?style=for-the-badge&label=Release%20Env&labelColor=maroon)](https://github.com/Boss-1s/key_multivalue_storage/deployments/release)<br>
 [![Tests](https://img.shields.io/github/actions/workflow/status/Boss-1s/key_multivalue_storage/.github%2Fworkflows%2Ftest.yml?style=for-the-badge&label=Tests&labelColor=blue)](https://github.com/Boss-1s/key_multivalue_storage/deployments/test)<br>
 [![License](https://img.shields.io/pypi/l/key-multivalue-storage?style=for-the-badge&color=cyan&labelColor=%230a6149)](https://github.com/Boss-1s/key_multivalue_storage/blob/main/LICENSE)<br><br>
-[![PyPI - Version](https://img.shields.io/pypi/v/key-multivalue-storage?style=for-the-badge&label=Latest&color=teal)](https://pypi.org/project/key-multivalue-storage/#history)<br>
+[![PyPI - Ver<br>br
 
 ### It is __strongly__ recommended to learn Python before using kms. The best environment to learn in is CPython 3.12 for this library.
 
@@ -156,7 +156,7 @@ Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "m
                          "newkey" # newpropkey
                          noexist_ok = True # Creates a new subkey with the new subkey name if the old subkey name did not exist
                         )
-... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+ Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue", "myothersk: anotherval"]
 >>> Storage.Edit.propval("database.json", # file_path
                          "my_top_level_key", # top_lv_key
@@ -175,7 +175,7 @@ Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "m
                               "my_top_level_key", # top_level_key
                               "myothersk" # property_key
                              )
-... Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
+...>>> Storage.Load.values("database.json", "my_top_level_key", keys=True, raw=False)
 ["newkey: myvalue"]
 ```
 > [!TIP]
@@ -185,11 +185,11 @@ Storage(top_lv_key="my_top_level_key", key_value_pairs=["mysubkey"="myvalue", "m
 ```pycon
 >>> # Adding instances combines the two instances, as long as the top level key is the same.
 ... addStorage = Storage("combine", sk1="val1") + Storage("combine", sk2="val2")
-... print(addStorage)
+ print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1", "sk2"="val2"])
 >>> # Subtracting instances remove any exact same key-value pairs from the two instances, as long as the top level key is the same.
 ... subStorage = Storage("combine", sk1="val1", sk2="val2") - Storage("combine", sk2="val2")
-... print(addStorage)
+...>>> print(addStorage)
 Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 ```
 > [!TIP]
@@ -205,6 +205,6 @@ Storage(top_lv_key="combine", key_value_pairs=["sk1"="val1"])
 
 ## Thanks for using kms! ❤
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYzMzQ2NjY1Miw3NjQ3OTU4OCw3ODg2OD
-czOTYsLTgwNjAyMDA5NF19
+eyJoaXN0b3J5IjpbMTc2NjQyNTQ5NywtNjMzNDY2NjUyLDc2ND
+c5NTg4LDc4ODY4NzM5NiwtODA2MDIwMDk0XX0=
 -->
