@@ -144,12 +144,8 @@ Nothing to be deprecated in this version.
 ---
 
 ### kms-semver1.3.3
-- **Projected Release Date: 2026/11/07**
 
-*Stable Release tag: `v1.3.3.20261107`*
-
-> [!important]
-> This major patch coincides with the 2nd alpha release of `kms-semver1.4`, `kms-v1.4.0a1/2026.11.07`.
+*Stable Release tag: `v1.3.3.2026xxxx`*
 
 #### Features
 
@@ -158,23 +154,20 @@ No new features will be introduced in this update.
 #### Bug Fixes
 
 - Fix discrepancy between `kms.storage`'s type stub and implementation
+- *(dev)* Fix tests acting weird ([#403](https://github.com/Boss-1s/key_multivalue_storage/pull/403))
 
 #### Graceful Deprecation cycle 1.3.3
 
 > [!note]
-> `kms-semver1.4.0a2` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
 - None yet...
 
 ---
 
 ### kms-semver1.3.4
-- **Projected Release Date: 2026/12/05**
 
-*Stable Release tag: `v1.3.4.20261205`*
-
-> [!important]
-> This major patch coincides with the 1st beta release of `kms-semver1.4`, `kms-v1.4.0b0/2026.12.05`.
+*Stable Release tag: `v1.3.4.2026xxxx`*
 
 #### Features
 
@@ -187,19 +180,15 @@ No new features will be introduced in this update.
 #### Graceful Deprecation cycle 1.3.4
 
 > [!note]
-> `kms-semver1.4.0b0` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
 - None yet...
 
 ---
 
 ### kms-semver1.3.5
-- **Projected Release Date: 2026/12/21**
 
-*Stable Release tag: `v1.3.5.20261221`*
-
-> [!important]
-> This major patch coincides with the 3rd beta release of `kms-semver1.4`, `kms-v1.4.0b2/2026.12.21`.
+*Stable Release tag: `v1.3.5.2027xxxx`*
 
 #### Features
 
@@ -212,16 +201,15 @@ No new features will be introduced in this update.
 #### Graceful Deprecation cycle 1.3.5
 
 > [!note]
-> `kms-semver1.4.0b2` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
 - None yet...
 
 ---
 
 ### kms-semver1.3.6
-- **Projected Release Date: 2027/01/03**
 
-*Stable Release tag: `v1.3.6.20261107`*
+*Stable Release tag: `v1.3.6.2027xxxx`*
 
 > [!important]
 > This major patch coincides with the stable release of `kms-semver1.4.0`.
@@ -237,17 +225,17 @@ No new features will be introduced in this update.
 
 - No bugs to be fixed...._yet_...
 
-This update will not have a deprecation cycle.
+**This update will not have a deprecation cycle.**
 
 ---
 
 ### kms-semver1.4.0
 - **Projected Stable Release Date: 2027/01/03**
 - **Projected Alpha 0 Release Date: 2026/10/12**
-- **Projected Beta 0 Release Date: 2026/12/05**
-- **Projected Release Candidate 0 Release Date: 2026/12/27**
+- **Projected Beta 0 Release Date: late 2026 ~ early 2027**
+- **Projected Release Candidate 0 Release Date: early 2027**
 
-*Stable Release tag: `v1.4.0.20260103`*
+*Stable Release tag: `v1.4.0.2027xxxx`*
 
 #### Release Plan
 
@@ -255,21 +243,18 @@ This update will not have a deprecation cycle.
 > The dates below are subject to change.
 
 - **`alpha0`: 2026/10/12**
-- `alpha1`: ~~2026/10/24~~ ~~2026/10/26~~ **2026/11/07** _(changed on 2026/10/24)_
-- `alpha2`: ~~2026/11/07~~ **2026/11/21**  _(changed on 2026/10/24)_
-- ~~`alpha3`: 2026/11/28 2026/11/21 _(changed on 2026/10/18)_~~  _(removed on 2026/10/24)_
-- **`beta0`: 2026/12/05** *(No features allowed past this point)*
-- `beta1`: 2026/12/13
-- `beta2`: 2026/12/21
-- **`rc0`: 2026/12/27**
+- `alpha1`: November 2026
+- `alpha2`: December 2026
+- **`beta0`: December 2026/January 2027** *(No features allowed past this point)*
+- `beta1`: January 2027
+- `beta2`: January 2027
+- **`rc0`: February 2027**
 
 > (*there may be more `rc`s in between; however, that is very unlikely.*)
 
-- **`final`: 2027/01/03**
+- **`final`: early 2027**
 
-***TL;DR ~~4~~ 34 Alphas, 3 Betas, and 1 Release Candidate are planned.***
-
-*Stable Release tag: `v1.4.0.20260103`*
+***TL;DR 3 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
 #### Full To-Do Lists
 
@@ -509,5 +494,5 @@ See all other new features in the [release notes](/Boss-1s/key_multivalue_storag
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzg1NDU2Mzg2XX0=
+eyJoaXN0b3J5IjpbNTgwMzMzNzkyLDM4NTQ1NjM4Nl19
 -->
