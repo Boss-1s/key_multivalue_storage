@@ -24,7 +24,12 @@ jobs:
         if: ${{ github.actor != 'renovate[bot]' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'}}
         shell: bash
         run: |
-          gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage"
+          if gh pr view "$PR_NUMBER" --json labels | jq -e '.labels | any(.name | startswith("Priority: "))' > /dev/null; then
+            echo "PR has a Priority tag; skipping add Needs Triage"
+          else
+            echo "No Priority tag found; adding Needs Triage"
+            gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "Needs Triage"
+          fi
           gh pr comment "$PR_NUMBER" \
             --repo "$GH_REPO" \
             --body "Thanks for taking time to submit this PR! Your PR will be triaged soon. If you have any comments or additions, you can make a new comment or edit your original post. Thanks for contributing to kms! *Note: your PR may be closed if it does not comply to [the rules](https://boss-1s.github.io/key_multivalue_storage/Development#pr-rules). Double check and make sure your PR is compliant.*"
