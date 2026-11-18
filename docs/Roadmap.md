@@ -4,6 +4,16 @@ sidebar_type: toc
 ---
 
 # Roadmap
+
+> [!important]
+> On **November 17th, 2026**, `kms`'s official roadmap *was rewritten again.* The biggest change is **dragging out everything from present to `kms-semver2.0.0`, the big milestone, over a _four year period._**
+>
+> Long story short, one minor version per school year. 
+> One whole school year to work on one big update. 
+> Unless I find some maintainers, this is how it is going to be until 2030.
+> 
+> **Remember, quality over quantity is *very* important.**
+
 > [!Tip]
 > **This is the roadmap for kms.** As time goes on, more and more items and information will be added to this roadmap.
 
@@ -18,11 +28,11 @@ kms will **NEVER** have the following features:
 
 ## Accepted Issues
 
-[See bugs here.](https://github.com/Boss-1s/key_meultivalaue_storage/issussss%3Aissue%20state%3Aopen%20label%3Abug)
+[See bugs here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug)
 
 [See refactorization requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Arefactor)
 
-[See feature requests here.](https://github.com/Bosss/ksey_multivalue_storage/eissues?q=is% 3Aissue%20state%3Aopen%20label%3Aenhancement)
+[See feature requests here.](https://github.com/Boss-1s/key_multivalue_storage/issues?q=is%3Aissue%20state%3Aopen%20label%3Aenhancement)
 
 ## Full Roadmap
 
@@ -42,15 +52,15 @@ Roadmap format:
 
 #### Features
 - List features here.
+
 #### Bug Fixes
 - List bug fixes here
+
 #### Graceful Deprecation cycle <semver>
 - List 'partial' breaking changes and deprecations here.
+-->
 
-
-### <details>
-
-<summary>Old Roadmaps</summary>
+### Old Roadmaps
 
 > [!warning]
 > Please refer to the actual release notes for accurate information.
@@ -59,7 +69,9 @@ Roadmap format:
 <summary markdown="span">kms-semver1.3.1</summary>
 <div markdown="block" class="content">
 
->  msse**er roecte Release Date: **~~2026/08/10~~** 2026/08/12**
+> ### kms-semver1.3.1
+> - **Projected Release Date: **~~2026/08/10~~** 2026/08/12**
+> 
 > *Stable Release tag: *~~`v1.3.1.20260810`~~* `v1.3.1.20260812`*
 >
 > Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.1.20260812
@@ -109,33 +121,24 @@ Roadmap format:
 <div markdown="block" class="content">
 
 > ### kms-semver1.3.2
->### kms-semver1.3.2
-- **Release Date: 2026/09/30**
+> **Release Date: 2026/09/30**
 > 
-> 
-*Stable Release tag: `v1.3.2.20260930`*
+> *Stable Release tag: `v1.3.2.20260930`*
 >
-> 
-Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
+> Release: https://github.com/Boss-1s/key_multivalue_storage/releases/tag/v1.3.2.20260930
 >
+> #### Features
 > 
-#### Features
+> No new features will be introduced in this update.
 > 
+> #### Bug Fixes
 > 
-No new features will be introduced in this update.
-> 
-> 
-#### Bug Fixes
-> 
-> 
-- Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
+> - Fixed release pipeline bug where a commit SHA target_commitish was treated as a branch
 > - Prettified all Storage dunder methods
 > 
+> #### Graceful Deprecation cycle 1.3.2
 > 
-#### Graceful Deprecation cycle 1.3.2
-> 
-> 
-Nothing to be deprecated in this version.
+> Nothing to be deprecated in this version.
 
 </div>
 
@@ -144,12 +147,9 @@ Nothing to be deprecated in this version.
 ---
 
 ### kms-semver1.3.3
-- **Projected Release Date: 2026/11/07**
+- **Projected Release Date: 2026/11/27**
 
-*Stable Release tag: `v1.3.3.20261107`*
-
-> [!important]
-> This major patch coincides with the 2nd alpha release of `kms-semver1.4`, `kms-v1.4.0a1/2026.11.07`.
+*Stable Release tag: `v1.3.3.20261127`*
 
 #### Features
 
@@ -158,23 +158,21 @@ No new features will be introduced in this update.
 #### Bug Fixes
 
 - Fix discrepancy between `kms.storage`'s type stub and implementation
+- *(dev)* Fix tests being weird via [#403](https://GitHub.com/Boss-1s/key_multivalue_storage)
 
 #### Graceful Deprecation cycle 1.3.3
 
 > [!note]
-> `kms-semver1.4.0a2` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
-- None yet...
+- None planned.
 
 ---
 
 ### kms-semver1.3.4
-- **Projected Release Date: 2026/12/05**
+- **Projected Release Date: December 2026**
 
-*Stable Release tag: `v1.3.4.20261205`*
-
-> [!important]
-> This major patch coincides with the 1st beta release of `kms-semver1.4`, `kms-v1.4.0b0/2026.12.05`.
+*Stable Release tag: `v1.3.4.2026xxxx`*
 
 #### Features
 
@@ -187,19 +185,16 @@ No new features will be introduced in this update.
 #### Graceful Deprecation cycle 1.3.4
 
 > [!note]
-> `kms-semver1.4.0b0` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
 - None yet...
 
 ---
 
 ### kms-semver1.3.5
-- **Projected Release Date: 2026/12/21**
+- **Projected Release Date: January 2027**
 
-*Stable Release tag: `v1.3.5.20261221`*
-
-> [!important]
-> This major patch coincides with the 3rd beta release of `kms-semver1.4`, `kms-v1.4.0b2/2026.12.21`.
+*Stable Release tag: `v1.3.5.202701xx`*
 
 #### Features
 
@@ -212,16 +207,16 @@ No new features will be introduced in this update.
 #### Graceful Deprecation cycle 1.3.5
 
 > [!note]
-> `kms-semver1.4.0b2` has its own list of deprecations.
+> The `kms-semver1.4.0` pre-release series has its own list of deprecations.
 
 - None yet...
 
 ---
 
 ### kms-semver1.3.6
-- **Projected Release Date: 2027/01/03**
+- **Projected Release Date: February 2027**
 
-*Stable Release tag: `v1.3.6.20261107`*
+*Stable Release tag: `v1.3.6.202702xx`*
 
 > [!important]
 > This major patch coincides with the stable release of `kms-semver1.4.0`.
@@ -242,12 +237,12 @@ This update will not have a deprecation cycle.
 ---
 
 ### kms-semver1.4.0
-- **Projected Stable Release Date: 2027/01/03**
+- **Projected Stable Release Date: Feb. 2027**
 - **Projected Alpha 0 Release Date: 2026/10/12**
-- **Projected Beta 0 Release Date: 2026/12/05**
-- **Projected Release Candidate 0 Release Date: 2026/12/27**
+- **Projected Beta 0 Release Date: Dec. 2026**
+- **Projected Release Candidate 0 Release Date: Jan 2027**
 
-*Stable Release tag: `v1.4.0.20260103`*
+*Stable Release tag: `v1.4.0.202702xx`*
 
 #### Release Plan
 
@@ -255,30 +250,25 @@ This update will not have a deprecation cycle.
 > The dates below are subject to change.
 
 - **`alpha0`: 2026/10/12**
-- `alpha1`: ~~2026/10/24~~ ~~2026/10/26~~ **2026/11/07** _(changed on 2026/10/24)_
-- `alpha2`: ~~2026/11/07~~ **2026/11/21**  _(changed on 2026/10/24)_
-- ~~`alpha3`: 2026/11/28 2026/11/21 _(changed on 2026/10/18)_~~  _(removed on 2026/10/24)_
-- **`beta0`: 2026/12/05** *(No features allowed past this point)*
-- `beta1`: 2026/12/13
-- `beta2`: 2026/12/21
-- **`rc0`: 2026/12/27**
+- `alpha1`: Late November 2026
+- `alpha2`: Early December 2026
+- **`beta0`: Late December 2026
+- `beta1`: Early-to-mid January 2027
+- `beta2`: Mid January 2027
+- **`rc0`: Late January 2027**
 
 > (*there may be more `rc`s in between; however, that is very unlikely.*)
 
-- **`final`: 2027/01/03**
+- **`final`: 2027/02/xx**
 
-***TL;DR ~~4~~ 34 Alphas, 3 Betas, and 1 Release Candidate are planned.***
+***TL;DR 3 Alphas, 3 Betas, and 1 Release Candidate are planned.***
 
-*Stable Release tag: `v1.4.0.20260103`*
+*Stable Release tag: `v1.4.0.202602xx`*
 
 #### Full To-Do Lists
 
-See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos. This inclusively includes all updates between `a0` and `a3`.
+See [#197](https://github.com/Boss-1s/key_multivalue_storage/issues/197) for the alpha releases' to-dos. This inclusively includes all updates between `a0` and `a2`.
 See [#198](https://github.com/Boss-1s/key_multivalue_storage/issues/198) for the beta releases' to-dos. This inclusively includes all updates between `b0` and `b2`.
-
-#### Features
-* More encoding option
-*Stable Release tag: `v1.4.0.20260103`*
 
 #### Features
 
@@ -298,47 +288,28 @@ I'm gonna have to sort these at some point....docs is harder than coding the mod
 * None for now...
 
 #### Graceful Deprecation cycle 1.4.0
-* _(a1)_ Usage of helper clas shift to 2.0
-  * This means that certain 2.0 features will be implemented in a non-breaking change way.
-  *  that i  moule  next ror o 2.0 o  specificlyuses through `Storae `nextgen` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The f**attribute** to tivate it
-   ruenextgen ttrte wil s ntil se toallohe aout of te to tanstio to ust specifically use the `kms.x` rie.**
-  * The `nextgen` attribute will exist unctionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`l `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
-
-#### Bug Fixes
-* None for now...
-
-#### Graceful Deprecation cycle 1.4.0
-* None for now...
+* _(a1)_ Usage of helper classes through `Storage` i.e. `Storage.Load.by_key` has now been deprecated in favor of direct import, i.e. `from key_multivalue_storage import Load`. Please note the change accordingly. The functionality of accessing the helper classes in this way will be completely removed in `kms-semver2.0.0`.
 
 ---
 
 ### kms-semver1.5.0
-- **Projected Stable Release Date: 2027/06/30**
-- **Projected Alpha 0 Release Date: 2027/03/31**
+- **Projected Stable Release Date: Mid 2028**
+- **Projected Alpha 0 Release Date: Early-to-Mid 2027**
 
-*Stable Release tag: `v1.5.0.20270630`*
+*Stable Release tag: `v1.5.0.2028xxxx`*
 
 #### Release Plan
 
 Most likely? No release plan! Keeping up with schoolwork and pre-releases just seems very unlikely to be possible right now.....
+
+(Funny how that already happened in `1.4.x`...)
 
 #### Features
 * Multiple file format support (`.json`, `.yaml`, `.yml`)
 * YAML parsing and editing
 * Find custom UUIDv7 library so that no fallback to UUIDv4 is necessary
 * Allow choosing type of UUID as the instance ID
-* [NextGgen Preview](#nextgen-preview) - Cyces B and * To turn on 2.0 mode in a **specific module**, you can set the `nextgen` **attribute** in that **module**.
-    ```py
-    from key_multivalue_storage import storage
-    storage.nextgen = True
-    
-    Storage = storage.Storage
-  
-    with Storage("tlk", sk='sv') as s:
-        print(dict(s)) # Will print the nested dict format (full storage) instead of just the values of the top level key
-    ```
-  * Note that **if a module did not exist prior to 2.0, you must specifically use the `kms.nextgen` attribute to activate it.**
-  * The `nextgen` attribute will exist until `kms-semver2.1`, to allow a good amount of time to transition to the `kms-semver2.x` series.
+* [NextGen Preview](#nextgen-preview) - Cycles B and C
 
 #### Bug Fixes
 
@@ -351,10 +322,10 @@ Most likely? No release plan! Keeping up with schoolwork and pre-releases just s
 ---
 
 ### kms-semver1.6.0
-- **Projected Stable Release Date: 2028/01/08**
-- **Projected Alpha 0 Release Date: 2027/10/05**
+- **Projected Stable Release Date: Mid 2030**
+- **Projected Alpha 0 Release Date: Early 2029**
 
-*Stable Release tag: `v1.6.0.20280108`*
+*Stable Release tag: `v1.6.0.2030xxxx`*
 
 > [!caution]
 > This will be the last update in the `kms-semver1.x` series. If you are still using this series of updates by then, you should switch over to `kms-semver2.x` instead.
@@ -372,12 +343,15 @@ This update will not have a deprecation cycle, due to it being the last version 
 
 ### `kms-semver2.0.0`
 - **Projected Stable Release Date: 2027/08/17**
-- **Projected Alpha 0 Release Date: 2027/06/14**
+- **Projected Alpha 0 Release Date: 2030/08/17**
 
 *Stable Release tag: `v2.0.0.20270817`*
 
-**kms-semver2.0.0 is an upcoming, backwards-incompatible update planned for release on August 17th, 2027, exactly two years after the release of kms-v1.0.0/2026.08.17.**
+**kms-semver2.0.0 will be a backwards-incompatible update planned for release on August 17th, 2030, exactly five years after the release of kms-v1.0.0/2025.08.17.** The first public alpha/preview is planned to release on `kms`'s second anniversary, on **August 17th, 2027.**
+
 This update will bring many changes and features, including the ability to store and read JSON data with SQL querying, store data in YAML files, `MultiStorage` which makes nesting `Storage` in `Storage` easier and more Pythonic, and more. All of these features will be built up slowly in the kms-semver1.x releases leading up to this version.
+
+This project will be *undeniable proof* of my learning in both **software development and project management.**
 
 > [!Note]
 > These lists is incomplete. As time passes and the release gets closer, more things will be added in the lists below.
@@ -509,5 +483,5 @@ See all other new features in the [release notes](/Boss-1s/key_multivalue_storag
 
 [***<< Back to home***](.)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzg1NDU2Mzg2XX0=
+eyJoaXN0b3J5IjpbMTkzMDYxMzc1MCwzODU0NTYzODZdfQ==
 -->
