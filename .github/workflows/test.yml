@@ -183,7 +183,7 @@ jobs:
       - name: Validate Branch Against Deployment Rules
         id: branch-check
         run: |
-          TARGET_BRANCH="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          TARGET_BRANCH="${{ github.head_ref || github.ref_name }}"
           echo "Evaluating branch name: $TARGET_BRANCH"
 
           REGEX_PATTERN="^(.*semver1\..*\.x.*|(backport|chore|deps|feat|fix|next|refactor)/semver1\..*\.x/.*)$"
