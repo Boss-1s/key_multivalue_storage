@@ -29,7 +29,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from public import public
 
-from .utils import CastWarning, KeyNotFoundError, metadata as meta
+from .storage import create_storage, create_storage_from_dict
+from .utils import CastWarning, KeyNotFoundError, metadata as meta, _decode
 
 if TYPE_CHECKING:
     from . import Storage
@@ -67,8 +68,8 @@ class Load(metaclass=meta._LoadMeta):
     - `Storage.Load.by_index(file_path: str, index: int, raw: bool=False) -> Storage | None` ->
     Load a JSON file and find the index at which to extract a single key-multivalue pair and its
     values.
-    - `Storage.Load.keys(file_path: str) -> list[str] | None` -> Load a JSON file and returns the keys
-    of that file.
+    - `Storage.Load.keys(file_path: str) -> list[str] | None` -> Load a JSON file and returns the
+    keys of that file.
     - `Storage.Load.values(file_path: str, key: Any, keys: bool=False, raw: bool=True) ->
     list[str] | None` -> Loads a JSON file and returns the values under the inputted key.
     - `Storage.Load.help(method: ((Any) -> Any) | None) -> None` -> Displays the docstring of the
@@ -117,8 +118,6 @@ class Load(metaclass=meta._LoadMeta):
         - `None`: Returns None if the key was not found or if there was an error.
         """
 
-        from . import Storage
-
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -157,7 +156,9 @@ class Load(metaclass=meta._LoadMeta):
 
         if key in loaded_data and found_in_keys: #Use the flag from the detailed comparison
             try:
-                return Storage._from_dict({key: loaded_data[key]}, raw)
+                if raw:
+                    return create_storage(key, **loaded_data[key])
+                return create_storage_from_dict({key: _decode(loaded_data[key])})[0]
             except ValueError as e:
                 print(f"Load.by_key: ERROR: Error reconstructing object for key '{key}': {e}")
                 return None
@@ -188,8 +189,6 @@ class Load(metaclass=meta._LoadMeta):
         - `None`: Only returned on failure to load the file or if the index is out of bounds.
         """
 
-        from . import Storage
-
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data: dict[str, dict[str, Any]] = json.load(f)
@@ -213,7 +212,9 @@ class Load(metaclass=meta._LoadMeta):
         target_key: str = keys[index]
         if target_key in loaded_data:
             try:
-                return Storage._from_dict({target_key: loaded_data[target_key]}, raw)
+                if raw:
+                    return create_storage(target_key, **loaded_data[target_key])
+                return create_storage(target_key, **_decode(loaded_data[target_key]))
             except ValueError as e:
                 print("Error reconstructing object for key",
                         f"'{target_key}' at index '{index}': {e}")
@@ -279,8 +280,6 @@ class Load(metaclass=meta._LoadMeta):
         - `None`: Returns None if the key was not found or if there was an error.
         """
 
-        from . import Storage
-
         print(f"Load.values: DEBUG: file_path={file_path}")
         print(f"Load.values: DEBUG: key={key}")
         print(f"Load.values: DEBUG: keys={keys}")
@@ -308,7 +307,14 @@ class Load(metaclass=meta._LoadMeta):
         if key in loaded_data:
             print(f"Load.values: DEBUG: dict_to_load={({key: loaded_data[key]})}")
             try:
-                subsection: Storage = Storage._from_dict({key: loaded_data[key]}, raw)
+                if raw:
+                    subsection: Storage = create_storage_from_dict(
+                        {key: loaded_data[key]}
+                    )[0]
+                else:
+                    subsection: Storage = create_storage_from_dict(
+                        {key: _decode(loaded_data[key])}
+                    )[0]
             except ValueError as e:
                 print(f"Load.values: ERROR: Error reconstructing object for key '{key}': {e}")
                 return None
@@ -325,4 +331,5 @@ class Load(metaclass=meta._LoadMeta):
                 items.append(val)
                 print(f"Load.values: DEBUG: items.append({val})")
         print(f"Load.values: DEBUG: {items}")
+        del subsection
         return items

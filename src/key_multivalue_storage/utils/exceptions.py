@@ -43,6 +43,7 @@ class NoInstantiationError(TypeError):
     set the `kms.nextgen` attribute to `True`.
     """
 
+@public
 class BadBitwiseOperation(TypeError):
     """
     Custom exception raised on invalid or internal errors within bitwise operations.
@@ -63,6 +64,20 @@ class BadBitwiseOperation(TypeError):
                             }`?")
         if message == "":
             self.message = "Invalid or internal error occurred within bitwise operation."
+        else:
+            self.message = message
+        super().__init__(self.message)
+
+@public
+class EncodingError(ValueError):
+    """
+    Custom exception raised when an encoding operation fails.
+
+    Example: if attempting to encode data with an unsupported encoding strategy, this would be raised.
+    """
+    def __init__(self, message="") -> None:
+        if message == "":
+            self.message = "An internal error occurred during the encoding operation."
         else:
             self.message = message
         super().__init__(self.message)

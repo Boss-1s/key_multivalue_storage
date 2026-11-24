@@ -69,7 +69,9 @@ from .delete import Delete
 from .utils import exceptions as exceptions
 # NOTE: Deprecate in 1.5
 from .utils import kms_warnings
+from .utils import enums
 from .utils.exceptions import (
+    EncodingError,
     KeyNotFoundError,
     NoInstantiationError,
     BadBitwiseOperation
@@ -80,6 +82,7 @@ from .utils.warnings import (
     SubtractionFailureWarning,
     CastWarning
 )
+from .utils.enums import Encoding, CharSet
 from .utils.config import _nextgen
 
 # Package Metadata
@@ -403,6 +406,9 @@ public(
     Load=Load,
     Edit=Edit,
     Delete=Delete,
+    enums=enums,
+    Encoding=Encoding,
+    CharSet=CharSet,
     KeyNotFoundError=KeyNotFoundError,
     NoInstantiationError=NoInstantiationError,
     DeleteWarning=DeleteWarning,
@@ -410,6 +416,7 @@ public(
     SubtractionFailureWarning=SubtractionFailureWarning,
     CastWarning=CastWarning,
     BadBitwiseOperation=BadBitwiseOperation,
+    EncodingError=EncodingError,
 )
 
 class _Module(ModuleType): #pylint: disable=too-few-public-methods
