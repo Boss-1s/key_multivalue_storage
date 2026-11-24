@@ -516,7 +516,7 @@ dev = [
 release = [
     "gitpython==3.2.1",
     "md-toc==9.1.0",
-    "packaging==26.3",
+    "packaging==26.4",
     "requests==2.34.2",
 ]
 test = [
