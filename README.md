@@ -13,10 +13,17 @@ This is, after all, the greatest piece of a CPython progam I have made. ;)
 
 ---------
 
+> [!Important]
+> There is a _really_ (and I mean _**really**_) high chance that this project goes on hiatus because of schoolwork, meaning the Roadmap's schedule shall be no more. Instead, plan on seeing updates come out --- when the updates _can_ come out. It's all dependant on me.
+>
+> _Note: even if the project goes on hiatus, the only thing not changing is `semver1.2.x`'s End of Life on 2026/01/04._
+
 ## 🚀 What's New in `kms-semver1.4.0a1`
 
 > [!warning]
-> `kms-semver1.4.0a1` has been pushed by two days. Originally to be released on 2026/10/24, it will now be released on**2026/10/26.**
+> **UPDATE**
+> 
+> `kms-semver1.4.0a1`and `kms-semver1.4.0a2` are being merged into one update,released under the `a1` tag.
 
 > [!important]
 > `kms-semver1.4.x` is ***officially*** built off of `kms-v1.3.1/2026.08.12`, and *partially* off of `kms-v1.3.2/2026.09.30`.

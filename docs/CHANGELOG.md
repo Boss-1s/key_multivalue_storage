@@ -11,7 +11,7 @@ title: Changelog
 - [📦 v1.4.0.20261001a0.dev1 — *kms-v1.4.0a0.dev1/2026.10.01*](#-v14020261001a0dev1--kms-v140a0dev120261001)
 - [📦 v1.4.0.20260915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*](#-v14020260915a0dev0--kms-v140a0dev020260915)
 - [📦 v1.3.2.20261012 — *kms-v1.3.2/2026.10.12*](#-v13220261012--kms-v13220261012)
-- [📦 v1.3.2.20260930 — *kms-v1.3.2/2026.09.30*](#-v13220260930--kms-v13220260930)
+- [📦 v1.3.2.20260930 — *kms-v1.3.2/2026.09.30*](#-v13220260930--kms-v132202609300915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*](#-v14020260915a0dev0--kms-v140a0dev020260915)
 - [📦 v1.3.2.20260922b4.post2 — *kms-v1.3.2/2026.09.22b4.post2*](#-v13220260922b4post2--kms-v13220260922b4post2)
 - [📦 v1.3.2.20260922b4.post1 — *kms-v1.3.2b4.post1/2026.09.22*](#-v13220260922b4post1--kms-v132b4post120260922)
 - [📦 v1.3.2.20260922b4.post0 — *kms-v1.3.2/2026.09.22b4.post0*](#-v13220260922b4post0--kms-v13220260922b4post0)
@@ -423,13 +423,44 @@ Nope. Why would I have notes on a successful update?
 
 **📑 Changelog (since last update)**: [`v1.3.2.20260922b4.post2` vs `v1.3.2.20260930`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.2.20260922b4.post2...v1.3.2.20260930)
 
-_**✨📑 ✨Full Changelog**: [`v1.3.1.20260812` vs `v1.3.2.20260930`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)_
+_**✨📑 ✨Full Changelog**: [`v1.3.1.20260812` vs `v1.3.2.20260930`](https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.3.2.20260930)_0915a0.dev0 — *kms-v1.4.0a0.dev0/2026.09.15*
+
+⚙ **Target Node Commit:** `3fbeb2d4`
+
+📝 **Release Type:** Pre-release - Minor Update
+
+This is a development pre-release. It is an interim pre-release (pre-release of pre-release) designed to prepare for the true pre-release. **`kms-semver1.4.0a0` releases officially on October 12th, 2026, 11 days after the release of CPython 3.15 on October 1st.**
+
+#### What's Changed
+* chore(deps-dev): Update setuptools requirement from >=83.0.0 to >=84.0.0 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/88
+* chore(deps): update astral-sh/setup-uv action to v10 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/89
+* chore(deps): update github/codeql-action action to v4.37.7 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/93
+* chore(deps): update astral-sh/setup-uv action to v10.0.1 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/95
+* fix(deps): update dependency griffe to v2.2.0 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/96
+* chore(deps-dev): Bump key-multivalue-storage from 1.3.0.20260731 to 1.3.1.20260812 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/98
+* chore(deps): update github/codeql-action action to v4.37.8 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/101
+* chore: merge semver1.3.x into semver1.4.x by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/102
+* chore(deps-dev): Bump pre-commit from 4.6.1 to 4.6.2 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/104
+* chore(deps-dev): Bump griffe from 2.1.0 to 2.2.0 in /test by @dependabot[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/103
+* feat: Automatic Pylint Issues (#30) by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/100
+* chore(deps): update dependency gitpython to v3.1.60 by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/119
+* chore(deps): update dependency gitpython to v3.1.60 (semver1.3.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/120
+* merge semver1.3.x into semver1.4.x by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/121
+* chore(deps): update github/codeql-action action to v4.37.9 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/123
+* chore(deps): update dependency gitpython to v3.1.61 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/128
+* Update dependency coverage to v7.16.0 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/131
+* fix(deps): update dependency pylint to v4.0.8 (semver1.4.x) by @renovate[bot] in https://github.com/Boss-1s/key_multivalue_storage/pull/133
+* backport(`semver1.4.x`): commit `caa2492` from branch `feat/semver1.4.x/154` by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/167
+* feat: automated backporting/forwardporting on PRs and commits by @Boss-1s in https://github.com/Boss-1s/key_multivalue_storage/pull/155
+
+
+**Full Changelog**: https://github.com/Boss-1s/key_multivalue_storage/compare/v1.3.1.20260812...v1.4.0.20260915a0.dev0
 
 ---
 
 ## 📦 v1.3.2.20260922b4.post2 — *kms-v1.3.2/2026.09.22b4.post2*
 
-⚙ **Target Node Commit:** `80282d37`
+⚙ **Target Node Commit:** `80282d373bcb272c`
 
 📝 **Release Type:** Pre-release - Minor Patch
 
@@ -2467,3 +2498,6 @@ loaded_db = Storage.Load.by_key("example.json", "my_top_level_key")
 ---
 
 [***<< Back to Home***](.)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbODQ4NDQyNTQwXX0=
+-->
